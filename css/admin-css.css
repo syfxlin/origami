@@ -1,0 +1,10 @@
+.fix-back-pre {
+    border: 1px solid #B6DFE9;
+    background: #f5f5f5;
+    padding: 10px;
+}
+
+blockquote {
+    border-left: 2px solid #B6DFE9;
+    padding-left: 7px;
+}
