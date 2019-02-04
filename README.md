@@ -2,7 +2,7 @@
 
 > 简洁，轻快
 
-![Version](https://img.shields.io/github/release/syfxlin/origami.svg?label=Version&style=flat-square)![Author](https://img.shields.io/badge/Author-Otstar%20Lin-blue.svg?style=flat-square)![WordPress](https://img.shields.io/badge/WordPress-4.4%2B-orange.svg?style=flat-square)![PHP](https://img.shields.io/badge/php-5.6%2B-green.svg?style=flat-square)![license](https://img.shields.io/badge/license-GPL%20v3-orange.svg?style=flat-square)
+![Version](https://img.shields.io/github/release/syfxlin/origami.svg?label=Version&style=flat-square) ![Author](https://img.shields.io/badge/Author-Otstar%20Lin-blue.svg?style=flat-square) ![WordPress](https://img.shields.io/badge/WordPress-4.4%2B-orange.svg?style=flat-square) ![PHP](https://img.shields.io/badge/php-5.6%2B-green.svg?style=flat-square) ![license](https://img.shields.io/badge/license-GPL%20v3-orange.svg?style=flat-square)
 
 ------
 
