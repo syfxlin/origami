@@ -1,24 +1,24 @@
 <?php if(is_author()) {
     $featured_title = get_the_author();
     $featured_content = 'Author';
-    $featured_img_height = '382px';
+    $featured_img_height = '300px';
 } else if(is_category()) {
     $the_cat = get_the_category()[0];
     $featured_title = '分类: '.$the_cat->name;
     $featured_content = 'Category';
-    $featured_img_height = '382px';
+    $featured_img_height = '300px';
 } else if(is_archive()) {
     $featured_title = get_the_archive_title();
     $featured_content = 'Archive';
-    $featured_img_height = '382px';
+    $featured_img_height = '300px';
 } else if(is_tag()) {
     $featured_title = get_the_tags();
     $featured_content = 'Tags';
-    $featured_img_height = '382px';
+    $featured_img_height = '300px';
 } else if(is_search()) {
     $featured_title = '搜索：'.get_search_query();
     $featured_content = 'Search';
-    $featured_img_height = '382px';
+    $featured_img_height = '300px';
 }?>
 <?php if(have_posts()){
     $blog_post_array = array();
@@ -58,8 +58,8 @@
         ?>');">
             <div class="container">
                 <div class="featured-content-area featured-pos-center featured-align-center" style="max-width:70%;background-color:rgba(0,0,0,0.3);padding:25px;">
-                    <h2 class="font-montserrat-reg" style="font-size:50px;line-height:100px;color:#fff;"><?php echo $featured_title; ?></h2>
-                    <p class="font-opensans-reg" style="color:#fff;"><?php echo $featured_content; ?></p>
+                    <h2 class="font-montserrat-reg"><?php echo $featured_title; ?></h2>
+                    <p class="font-opensans-reg"><?php echo $featured_content; ?></p>
                 </div>
             </div>
         </div>

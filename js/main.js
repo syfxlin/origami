@@ -298,15 +298,17 @@ window.onload = function() {
         origami.post_index = function() {
             var select = true;
             if($(window).width() > 991) {
-                $('#toc-button').click(function() {
-                    if(select) {
-                        $('.toc').addClass('toc-show');
-                        $('.toc').css('box-shadow','none');
-                        select = false;
-                    } else {
-                        $('.toc').removeClass('toc-show');
-                        $('.toc').css('box-shadow','0 0 20px #B6DFE9');
-                        select = true;
+                $('#toc-button').click(function(e) {
+                    if(e.target.className == "fa fa-indent fa-2x") {
+                        if(select) {
+                            $('.toc').addClass('toc-show');
+                            $('.toc').css('box-shadow','none');
+                            select = false;
+                        } else {
+                            $('.toc').removeClass('toc-show');
+                            $('.toc').css('box-shadow','0 0 20px #B6DFE9');
+                            select = true;
+                        }
                     }
                 });
             }

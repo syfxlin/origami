@@ -9,7 +9,7 @@
             $thum_img = origami_get_other_thumbnail($post);
         } ?>
     <section class="featured-section" style="padding:0px;margin:0px;">
-        <div class="featured-slide " style="height:300px;background-image:url('<?php echo $thum_img; ?>');">
+        <div class="featured-slide" style="height:300px;background-image:url('<?php echo $thum_img; ?>');">
             <div class="container">
                 <div class="featured-content-area featured-pos-center featured-align-center" style="max-width:70%;background-color:rgba(0,0,0,0.3);padding:25px;">
                     <h2 class="font-montserrat-reg" style="font-size:50px;line-height:100px;color:#fff;"><?php echo get_the_title(); ?></h2>
@@ -28,6 +28,9 @@
             <div class="col-xlarge-8 col-medium-8 ">
                 <?php origami_breadcrumbs();?>
                 <article id="post-<?php the_ID(); ?>" <?php post_class("blog-post-content"); ?>>
+                    <?php if(!get_post_thumbnail_id($post->ID) && !origami_get_other_thumbnail($post)) {
+                        get_template_part('template-part/post-top-title');
+                    } ?>
                     <div class="page-content clearfix">
                         <?php the_content(); ?>
                     </div>

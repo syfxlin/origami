@@ -4,7 +4,7 @@ Theme URI: https://blog.ixk.me/theme-origami.html
 Author: Otstar Lin
 Author URI: https://www.ixk.me
 Description: 简约平面化风格的主题
-Version: 1.0
+Version: 1.0.1
 License: GNU General Public License v3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Tags: black,cyan-blue,flat,responsive
@@ -889,6 +889,12 @@ ul {
     font-size: 1.5em;
     color: #fff;
     text-align: center;
+}
+
+@media(max-width:991px) {
+    #header-search {
+        margin-right: 40px;
+    }
 }
 
 .header-style #header-nav {
@@ -1782,8 +1788,8 @@ ul {
 /* new-end */
 
 .featured-content-area h2 {
-    font-size: 40px;
-    line-height: 55px;
+    font-size: 50px;
+    line-height: 100px;
     color:#fff;
 }
 
@@ -2791,8 +2797,8 @@ body:not(.boxed) .map-section.wide .container {
     }
 
     .featured-content-area h2 {
-        font-size: 40px !important;
-        line-height: 55px !important
+        font-size: 30px !important;
+        line-height: 40px !important
     }
 
     .featured-content-area p {
@@ -2902,6 +2908,23 @@ body:not(.boxed) .map-section.wide .container {
 
 .myblog-post-list-buttom .post-categories li:hover a {
     color: #f5f5f5;
+}
+
+.myblog-post-list-buttom .post-tags {
+    float: left !important;
+    margin-top: 2px !important;
+    overflow-x: auto;
+    width: 50%;
+    white-space:nowrap;
+}
+
+.myblog-post-list-buttom .post-tags::-webkit-scrollbar {
+    width: 2px !important;
+    height: 2px !important;
+}
+
+.myblog-post-list-buttom .post-tags li {
+    display: inline-block;
 }
 
 .myblog-post-list-button {
@@ -3941,7 +3964,7 @@ img.responsively-lazy{
     font-size: 1.5em;
     color: #111;
     text-align: center;
-    z-index: 10001;
+    z-index: 10002;
 }
 
 #search-section-close {
@@ -3959,6 +3982,7 @@ img.responsively-lazy{
     outline: 0px;
     border: 0px;
     font-size: 18px;
+    z-index: 10001;
 }
 
 #search-content {
