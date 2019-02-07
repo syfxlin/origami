@@ -4,10 +4,10 @@
  */
 get_header(); ?>
 <?php
-    $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+    // $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
     $args = array(
-        'paged' => ''.$paged,
-        'posts_per_page' => '30',
+        // 'paged' => ''.$paged,
+        'posts_per_page' => -1,
     );
     query_posts($args);
 ?>
@@ -79,9 +79,9 @@ the_post(); ?>
                 </div>
         <?php } ?>
         <?php echo '</div></div></section>'; ?>
-        <div class="post-list-pagination timeline-pagination">
-            <?php origami_page_index(); ?>
-        </div>
+        <!-- <div class="post-list-pagination timeline-pagination"> -->
+            <?php // origami_page_index(); ?>
+        <!-- </div> -->
     </div>
 </div>
 <script>
