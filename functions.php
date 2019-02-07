@@ -365,7 +365,7 @@ function origami_comment($comment, $args, $depth)
     $comment_mark = "";
     $comment_mark_color = "#CBBBBA";
     //站长邮箱
-    $adminEmail = 'syfxlin@gmail.com';
+    $adminEmail = get_option('admin_email');
     //从数据库读取有人链接
     $linkurls = $wpdb->get_results("SELECT link_url FROM wp_links");
     //默认不是朋友，将标记为访客
@@ -383,6 +383,7 @@ function origami_comment($comment, $args, $depth)
                 || $linkurl->link_url == ($comment->comment_author_url . "/")) {
                 $comment_mark = '<a target="_blank" href="/links" title="友情链接认证">友人</a>';
                 $comment_mark_color = "#5EBED2";
+                $is_friend = true;
             }
         }
     }
@@ -412,7 +413,13 @@ function origami_comment($comment, $args, $depth)
         </div>
         <div class="comment-right">
             <div class="comment-header">
-                <div class="comment-author"><?php echo $comment->comment_author; ?></div>
+                <div class="comment-author">
+                    <?php if($comment->comment_author_url != "") {
+                        echo '<a href="'.$comment->comment_author_url.'">'.$comment->comment_author.'</a>';
+                    } else {
+                        echo $comment->comment_author;
+                    } ?>
+                </div>
                 <?php echo $comment_mark; ?>
             </div>
             <div class="comment-text">
@@ -436,7 +443,6 @@ function origami_comment($comment, $args, $depth)
     </div>
     <div class="clearfix"></div>
 <?php
-
 }
 
 /**
