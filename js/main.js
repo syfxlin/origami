@@ -366,6 +366,10 @@ window.onload = function() {
         origami.reading_transfer();
         origami.set_position();
         origami.post_index();
+        origami.fix_a_hover = function() {
+            $('body').append('<style>a{transition: color 0.5s;}</style>');
+        };
+        origami.fix_a_hover();
     });
 
     function origami_new_owo() {
