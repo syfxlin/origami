@@ -109,8 +109,8 @@ get_header(); ?>
                         <li>
                             <a rel="nofollow" title="<?php echo $comment->link_url; ?>" target="_blank" href="<?php echo $comment->link_url; ?>" style="background-image:url(<?php echo $comment->link_image; ?>);background-size: cover;">
                                 <div id="links_info"></div>
-                                <em>"<?php echo $comment->link_name; ?>"</em>
-                                <span>"<?php echo $comment->link_notes; ?>"</span>
+                                <em><?php echo $comment->link_name; ?></em>
+                                <span><?php echo $comment->link_notes; ?></span>
                                 <img id="links_icon" src="<?php echo $comment->link_rss; ?>"></img>
                             </a>
                         </li>
