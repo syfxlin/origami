@@ -86,6 +86,7 @@ get_header(); ?>
 }
 </style>
 		<div>
+		    <ul class="readers-list clearfix">
 			<?php
 			    global $wpdb;
                 $qlink="select link_url,link_name,link_image,link_notes,link_description,link_rss from wp_links where link_visible='Y' order by link_id"; 
@@ -104,14 +105,19 @@ get_header(); ?>
                         }
                     }
                     retain_key_shuffle($links);
-                    foreach ($links as $comment) {
-                        $tmp = "<li><a rel=\"nofollow\" title=".$comment->link_url." target=\"_blank\" href=\"$comment->link_url\" style=\"background-image:url($comment->link_image);background-size: cover;\"><div id=\"links_info\"></div><em>".$comment->link_name."</em><span>".$comment->link_notes."</span><img id=\"links_icon\" src=\"$comment->link_rss\"></img></a></li>";   
-                        $output1 .= $tmp;
-                    }
-                    $output1 = "<ul class=\"readers-list clearfix\">".$output1."</ul>";
-                    echo $output1;
+                    foreach ($links as $comment) { ?>
+                        <li>
+                            <a rel="nofollow" title="<?php echo $comment->link_url; ?>" target="_blank" href="<?php echo $comment->link_url; ?>" style="background-image:url(<?php echo $comment->link_image; ?>);background-size: cover;">
+                                <div id="links_info"></div>
+                                <em>"<?php echo $comment->link_name; ?>"</em>
+                                <span>"<?php echo $comment->link_notes; ?>"</span>
+                                <img id="links_icon" src="<?php echo $comment->link_rss; ?>"></img>
+                            </a>
+                        </li>
+                    <?php }
                 }
             ?>
+            </ul>
 		</div>
 		<div style="text-align:center;font-size:18px;margin:10px 0px;">此页模板由<a href="https://www.ixk.me">Otstar-Lin</a>于2018制作,源码已上传至<a href="https://github.com/syfxlin/wp-links-template">Github</a></div>
 	</div>
