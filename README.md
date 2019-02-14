@@ -60,6 +60,8 @@ Origami - 一个拥有许多强大功能，简洁，轻快的WordPress主题
 
 若要启用WordBox，请先将主题文件夹下的js文件夹中的sw.js复制至WordPress根目录
 
+> 目前WorkBox的缓存规则还有些问题，请暂时不要使用WorkBox，若已经使用了WorkBox，请将Origami主题设置中的workbox选项取消勾选即可，主题就会加载卸载WorkBox的js，注意：若已经使用了WorkBox请不要直接删除sw.js，否则会导致访客看到的页面永不更新
+
 ## 文档 Docs
 
 暂无
