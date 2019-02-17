@@ -172,15 +172,15 @@ add_filter('script_loader_tag', 'origami_async_script', 10, 3);
 /**
  * 块编辑器
  */
-// 去除 Wordpress5.0 块编辑器样式
-function fanly_remove_block_library_css()
-{
-    wp_dequeue_style('wp-block-library');
-}
-add_action('wp_enqueue_scripts', 'fanly_remove_block_library_css', 100);
-// 禁用块编辑器
-add_filter('use_block_editor_for_post', '__return_false');
-remove_action('wp_enqueue_scripts', 'wp_common_block_scripts_and_styles');
+// // 去除 Wordpress5.0 块编辑器样式
+// function fanly_remove_block_library_css()
+// {
+//     wp_dequeue_style('wp-block-library');
+// }
+// add_action('wp_enqueue_scripts', 'fanly_remove_block_library_css', 100);
+// // 禁用块编辑器
+// add_filter('use_block_editor_for_post', '__return_false');
+// remove_action('wp_enqueue_scripts', 'wp_common_block_scripts_and_styles');
 
 /**
  * 使评论支持图片
