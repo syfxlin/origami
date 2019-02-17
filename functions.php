@@ -367,7 +367,12 @@ function origami_comment($comment, $args, $depth)
     //站长邮箱
     $adminEmail = get_option('admin_email');
     //从数据库读取有人链接
-    $linkurls = $wpdb->get_results("SELECT link_url FROM wp_links");
+    $linkurls = $wpdb->get_results("SELECT link_url FROM wp_links", "ARRAY_N");
+    $other_friend_links = explode(',', get_option('origami_other_friends'));
+    foreach($other_friend_links as $other_friend_link) {
+        $other_friend_links_arr[][0] = $other_friend_link;
+    }
+    $linkurls = array_merge($linkurls, $other_friend_links_arr);
     //默认不是朋友，将标记为访客
     $is_friend = false;
     //判断是不是站长我
@@ -376,23 +381,22 @@ function origami_comment($comment, $args, $depth)
         $comment_mark_color = "#0bf";
         $is_friend = true;
     }
-    //循环判断是不是友人
-    if (!$is_friend) {
-        foreach ($linkurls as $linkurl) {
-            if ($linkurl->link_url == $comment->comment_author_url || $linkurl->link_url . "/" == $comment->comment_author_url
-                || $linkurl->link_url == ($comment->comment_author_url . "/")) {
-                $comment_mark = '<a target="_blank" href="/links" title="友情链接认证">友人</a>';
-                $comment_mark_color = "#5EBED2";
-                $is_friend = true;
-            }
+    if(!$is_friend && $comment->comment_author_url != '') {
+        $rex = '/(https:\/\/|http:\/\/)[a-z0-9-]*\.([a-z0-9-]+\.[a-z]+).*/i';
+        $rex2 = '/(https:\/\/|http:\/\/)([a-z0-9-]+\.[a-z]+).*/i';
+        if(substr_count($comment->comment_author_url, '.') == 2) {
+            preg_match($rex, $comment->comment_author_url, $author_url_re);
+        } else {
+            preg_match($rex2, $comment->comment_author_url, $author_url_re);
         }
-    }
-    //其他的友人链接
-    if (!$is_friend) {
-        $other_friend_links = explode(',', get_option('origami_other_friends'));
-        foreach ($other_friend_links as $linkurl) {
-            if ($linkurl == $comment->comment_author_url || $linkurl == $comment->comment_author_url . "/"
-                || $linkurl . "/" == $comment->comment_author_url) {
+        $comment_author_url_reg = $author_url_re[2];
+        foreach($linkurls as $linkurl) {
+            if(substr_count($linkurl[0], '.') == 2) {
+                preg_match($rex, $linkurl[0], $url_re);
+            } else {
+                preg_match($rex2, $linkurl[0], $url_re);
+            }
+            if($comment_author_url_reg == $url_re[2]) {
                 $comment_mark = '<a target="_blank" href="/links" title="友情链接认证">友人</a>';
                 $comment_mark_color = "#5EBED2";
                 $is_friend = true;
