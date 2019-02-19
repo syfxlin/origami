@@ -391,4 +391,5 @@ window.onload = function() {
     // 执行原生js函数
     origami_new_owo();
     lazyload();
+    console.log("\n %c Origami 折纸主题 %c https://blog.ixk.me/theme-origami.html \n", "color: #fff; background: #4285f4; padding:5px 0;", "background: #87d1df; padding:5px 0;");
 };
