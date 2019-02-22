@@ -64,7 +64,7 @@ Origami - 一个拥有许多强大功能，简洁，轻快的WordPress主题
 
 ## 文档 Docs
 
-暂无
+[Wiki](https://github.com/syfxlin/origami/wiki)
 
 ## 维护者 Maintainer
 
