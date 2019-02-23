@@ -150,8 +150,8 @@ function origami_customize_register( $wp_customize ) {
         'origami_start_image_content',
             array(
                 'type' => 'text',
-                'label' => esc_html__('首页图像URL'),
-                'description' => '若填写了此URL则将首页图像设置为这个图像',
+                'label' => esc_html__('首页图像副标题'),
+                'description' => '首页图像中的副标题',
                 'section' => 'origami_option',
                 'setting' => 'origami_start_image_content',
             )
