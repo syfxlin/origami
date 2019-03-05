@@ -854,7 +854,7 @@ function origami_lazyload_img()
     }
     if (strcmp($config[0], 'true') == 0) {
         if (strcmp($config[1], 'post') == 0) {
-            add_filter('the_content', 'lazyload_img_process');
+            add_filter('the_content', 'origami_lazyload_img_process');
         } else {
             add_action('template_redirect', 'lazyload_img_obstart');
             function lazyload_img_all($content)
