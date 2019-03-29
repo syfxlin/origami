@@ -769,7 +769,7 @@ function origami_image_shortcode_func($attr, $content)
     if (isset($attr['is-thum']) && !empty($attr['is-thum'])) {
         $is_thum = $attr['is-thum'];
     }
-    if (isset($attr['is-show']) && !empty($attr['is-show'] && strcmp($is_thum, 'true') == 0)) {
+    if (isset($attr['is-show']) && !empty($attr['is-show']) && strcmp($is_thum, 'true') == 0) {
         $is_show = $attr['is-show'];
     }
     if (isset($attr['alt']) && !empty($attr['alt'])) {
