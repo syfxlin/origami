@@ -144,6 +144,19 @@ if (!is_admin()) {
 }
 
 /**
+ * 添加古腾堡资源
+ */
+function origami_load_blocks() {
+	wp_enqueue_script(
+		'origami_block_js',
+		get_template_directory_uri() . '/js/blocks.build.js',
+		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ),
+		true
+	);
+}
+add_action( 'enqueue_block_editor_assets', 'origami_load_blocks' );
+
+/**
  * 异步加载JS
  */
 function origami_async_script($tag, $handle, $src)
