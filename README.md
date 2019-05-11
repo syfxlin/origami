@@ -62,6 +62,8 @@ Origami - 一个拥有许多强大功能，简洁，轻快的WordPress主题
 
 > 已经修复了WorkBox的缓存规则，这里说明一下，启用WorkBox会使用户的浏览器的请求完全被WorkBox接管，一旦启用后，页面的加载速度将得到质的提升，但是若要删除就必须加载卸载WorkBox的js，否则用户访问的页面将不会更新
 
+> 若站点使用https，同时又需要引用http的资源，请将`header.php`文件中的`<meta http-equiv="Content-Security-Policy" content="block-all-mixed-content">`字段删除。
+
 ## 文档 Docs
 
 [Wiki](https://github.com/syfxlin/origami/wiki)
