@@ -591,11 +591,11 @@ function origami_comment_respond_email($comment_id, $comment) {
             															<td style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:13px;color:#202020;line-height:1.5">尊敬的<span style="color:#40ceff;font-weight:bold">' . $comment_parent_author_name . '</span>，您好！</td>
             														</tr>
             														<tr>
-            															<td style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:13px;color:#202020;line-height:1.5">您对[青空之蓝]上 《<span style="white-space:nowrap;color:#40ceff" href="' . get_permalink($comment_post_id) . '">' . get_the_title($comment_post_id) . '</span>》 一文的评论有新回复，欢迎您前来继续参与讨论。<br><br>这是您发表的原始评论<ol style="background:#e0e0e0;margin:5px;padding:20px 40px 20px">' . $comment_parent->comment_content . '</ol><span style="color:#40ceff;font-weight:bold">' . $comment_author_name . '</span>给您的回复如下<ol style="background:#e0e0e0;margin:5px;padding:20px 40px 20px">' . $comment->comment_content . '</ol><br>如有需要，您可以<a style="text-decoration:none;color:#4285f4" target="_blank" href="' . get_comment_link($comment_parent->comment_ID) . '">查看有关此回复的详细信息</a>。 </td>
+            															<td style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:13px;color:#202020;line-height:1.5">您对[' . $blog_name . ']上 《<span style="white-space:nowrap;color:#40ceff" href="' . get_permalink($comment_post_id) . '">' . get_the_title($comment_post_id) . '</span>》 一文的评论有新回复，欢迎您前来继续参与讨论。<br><br>这是您发表的原始评论<ol style="background:#e0e0e0;margin:5px;padding:20px 40px 20px">' . $comment_parent->comment_content . '</ol><span style="color:#40ceff;font-weight:bold">' . $comment_author_name . '</span>给您的回复如下<ol style="background:#e0e0e0;margin:5px;padding:20px 40px 20px">' . $comment->comment_content . '</ol><br>如有需要，您可以<a style="text-decoration:none;color:#4285f4" target="_blank" href="' . get_comment_link($comment_parent->comment_ID) . '">查看有关此回复的详细信息</a>。 </td>
             														</tr>
             														<tr height="26px"></tr>
             														<tr>
-            															<td style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:13px;color:#202020;line-height:1.5">此致<br>Otstar 团队敬上</td>
+            															<td style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:13px;color:#202020;line-height:1.5">此致<br>' . $blog_name . '敬上</td>
             														</tr>
             														<tr height="20px"></tr>
             														<tr>
@@ -631,7 +631,7 @@ function origami_comment_respond_email($comment_id, $comment) {
                                                     </tr>
                                                     <tr>
                                                         <td>
-                                                            <div style="direction: ltr;">©Copyright&nbsp;2018&nbsp;青空之蓝</div>
+                                                            <div style="direction: ltr;">©Copyright&nbsp;2019&nbsp;' . $blog_name . '</div>
                                                         </td>
                                                     </tr>
                                                 </tbody>
