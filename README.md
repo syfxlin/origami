@@ -50,7 +50,7 @@ Origami - 一个拥有许多强大功能，简洁，轻快的WordPress主题
 ## 演示 Demo
 
 - [青空之蓝](https://blog.ixk.me)
-- 临时：[Origami Dev](https://dev.ixk.me)
+- [Origami Demo](https://origami.ixk.me)
 
 ## 安装 Install
 
