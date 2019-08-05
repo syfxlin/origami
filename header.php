@@ -20,6 +20,7 @@ $ori_header_logo = get_option(
   <!-- New Style.css -->
   <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/style.css">
   <script src="<?php echo get_template_directory_uri(); ?>/js/new-main.js"></script>
+  <script src="<?php echo get_template_directory_uri(); ?>/js/anime.min.js"></script>
 </head>
 <body <?php body_class($GLOBALS['not_carousel'] ? 'not-car' : ''); ?>>
   <header class="p-fixed ori-header">
@@ -52,4 +53,19 @@ $ori_header_logo = get_option(
         </div>
       </section>
     </div>
+    <!-- Header search box -->
+    <section class="ori-search">
+      <div class="ori-container navbar">
+        <section class="navbar-section">
+          <div><i class="fa fa-search"></i></div>
+        </section>
+        <section class="navbar-center">
+          <input id="ori-search-input" class="form-input" type="text" placeholder="快来寻找你要的文章ヾ(≧▽≦*)o...">
+        </section>
+        <section class="navbar-section">
+          <div id="ori-h-search-close"><i class="fa fa-close"></i></div>
+        </section>
+      </div>
+      <div class="ori-search-mask"></div>
+    </section>
   </header>

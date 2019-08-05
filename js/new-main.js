@@ -1,4 +1,5 @@
 window.addEventListener("load", function() {
+  // mobile menu button
   document.getElementById("ori-h-m-btn").addEventListener("click", function() {
     let btn = document.getElementById("ori-h-m-btn");
     let menu = document.getElementById("ori-h-menu");
@@ -13,4 +14,27 @@ window.addEventListener("load", function() {
       header.classList.add("menu-active");
     }
   });
+  // search button
+  document.getElementById("ori-h-search").addEventListener("click", function() {
+    document.getElementsByClassName("ori-search")[0].style.display = "block";
+    document.getElementById("ori-search-input").focus();
+    anime({
+      targets: ".ori-search",
+      opacity: 1,
+      duration: 3000
+    });
+  });
+  document
+    .getElementById("ori-h-search-close")
+    .addEventListener("click", function() {
+      anime({
+        targets: ".ori-search",
+        opacity: 0,
+        duration: 3000,
+        complete: function() {
+          document.getElementsByClassName("ori-search")[0].style.display =
+            "none";
+        }
+      });
+    });
 });
