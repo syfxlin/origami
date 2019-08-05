@@ -1,0 +1,97 @@
+.ori-container {
+  margin: 0 auto;
+  padding: 0 15px;
+}
+@media (min-width: 992px) {
+  .ori-container {
+    width: 1140px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1099px) {
+  .ori-container {
+    width: 970px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .ori-container {
+    width: 750px;
+  }
+}
+
+.ori-header {
+  width: 100%;
+  height: 4rem;
+  background-color: #fff;
+  display: flex;
+}
+
+#ori-logo,
+#ori-title {
+  position: absolute;
+}
+
+#ori-logo {
+  display: flex;
+}
+
+#ori-title {
+  font-size: 1.1rem;
+}
+
+body.home #ori-logo {
+  display: none;
+}
+
+body:not(.home) #ori-title {
+  display: none;
+}
+
+#ori-h-menu {
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+
+#ori-h-menu li a {
+  margin: 0 0.4rem;
+  background: #fff;
+  border-radius: 0.1rem;
+  color: #5755d9;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.8rem;
+  height: 1.8rem;
+  line-height: 1.2rem;
+  outline: 0;
+  padding: 0.25rem 0.4rem;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.2s, border 0.2s, box-shadow 0.2s, color 0.2s;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+#ori-h-menu a:hover + .sub-menu {
+  visibility: visible;
+  opacity: 1;
+}
+
+#ori-h-menu .sub-menu {
+  background-color: #fff;
+  position: absolute;
+  z-index: 1000;
+  top: 2rem;
+  min-width: 230px;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+  transition: all 0.35s;
+  margin-left: 0;
+}
+
+#ori-h-menu .sub-menu li {
+  padding: 0.5em 1em;
+}

@@ -1,0 +1,288 @@
+.ori-container {
+  margin: 0 auto;
+  padding: 0 15px;
+  width: 100%;
+}
+@media (min-width: 992px) {
+  .ori-container {
+    width: 1140px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1099px) {
+  .ori-container {
+    width: 970px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .ori-container {
+    width: 750px;
+  }
+}
+
+.ori-header {
+  width: 100%;
+  height: 4rem;
+  background-color: #fff;
+  color: #5755d9;
+  display: flex;
+  z-index: 999;
+  box-shadow: 0 0 20px #dfdfdf;
+}
+
+/* 首页滚动时交替颜色 */
+.home .ori-header {
+  box-shadow: none;
+  background-color: transparent;
+  color: #fff;
+}
+
+.home .ori-header .btn {
+  color: #fff;
+}
+
+.home #ori-h-menu > .menu-item > a {
+  color: #fff;
+}
+
+.home #ori-h-m-btn span {
+  background-color: #fff;
+}
+
+.not-car .ori-header {
+  box-shadow: 0 0 20px #dfdfdf;
+  background-color: #fff;
+  color: #5755d9;
+}
+
+.not-car .ori-header .btn {
+  color: #5755d9;
+}
+
+.not-car #ori-h-menu > .menu-item > a {
+  color: #5755d9;
+}
+
+.not-car #ori-h-m-btn span {
+  background-color: #5755d9;
+}
+/* end */
+
+#ori-logo,
+#ori-title {
+  position: absolute;
+}
+
+#ori-logo {
+  display: flex;
+}
+
+#ori-title {
+  font-size: 1.1rem;
+}
+
+body.home #ori-logo {
+  display: none;
+}
+
+body:not(.home) #ori-title {
+  display: none;
+}
+
+#ori-h-menu {
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+
+#ori-h-menu a:focus {
+  box-shadow: none;
+}
+
+#ori-h-menu li {
+  margin: 0;
+}
+
+#ori-h-menu li a {
+  margin: 0 0.4rem;
+  border-radius: 0.1rem;
+  color: #5755d9;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.8rem;
+  height: 1.8rem;
+  line-height: 1.2rem;
+  outline: 0;
+  padding: 0.25rem 0.4rem;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.2s, border 0.2s, box-shadow 0.2s, color 0.2s;
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+#ori-h-menu .sub-menu:hover,
+#ori-h-menu a:hover + .sub-menu {
+  visibility: visible;
+  opacity: 1;
+}
+
+#ori-h-menu .sub-menu {
+  background-color: #fff;
+  position: absolute;
+  z-index: 1000;
+  top: 1.5rem;
+  min-width: 230px;
+  opacity: 0;
+  visibility: hidden;
+  margin-top: 30px;
+  transition: all 0.35s;
+  margin-left: 0.8rem;
+  list-style: none;
+  box-shadow: 0 0.05rem 0.2rem rgba(48, 55, 66, 0.3);
+}
+
+#ori-h-menu .sub-menu li {
+  border-bottom: 0.5px solid #5755d93d;
+}
+
+#ori-h-menu .sub-menu li:hover {
+  background: #f1f1fc;
+  color: #5755d9;
+}
+
+#ori-h-menu .sub-menu li a {
+  font-size: 0.6rem;
+}
+
+#ori-h-menu .sub-menu .sub-menu {
+  margin-top: 0.35rem;
+}
+
+#ori-h-search i {
+  font-size: 1rem;
+  margin: 0 0.4rem;
+}
+
+#ori-h-m-btn {
+  width: 1.2rem;
+  height: 1rem;
+  margin: 0 0.4rem;
+  cursor: pointer;
+  transform: rotate(0);
+  transition: 0.5s ease-in-out;
+  display: none;
+}
+
+#ori-h-m-btn span {
+  display: block;
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  background-color: #5755d9;
+  opacity: 1;
+  left: 0;
+  border-radius: 2px;
+  transform: rotate(0);
+  transition: 0.25s ease-in-out;
+}
+
+#ori-h-m-btn span:nth-child(1) {
+  top: 0;
+}
+
+#ori-h-m-btn span:nth-child(2),
+#ori-h-m-btn span:nth-child(3) {
+  top: 8px;
+}
+
+#ori-h-m-btn span:nth-child(4) {
+  top: 16px;
+}
+
+#ori-h-m-btn.active span:nth-child(1),
+#ori-h-m-btn.active span:nth-child(4) {
+  top: 10px;
+  width: 0;
+  left: 50%;
+}
+
+#ori-h-m-btn.active span:nth-child(2) {
+  transform: rotate(45deg);
+}
+
+#ori-h-m-btn.active span:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+@media (max-width: 991px) {
+  #ori-h-menu {
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    top: 0;
+    right: 0;
+    width: 30%;
+    background: #fff;
+    color: #5755d9;
+    margin: 0;
+    height: 100%;
+  }
+
+  #ori-h-menu.active {
+    display: flex;
+  }
+
+  #ori-h-menu > .menu-item > a {
+    color: #5755d9 !important;
+  }
+
+  #ori-h-menu li {
+    width: 100%;
+  }
+
+  #ori-h-menu li a {
+    text-align: left;
+  }
+
+  #ori-h-menu .sub-menu {
+    opacity: 1;
+    visibility: visible;
+    position: unset;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    box-shadow: none;
+    display: none;
+  }
+
+  #ori-h-menu li:focus > .sub-menu {
+    display: block;
+  }
+
+  #ori-h-menu .sub-menu li {
+    border: none;
+  }
+
+  #ori-h-menu .sub-menu li:hover {
+    background: none;
+  }
+
+  #ori-h-menu .menu-item-has-children::before {
+    transform: translate(-50%, -75%) rotate(225deg);
+    border: 0.1rem solid currentColor;
+    border-bottom: 0;
+    border-right: 0;
+    height: 0.65em;
+    width: 0.65em;
+    content: "";
+    display: block;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+  }
+
+  #ori-h-m-btn {
+    display: block;
+  }
+}
