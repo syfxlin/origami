@@ -1242,6 +1242,39 @@ function origami_real_time_search()
 add_action('init', 'origami_real_time_search');
 
 // New Function.php
+// 后台配置面板
 require_once "include/config.class.php";
 $config_class = new OrigamiConfig();
+
+// 分页导航栏
+function origami_pagination()
+{
+  global $wp_query;
+  $big = 999999999;
+  $pagination_args = [
+    'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+    'format' => '?paged=%#%',
+    'total' => $wp_query->max_num_pages,
+    'current' => max(1, get_query_var('paged')),
+    'show_all' => false,
+    'end_size' => 1,
+    'prev_next' => true,
+    'prev_text' => '<i class="icon icon-back"></i> ' . __('上一页', 'origami'),
+    'next_text' =>
+      __('下一页', 'origami') . ' <i class="icon icon-forward"></i>',
+    'type' => 'array',
+    'add_args' => false,
+    'add_fragment' => '',
+    'before_page_number' => '',
+    'after_page_number' => ''
+  ];
+  $page_arr = paginate_links($pagination_args);
+  $paginate = '';
+  foreach ($page_arr as $value) {
+    $paginate .= '<li class="page-item">';
+    $paginate .= $value;
+    $paginate .= '</li>';
+  }
+  echo '<ul class="pagination">' . $paginate . '</ul>';
+}
 // end

@@ -1001,7 +1001,7 @@ ul {
     background: #fff;
 }
 
-#scroll-top {
+/* #scroll-top {
     width: 40px;
     height: 40px;
     background-color: #fff;
@@ -1033,7 +1033,7 @@ ul {
 
 #scroll-top:hover span {
     color: #fff
-}
+} */
 
 .type-page {
     padding-top: 20px;
@@ -2100,7 +2100,7 @@ ul {
     margin-right: 7px
 }
 
-.post-tags {
+/* .post-tags {
     float: left
 }
 
@@ -2123,7 +2123,7 @@ ul {
     background-color: #B6DFE9;
     border: 1.5px solid #B6DFE9;
     color: #f5f5f5 !important
-}
+} */
 
 .single-post-meta {
     margin-top: 30px
@@ -2279,7 +2279,7 @@ ul {
     margin-bottom: 5px
 }
 
-.post-pagination {
+/* .post-pagination {
     background-color: #B6DFE9;
     padding: 15px 0;
     margin-top: 25px;
@@ -2293,7 +2293,7 @@ ul {
 
 .post-pagination a:hover {
     color: #111
-}
+} */
 
 .map-section {
     padding-bottom: 40px

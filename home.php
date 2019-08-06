@@ -17,11 +17,11 @@ $btn_url = get_option("origami_carousel_btn_url", "https://ixk.me");
 ?>
 
 <?php get_header(); ?>
-<main id="main-content">
+<div id="main-content">
     <?php if ($len > 0): ?>
-        <div class="carousel">
+        <section class="carousel">
             <?php for ($i = 1; $i <= $len; $i++): ?>
-                <input class="carousel-locator" id="slide-<?php echo $i; ?>" type="radio" name="carousel-radio" hidden="">
+                <input class="carousel-locator" id="slide-<?php echo $i; ?>" type="radio" name="carousel-radio" hidden="" <?php if ($i==1) {echo 'checked';}?>>
             <?php endfor; ?>
             <div class="carousel-container">
                 <?php for ($i = 1; $i <= $len; $i++): ?>
@@ -32,9 +32,9 @@ $btn_url = get_option("origami_carousel_btn_url", "https://ixk.me");
                         <label class="item-next btn btn-action btn-lg" for="slide-<?php echo $link_to[
                           $i - 1
                         ][1]; ?>"><i class="icon icon-arrow-right"></i></label>
-                        <div class="img-responsive rounded" style="background-image:url('<?php echo $carousels[
+                        <div class="img-responsive rounded" style="background-image:url(<?php echo $carousels[
                           $i - 1
-                        ]; ?>')"></div>
+                        ]; ?>)"></div>
                     </figure>
                 <?php endfor; ?>
             </div>
@@ -51,8 +51,8 @@ $btn_url = get_option("origami_carousel_btn_url", "https://ixk.me");
                 </a>
             </div>
             <div class="carousel-mask"></div>
-        </div>
+        </section>
     <?php endif; ?>
     <?php get_template_part('template-part/post-list'); ?>
-</main>
+</div>
 <?php get_footer(); ?>

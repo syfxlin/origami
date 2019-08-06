@@ -74,6 +74,92 @@ class OrigamiConfig
       ]
     );
 
+    // 页脚设置
+    register_setting("origami_style", "origami_footer_text");
+    add_settings_section(
+      'origami_style_footer',
+      __('2.页脚设置', 'origami'),
+      [&$this, 'origami_style_section'],
+      'origami_style'
+    );
+    add_settings_field(
+      'origami_footer_text',
+      __('页脚文本', 'origami'),
+      [&$this, 'settings_field_textarea'],
+      'origami_style',
+      'origami_style_footer',
+      [
+        'field' => 'origami_footer_text',
+        'value' => '',
+        'type' => 'text',
+        'description' =>
+          '<span class="my-face"></span>中的内容会添加随机摇动效果，<span id="timeDate"></span>显示日期，<span id="times"></span>显示时间'
+      ]
+    );
+
+    //About card设置
+    register_setting("origami_style", "origami_about_card_enable");
+    register_setting("origami_style", "origami_about_card_image");
+    register_setting("origami_style", "origami_about_card_avatar");
+    register_setting("origami_style", "origami_about_card_content");
+    add_settings_section(
+      'origami_style_about_card',
+      __('3.侧栏关于卡片设置', 'origami'),
+      [&$this, 'origami_style_section'],
+      'origami_style'
+    );
+    add_settings_field(
+      'origami_about_card_enable',
+      __('开启关于卡片', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_style',
+      'origami_style_about_card',
+      [
+        'field' => 'origami_about_card_enable',
+        'value' => 'true',
+        'type' => 'text',
+        'description' => '填入true为开，false为关'
+      ]
+    );
+    add_settings_field(
+      'origami_about_card_image',
+      __('关于卡片图像', 'origami'),
+      [&$this, 'settings_field_input_media'],
+      'origami_style',
+      'origami_style_about_card',
+      [
+        'field' => 'origami_about_card_image',
+        'value' => '',
+        'type' => 'text'
+      ]
+    );
+    add_settings_field(
+      'origami_about_card_avatar',
+      __('关于卡片头像', 'origami'),
+      [&$this, 'settings_field_input_media'],
+      'origami_style',
+      'origami_style_about_card',
+      [
+        'field' => 'origami_about_card_avatar',
+        'value' => 'default',
+        'type' => 'text',
+        'description' => '如果填入default则会自动读取用户信息显示'
+      ]
+    );
+    add_settings_field(
+      'origami_about_card_content',
+      __('关于卡片', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_style',
+      'origami_style_about_card',
+      [
+        'field' => 'origami_about_card_content',
+        'value' => 'default',
+        'type' => 'text',
+        'description' => '如果填入default则会自动读取用户信息显示'
+      ]
+    );
+
     // 首页设置
     register_setting("origami_style", "origami_carousel_1");
     register_setting("origami_style", "origami_carousel_2");
@@ -85,7 +171,7 @@ class OrigamiConfig
     register_setting("origami_style", "origami_carousel_btn_url");
     add_settings_section(
       'origami_style_home',
-      __('2.首页设置', 'origami'),
+      __('4.首页设置', 'origami'),
       [&$this, 'origami_style_section'],
       'origami_style'
     );
@@ -186,11 +272,16 @@ class OrigamiConfig
       ]
     );
   }
+  // field模式
   public function settings_field_input_media($args)
   {
     $field = $args['field'];
     $type = $args['type'];
+    $description = $args['description'];
     $value = get_option($field);
+    if ($value === false) {
+      $value = $args['value'];
+    }
     echo sprintf(
       '<input type="%s" name="%s" id="%s" value="%s"/>' .
         '<input upload="%s" class="button" type="button" value="上传" />',
@@ -200,25 +291,49 @@ class OrigamiConfig
       $value,
       $field
     );
+    if ($description) {
+      echo '<p>' . htmlspecialchars($description) . '</p>';
+    }
   }
-  /**
-   * 此功能为设置字段提供文本输入
-   */
   public function settings_field_input_text($args)
   {
     $field = $args['field'];
     $type = $args['type'];
+    $description = $args['description'];
     $value = get_option($field);
     if ($value === false) {
       $value = $args['value'];
     }
     echo sprintf(
-      '<input type="%s" name="%s" id="%s" value="%s" />',
+      '<input type="%s" name="%s" id="%s" value="%s"/>',
       $type,
       $field,
       $field,
       $value
     );
+    if ($description) {
+      echo '<p>' . htmlspecialchars($description) . '</p>';
+    }
+  }
+  public function settings_field_textarea($args)
+  {
+    $field = $args['field'];
+    $type = $args['type'];
+    $description = $args['description'];
+    $value = get_option($field);
+    if ($value === false) {
+      $value = $args['value'];
+    }
+    echo sprintf(
+      '<textarea type="%s" name="%s" id="%s">%s</textarea>',
+      $type,
+      $field,
+      $field,
+      $value
+    );
+    if ($description) {
+      echo '<p>' . htmlspecialchars($description) . '</p>';
+    }
   }
   public function origami_style_section()
   {

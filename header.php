@@ -60,7 +60,7 @@ $ori_header_logo = get_option(
           <div><i class="fa fa-search"></i></div>
         </section>
         <section class="navbar-center">
-          <input id="ori-search-input" class="form-input" type="text" placeholder="快来寻找你要的文章ヾ(≧▽≦*)o...">
+          <input id="ori-search-input" class="form-input" type="text" placeholder="<?php echo __('快来寻找你要的文章ヾ(≧▽≦*)o...', 'origami'); ?>">
         </section>
         <section class="navbar-section">
           <div id="ori-h-search-close"><i class="fa fa-close"></i></div>
