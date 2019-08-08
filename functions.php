@@ -46,12 +46,12 @@ require 'ajax-comment/main.php';
  */
 if (!is_admin()) {
   // 加载主要css/js文件
-  wp_enqueue_style(
-    'origami-style',
-    get_stylesheet_uri(),
-    array(),
-    wp_get_theme()->get('Version')
-  );
+  // wp_enqueue_style(
+  //   'origami-style',
+  //   get_stylesheet_uri(),
+  //   array(),
+  //   wp_get_theme()->get('Version')
+  // );
   wp_enqueue_script('comment-reply');
   wp_enqueue_script(
     'jquery-script',
@@ -318,154 +318,174 @@ add_action('comment_unapproved_to_approved', 'sirius_comment_approved');
 /**
  * 添加面包屑导航
  */
-function origami_breadcrumbs()
+function origami_breadcrumbs($echo = true)
 {
-  $delimiter = '»'; // 分隔符
-  $before = '<span class="current">'; // 在当前链接前插入
-  $after = '</span>'; // 在当前链接后插入
+  $breadcrumbs = [];
   if ((!is_home() && !is_front_page()) || is_paged()) {
     global $post;
     $homeLink = home_url();
-    echo ' <a href="' .
-      $homeLink .
-      '">' .
-      __('Home') .
-      '</a> ' .
-      $delimiter .
-      ' ';
+    $breadcrumbs[] = [
+      "name" => __("Home"),
+      "link" => $homeLink
+    ];
     if (is_category()) {
-      // 分类 存档
+      $arr = [];
       global $wp_query;
       $cat_obj = $wp_query->get_queried_object();
-      $thisCat = $cat_obj->term_id;
-      $thisCat = get_category($thisCat);
-      $parentCat = get_category($thisCat->parent);
-      if ($thisCat->parent != 0) {
-        $cat_code = get_category_parents(
-          $parentCat,
-          true,
-          ' ' . $delimiter . ' '
-        );
-        echo $cat_code = str_replace('<a', '<a ', $cat_code);
+      $thisCat = $cat_obj->cat_ID;
+      $thisCat = get_the_category($thisCat)[0];
+      $arr[] = [
+        "name" => $thisCat->name,
+        "link" => get_category_link($thisCat->cat_ID)
+      ];
+      $parentCat = get_the_category($thisCat->parent)[0];
+      while (
+        $parentCat->cat_ID != $thisCat->cat_ID &&
+        $parentCat->cat_ID != 0
+      ) {
+        $arr[] = [
+          "name" => $parentCat->name,
+          "link" => get_category_link($parentCat->car_ID)
+        ];
+        $parentCat = get_the_category($parentCat->parent)[0];
       }
-      echo $before . '' . single_cat_title('', false) . '' . $after;
+      for ($i = count($arr) - 1; $i >= 0; $i--) {
+        $breadcrumbs[] = $arr[$i];
+      }
     } elseif (is_day()) {
-      // 天 存档
-      echo '<a href="' .
-        get_year_link(get_the_time('Y')) .
-        '">' .
-        get_the_time('Y') .
-        '</a> ' .
-        $delimiter .
-        ' ';
-      echo '<a  href="' .
-        get_month_link(get_the_time('Y'), get_the_time('m')) .
-        '">' .
-        get_the_time('F') .
-        '</a> ' .
-        $delimiter .
-        ' ';
-      echo $before . get_the_time('d') . $after;
+      $breadcrumbs[] = [
+        "link" => get_year_link(get_the_time('Y')),
+        "name" => get_the_time('Y')
+      ];
+      $breadcrumbs[] = [
+        "link" => get_month_link(get_the_time('Y'), get_the_time('m')),
+        "name" => get_the_time('F')
+      ];
+      $breadcrumbs[] = [
+        "name" => get_the_time('d'),
+        "link" => false
+      ];
     } elseif (is_month()) {
-      // 月 存档
-      echo '<a href="' .
-        get_year_link(get_the_time('Y')) .
-        '">' .
-        get_the_time('Y') .
-        '</a> ' .
-        $delimiter .
-        ' ';
-      echo $before . get_the_time('F') . $after;
+      $breadcrumbs[] = [
+        "link" => get_year_link(get_the_time('Y')),
+        "name" => get_the_time('Y')
+      ];
+      $breadcrumbs[] = [
+        "link" => false,
+        "name" => get_the_time('F')
+      ];
     } elseif (is_year()) {
-      // 年 存档
-      echo $before . get_the_time('Y') . $after;
+      $breadcrumbs[] = [
+        "link" => false,
+        "name" => get_the_time('Y')
+      ];
     } elseif (is_single() && !is_attachment()) {
       // 文章
       if (get_post_type() != 'post') {
         // 自定义文章类型
         $post_type = get_post_type_object(get_post_type());
         $slug = $post_type->rewrite;
-        echo '<a href="' .
-          $homeLink .
-          '/' .
-          $slug['slug'] .
-          '/">' .
-          $post_type->labels->singular_name .
-          '</a> ' .
-          $delimiter .
-          ' ';
-        echo $before . get_the_title() . $after;
+        $breadcrumbs[] = [
+          "link" => $homeLink . '/' . $slug['slug'] . '/',
+          "name" => $post_type->labels->singular_name
+        ];
+        $breadcrumbs[] = [
+          "link" => false,
+          "name" => get_the_title()
+        ];
       } else {
-        // 文章 post
-        $cat = get_the_category();
-        $cat = $cat[0];
-        $cat_code = get_category_parents($cat, true, ' ' . $delimiter . ' ');
-        echo $cat_code = str_replace('<a', '<a ', $cat_code);
-        echo $before . get_the_title() . $after;
+        $arr = [];
+        $thisCat = get_the_category()[0];
+        $arr[] = [
+          "name" => $thisCat->name,
+          "link" => get_category_link($thisCat->cat_ID)
+        ];
+        $parentCat = get_the_category($thisCat->parent)[0];
+        while (
+          $parentCat->cat_ID != $thisCat->cat_ID &&
+          $parentCat->cat_ID != 0
+        ) {
+          $arr[] = [
+            "name" => $parentCat->name,
+            "link" => get_category_link($parentCat->cat_ID)
+          ];
+          if ($parentCat->parent == 0) {
+            break;
+          }
+          $parentCat = get_the_category($parentCat->parent)[0];
+        }
+        for ($i = count($arr) - 1; $i >= 0; $i--) {
+          $breadcrumbs[] = $arr[$i];
+        }
+        $breadcrumbs[] = [
+          "link" => false,
+          "name" => get_the_title()
+        ];
       }
     } elseif (!is_single() && !is_page() && get_post_type() != 'post') {
       $post_type = get_post_type_object(get_post_type());
-      echo $before . $post_type->labels->singular_name . $after;
+      $breadcrumbs[] = [
+        "link" => false,
+        "name" => $post_type->labels->singular_name
+      ];
     } elseif (is_attachment()) {
-      // 附件
       $parent = get_post($post->post_parent);
-      $cat = get_the_category($parent->ID);
-      $cat = $cat[0];
-      echo '<a href="' .
-        get_permalink($parent) .
-        '">' .
-        $parent->post_title .
-        '</a> ' .
-        $delimiter .
-        ' ';
-      echo $before . get_the_title() . $after;
+      $breadcrumbs[] = [
+        "link" => get_permalink($parent),
+        "name" => $parent->post_title
+      ];
+      $breadcrumbs[] = [
+        "link" => false,
+        "name" => get_the_title()
+      ];
     } elseif (is_page() && !$post->post_parent) {
-      // 页面
-      echo $before . get_the_title() . $after;
+      $breadcrumbs[] = [
+        "link" => false,
+        "name" => get_the_title()
+      ];
     } elseif (is_page() && $post->post_parent) {
-      // 父级页面
       $parent_id = $post->post_parent;
-      $breadcrumbs = array();
+      $bread = [];
       while ($parent_id) {
         $page = get_page($parent_id);
-        $breadcrumbs[] =
-          '<a href="' .
-          get_permalink($page->ID) .
-          '">' .
-          get_the_title($page->ID) .
-          '</a>';
+        $bread[] = [
+          "link" => get_permalink($page->ID),
+          "name" => get_the_title($page->ID)
+        ];
         $parent_id = $page->post_parent;
       }
-      $breadcrumbs = array_reverse($breadcrumbs);
-      foreach ($breadcrumbs as $crumb) {
-        echo $crumb . ' ' . $delimiter . ' ';
+      for ($i = count($bread) - 1; $i >= 0; $i--) {
+        $breadcrumbs[] = $bread[i];
       }
-      echo $before . get_the_title() . $after;
+      $breadcrumbs[] = [
+        "link" => false,
+        "name" => get_the_title()
+      ];
     } elseif (is_search()) {
-      // 搜索结果
-      echo $before;
-      printf(__('Search Results for: %s'), get_search_query());
-      echo $after;
+      $breadcrumbs[] = [
+        "link" => false,
+        "name" => sprintf(__('Search Results for: %s'), get_search_query())
+      ];
     } elseif (is_tag()) {
-      //标签 存档
-      echo $before;
-      printf(__('Tag Archives: %s'), single_tag_title('', false));
-      echo $after;
+      $breadcrumbs[] = [
+        "link" => false,
+        "name" => sprintf(__('Tag Archives: %s'), single_tag_title('', false))
+      ];
     } elseif (is_author()) {
       // 作者存档
       global $author;
       $userdata = get_userdata($author);
-      echo $before;
-      printf(__('Author Archives: %s'), $userdata->display_name);
-      echo $after;
+      $breadcrumbs[] = [
+        "link" => false,
+        "name" => sprintf(__('Author Archives: %s'), $userdata->display_name)
+      ];
     } elseif (is_404()) {
-      // 404 页面
-      echo $before;
-      _e('Not Found');
-      echo $after;
+      $breadcrumbs[] = [
+        "link" => false,
+        "name" => _e('Not Found')
+      ];
     }
     if (get_query_var('paged')) {
-      // 分页
       if (
         is_category() ||
         is_day() ||
@@ -475,9 +495,24 @@ function origami_breadcrumbs()
         is_tag() ||
         is_author()
       ) {
-        echo sprintf(__('( Page %s )'), get_query_var('paged'));
+        $breadcrumbs[] = [
+          "link" => false,
+          "name" => sprintf(__('( Page %s )'), get_query_var('paged'))
+        ];
       }
     }
+  }
+  $str = "";
+  if ($echo) {
+    foreach ($breadcrumbs as $item) {
+      $str .=
+        '<li class="breadcrumb-item"><a href="' .
+        $item['link'] .
+        '">' .
+        $item['name'] .
+        '</a></li>';
+    }
+    echo '<ul class="breadcrumb">' . $str . '</ul>';
   }
 }
 

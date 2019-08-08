@@ -5,7 +5,7 @@ if (have_posts()) {
     the_post();
     $post_author_id = get_post_field('post_author', $post->ID);
     global $post_list;
-    $post_item = array(
+    $post_item = [
       'post_id' => $post->ID,
       'post_title' => get_the_title($post->ID),
       'post_date' => get_the_date(get_option('date_format'), $post->ID),
@@ -21,7 +21,7 @@ if (have_posts()) {
       'post_category' => wp_get_post_categories($post->ID),
       'post_tag' => wp_get_post_tags($post->ID),
       'post_excerpt' => get_the_excerpt($post->ID)
-    );
+    ];
     if (
       $post_item['post_image'] == false &&
       origami_get_other_thumbnail($post)
@@ -38,7 +38,7 @@ $sidebar_class = $sidebar_pos == 'none' ? 'd-none' : 'col-4 col-md-12';
 $main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
 ?>
 <main class="ori-container columns <?php echo $main_class; ?> grid-md">
-  <section class="post-list <?php echo $post_list_class; ?>">
+  <section class="post-list column <?php echo $post_list_class; ?>">
     <?php foreach ($post_list as $item): ?>
       <article class="card" id="post-<?php echo $item['post_id']; ?>">
         <?php if ($item['post_image']): ?>
@@ -73,7 +73,7 @@ $main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
       <?php origami_pagination();?>
     </section>
   </section>
-  <aside class="<?php echo $sidebar_class; ?>">
+  <aside class="column <?php echo $sidebar_class; ?>">
     <?php get_sidebar(); ?>
   </aside>
 </main>
