@@ -1275,6 +1275,23 @@ function origami_pagination()
     $paginate .= $value;
     $paginate .= '</li>';
   }
-  echo '<ul class="pagination">' . $paginate . '</ul>';
+  if ($paginate != '') {
+    echo '<ul class="pagination">' . $paginate . '</ul>';
+  }
 }
+
+//注册侧边栏
+function origami_sidebar_init()
+{
+  register_sidebar([
+    'name' => __('默认侧栏', 'origami'),
+    'description' => '默认的侧边栏',
+    'id' => 'default_sidebar',
+    'before_widget' => '<aside class="sidebar-widget %2$s">',
+    'after_widget' => '</aside>',
+    'before_title' => '<h3>',
+    'after_title' => '</h3>'
+  ]);
+}
+add_action('widgets_init', 'origami_sidebar_init');
 // end

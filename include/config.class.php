@@ -53,11 +53,48 @@ class OrigamiConfig
       'origami_config',
       get_template_directory_uri() . '/js/config.js'
     );
+
+    // 布局设置
+    register_setting("origami_style", "origami_layout_style");
+    register_setting("origami_style", "origami_layout_sidebar");
+    add_settings_section(
+      'origami_style_layout',
+      __('1.布局', 'origami'),
+      [&$this, 'origami_style_section'],
+      'origami_style'
+    );
+    add_settings_field(
+      'origami_layout_style',
+      __('布局方式', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_style',
+      'origami_style_layout',
+      [
+        'field' => 'origami_layout_style',
+        'value' => 'layout1',
+        'type' => 'text',
+        'description' => 'layout1：有大图布局，layout2：无大图布局'
+      ]
+    );
+    add_settings_field(
+      'origami_layout_sidebar',
+      __('侧边栏位置', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_style',
+      'origami_style_layout',
+      [
+        'field' => 'origami_layout_sidebar',
+        'value' => 'right',
+        'type' => 'text',
+        'description' => 'right：侧边栏右置，left：侧边栏左置，none：不显示侧边栏'
+      ]
+    );
+
     // 导航栏设置
     register_setting("origami_style", "origami_header_icon");
     add_settings_section(
       'origami_style_header',
-      __('1.导航栏设置', 'origami'),
+      __('2.导航栏设置', 'origami'),
       [&$this, 'origami_style_section'],
       'origami_style'
     );
@@ -78,7 +115,7 @@ class OrigamiConfig
     register_setting("origami_style", "origami_footer_text");
     add_settings_section(
       'origami_style_footer',
-      __('2.页脚设置', 'origami'),
+      __('3.页脚设置', 'origami'),
       [&$this, 'origami_style_section'],
       'origami_style'
     );
@@ -104,7 +141,7 @@ class OrigamiConfig
     register_setting("origami_style", "origami_about_card_content");
     add_settings_section(
       'origami_style_about_card',
-      __('3.侧栏关于卡片设置', 'origami'),
+      __('4.侧栏关于卡片设置', 'origami'),
       [&$this, 'origami_style_section'],
       'origami_style'
     );
@@ -171,7 +208,7 @@ class OrigamiConfig
     register_setting("origami_style", "origami_carousel_btn_url");
     add_settings_section(
       'origami_style_home',
-      __('4.首页设置', 'origami'),
+      __('5.首页设置', 'origami'),
       [&$this, 'origami_style_section'],
       'origami_style'
     );

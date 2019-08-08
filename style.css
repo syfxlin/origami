@@ -1353,7 +1353,7 @@ ul {
 .right-sidebar {
     padding-left: 30px
 }
-
+/* 
 .sidebar-widget {
     margin-bottom: 50px
 }
@@ -1727,7 +1727,7 @@ ul {
     margin-left: 20px;
     transition: color .35s ease-in-out;
     -webkit-transition: color .35s ease-in-out
-}
+} */
 /* 新增 - start */
 .featured-inner {
     width: 100%;
@@ -2623,13 +2623,13 @@ body:not(.boxed) .map-section.wide .container {
         clear: both;
     }
 
-    .input-field,
+    /* .input-field,
     .input-textarea,
     .page-newsletter input[type=email],
     .sidebar-widget input,
     .sidebar-widget select {
         font-size: 16px
-    }
+    } */
 
     .menu .children .sub-drop-icon,
     .menu .sub-menu .sub-drop-icon {
@@ -2787,9 +2787,9 @@ body:not(.boxed) .map-section.wide .container {
         margin-bottom: 0px
     }
 
-    .post-sidebar .sidebar-widget:first-child {
+    /* .post-sidebar .sidebar-widget:first-child {
         margin-top: 60px
-    }
+    } */
 
     .featured-section {
         padding-bottom: 0;

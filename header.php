@@ -66,6 +66,8 @@ $ori_header_logo = get_option(
           <div id="ori-h-search-close"><i class="fa fa-close"></i></div>
         </section>
       </div>
-      <div class="ori-search-mask"></div>
+      <div class="ori-search-mask grid-md">
+        <section class="col-8 col-md-12 post-list" id="search-list"></section>
+      </div>
     </section>
   </header>

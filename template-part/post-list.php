@@ -30,9 +30,15 @@ if (have_posts()) {
     }
     $post_list[] = $post_item;
   }
-} ?>
-<main class="ori-container columns">
-  <section class="post-list col-8">
+}
+
+$sidebar_pos = get_option('origami_layout_sidebar', 'right');
+$post_list_class = $sidebar_pos == 'none' ? 'col-10 col-md-12' : 'col-8 col-md-12';
+$sidebar_class = $sidebar_pos == 'none' ? 'd-none' : 'col-4 col-md-12';
+$main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
+?>
+<main class="ori-container columns <?php echo $main_class; ?> grid-md">
+  <section class="post-list <?php echo $post_list_class; ?>">
     <?php foreach ($post_list as $item): ?>
       <article class="card" id="post-<?php echo $item['post_id']; ?>">
         <?php if ($item['post_image']): ?>
@@ -42,12 +48,12 @@ if (have_posts()) {
           <h2 class="card-title"><a href="<?php echo $item['post_link']; ?>"><?php echo $item['post_title']; ?></a></h2>
           <div class="card-subtitle text-gray">
             <time><?php echo $item['post_date']; ?></time> • <span><?php echo $item['post_author']; ?></span> •
+            <span><?php echo $item['post_comments'] . __('条评论', 'origami'); ?></span> • 
             <ul>
               <?php foreach ($item['post_category'] as $cat): ?>
                 <li><a href="<?php echo get_category_link($cat); ?>"><?php echo get_cat_name($cat); ?></a></li>
               <?php endforeach; ?>
-            </ul> • 
-            <span><?php echo $item['post_comments'] . __('条评论', 'origami'); ?></span>
+            </ul>
           </div>
         </div>
         <div class="card-body">
@@ -67,7 +73,7 @@ if (have_posts()) {
       <?php origami_pagination();?>
     </section>
   </section>
-  <aside class="col-4">
-  <?php get_sidebar(); ?>
+  <aside class="<?php echo $sidebar_class; ?>">
+    <?php get_sidebar(); ?>
   </aside>
 </main>

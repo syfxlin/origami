@@ -2,6 +2,10 @@ body {
   background-color: #f8f9fa;
 }
 
+.flex-rev {
+  flex-direction: row-reverse;
+}
+
 .ori-container {
   margin: 0 auto;
   padding: 0 15px;
@@ -36,6 +40,14 @@ body {
 
 #main-content {
   padding-top: 4rem;
+}
+
+#main-content main {
+  justify-content: center;
+}
+
+#main-content main > * {
+  margin-top: 1.5rem;
 }
 
 /* 首页滚动时交替颜色 */
@@ -79,7 +91,7 @@ body {
   background-color: #5755d9;
 }
 
-.not-car #main-content {
+.not-car:not(.home) #main-content {
   padding-top: 4rem;
 }
 /* end */
@@ -132,7 +144,7 @@ body:not(.home) #ori-title {
   padding: 0.25rem 0.8rem;
   text-align: center;
   text-decoration: none;
-  transition: background 0.2s, border 0.2s, box-shadow 0.2s, color 0.2s;
+  transition: border 0.2s, box-shadow 0.2s, color 0.2s;
   user-select: none;
   vertical-align: middle;
   white-space: nowrap;
@@ -142,40 +154,41 @@ body:not(.home) #ori-title {
 #ori-h-menu a:hover + .sub-menu {
   visibility: visible;
   opacity: 1;
-  top: 1.5rem;
+  top: 2.7rem;
 }
 
 #ori-h-menu .sub-menu {
-  background-color: #fff;
+  border-radius: 0.1rem;
+  list-style: none;
+  transition: all 0.35s;
   position: absolute;
   z-index: 1000;
-  top: 2.5rem;
-  min-width: 230px;
+  top: 3.5rem;
   opacity: 0;
   visibility: hidden;
-  margin-top: 30px;
-  transition: all 0.35s;
-  margin-left: 0.8rem;
-  list-style: none;
-  box-shadow: 0 0.05rem 0.2rem rgba(48, 55, 66, 0.3);
-  border-radius: 0.1rem;
+  min-width: 15rem;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 0.067em 1.2em rgba(0, 0, 0, 0.14);
+  background-color: #fff;
 }
 
-#ori-h-menu .sub-menu li {
-  border-bottom: 0.5px solid #5755d93d;
+#ori-h-menu .sub-menu li:not(:last-child) {
+  border-bottom: 1px solid #f5f3f0;
 }
 
-#ori-h-menu .sub-menu li:hover {
-  background: #f1f1fc;
+#ori-h-menu .sub-menu li:hover a {
   color: #5755d9;
 }
 
 #ori-h-menu .sub-menu li a {
   font-size: 0.6rem;
+  padding: 0.3rem 0;
+  height: unset;
+  color: #7d7d7d;
 }
 
 #ori-h-menu .sub-menu .sub-menu {
-  margin-top: 0.35rem;
+  margin-top: 0rem;
 }
 
 #ori-h-search i {
@@ -272,8 +285,14 @@ body:not(.home) #ori-title {
 .ori-search-mask {
   position: fixed;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 4rem);
   background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+}
+
+#search-list {
+  overflow-y: auto;
 }
 
 /* end */
@@ -346,6 +365,52 @@ body:not(.home) #ori-title {
   pointer-events: none;
 }
 
+.not-carousel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem 0.8rem 0rem 0.8rem;
+}
+
+.not-carousel h1 {
+  font-size: 1.7rem;
+}
+
+.not-carousel h2 {
+  font-size: 1rem;
+}
+
+.featured {
+  height: 17rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.featured-container {
+  width: 27rem;
+  height: 12rem;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.featured-container h1,
+.featured-container h2 {
+  color: #fff;
+}
+
+.featured-container h2 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
 .ori-footer {
   display: flex;
   flex-direction: column;
@@ -372,11 +437,12 @@ body:not(.home) #ori-title {
   position: fixed;
   bottom: 1rem;
   right: 1rem;
+  z-index: 10000;
+  opacity: 0;
 }
 
 .card {
-  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
-    0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 20px -6px rgba(0, 0, 0, 0.2);
 }
 
 .post-info .card-title {
@@ -387,6 +453,10 @@ body:not(.home) #ori-title {
   font-size: 1.25rem;
   text-decoration: none;
   color: #3b4351;
+}
+
+.post-info .card-title a:hover {
+  color: #5755d9;
 }
 
 .post-info .card-subtitle {
@@ -420,6 +490,10 @@ body:not(.home) #ori-title {
   font-size: 0.7rem;
 }
 
+.post-list article {
+  margin-bottom: 1rem;
+}
+
 .post-list .card-image {
   background-position: center;
   background-repeat: no-repeat;
@@ -434,6 +508,7 @@ body:not(.home) #ori-title {
 
 .post-list .card-body {
   font-size: 0.75rem;
+  color: #3b4351;
 }
 
 .post-list .card-footer {
@@ -488,8 +563,7 @@ body:not(.home) #ori-title {
   display: flex;
   justify-content: center;
   background-color: #fff;
-  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
-    0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 20px -6px rgba(0, 0, 0, 0.2);
 }
 
 .avatar.avatar-xxl {
@@ -503,8 +577,7 @@ body:not(.home) #ori-title {
   flex-direction: column;
   align-items: center;
   background-color: #fff;
-  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14),
-    0 1px 3px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 20px -6px rgba(0, 0, 0, 0.2);
 }
 
 .about-card-image {
@@ -524,6 +597,76 @@ body:not(.home) #ori-title {
   width: 100%;
 }
 
+.sidebar-widget {
+  padding: 1.5rem;
+  background-color: #fff;
+  box-shadow: 0 1px 20px -6px rgba(0, 0, 0, 0.2);
+  margin-top: 1rem;
+  font-size: 0.7rem;
+}
+
+.sidebar-widget #searchform label {
+  display: none;
+}
+
+.sidebar-widget h3 {
+  font-size: 0.9rem;
+}
+
+.sidebar-widget h3:after {
+  height: 0.12rem;
+  width: 2.5rem;
+  background-color: #5755d9;
+  content: "";
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.sidebar-widget ul {
+  list-style: none;
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+.sidebar-widget li {
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #f5f3f0;
+}
+
+.sidebar-widget a {
+  color: #7d7d7d;
+  text-decoration: none;
+}
+
+.sidebar-widget a:hover {
+  color: #302ecd;
+}
+
+.sidebar-widget.widget_recent_entries a {
+  display: block;
+}
+
+.sidebar-widget.widget_recent_entries .post-date {
+  line-height: 1.2rem;
+  color: #bcc3ce;
+  font-size: 80%;
+  font-weight: 400;
+}
+
+.sidebar-widget .tagcloud {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sidebar-widget .tagcloud a {
+  border: 1px solid #dfdfdf;
+  font-size: 0.65rem !important;
+  padding: 0.2rem 0.5rem;
+  margin-top: 0.4rem;
+  margin-right: 0.5rem;
+  display: inline-block;
+}
+
 @media (max-width: 991px) {
   #ori-h-menu {
     display: flex;
@@ -536,6 +679,7 @@ body:not(.home) #ori-title {
     color: #5755d9;
     margin: 0;
     height: 100%;
+    border-left: 1px solid #dfdfdf;
   }
 
   #ori-h-menu.active {
@@ -615,5 +759,136 @@ body:not(.home) #ori-title {
     position: relative;
     bottom: unset;
     right: unset;
+  }
+}
+
+.my-face {
+  animation: my-face 5s infinite ease-in-out;
+  display: inline-block;
+  margin: 0 5px;
+}
+
+@keyframes my-face {
+  2%,
+  24%,
+  80% {
+    transform: translate(0, 1.5px) rotate(1.5deg);
+  }
+
+  4%,
+  68%,
+  98% {
+    transform: translate(0, -1.5px) rotate(-0.5deg);
+  }
+
+  38%,
+  6% {
+    transform: translate(0, 1.5px) rotate(-1.5deg);
+  }
+
+  8%,
+  86% {
+    transform: translate(0, -1.5px) rotate(-1.5deg);
+  }
+
+  10%,
+  72% {
+    transform: translate(0, 2.5px) rotate(1.5deg);
+  }
+
+  12%,
+  64%,
+  78%,
+  96% {
+    transform: translate(0, -0.5px) rotate(1.5deg);
+  }
+
+  14%,
+  54% {
+    transform: translate(0, -1.5px) rotate(1.5deg);
+  }
+
+  16% {
+    transform: translate(0, -0.5px) rotate(-1.5deg);
+  }
+
+  18%,
+  22% {
+    transform: translate(0, 0.5px) rotate(-1.5deg);
+  }
+
+  20%,
+  36%,
+  46% {
+    transform: translate(0, -1.5px) rotate(2.5deg);
+  }
+
+  26%,
+  50% {
+    transform: translate(0, 0.5px) rotate(0.5deg);
+  }
+
+  28% {
+    transform: translate(0, 0.5px) rotate(1.5deg);
+  }
+
+  30%,
+  40%,
+  62%,
+  76%,
+  88% {
+    transform: translate(0, -0.5px) rotate(2.5deg);
+  }
+
+  32%,
+  34%,
+  66% {
+    transform: translate(0, 1.5px) rotate(-0.5deg);
+  }
+
+  42% {
+    transform: translate(0, 2.5px) rotate(-1.5deg);
+  }
+
+  44%,
+  70% {
+    transform: translate(0, 1.5px) rotate(0.5deg);
+  }
+
+  48%,
+  74%,
+  82% {
+    transform: translate(0, -0.5px) rotate(0.5deg);
+  }
+
+  52%,
+  56%,
+  60% {
+    transform: translate(0, 2.5px) rotate(2.5deg);
+  }
+
+  58% {
+    transform: translate(0, 0.5px) rotate(2.5deg);
+  }
+
+  84% {
+    transform: translate(0, 1.5px) rotate(2.5deg);
+  }
+
+  90% {
+    transform: translate(0, 2.5px) rotate(-0.5deg);
+  }
+
+  92% {
+    transform: translate(0, 0.5px) rotate(-0.5deg);
+  }
+
+  94% {
+    transform: translate(0, 2.5px) rotate(0.5deg);
+  }
+
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0);
   }
 }

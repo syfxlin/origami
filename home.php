@@ -1,11 +1,13 @@
 <?php
 $link_to = [[4, 2], [1, 3], [2, 4], [3, 1]];
 $carousels = [];
-for ($i = 1; $i < 5; $i++) {
-  $url = get_option("origami_carousel_" . $i, "");
-  if ($url != "") {
-    $carousels[] = $url;
-  }
+if (get_option('origami_layout_style', 'layout1') == 'layout1') {
+    for ($i = 1; $i < 5; $i++) {
+    $url = get_option("origami_carousel_" . $i, "");
+    if ($url != "") {
+        $carousels[] = $url;
+    }
+    }
 }
 $len = count($carousels);
 $GLOBALS['not_carousel'] = $len <= 0;
@@ -51,6 +53,14 @@ $btn_url = get_option("origami_carousel_btn_url", "https://ixk.me");
                 </a>
             </div>
             <div class="carousel-mask"></div>
+        </section>
+    <?php else: ?>
+        <section class="not-carousel">
+            <h1><?php echo $title; ?></h1>
+            <h2><?php echo $subtitle; ?></h2>
+            <a href="<?php echo $btn_url; ?>">
+                <?php echo $btn_content; ?>
+            </a>
         </section>
     <?php endif; ?>
     <?php get_template_part('template-part/post-list'); ?>

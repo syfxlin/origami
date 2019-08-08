@@ -373,37 +373,37 @@ function origami_page_index(){
 }
 
 // 注册侧边栏，同时定义样式
-function origami_sidebars_init() {
-    register_sidebar( array(
-        'name'          => esc_html__( 'Default Sidebar'),
-        'description'   => 'Sidebar to be used by default on all pages, unless another is selected.',
-        'id'            => 'default_sidebar',
-        'before_widget' => '<div class="sidebar-widget font-opensans-reg %2$s">',
-        'after_widget'  => '</div>',
-        'before_title'  => '<h3 class="font-montserrat-reg">',
-        'after_title'   => '</h3>',
-    ));
-    $sidebar_count = 1;
-    $sidebars = array();
-    for($i=1;$i<=$sidebar_count;$i++)
-    {
-        $array_data = array(
-            'name' => "Sidebar " . $i, 'id' => "sidebar_" . $i, 'number' => $i,
-        );
-        $sidebars[] = $array_data;
-    }
-    foreach($sidebars as $sidebar) {
-        register_sidebar( array(
-            'name'          => $sidebar['name'],
-            'description'   => 'Custom sidebar number ' . $sidebar['number'],
-            'id'            => $sidebar['id'],
-            'before_widget' => '<div class="sidebar-widget font-opensans-reg %2$s">',
-            'after_widget'  => '</div>',
-            'before_title'  => '<h3 class="font-montserrat-reg">',
-            'after_title'   => '</h3>',
-        ));
-    }
-}
-add_action( 'widgets_init', 'origami_sidebars_init' );
+// function origami_sidebars_init() {
+//     register_sidebar( array(
+//         'name'          => esc_html__( 'Default Sidebar'),
+//         'description'   => 'Sidebar to be used by default on all pages, unless another is selected.',
+//         'id'            => 'default_sidebar',
+//         'before_widget' => '<div class="sidebar-widget font-opensans-reg %2$s">',
+//         'after_widget'  => '</div>',
+//         'before_title'  => '<h3 class="font-montserrat-reg">',
+//         'after_title'   => '</h3>',
+//     ));
+//     $sidebar_count = 1;
+//     $sidebars = array();
+//     for($i=1;$i<=$sidebar_count;$i++)
+//     {
+//         $array_data = array(
+//             'name' => "Sidebar " . $i, 'id' => "sidebar_" . $i, 'number' => $i,
+//         );
+//         $sidebars[] = $array_data;
+//     }
+//     foreach($sidebars as $sidebar) {
+//         register_sidebar( array(
+//             'name'          => $sidebar['name'],
+//             'description'   => 'Custom sidebar number ' . $sidebar['number'],
+//             'id'            => $sidebar['id'],
+//             'before_widget' => '<div class="sidebar-widget font-opensans-reg %2$s">',
+//             'after_widget'  => '</div>',
+//             'before_title'  => '<h3 class="font-montserrat-reg">',
+//             'after_title'   => '</h3>',
+//         ));
+//     }
+// }
+// add_action( 'widgets_init', 'origami_sidebars_init' );
 
 ?>
