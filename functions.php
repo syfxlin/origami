@@ -36,7 +36,7 @@ if (get_option('origami_first_install') != "ok") {
 add_theme_support('title-tag');
 add_theme_support('post-thumbnails');
 add_filter('pre_option_link_manager_enabled', '__return_true');
-register_nav_menus(array('main-menu' => esc_html__('Main Menu')));
+register_nav_menus(['main-menu' => esc_html__('主菜单')]);
 // 加载主题设置
 require get_template_directory() . '/include/customizer.php';
 // Ajax提交评论注入
@@ -1329,4 +1329,112 @@ function origami_sidebar_init()
   ]);
 }
 add_action('widgets_init', 'origami_sidebar_init');
+
+function comment_mark($comment)
+{
+  /* 评论者标签 - start */
+  global $wpdb;
+  $comment_mark = "";
+  $comment_mark_color = "#CBBBBA";
+  //站长邮箱
+  $adminEmail = get_option('admin_email');
+  //从数据库读取有人链接
+  $linkurls = $wpdb->get_results("SELECT link_url FROM wp_links", "ARRAY_N");
+  $other_friend_links = explode(',', get_option('origami_other_friends'));
+  foreach ($other_friend_links as $other_friend_link) {
+    $other_friend_links_arr[][0] = $other_friend_link;
+  }
+  $linkurls = array_merge($linkurls, $other_friend_links_arr);
+  //默认不是朋友，将标记为访客
+  $is_friend = false;
+  //判断是不是站长我
+  if ($comment->comment_author_email == $adminEmail) {
+    $comment_mark =
+      '<a target="_blank" href="/关于我" title="经鉴定，这货是站长">站长</a>';
+    $comment_mark_color = "#0bf";
+    $is_friend = true;
+  }
+  if (!$is_friend && $comment->comment_author_url != '') {
+    $rex = '/(https:\/\/|http:\/\/)[a-z0-9-]*\.([a-z0-9-]+\.[a-z]+).*/i';
+    $rex2 = '/(https:\/\/|http:\/\/)([a-z0-9-]+\.[a-z]+).*/i';
+    if (substr_count($comment->comment_author_url, '.') == 2) {
+      preg_match($rex, $comment->comment_author_url, $author_url_re);
+    } else {
+      preg_match($rex2, $comment->comment_author_url, $author_url_re);
+    }
+    $comment_author_url_reg = $author_url_re[2];
+    foreach ($linkurls as $linkurl) {
+      if (substr_count($linkurl[0], '.') == 2) {
+        preg_match($rex, $linkurl[0], $url_re);
+      } else {
+        preg_match($rex2, $linkurl[0], $url_re);
+      }
+      if (
+        $comment_author_url_reg != "" &&
+        $comment_author_url_reg == $url_re[2]
+      ) {
+        $comment_mark =
+          '<a target="_blank" href="/links" title="友情链接认证">友人</a>';
+        $comment_mark_color = "#5EBED2";
+        $is_friend = true;
+      }
+    }
+  }
+  //若不在列表中就标记为访客
+  if ($is_friend == false) {
+    $comment_mark = "访客";
+  }
+  return '<div class="comment-mark" style="background:' .
+    $comment_mark_color .
+    '">' .
+    $comment_mark .
+    '</div>';
+
+  /* 评论者标签 - end */
+}
+
+// REST API 评论
+function origami_rest_comments(WP_REST_Request $request)
+{
+  $post_id = $request['id'];
+  $page_index = $request['page'] ? $request['page'] : 1;
+  $pre_page = 10;
+  $offset = (intval($page_index) - 1) * $pre_page;
+  $parent = get_comments([
+    "post_id" => $post_id,
+    "number" => 10,
+    "offset" => $offset,
+    "parent" => 0,
+    "status" => "approve"
+  ]);
+  foreach ($parent as $item) {
+    $item->comment_avatar = get_avatar_url($item->comment_author_email);
+    $item->comment_mark = comment_mark($item);
+    unset($item->comment_author_email);
+    unset($item->comment_author_IP);
+  }
+  $stack = $parent;
+  while (count($stack) != 0) {
+    $tmp = array_pop($stack);
+    $children = get_comments([
+      "parent" => $tmp->comment_ID,
+      "status" => "approve"
+    ]);
+    foreach ($children as $item) {
+      $item->comment_avatar = get_avatar_url($item->comment_author_email);
+      $item->comment_mark = comment_mark($item);
+      unset($item->comment_author_email);
+      unset($item->comment_author_IP);
+    }
+    $tmp->sub = $children;
+    $stack = array_merge($stack, $children);
+  }
+  return $parent;
+}
+add_action('rest_api_init', function () {
+  register_rest_route('origami/v1', '/comments', [
+    'methods' => 'GET',
+    'callback' => 'origami_rest_comments'
+  ]);
+});
 // end

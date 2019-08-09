@@ -6,6 +6,7 @@
   <meta charset="<?php bloginfo('charset'); ?>"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#87d1df">
+  <?php wp_head(); ?>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-exp.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-icons.min.css">
@@ -34,6 +35,8 @@
     }
     .main-content a {
       margin-top: 1rem;
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
     }
     .main-content h2:first-child {
       padding-right: 1rem;
@@ -188,7 +191,10 @@
         <section>
           The requested resources is not available.
         </section>
-        <a href="<?php echo esc_url(home_url('/')); ?>" class="btn">Go Back</a>
+        <section>
+          <a href="<?php echo esc_url(home_url('/')); ?>" class="btn">Home</a>
+          <a href="javascript:history.back(-1);" class="btn">Go Back</a>
+        </section>
     </main>
     <footer class="ori-footer">
       <section class="ori-copyright">

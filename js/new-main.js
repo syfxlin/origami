@@ -64,18 +64,12 @@ origami.titleChange = function() {
 
 origami.scrollTop = function() {
   let scrollE = function() {
+    let el = document.getElementById("scroll-top");
+    el.style.transition = "opacity 0.5s";
     if (window.scrollY > 50) {
-      anime({
-        targets: "#scroll-top",
-        opacity: 1,
-        duration: 1000
-      });
+      el.style.opacity = "1";
     } else {
-      anime({
-        targets: "#scroll-top",
-        opacity: 0,
-        duration: 1000
-      });
+      el.style.opacity = "0";
     }
   };
   scrollE();
@@ -123,26 +117,21 @@ origami.mobileBtn = function() {
 
 origami.searchBtn = function() {
   document.getElementById("ori-h-search").addEventListener("click", function() {
-    document.getElementsByClassName("ori-search")[0].style.display = "block";
+    let el = document.getElementsByClassName("ori-search")[0];
+    el.style.display = "block";
     document.getElementById("ori-search-input").focus();
-    anime({
-      targets: ".ori-search",
-      opacity: 1,
-      duration: 3000
-    });
+    el.style.transition = "opacity 0.5s";
+    el.style.opacity = "1";
   });
   document
     .getElementById("ori-h-search-close")
     .addEventListener("click", function() {
-      anime({
-        targets: ".ori-search",
-        opacity: 0,
-        duration: 3000,
-        complete: function() {
-          document.getElementsByClassName("ori-search")[0].style.display =
-            "none";
-        }
-      });
+      let el = document.getElementsByClassName("ori-search")[0];
+      setTimeout(function() {
+        el.style.display = "none";
+      }, 500);
+      el.style.transition = "opacity 0.5s";
+      el.style.opacity = "0";
     });
 };
 
@@ -153,49 +142,26 @@ origami.realTimeSearch = function() {
   let timer = null;
   let changeSearchList = function(list) {
     listEle.innerHTML = "";
-    let c = function(tag) {
-      return document.createElement(tag);
-    };
     list.forEach(function(item) {
-      let post = c("article");
-      post.className = "card";
-      post.id = "post-" + item.id;
-      let header = c("div");
-      header.className = "card-header post-info";
-      let title = c("h2");
-      title.className = "card-title";
-      let titleA = c("a");
-      titleA.href = item.link;
-      titleA.innerHTML = item.title.rendered;
-      let subtitle = c("div");
-      subtitle.className = "card-subtitle text-gray";
-      let time = c("time");
+      let str = "";
+      str += '<article class="card" id="post-' + item.id + '">';
+      str += '<div class="card-header post-info">';
+      str += '<h2 class="card-title">';
+      str += '<a href="' + item.link + '">' + item.title.rendered + "</a>";
+      str += "</h2>";
       let d = new Date(item.date);
-      time.textContent = d.getFullYear() + "年" + d.getMonth() + "月" + d.getDate() + "日";
-      let body = c("div");
-      body.className = "card-body";
-      body.innerHTML = item.excerpt.rendered;
-      let footer = c("div");
-      footer.className = "card-footer";
-      let tags = c("div");
-      tags.className = "post-tags";
-      let readMore = c("a");
-      readMore.className = "read-more";
-      readMore.href = item.link;
-      readMore.textContent = "阅读更多";
-      
-      subtitle.append(time);
-      title.append(titleA);
-      header.append(title);
-      header.append(subtitle);
-      footer.append(tags);
-      footer.append(readMore);
-      post.append(header);
-      post.append(body);
-      post.append(footer);
-      listEle.append(post);
+      let dStr =
+        d.getFullYear() + "年" + d.getMonth() + "月" + d.getDate() + "日";
+      str +=
+        '<div class="card-subtitle text-gray"><time>' + dStr + "</time></div>";
+      str += "</div>";
+      str += '<div class="card-body">' + item.excerpt.rendered + "</div>";
+      str += '<div class="card-footer"><div class="post-tags"></div>';
+      str += '<a class="read-more" href="' + item.link + '">阅读更多</a>';
+      str += "</div>";
+      listEle.innerHTML += str;
     });
-  }
+  };
 
   ele.addEventListener("input", function() {
     clearTimeout(timer);
@@ -223,7 +189,125 @@ origami.realTimeSearch = function() {
   });
 };
 
+origami.loadComments = function() {
+  let isOne = true;
+  let postId = document
+    .getElementById("comments-container")
+    .getAttribute("data-postid");
+  let maxPage = 2;
+  let pageOut = 1;
+  let listEle = document.getElementById("comments-container");
+  let changeComments = function(list, lv = 1) {
+    let str = "";
+    list.forEach(function(item) {
+      str +=
+        '<div id="comment-' +
+        item.comment_ID +
+        '" class="comment-lv' +
+        lv +
+        ' comment">';
+      str +=
+        '<img class="comment-avatar" src="' +
+        item.comment_avatar +
+        '" height="64" width="64">';
+      str += '<div class="comment-content"><div class="comment-header">';
+      if (item.comment_author_url == "") {
+        str += '<div class="comment-author">' + item.comment_author + "</div>";
+      } else {
+        str +=
+          '<div class="comment-author"><a href="' +
+          item.comment_author_url +
+          '">' +
+          item.comment_author +
+          "</a></div>";
+      }
+      str += item.comment_mark + "</div>";
+      str += '<div class="comment-body">' + item.comment_content + "</div>";
+      str += '<div class="comment-footer">';
+      str +=
+        '<div class="comment-date"><i class="fa fa-clock-o" aria-hidden="true"></i>';
+      str += "发表于: <time>" + item.comment_date + "</time></div>";
+      str += '<div class="comment-btn"><span title="回复">';
+      str += '<i class="fa fa-reply" aria-hidden="true"></i>';
+      str +=
+        '<a rel="nofollow" class="comment-reply-link" data-commentid="' +
+        item.comment_ID +
+        '" data-postid="' +
+        item.comment_post_ID +
+        '" data-belowelement="#comment-' +
+        item.comment_ID +
+        '" data-respondelement="#respond">回复</a>';
+      str += "</span></div></div></div></div>";
+      if (item.sub != []) {
+        str +=
+          '<ul class="comment-children">' +
+          changeComments(item.sub, lv + 1) +
+          "</ul>";
+      }
+    });
+    return str;
+  };
+  let load = function(page = pageOut) {
+    let loading = document.getElementById("comment-loading");
+    loading.style.height = "4rem";
+    if (!isOne) {
+      window.scrollTo({
+        top: loading.offsetTop - 200,
+        behavior: "smooth"
+      });
+    }
+    listEle.style.height = "0px";
+    if (page <= 0) {
+      page = 1;
+    }
+    if (page > maxPage) {
+      page = maxPage;
+    }
+    let loadF = function() {
+      $http({
+        url: "/wp-json/origami/v1/comments",
+        type: "GET",
+        dataType: "json",
+        data: {
+          id: postId,
+          page: page
+        },
+        success: function(response) {
+          loading.style.height = "0";
+          listEle.innerHTML = changeComments(response);
+          listEle.style.height = listEle.scrollHeight + "px";
+          pageOut = page;
+        },
+        error: function(status) {
+          console.log("状态码为" + status);
+        }
+      });
+    };
+    if (isOne) {
+      loadF();
+      isOne = false;
+    } else {
+      setTimeout(loadF, 600);
+    }
+  };
+  let loadPrev = function() {
+    pageOut--;
+    load(pageOut);
+  };
+  let loadNext = function() {
+    pageOut++;
+    load(pageOut);
+  };
+  return {
+    load: load,
+    loadPrev: loadPrev,
+    loadNext: loadNext
+  };
+};
+
 window.addEventListener("load", function() {
+  origami.comment = origami.loadComments();
+  origami.comment.load();
   origami.titleChange();
   origami.scrollTop();
   origami.scrollChange();

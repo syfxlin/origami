@@ -347,30 +347,30 @@ function origami_customize_register( $wp_customize ) {
 add_action( 'customize_register', 'origami_customize_register' );
 
 // 页面导航
-function origami_page_index(){
-    global $wp_query;
-    $big = 999999999;
-    $pagination_args = array(
-        'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
-        'format' => '?paged=%#%',
-        'total' => $wp_query->max_num_pages,
-        'current' => max( 1, get_query_var('paged') ),
-        'show_all' => False,
-        'end_size' => 1,
-        'prev_next' => True,
-        'prev_text' => '<span id="post-nav-prev" class="post-nav-item font-montserrat-reg"><i class="fa fa-angle-left"></i>Newer</span>',
-        'next_text' => '<span id="post-nav-next" class="post-nav-item font-montserrat-reg">Older<i class="fa fa-angle-right"></i></span>',
-        'type' => 'plain',
-        'add_args' => false,
-        'add_fragment' => '',
-    );
-    $paginate_links = paginate_links($pagination_args);
-    if ($paginate_links) {
-        echo '<section class="post-navigation">';
-            echo '<div id="post-nav-main" class="clearfix">' . $paginate_links . '</div>';
-        echo '</section>';
-    }
-}
+// function origami_page_index(){
+//     global $wp_query;
+//     $big = 999999999;
+//     $pagination_args = array(
+//         'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+//         'format' => '?paged=%#%',
+//         'total' => $wp_query->max_num_pages,
+//         'current' => max( 1, get_query_var('paged') ),
+//         'show_all' => False,
+//         'end_size' => 1,
+//         'prev_next' => True,
+//         'prev_text' => '<span id="post-nav-prev" class="post-nav-item font-montserrat-reg"><i class="fa fa-angle-left"></i>Newer</span>',
+//         'next_text' => '<span id="post-nav-next" class="post-nav-item font-montserrat-reg">Older<i class="fa fa-angle-right"></i></span>',
+//         'type' => 'plain',
+//         'add_args' => false,
+//         'add_fragment' => '',
+//     );
+//     $paginate_links = paginate_links($pagination_args);
+//     if ($paginate_links) {
+//         echo '<section class="post-navigation">';
+//             echo '<div id="post-nav-main" class="clearfix">' . $paginate_links . '</div>';
+//         echo '</section>';
+//     }
+// }
 
 // 注册侧边栏，同时定义样式
 // function origami_sidebars_init() {
