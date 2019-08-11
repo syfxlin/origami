@@ -189,14 +189,16 @@ origami.realTimeSearch = function() {
   });
 };
 
-origami.loadComments = function() {
+origami.initComments = function() {
+  let listEle = document.getElementById("comments-list");
+  let nav = document.getElementsByClassName("comments-nav")[0];
+  let select = document.getElementById("comments-select");
+  let nextBtn = document.getElementById("comments-next");
+  let prevBtn = document.getElementById("comments-prev");
   let isOne = true;
-  let postId = document
-    .getElementById("comments-container")
-    .getAttribute("data-postid");
-  let maxPage = 2;
+  let postId = listEle.getAttribute("data-postid");
+  let pageCount = listEle.getAttribute("data-pagecount");
   let pageOut = 1;
-  let listEle = document.getElementById("comments-container");
   let changeComments = function(list, lv = 1) {
     let str = "";
     list.forEach(function(item) {
@@ -205,11 +207,8 @@ origami.loadComments = function() {
         item.comment_ID +
         '" class="comment-lv' +
         lv +
-        ' comment">';
-      str +=
-        '<img class="comment-avatar" src="' +
-        item.comment_avatar +
-        '" height="64" width="64">';
+        ' comment-item">';
+      str += item.comment_avatar;
       str += '<div class="comment-content"><div class="comment-header">';
       if (item.comment_author_url == "") {
         str += '<div class="comment-author">' + item.comment_author + "</div>";
@@ -236,7 +235,7 @@ origami.loadComments = function() {
         item.comment_post_ID +
         '" data-belowelement="#comment-' +
         item.comment_ID +
-        '" data-respondelement="#respond">回复</a>';
+        '" data-respondelement="#comments-respond">回复</a>';
       str += "</span></div></div></div></div>";
       if (item.sub != []) {
         str +=
@@ -247,21 +246,37 @@ origami.loadComments = function() {
     });
     return str;
   };
-  let load = function(page = pageOut) {
-    let loading = document.getElementById("comment-loading");
-    loading.style.height = "4rem";
+  let changeNav = function() {
+    if (pageOut == 1) {
+      prevBtn.style.display = "none";
+    } else {
+      prevBtn.style.display = "block";
+    }
+    if (pageOut == pageCount) {
+      nextBtn.style.display = "none";
+    } else {
+      nextBtn.style.display = "block";
+    }
+    select.value = pageOut;
+  };
+  let load = function(page = -1, callback = () => {}) {
+    if (page == -1) {
+      page = pageOut;
+    }
+    let loading = document.getElementById("comments-loading");
     if (!isOne) {
       window.scrollTo({
         top: loading.offsetTop - 200,
         behavior: "smooth"
       });
     }
+    loading.style.height = "4rem";
     listEle.style.height = "0px";
     if (page <= 0) {
       page = 1;
     }
-    if (page > maxPage) {
-      page = maxPage;
+    if (page > pageCount) {
+      page = pageCount;
     }
     let loadF = function() {
       $http({
@@ -277,6 +292,8 @@ origami.loadComments = function() {
           listEle.innerHTML = changeComments(response);
           listEle.style.height = listEle.scrollHeight + "px";
           pageOut = page;
+          changeNav();
+          callback(pageOut, response);
         },
         error: function(status) {
           console.log("状态码为" + status);
@@ -298,16 +315,84 @@ origami.loadComments = function() {
     pageOut++;
     load(pageOut);
   };
+  let submit = function(info, callback = () => {}) {
+    $http({
+      url: "/wp-json/wp/v2/comments",
+      type: "POST",
+      dataType: "json",
+      data: {
+        author_email: info.author_email,
+        author_name: info.author_name,
+        author_url: info.author_url,
+        content: info.content,
+        parent: info.parent,
+        post: info.post
+      },
+      success: function(res) {
+        callback(res);
+      },
+      error: function(error) {
+        console.log("状态码为" + status);
+      }
+    });
+  };
+  // 初始化
+  let initNav = function() {
+    if (pageCount <= 1) {
+      return;
+    } else {
+      nav.style.display = "flex";
+    }
+    let str = "";
+    for (let i = 1; i <= pageCount; i++) {
+      str += '<option value="' + i + '">第' + i + "页</option>";
+    }
+    select.innerHTML = str;
+    select.addEventListener("change", function() {
+      load(select.value);
+    });
+    nextBtn.addEventListener("click", loadNext);
+    prevBtn.addEventListener("click", loadPrev);
+  };
+  let initSubmit = function() {
+    new SMValidator('form');
+    let submitEle = document.getElementById("response-submit");
+    submitEle.addEventListener("click", function(e) {
+      let authorNameEle = document.getElementById("response-author");
+      let authorEmailEle = document.getElementById("response-email");
+      let contentEle = document.getElementById("response-text");
+      if (contentEle.style.color || authorEmailEle.style.color || authorNameEle.style.color) {
+        console.log("输入有误");
+        return;
+      }
+      let info = {
+        post: submitEle.getAttribute("data-postid"),
+        parent: submitEle.getAttribute("data-commentid"),
+        content: contentEle.value,
+        author_email: authorEmailEle.value,
+        author_name: authorNameEle.value,
+        author_url: document.getElementById("response-website").value
+      };
+      submit(info);
+      e.preventDefault();
+    });
+  };
+  let init = function() {
+    initNav();
+    load();
+    initSubmit();
+  };
+  init();
   return {
     load: load,
     loadPrev: loadPrev,
-    loadNext: loadNext
+    loadNext: loadNext,
+    submit: submit
   };
 };
 
 window.addEventListener("load", function() {
-  origami.comment = origami.loadComments();
-  origami.comment.load();
+  origami.comments = origami.initComments();
   origami.titleChange();
   origami.scrollTop();
   origami.scrollChange();

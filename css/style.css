@@ -15,6 +15,14 @@ a:visited {
   flex-direction: row-reverse;
 }
 
+.flex-1 {
+  flex: 1;
+}
+
+.input-error {
+  border-color: #e85600;
+}
+
 .ori-container {
   margin: 0 auto;
   padding: 0 15px;
@@ -766,12 +774,17 @@ body:not(.home) #ori-title {
   margin-top: 1.5rem;
 }
 
+.p-post-nav,
+.s-post-nav {
+  margin-top: 1.5rem;
+}
+
 .p-post-comments,
 .s-post-comments {
   margin-top: 1.5rem;
 }
 
-.comment {
+.comment-item {
   display: flex;
   font-size: 0.7rem;
   border-bottom: 0.5px solid #dfdfdf;
@@ -782,6 +795,7 @@ body:not(.home) #ori-title {
   height: 3.2rem;
   width: 3.2rem;
   box-shadow: 0 0 0.3rem 0.05rem rgba(0, 0, 0, 0.2);
+  border-radius: 0;
 }
 
 .comment-lv1 .comment-avatar {
@@ -858,13 +872,13 @@ body:not(.home) #ori-title {
   color: #fff;
 }
 
-.comments-container {
+#comments-list {
   height: 0;
   overflow: hidden;
   transition: height 0.5s;
 }
 
-#comment-loading {
+#comments-loading {
   height: 4rem;
   min-height: 0;
   overflow: hidden;
@@ -872,9 +886,93 @@ body:not(.home) #ori-title {
   text-align: center;
 }
 
-#comment-loading span {
+#comments-loading span {
   display: inline-block;
   margin-top: 0.4rem;
+}
+
+.comments-nav {
+  display: none;
+  align-items: center;
+}
+
+.comments-nav label {
+  font-weight: bold;
+}
+
+.comments-nav select {
+  width: 30%;
+}
+
+.comments-nav .pagination {
+  margin: 0;
+  padding: 0;
+}
+
+#comments-next,
+#comments-prev {
+  cursor: pointer;
+}
+
+.comments-count {
+  font-size: 0.9rem;
+  text-align: right;
+  border-bottom: 0.5px solid #dfdfdf;
+  padding-bottom: 0.3rem;
+  margin-bottom: 0.7rem;
+}
+
+.response-header,
+.response-body,
+.response-footer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.response-title {
+  flex: 1;
+  font-size: 1.2rem;
+}
+
+.response-user {
+  margin-right: 4rem;
+}
+
+#close-response {
+  visibility: hidden;
+}
+
+.response-avatar {
+  height: 3.8rem;
+  width: 3.8rem;
+  box-shadow: 0 0 0.3rem 0.05rem rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+}
+
+#response-text {
+  height: 3.8rem;
+  flex: 1;
+  margin-left: 0.5rem;
+}
+
+.response-footer {
+  margin-left: 4.3rem;
+  justify-content: flex-end;
+}
+
+.response-input-item {
+  flex: 1;
+  margin-right: 0.5rem;
+  max-width: 50%;
+}
+
+.response-input-item:last-child {
+  margin-right: 0;
+}
+
+.response-input-item input {
+  margin-bottom: 0.5rem;
 }
 
 /* 文末版权 */

@@ -1,6 +1,83 @@
-<div id="comment-loading">
-    <div class="loading loading-lg"></div>
-    <span>Loading...</span>
-</div>
-<section class="comments-container" id="comments-container" data-postid="<?php echo $post->ID; ?>">
+<?php
+$logged = is_user_logged_in();
+if ($logged) {
+    $current_user = wp_get_current_user();
+    $comment_author_email = $current_user->user_email;
+    $comment_author = $current_user->display_name;
+    $comment_author_url = $current_user->user_url;
+}
+
+$current_user_url = get_site_url() . '/author/' . $current_user->user_login;
+
+$comment_count = get_comments_number();
+?>
+
+<section id="comments-response" class="comments-response">
+    <form onsubmit="return false">
+        <div class="response-header">
+            <div class="response-title"><?php echo __(
+            '说点什么',
+            'origami'
+            ); ?></div>
+            <div class="response-user"><?php echo __(
+            '您是',
+            'origami'
+            ); ?> <a href="<?php echo $current_user_url; ?>"><?php echo $current_user->user_nicename; ?></a> | <?php echo wp_loginout(); ?></div>
+            <button id="close-response" class="btn"><?php echo __('放弃治疗', 'origami');?></button>
+        </div>
+        <div class="response-body">
+            <?php echo get_avatar(
+                $comment_author_email,
+                64,
+                get_option("avatar_default"),
+                "",
+                [
+                    "class" => "response-avatar"
+                ]
+            ); ?>
+            <textarea class="form-input" id="response-text" data-rule="required(请输入内容)|/.{5,}/输入的评论太短|disinput|focus" placeholder="<?php echo __('加入讨论', 'origami'); ?>"></textarea>
+        </div>
+        <div class="response-footer">
+            <div class="response-input-item">
+                <input data-rule="required(请输入昵称)|/.{1,50}/昵称太长或太短|disinput|focus" name="author" <?php if ($logged) {echo 'style="display:none"';} ?> id="response-author" class="form-input" type="text" value="<?php echo $comment_author; ?>" placeholder="<?php echo __('昵称', 'origami'); ?> *">
+                <input name="url" <?php if ($logged) {echo 'style="display:none"';} ?> id="response-website" class="form-input" type="text" value="<?php echo $comment_author_url; ?>" placeholder="<?php echo __('网站', 'origami'); ?>">
+            </div>
+            <div class="response-input-item">
+                <input data-rule="required(请输入邮箱)|/^([A-Za-z0-9_\-\.\u4e00-\u9fa5])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,8})$/您输入的邮箱有误|disinput|focus" name="email" <?php if ($logged) {echo 'style="display:none"';} ?> id="response-email" class="form-input" type="text" value="<?php echo $comment_author_email; ?>" placeholder="<?php echo __('邮箱', 'origami'); ?> *">
+                <input id="response-submit" class="form-input" type="submit" value="<?php echo __('发表评论', 'origami'); ?>" data-postid="<?php echo $post->ID; ?>" data-commentid="0">
+            </div>
+        </div>
+    </form>
+</section>
+<section class="comments-container">
+    <div class="comments-count"><?php if ($comment_count == 0) {
+      echo __('好耶,沙发还空着ヾ(≧▽≦*)o', 'origami');
+    } else {
+      echo __('在', 'origami') .
+        '"' .
+        get_the_title() .
+        '"' .
+        __('已有', 'origami') .
+        $comment_count .
+        __('条评论', 'origami');
+    } ?></div>
+    <div id="comments-loading">
+        <div class="loading loading-lg"></div>
+        <span>Loading...</span>
+    </div>
+    <div id="comments-list" data-postid="<?php echo $post->ID; ?>" data-pagecount="<?php echo get_comment_pages_count(); ?>"></div>
+    <div class="comments-nav">
+        <label class="form-label">当前评论页：</label>
+        <select class="form-select" id="comments-select">
+        </select>
+        <div class="flex-1"></div>
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="prev" id="comments-prev"><i class="icon icon-back"></i> 上一页</a>
+            </li>
+            <li class="page-item">
+                <a class="next" id="comments-next">下一页 <i class="icon icon-forward"></i></a>
+            </li>
+        </ul>
+    </div>
 </section>

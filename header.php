@@ -20,7 +20,7 @@ $ori_header_logo = get_option(
   <!-- New Style.css -->
   <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/style.css">
   <script src="<?php echo get_template_directory_uri(); ?>/js/new-main.js"></script>
-  <script src="<?php echo get_template_directory_uri(); ?>/js/anime.min.js"></script>
+  <script src="<?php echo get_template_directory_uri(); ?>/js/SMValidator.min.js"></script>
 </head>
 <body <?php body_class($GLOBALS['not_carousel'] ? 'not-car' : ''); ?>>
   <header class="p-fixed ori-header">

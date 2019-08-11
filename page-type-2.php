@@ -21,7 +21,7 @@ $post_item = [
     '_wp_attachment_image_alt',
     true
   ),
-  'post_author' => get_the_author_meta('nickname', $post_author_id),
+  'post_author' => get_the_author_meta('display_name', $post_author_id),
   'post_category' => wp_get_post_categories($post->ID),
   'post_tag' => wp_get_post_tags($post->ID),
   'post_excerpt' => get_the_excerpt($post->ID)

@@ -890,7 +890,7 @@ function origami_comment_respond_email($comment_id, $comment)
     wp_mail($comment_parent_author_email, $subject, $message, $headers);
   }
 }
-add_action('wp_insert_comment', 'origami_comment_respond_email', 99, 2);
+// add_action('wp_insert_comment', 'origami_comment_respond_email', 99, 2);
 
 /**
  * 说说
@@ -1398,17 +1398,25 @@ function origami_rest_comments(WP_REST_Request $request)
 {
   $post_id = $request['id'];
   $page_index = $request['page'] ? $request['page'] : 1;
-  $pre_page = 10;
+  $pre_page = get_option('comments_per_page');
   $offset = (intval($page_index) - 1) * $pre_page;
   $parent = get_comments([
     "post_id" => $post_id,
-    "number" => 10,
+    "number" => $pre_page,
     "offset" => $offset,
     "parent" => 0,
     "status" => "approve"
   ]);
   foreach ($parent as $item) {
-    $item->comment_avatar = get_avatar_url($item->comment_author_email);
+    $item->comment_avatar = get_avatar(
+      $item->comment_author_email,
+      64,
+      get_option("avatar_default"),
+      "",
+      [
+        "class" => "comment-avatar"
+      ]
+    );
     $item->comment_mark = comment_mark($item);
     unset($item->comment_author_email);
     unset($item->comment_author_IP);
@@ -1421,7 +1429,15 @@ function origami_rest_comments(WP_REST_Request $request)
       "status" => "approve"
     ]);
     foreach ($children as $item) {
-      $item->comment_avatar = get_avatar_url($item->comment_author_email);
+      $item->comment_avatar = get_avatar(
+        $item->comment_author_email,
+        64,
+        get_option("avatar_default"),
+        "",
+        [
+          "class" => "comment-avatar"
+        ]
+      );
       $item->comment_mark = comment_mark($item);
       unset($item->comment_author_email);
       unset($item->comment_author_IP);
@@ -1437,4 +1453,14 @@ add_action('rest_api_init', function () {
     'callback' => 'origami_rest_comments'
   ]);
 });
+
+// 修改REST API评论权限
+function filter_rest_allow_anonymous_comments()
+{
+  return get_option('comment_registration', '') == '';
+}
+add_filter(
+  'rest_allow_anonymous_comments',
+  'filter_rest_allow_anonymous_comments'
+);
 // end
