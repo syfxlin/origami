@@ -46,6 +46,10 @@ class OrigamiConfig
   {
     require_once "config_style.php";
   }
+  public function ori_menu_fun2()
+  {
+    require_once "config_fun.php";
+  }
   public function admin_init()
   {
     wp_enqueue_media();
@@ -60,7 +64,7 @@ class OrigamiConfig
     add_settings_section(
       'origami_style_layout',
       __('1.布局', 'origami'),
-      [&$this, 'origami_style_section'],
+      [&$this, 'origami_section'],
       'origami_style'
     );
     add_settings_field(
@@ -86,7 +90,8 @@ class OrigamiConfig
         'field' => 'origami_layout_sidebar',
         'value' => 'right',
         'type' => 'text',
-        'description' => 'right：侧边栏右置，left：侧边栏左置，none：不显示侧边栏'
+        'description' =>
+          'right：侧边栏右置，left：侧边栏左置，none：不显示侧边栏'
       ]
     );
 
@@ -95,7 +100,7 @@ class OrigamiConfig
     add_settings_section(
       'origami_style_header',
       __('2.导航栏设置', 'origami'),
-      [&$this, 'origami_style_section'],
+      [&$this, 'origami_section'],
       'origami_style'
     );
     add_settings_field(
@@ -116,7 +121,7 @@ class OrigamiConfig
     add_settings_section(
       'origami_style_footer',
       __('3.页脚设置', 'origami'),
-      [&$this, 'origami_style_section'],
+      [&$this, 'origami_section'],
       'origami_style'
     );
     add_settings_field(
@@ -142,7 +147,7 @@ class OrigamiConfig
     add_settings_section(
       'origami_style_about_card',
       __('4.侧栏关于卡片设置', 'origami'),
-      [&$this, 'origami_style_section'],
+      [&$this, 'origami_section'],
       'origami_style'
     );
     add_settings_field(
@@ -209,7 +214,7 @@ class OrigamiConfig
     add_settings_section(
       'origami_style_home',
       __('5.首页设置', 'origami'),
-      [&$this, 'origami_style_section'],
+      [&$this, 'origami_section'],
       'origami_style'
     );
     add_settings_field(
@@ -308,6 +313,80 @@ class OrigamiConfig
         'type' => 'text'
       ]
     );
+
+    // 功能
+    register_setting("origami_fun", "origami_other_friends");
+    add_settings_section(
+      'origami_fun_friend',
+      __('1.友链设置', 'origami'),
+      [&$this, 'origami_section'],
+      'origami_fun'
+    );
+    add_settings_field(
+      'origami_other_friends',
+      __('其他友链列表', 'origami'),
+      [&$this, 'settings_field_textarea'],
+      'origami_fun',
+      'origami_fun_friend',
+      [
+        'field' => 'origami_other_friends',
+        'value' => '',
+        'type' => 'textarea',
+        'description' =>
+          '当友人如果有其他的链接时可以填充在这里，在评论时标记为友人，使用逗号分割'
+      ]
+    );
+
+    // 评论
+    register_setting("origami_fun", "origami_comment_key");
+    register_setting("origami_fun", "origami_enable_comment_update");
+    register_setting("origami_fun", "origami_enable_comment_delete");
+    add_settings_section(
+      'origami_fun_comment',
+      __('2.评论设置', 'origami'),
+      [&$this, 'origami_section'],
+      'origami_fun'
+    );
+    add_settings_field(
+      'origami_comment_key',
+      __('权限控制(key)', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_comment',
+      [
+        'field' => 'origami_comment_key',
+        'value' => 'qwertyuiopasdfghjklzxcvbnm12345',
+        'type' => 'text',
+        'description' =>
+          '用于权限验证的key，在下方两个功能中都有使用，请填入随机字符串，尽量不要少于30位'
+      ]
+    );
+    add_settings_field(
+      'origami_enable_comment_update',
+      __('开启评论可编辑', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_comment',
+      [
+        'field' => 'origami_enable_comment_update',
+        'value' => 'true',
+        'type' => 'text',
+        'description' => '开启评论可编辑（5分钟之内评论者可以编辑评论内容）'
+      ]
+    );
+    add_settings_field(
+      'origami_enable_comment_delete',
+      __('开启评论可删除', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_comment',
+      [
+        'field' => 'origami_enable_comment_delete',
+        'value' => 'true',
+        'type' => 'text',
+        'description' => '开启评论可删除（5分钟之内评论者可以删除评论内容）'
+      ]
+    );
   }
   // field模式
   public function settings_field_input_media($args)
@@ -372,8 +451,8 @@ class OrigamiConfig
       echo '<p>' . htmlspecialchars($description) . '</p>';
     }
   }
-  public function origami_style_section()
+  public function origami_section()
   {
-    echo '首页设置';
+    echo '';
   }
 }

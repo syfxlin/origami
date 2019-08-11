@@ -851,7 +851,7 @@ body:not(.home) #ori-title {
   margin-right: 1rem;
 }
 
-.comment:hover .comment-btn {
+.comment-item:hover .comment-btn {
   visibility: visible;
   opacity: 1;
 }
@@ -975,6 +975,19 @@ body:not(.home) #ori-title {
   margin-bottom: 0.5rem;
 }
 
+.response-loading {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.not-approved {
+  text-align: right;
+  flex: 1;
+  font-size: 0.8rem;
+  margin-right: 2rem;
+  color: #ffb700;
+}
+
 /* 文末版权 */
 #content-copyright {
   color: #4d99d2;
@@ -1016,6 +1029,21 @@ body:not(.home) #ori-title {
   border: 1px solid #ffdbdb;
   background: #fde2e2;
   color: #ac888a;
+}
+
+.ori-tools > * {
+  /* display: none; */
+  visibility: hidden;
+}
+
+.ori-tools .toast {
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+  z-index: 10000;
+  max-width: 30%;
+  opacity: 0;
+  transition: opacity 0.5s;
 }
 
 @media (max-width: 991px) {

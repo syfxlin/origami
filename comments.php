@@ -10,19 +10,26 @@ if ($logged) {
 $current_user_url = get_site_url() . '/author/' . $current_user->user_login;
 
 $comment_count = get_comments_number();
+
+if (comments_open()):
 ?>
 
 <section id="comments-response" class="comments-response">
-    <form onsubmit="return false">
+    <form onsubmit="return false" id="comments-form">
         <div class="response-header">
             <div class="response-title"><?php echo __(
             '说点什么',
             'origami'
             ); ?></div>
-            <div class="response-user"><?php echo __(
-            '您是',
-            'origami'
-            ); ?> <a href="<?php echo $current_user_url; ?>"><?php echo $current_user->user_nicename; ?></a> | <?php echo wp_loginout(); ?></div>
+            <div class="response-user">
+                <?php if ($logged): ?>
+                    <?php echo __('您是', 'origami'); ?>
+                    <a href="<?php echo $current_user_url; ?>">
+                        <?php echo $current_user->user_nicename; ?>
+                    </a> | 
+                <?php endif; ?>
+                <?php echo wp_loginout(); ?>
+            </div>
             <button id="close-response" class="btn"><?php echo __('放弃治疗', 'origami');?></button>
         </div>
         <div class="response-body">
@@ -35,16 +42,25 @@ $comment_count = get_comments_number();
                     "class" => "response-avatar"
                 ]
             ); ?>
-            <textarea class="form-input" id="response-text" data-rule="required(请输入内容)|/.{5,}/输入的评论太短|disinput|focus" placeholder="<?php echo __('加入讨论', 'origami'); ?>"></textarea>
+            <textarea class="form-input" id="response-text" data-rule="required(请输入内容)|/.{2,}/输入的评论太短|disinput|focus" placeholder="<?php echo __('加入讨论', 'origami'); ?>"></textarea>
         </div>
         <div class="response-footer">
             <div class="response-input-item">
-                <input data-rule="required(请输入昵称)|/.{1,50}/昵称太长或太短|disinput|focus" name="author" <?php if ($logged) {echo 'style="display:none"';} ?> id="response-author" class="form-input" type="text" value="<?php echo $comment_author; ?>" placeholder="<?php echo __('昵称', 'origami'); ?> *">
-                <input name="url" <?php if ($logged) {echo 'style="display:none"';} ?> id="response-website" class="form-input" type="text" value="<?php echo $comment_author_url; ?>" placeholder="<?php echo __('网站', 'origami'); ?>">
+                <div class="form-group has-icon-right">
+                    <input data-rule="required(请输入昵称)|/.{1,50}/昵称太长或太短|disinput|focus" name="author" <?php if ($logged) {echo 'style="display:none"';} ?> id="response-author" class="form-input" type="text" value="<?php echo $comment_author; ?>" placeholder="<?php echo __('昵称', 'origami'); ?> *">
+                </div>
+                <div class="form-group has-icon-right">
+                    <input name="url" <?php if ($logged) {echo 'style="display:none"';} ?> id="response-website" class="form-input" type="text" value="<?php echo $comment_author_url; ?>" placeholder="<?php echo __('网站', 'origami'); ?>">
+                </div>
             </div>
             <div class="response-input-item">
-                <input data-rule="required(请输入邮箱)|/^([A-Za-z0-9_\-\.\u4e00-\u9fa5])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,8})$/您输入的邮箱有误|disinput|focus" name="email" <?php if ($logged) {echo 'style="display:none"';} ?> id="response-email" class="form-input" type="text" value="<?php echo $comment_author_email; ?>" placeholder="<?php echo __('邮箱', 'origami'); ?> *">
-                <input id="response-submit" class="form-input" type="submit" value="<?php echo __('发表评论', 'origami'); ?>" data-postid="<?php echo $post->ID; ?>" data-commentid="0">
+                <div class="form-group has-icon-right">
+                    <input data-rule="required(请输入邮箱)|/^([A-Za-z0-9_\-\.\u4e00-\u9fa5])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,8})$/您输入的邮箱有误|disinput|focus" name="email" <?php if ($logged) {echo 'style="display:none"';} ?> id="response-email" class="form-input" type="text" value="<?php echo $comment_author_email; ?>" placeholder="<?php echo __('邮箱', 'origami'); ?> *">
+                </div>
+                <div class="form-group has-icon-right">
+                    <input id="response-submit" class="form-input" type="submit" value="<?php echo __('发表评论', 'origami'); ?>" data-postid="<?php echo $post->ID; ?>" data-commentid="0">
+                    <i class="loading form-icon response-loading"></i>
+                </div>
             </div>
         </div>
     </form>
@@ -81,3 +97,4 @@ $comment_count = get_comments_number();
         </ul>
     </div>
 </section>
+<?php endif; ?>

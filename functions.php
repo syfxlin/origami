@@ -1393,8 +1393,8 @@ function comment_mark($comment)
   /* 评论者标签 - end */
 }
 
-// REST API 评论
-function origami_rest_comments(WP_REST_Request $request)
+// REST API 评论读取
+function origami_rest_get_comments(WP_REST_Request $request)
 {
   $post_id = $request['id'];
   $page_index = $request['page'] ? $request['page'] : 1;
@@ -1450,17 +1450,199 @@ function origami_rest_comments(WP_REST_Request $request)
 add_action('rest_api_init', function () {
   register_rest_route('origami/v1', '/comments', [
     'methods' => 'GET',
-    'callback' => 'origami_rest_comments'
+    'callback' => 'origami_rest_get_comments'
   ]);
 });
 
-// 修改REST API评论权限
-function filter_rest_allow_anonymous_comments()
+// REST API 评论提交
+function origami_rest_post_comments(WP_REST_Request $request)
 {
-  return get_option('comment_registration', '') == '';
+  $comment_data = [
+    "email" => $request["author_email"],
+    "author" => $request["author_name"],
+    "url" => $request["author_url"],
+    "comment" => $request["content"],
+    "comment_parent" => $request["parent"],
+    "comment_post_ID" => $request["post"]
+  ];
+  $comment_re = wp_handle_comment_submission(wp_unslash($comment_data));
+  if (is_wp_error($comment_re)) {
+    $error = $comment_re->get_error_data();
+    return [
+      "code" => "wp_handle_comment_submission error",
+      "data" => [
+        "status" => $error
+      ],
+      "massage" => $comment_re->get_error_message()
+    ];
+  }
+  $user = wp_get_current_user();
+  do_action('set_comment_cookies', $comment_re, $user);
+  $comment_re->comment_avatar = get_avatar(
+    $comment_re->comment_author_email,
+    64,
+    get_option("avatar_default"),
+    "",
+    [
+      "class" => "comment-avatar"
+    ]
+  );
+  $comment_re->comment_mark = comment_mark($comment_re);
+  unset($comment_re->comment_author_email);
+  unset($comment_re->comment_author_IP);
+  $aes = new Aes(
+    get_option("origami_comment_key", "qwertyuiopasdfghjklzxcvbnm12345")
+  );
+  $change_token = $aes->encrypt(time() . ":" . $comment_re->comment_ID);
+  setcookie("change_comment", $change_token, time() + 300, "/");
+  return $comment_re;
 }
-add_filter(
-  'rest_allow_anonymous_comments',
-  'filter_rest_allow_anonymous_comments'
-);
+add_action('rest_api_init', function () {
+  register_rest_route('origami/v1', '/comments', [
+    'methods' => 'POST',
+    'callback' => 'origami_rest_post_comments'
+  ]);
+});
+
+// REST API 修改评论 TODO: 调整是否开启
+function origami_rest_put_comments(WP_REST_Request $request)
+{
+  $comment_data = [
+    "comment_author_email" => $request["author_email"],
+    "comment_author" => $request["author_name"],
+    "comment_author_url" => $request["author_url"],
+    "comment_content" => $request["content"],
+    "comment_ID" => $request["id"],
+    "comment_post_ID" => $request["post"]
+  ];
+  $error_401 = [
+    "code" => "Insufficient permissions",
+    "data" => [
+      "status" => 401
+    ],
+    "massage" => "权限不足，未读取到合法的token"
+  ];
+  $error_403 = [
+    "code" => "You cannot change comments over 5 minutes",
+    "data" => [
+      "status" => 403
+    ],
+    "massage" => "您无法更改超过5分钟的评论"
+  ];
+  $error_409 = [
+    "code" => "Submitted comment ID does not match",
+    "data" => [
+      "status" => 409
+    ],
+    "massage" => "提交的评论ID不匹配"
+  ];
+  if (!isset($_COOKIE['change_comment'])) {
+    return $error_401;
+  }
+  $aes = new Aes(
+    get_option("origami_comment_key", "qwertyuiopasdfghjklzxcvbnm12345")
+  );
+  $data = explode(":", $aes->decrypt($_COOKIE['change_comment']));
+  if (time() - $data[0] > 300) {
+    return $error_403;
+  }
+  if ($comment_data['comment_ID'] != $data[1]) {
+    return $error_409;
+  }
+  $status = wp_update_comment($comment_data);
+  return $status;
+}
+add_action('rest_api_init', function () {
+  register_rest_route('origami/v1', '/comments', [
+    'methods' => 'PUT',
+    'callback' => 'origami_rest_put_comments'
+  ]);
+});
+
+// REST API 评论删除 TODO: 调整是否开启
+function origami_rest_delete_comments(WP_REST_Request $request)
+{
+  $error_401 = [
+    "code" => "Insufficient permissions",
+    "data" => [
+      "status" => 401
+    ],
+    "massage" => "权限不足，未读取到合法的token"
+  ];
+  $error_403 = [
+    "code" => "You cannot change comments over 5 minutes",
+    "data" => [
+      "status" => 403
+    ],
+    "massage" => "您无法更改超过5分钟的评论"
+  ];
+  $error_409 = [
+    "code" => "Comment ID does not found",
+    "data" => [
+      "status" => 400
+    ],
+    "massage" => "评论ID未找到"
+  ];
+  $comment_id = $request["id"];
+  if (!isset($_COOKIE['change_comment'])) {
+    return $error_401;
+  }
+  $aes = new Aes(
+    get_option("origami_comment_key", "qwertyuiopasdfghjklzxcvbnm12345")
+  );
+  $data = explode(":", $aes->decrypt($_COOKIE['change_comment']));
+  if (time() - $data[0] > 300) {
+    return $error_403;
+  }
+  if (!$comment_id) {
+    return $error_409;
+  }
+  $status = wp_delete_comment($comment_id);
+  return $status;
+}
+add_action('rest_api_init', function () {
+  register_rest_route('origami/v1', '/comments', [
+    'methods' => 'DELETE',
+    'callback' => 'origami_rest_delete_comments'
+  ]);
+});
+
+class Aes
+{
+  protected $method;
+  protected $secret_key;
+  protected $iv;
+  protected $options;
+  public function __construct(
+    $key,
+    $method = 'AES-128-ECB',
+    $iv = '',
+    $options = 0
+  ) {
+    $this->secret_key = isset($key) ? $key : 'morefun';
+    $this->method = $method;
+    $this->iv = $iv;
+    $this->options = $options;
+  }
+  public function encrypt($data)
+  {
+    return openssl_encrypt(
+      $data,
+      $this->method,
+      $this->secret_key,
+      $this->options,
+      $this->iv
+    );
+  }
+  public function decrypt($data)
+  {
+    return openssl_decrypt(
+      $data,
+      $this->method,
+      $this->secret_key,
+      $this->options,
+      $this->iv
+    );
+  }
+}
 // end

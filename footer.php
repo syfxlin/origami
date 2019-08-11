@@ -13,6 +13,7 @@ $footer_text = get_option('origami_footer_text'); ?>
         </section>
     </div>
 </footer>
+<?php get_template_part('template-part/tools'); ?>
 <?php wp_footer(); ?>
 </body>
 </html>
