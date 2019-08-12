@@ -341,6 +341,7 @@ class OrigamiConfig
     register_setting("origami_fun", "origami_comment_key");
     register_setting("origami_fun", "origami_enable_comment_update");
     register_setting("origami_fun", "origami_enable_comment_delete");
+    register_setting("origami_fun", "origami_enable_comment_time");
     add_settings_section(
       'origami_fun_comment',
       __('2.评论设置', 'origami'),
@@ -371,7 +372,7 @@ class OrigamiConfig
         'field' => 'origami_enable_comment_update',
         'value' => 'true',
         'type' => 'text',
-        'description' => '开启评论可编辑（5分钟之内评论者可以编辑评论内容）'
+        'description' => '开启评论可编辑（指定时间之内评论者可以编辑评论内容）'
       ]
     );
     add_settings_field(
@@ -384,7 +385,20 @@ class OrigamiConfig
         'field' => 'origami_enable_comment_delete',
         'value' => 'true',
         'type' => 'text',
-        'description' => '开启评论可删除（5分钟之内评论者可以删除评论内容）'
+        'description' => '开启评论可删除（指定时间之内评论者可以删除评论内容）'
+      ]
+    );
+    add_settings_field(
+      'origami_enable_comment_time',
+      __('评论可操作的时间(分钟)', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_comment',
+      [
+        'field' => 'origami_enable_comment_time',
+        'value' => '5',
+        'type' => 'text',
+        'description' => '评论者可以操作评论内容的有效时间，单位为分钟'
       ]
     );
   }

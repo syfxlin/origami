@@ -860,6 +860,10 @@ body:not(.home) #ori-title {
   cursor: pointer;
 }
 
+.comment-btn span {
+  margin-left: 0.5rem;
+}
+
 .comment-children {
   margin-left: 3rem;
 }
@@ -986,6 +990,14 @@ body:not(.home) #ori-title {
   font-size: 0.8rem;
   margin-right: 2rem;
   color: #ffb700;
+}
+
+.countdown {
+  text-align: right;
+  flex: 1;
+  font-size: 0.8rem;
+  margin-right: 2rem;
+  color: #32b643;
 }
 
 /* 文末版权 */

@@ -48,6 +48,13 @@ window.$http = function(options) {
   }
 };
 
+window.$getCookie = function(name) {
+  var arr,
+    reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+  if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
+  else return null;
+};
+
 var origami = {};
 
 origami.titleChange = function() {
@@ -211,12 +218,42 @@ origami.tools = {
       toast.querySelector("p").innerHTML = "";
     }, 500);
   },
+  timeToast: function(massage, status, delay) {
+    origami.tools.showToast(massage, status);
+    setTimeout(origami.tools.hideToast, delay);
+  },
   initToast: function() {
     document
       .querySelector(".ori-tools .toast .btn-clear")
       .addEventListener("click", function() {
         origami.tools.hideToast();
       });
+  },
+  showModal: function(title, content, confirm = () => {}, cancel = () => {}) {
+    let modal = document.querySelector(".ori-tools .modal");
+    modal.querySelector(".modal-title").textContent = title;
+    modal.querySelector(".modal-body .content").textContent = content;
+    let confirmEle = modal.querySelector(".confirm");
+    let confirmFun = function(e) {
+      confirm(e);
+      origami.tools.hideModal();
+      confirmEle.removeEventListener("click", confirmFun);
+    };
+    confirmEle.addEventListener("click", confirmFun);
+    let cancelEle = modal.querySelector(".cancel");
+    let cancelFun = function(e) {
+      cancel(e);
+      origami.tools.hideModal();
+      cancelEle.removeEventListener("click", cancelFun);
+    };
+    cancelEle.addEventListener("click", cancelFun);
+    modal.classList.add("active");
+    modal.style.visibility = "visible";
+  },
+  hideModal: function() {
+    let modal = document.querySelector(".ori-tools .modal");
+    modal.style.visibility = "hidden";
+    modal.classList.remove("active");
   }
 };
 
@@ -230,7 +267,10 @@ origami.initComments = function() {
   let postId = listEle.getAttribute("data-postid");
   let pageCount = listEle.getAttribute("data-pagecount");
   let pageOut = 1;
-  let commentToHtml = function(item, lv = 1) {
+
+  let enUpdate = listEle.getAttribute("data-update") == "true";
+  let enDelete = listEle.getAttribute("data-delete") == "true";
+  let commentToHtml = function(item, lv = 1, option = {}) {
     let str = "";
     str +=
       '<div id="comment-' +
@@ -251,6 +291,9 @@ origami.initComments = function() {
         "</a></div>";
     }
     str += item.comment_mark;
+    if (option.enCountdown) {
+      str += '<div class="countdown">可操作剩余时间：<span></span></div>';
+    }
     if (item.comment_approved != "1") {
       str += '<div class="not-approved">您的评论还在等待审核</div>';
     }
@@ -260,25 +303,52 @@ origami.initComments = function() {
     str +=
       '<div class="comment-date"><i class="fa fa-clock-o" aria-hidden="true"></i>';
     str += "发表于: <time>" + item.comment_date + "</time></div>";
-    str += '<div class="comment-btn"><span title="回复">';
-    str += '<i class="fa fa-reply" aria-hidden="true"></i>';
+    str += '<div class="comment-btn">';
+    if (option.enUpdate) {
+      str += '<span title="修改"><i class="fa fa-edit"></i>';
+      str +=
+        '<a rel="nofollow" class="comment-update-link" data-commentid="' +
+        item.comment_ID +
+        '" data-postid="' +
+        item.comment_post_ID +
+        '" data-lv="' +
+        lv +
+        '">修改</a>';
+      str += "</span>";
+    }
+    if (option.enDelete) {
+      str += '<span title="删除"><i class="fa fa-trash"></i>';
+      str +=
+        '<a rel="nofollow" class="comment-delete-link" data-commentid="' +
+        item.comment_ID +
+        '" data-postid="' +
+        item.comment_post_ID +
+        '" data-lv="' +
+        lv +
+        '">删除</a>';
+      str += "</span>";
+    }
+    str += '<span title="回复"><i class="fa fa-reply"></i>';
     str +=
       '<a rel="nofollow" class="comment-reply-link" data-commentid="' +
       item.comment_ID +
       '" data-postid="' +
       item.comment_post_ID +
+      '" data-lv="' +
+      lv +
       '">回复</a>';
-    str += "</span></div></div></div></div>";
+    str += "</span>";
+    str += "</div></div></div></div>";
     return str;
   };
-  let changeComments = function(list, lv = 1) {
+  let commentsToList = function(list, lv = 1) {
     let str = "";
     list.forEach(function(item) {
       str += commentToHtml(item, lv);
       if (item.sub != []) {
         str +=
           '<ul class="comment-children">' +
-          changeComments(item.sub, lv + 1) +
+          commentsToList(item.sub, lv + 1) +
           "</ul>";
       }
     });
@@ -327,7 +397,7 @@ origami.initComments = function() {
         },
         success: function(response) {
           loading.style.height = "0";
-          listEle.innerHTML = changeComments(response);
+          listEle.innerHTML = commentsToList(response);
           listEle.style.height = listEle.scrollHeight + "px";
           setTimeout(function() {
             listEle.style.height = "unset";
@@ -356,38 +426,73 @@ origami.initComments = function() {
     pageOut++;
     load(pageOut);
   };
-  let submit = function(info, callback = () => {}) {
-    $http({
-      url: "/wp-json/origami/v1/comments",
-      type: "POST",
-      dataType: "json",
-      data: {
-        author_email: info.author_email,
-        author_name: info.author_name,
-        author_url: info.author_url,
-        content: info.content,
-        parent: info.parent,
-        post: info.post
-      },
-      success: function(res) {
-        callback(res);
-      },
-      error: function(error) {
-        console.log("状态码为" + status);
-      }
-    });
+  let submit = function(info, callback = () => {}, isUpdate = false) {
+    if (!isUpdate) {
+      $http({
+        url: "/wp-json/origami/v1/comments",
+        type: "POST",
+        dataType: "json",
+        data: {
+          author_email: info.author_email,
+          author_name: info.author_name,
+          author_url: info.author_url,
+          content: info.content,
+          parent: info.parent,
+          post: info.post
+        },
+        success: function(res) {
+          callback(res);
+        },
+        error: function(error) {
+          console.log("状态码为" + status);
+        }
+      });
+    } else {
+      $http({
+        url: "/wp-json/origami/v1/comments",
+        type: "PUT",
+        dataType: "json",
+        data: {
+          author_email: info.author_email,
+          author_name: info.author_name,
+          author_url: info.author_url,
+          content: info.content,
+          id: info.parent,
+          post: info.post
+        },
+        success: function(res) {
+          callback(res);
+        },
+        error: function(error) {
+          console.log("状态码为" + status);
+        }
+      });
+    }
   };
   let submitError = function(res) {
-    origami.tools.showToast(res.massage, "error");
-    setTimeout(origami.tools.hideToast, 5000);
+    origami.tools.timeToast(res.massage, "error", 5000);
   };
-  let submitSuccess = function(res) {
-    origami.tools.showToast("评论成功ヾ(≧▽≦*)o", "success");
-    setTimeout(origami.tools.hideToast, 5000);
+  let submitSuccess = function(res, lv = 1) {
+    // 显示和定时隐藏提示
+    origami.tools.timeToast("评论成功ヾ(≧▽≦*)o", "success", 3000);
+    // 清空评论框中的值
     document.getElementById("response-text").value = "";
+    // 构造新的comment节点
     let newComment = new DOMParser()
-      .parseFromString(commentToHtml(res), "text/html")
+      .parseFromString(
+        commentToHtml(res, lv, {
+          enDelete: enDelete,
+          enUpdate: enUpdate,
+          enCountdown: true
+        }),
+        "text/html"
+      )
       .getElementsByClassName("comment-item")[0];
+    let time = $getCookie("change_comment_time");
+    setInterval(function() {
+      newComment.querySelector(".countdown span").textContent =
+        parseInt(time) - Math.round(Date.now() / 1000);
+    }, 1000);
     let responseForm = document.getElementById("comments-form");
     let respondMain = document.getElementById("comments-response");
     let parent = responseForm.parentElement;
@@ -397,6 +502,8 @@ origami.initComments = function() {
       parent.replaceChild(newComment, responseForm);
       respondMain.appendChild(responseForm);
     }
+    // 初始化两个按钮
+    initBtn();
   };
   // 初始化
   let initNav = function() {
@@ -441,14 +548,18 @@ origami.initComments = function() {
         author_url: document.getElementById("response-website").value
       };
       loadingEle.style.opacity = "1";
-      submit(info, function(res) {
-        loadingEle.style.opacity = "0";
-        if (res.code) {
-          submitError(res);
-          return;
-        }
-        submitSuccess(res);
-      });
+      submit(
+        info,
+        function(res) {
+          loadingEle.style.opacity = "0";
+          if (res.code) {
+            submitError(res);
+            return;
+          }
+          submitSuccess(res, submitEle.getAttribute("data-lv"));
+        },
+        submitEle.getAttribute("data-isupdate") == "true"
+      );
       e.preventDefault();
     });
   };
@@ -461,6 +572,7 @@ origami.initComments = function() {
       form.remove();
       response.appendChild(form);
       submitEle.setAttribute("data-commentid", 0);
+      submitEle.setAttribute("data-lv", 1);
       closeResponse.style.visibility = "hidden";
     });
     document.querySelectorAll(".comment-reply-link").forEach(function(item) {
@@ -471,8 +583,67 @@ origami.initComments = function() {
           .querySelector("#comment-" + parentId)
           .nextElementSibling.appendChild(form);
         submitEle.setAttribute("data-commentid", parentId);
+        submitEle.setAttribute(
+          "data-lv",
+          parseInt(item.getAttribute("data-lv")) + 1
+        );
         closeResponse.style.visibility = "visible";
       });
+    });
+  };
+  let initBtn = function() {
+    let deleteBtn = document.getElementsByClassName("comment-delete-link")[0];
+    deleteBtn.addEventListener("click", function() {
+      origami.tools.showModal("删除评论", "确定要删除这条评论？", function() {
+        $http({
+          url: "/wp-json/origami/v1/comments",
+          type: "DELETE",
+          dataType: "json",
+          data: {
+            id: deleteBtn.getAttribute("data-commentid")
+          },
+          success: function(res) {
+            if (res || res == "true") {
+              document
+                .getElementById(
+                  "comment-" + deleteBtn.getAttribute("data-commentid")
+                )
+                .remove();
+              origami.tools.timeToast("删除评论成功！", "success", 3000);
+            }
+          }
+        });
+      });
+    });
+
+    let updateBtn = document.getElementsByClassName("comment-update-link")[0];
+    updateBtn.addEventListener("click", function() {
+      let form = document.getElementById("comments-form");
+      let submitEle = document.getElementById("response-submit");
+      let closeResponse = document.getElementById("close-response");
+      let commentId = updateBtn.getAttribute("data-commentid");
+      let commentEle = document.getElementById("comment-" + commentId);
+      submitEle.setAttribute("data-commentid", commentId);
+      submitEle.setAttribute(
+        "data-lv",
+        parseInt(updateBtn.getAttribute("data-lv"))
+      );
+      submitEle.setAttribute("data-isupdate", "true");
+      let parent = commentEle.parentElement;
+      let next = commentEle.nextElementSibling;
+      form.remove();
+      parent.replaceChild(form, commentEle);
+      document.getElementById("response-text").value = commentEle.querySelector(
+        ".comment-body"
+      ).innerHTML;
+      closeResponse.style.visibility = "visible";
+      let repl = function() {
+        parent.insertBefore(commentEle, next);
+        document.getElementById("response-text").value = "";
+        submitEle.removeAttribute("data-isupdate");
+        closeResponse.removeEventListener("click", repl);
+      };
+      closeResponse.addEventListener("click", repl);
     });
   };
   let init = function() {

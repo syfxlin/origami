@@ -58,7 +58,7 @@ if (comments_open()):
                     <input data-rule="required(请输入邮箱)|/^([A-Za-z0-9_\-\.\u4e00-\u9fa5])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,8})$/您输入的邮箱有误|disinput|focus" name="email" <?php if ($logged) {echo 'style="display:none"';} ?> id="response-email" class="form-input" type="text" value="<?php echo $comment_author_email; ?>" placeholder="<?php echo __('邮箱', 'origami'); ?> *">
                 </div>
                 <div class="form-group has-icon-right">
-                    <input id="response-submit" class="form-input" type="submit" value="<?php echo __('发表评论', 'origami'); ?>" data-postid="<?php echo $post->ID; ?>" data-commentid="0">
+                    <input id="response-submit" class="form-input" type="submit" value="<?php echo __('发表评论', 'origami'); ?>" data-postid="<?php echo $post->ID; ?>" data-commentid="0" data-lv="1">
                     <i class="loading form-icon response-loading"></i>
                 </div>
             </div>
@@ -81,7 +81,13 @@ if (comments_open()):
         <div class="loading loading-lg"></div>
         <span>Loading...</span>
     </div>
-    <div id="comments-list" data-postid="<?php echo $post->ID; ?>" data-pagecount="<?php echo get_comment_pages_count(); ?>"></div>
+    <div
+        id="comments-list"
+        data-postid="<?php echo $post->ID; ?>"
+        data-pagecount="<?php echo get_comment_pages_count(); ?>"
+        data-update="<?php echo get_option("origami_enable_comment_update", "true"); ?>"
+        data-delete="<?php echo get_option("origami_enable_comment_delete", "true"); ?>"
+    ></div>
     <div class="comments-nav">
         <label class="form-label">当前评论页：</label>
         <select class="form-select" id="comments-select">

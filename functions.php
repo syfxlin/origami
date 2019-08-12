@@ -1493,8 +1493,11 @@ function origami_rest_post_comments(WP_REST_Request $request)
   $aes = new Aes(
     get_option("origami_comment_key", "qwertyuiopasdfghjklzxcvbnm12345")
   );
-  $change_token = $aes->encrypt(time() . ":" . $comment_re->comment_ID);
-  setcookie("change_comment", $change_token, time() + 300, "/");
+  $time = time();
+  $time_out = 60 * intval(get_option("origami_enable_comment_time", "5"));
+  $change_token = $aes->encrypt($time . ":" . $comment_re->comment_ID);
+  setcookie("change_comment", $change_token, $time + $time_out, "/");
+  setcookie("change_comment_time", $time + $time_out, $time + $time_out, "/");
   return $comment_re;
 }
 add_action('rest_api_init', function () {
@@ -1504,9 +1507,18 @@ add_action('rest_api_init', function () {
   ]);
 });
 
-// REST API 修改评论 TODO: 调整是否开启
+// REST API 修改评论
 function origami_rest_put_comments(WP_REST_Request $request)
 {
+  if (get_option("origami_enable_comment_update", "true") != "true") {
+    return [
+      "code" => "The function not enable",
+      "data" => [
+        "status" => 200
+      ],
+      "massage" => "此功能未开启"
+    ];
+  }
   $comment_data = [
     "comment_author_email" => $request["author_email"],
     "comment_author" => $request["author_name"],
@@ -1543,14 +1555,32 @@ function origami_rest_put_comments(WP_REST_Request $request)
     get_option("origami_comment_key", "qwertyuiopasdfghjklzxcvbnm12345")
   );
   $data = explode(":", $aes->decrypt($_COOKIE['change_comment']));
-  if (time() - $data[0] > 300) {
+  $time_out = 60 * intval(get_option("origami_enable_comment_time", "5"));
+  if (time() - $data[0] > $time_out) {
     return $error_403;
   }
   if ($comment_data['comment_ID'] != $data[1]) {
     return $error_409;
   }
   $status = wp_update_comment($comment_data);
-  return $status;
+  if ($status != 1) {
+    return $status;
+  } else {
+    $comment_re = get_comment($comment_data['comment_ID']);
+    $comment_re->comment_avatar = get_avatar(
+      $comment_re->comment_author_email,
+      64,
+      get_option("avatar_default"),
+      "",
+      [
+        "class" => "comment-avatar"
+      ]
+    );
+    $comment_re->comment_mark = comment_mark($comment_re);
+    unset($comment_re->comment_author_email);
+    unset($comment_re->comment_author_IP);
+    return $comment_re;
+  }
 }
 add_action('rest_api_init', function () {
   register_rest_route('origami/v1', '/comments', [
@@ -1559,9 +1589,18 @@ add_action('rest_api_init', function () {
   ]);
 });
 
-// REST API 评论删除 TODO: 调整是否开启
+// REST API 评论删除
 function origami_rest_delete_comments(WP_REST_Request $request)
 {
+  if (get_option("origami_enable_comment_delete", "true") != "true") {
+    return [
+      "code" => "The function not enable",
+      "data" => [
+        "status" => 200
+      ],
+      "massage" => "此功能未开启"
+    ];
+  }
   $error_401 = [
     "code" => "Insufficient permissions",
     "data" => [
@@ -1591,7 +1630,8 @@ function origami_rest_delete_comments(WP_REST_Request $request)
     get_option("origami_comment_key", "qwertyuiopasdfghjklzxcvbnm12345")
   );
   $data = explode(":", $aes->decrypt($_COOKIE['change_comment']));
-  if (time() - $data[0] > 300) {
+  $time_out = 60 * intval(get_option("origami_enable_comment_time", "5"));
+  if (time() - $data[0] > $time_out) {
     return $error_403;
   }
   if (!$comment_id) {
