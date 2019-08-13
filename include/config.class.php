@@ -118,6 +118,7 @@ class OrigamiConfig
 
     // 页脚设置
     register_setting("origami_style", "origami_footer_text");
+    register_setting("origami_fun", "origami_footer_time");
     add_settings_section(
       'origami_style_footer',
       __('3.页脚设置', 'origami'),
@@ -136,6 +137,20 @@ class OrigamiConfig
         'type' => 'text',
         'description' =>
           '<span class="my-face"></span>中的内容会添加随机摇动效果，<span id="timeDate"></span>显示日期，<span id="times"></span>显示时间'
+      ]
+    );
+    add_settings_field(
+      'origami_footer_time',
+      __('页脚时间', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_style',
+      'origami_style_footer',
+      [
+        'field' => 'origami_footer_time',
+        'value' => '07/01/2017 00:00:09',
+        'type' => 'text',
+        'description' =>
+          '是否显示页脚时间？若填写时间代表显示，格式如下</br>07/01/2017 00:00:09'
       ]
     );
 
@@ -342,6 +357,7 @@ class OrigamiConfig
     register_setting("origami_fun", "origami_enable_comment_update");
     register_setting("origami_fun", "origami_enable_comment_delete");
     register_setting("origami_fun", "origami_enable_comment_time");
+    register_setting("origami_fun", "origami_comment_owo");
     add_settings_section(
       'origami_fun_comment',
       __('2.评论设置', 'origami'),
@@ -399,6 +415,72 @@ class OrigamiConfig
         'value' => '5',
         'type' => 'text',
         'description' => '评论者可以操作评论内容的有效时间，单位为分钟'
+      ]
+    );
+    add_settings_field(
+      'origami_comment_owo',
+      __('OwO表情', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_comment',
+      [
+        'field' => 'origami_comment_owo',
+        'value' => '5',
+        'type' => 'text',
+        'description' =>
+          '是否开启评论区的OwO表情，默认为true(true为开，false为关)'
+      ]
+    );
+
+    // 其他
+    register_setting("origami_fun", "origami_canvas_nest");
+    register_setting("origami_fun", "origami_workbox");
+    register_setting("origami_fun", "origami_lazyload");
+    add_settings_section(
+      'origami_fun_other',
+      __('3.其他设置', 'origami'),
+      [&$this, 'origami_section'],
+      'origami_fun'
+    );
+    add_settings_field(
+      'origami_canvas_nest',
+      __('Canvas-Nest背景', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_other',
+      [
+        'field' => 'origami_canvas_nest',
+        'value' => '5',
+        'type' => 'text',
+        'description' =>
+          '是否开启Canvas-Nest背景，默认为true(true为开，false为关)'
+      ]
+    );
+    add_settings_field(
+      'origami_workbox',
+      __('WorkBox缓存', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_other',
+      [
+        'field' => 'origami_workbox',
+        'value' => '5',
+        'type' => 'text',
+        'description' => '是否开启WorkBox缓存，默认为false(true为开，false为关)'
+      ]
+    );
+    add_settings_field(
+      'origami_lazyload',
+      __('LazyLoad加载图片', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_other',
+      [
+        'field' => 'origami_lazyload',
+        'value' => '5',
+        'type' => 'text',
+        'description' =>
+          '是否开启Lazyload加载图片，默认为false，格式为[true/false,all/post]'
       ]
     );
   }

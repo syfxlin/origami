@@ -11,16 +11,11 @@ $ori_header_logo = get_option(
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>"/>
   <meta name="theme-color" content="#87d1df">
-  <?php wp_head(); ?>
-  <meta http-equiv="Content-Security-Policy" content="block-all-mixed-content">
-  <!-- Spectre.css -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-exp.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-icons.min.css">
-  <!-- New Style.css -->
-  <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/css/style.css">
-  <script src="<?php echo get_template_directory_uri(); ?>/js/new-main.js"></script>
-  <script src="<?php echo get_template_directory_uri(); ?>/js/SMValidator.min.js"></script>
+  <?php wp_head(); ?>
+  <meta http-equiv="Content-Security-Policy" content="block-all-mixed-content">
 </head>
 <body <?php body_class($GLOBALS['not_carousel'] ? 'not-car' : ''); ?>>
   <header class="p-fixed ori-header">
@@ -60,7 +55,10 @@ $ori_header_logo = get_option(
           <div><i class="fa fa-search"></i></div>
         </section>
         <section class="navbar-center">
-          <input id="ori-search-input" class="form-input" type="text" placeholder="<?php echo __('快来寻找你要的文章ヾ(≧▽≦*)o...', 'origami'); ?>">
+          <input id="ori-search-input" class="form-input" type="text" placeholder="<?php echo __(
+            '快来寻找你要的文章ヾ(≧▽≦*)o...',
+            'origami'
+          ); ?>">
         </section>
         <section class="navbar-section">
           <div id="ori-h-search-close"><i class="fa fa-close"></i></div>

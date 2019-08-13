@@ -43,6 +43,7 @@ if (comments_open()):
                 ]
             ); ?>
             <textarea class="form-input" id="response-text" data-rule="required(请输入内容)|/.{2,}/输入的评论太短|disinput|focus" placeholder="<?php echo __('加入讨论', 'origami'); ?>"></textarea>
+            <div class="OwO"></div>
         </div>
         <div class="response-footer">
             <div class="response-input-item">

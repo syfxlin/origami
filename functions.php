@@ -39,97 +39,55 @@ add_filter('pre_option_link_manager_enabled', '__return_true');
 register_nav_menus(['main-menu' => esc_html__('主菜单')]);
 // 加载主题设置
 require get_template_directory() . '/include/customizer.php';
-// Ajax提交评论注入
-require 'ajax-comment/main.php';
 /**
  * 加载主要资源
  */
 if (!is_admin()) {
   // 加载主要css/js文件
-  // wp_enqueue_style(
-  //   'origami-style',
-  //   get_stylesheet_uri(),
-  //   array(),
-  //   wp_get_theme()->get('Version')
-  // );
-  wp_enqueue_script('comment-reply');
-  wp_enqueue_script(
-    'jquery-script',
-    get_template_directory_uri() . '/js/jquery-3.3.1.min.js',
-    array(),
+  wp_enqueue_style(
+    'origami-style',
+    get_stylesheet_uri(),
+    [],
     wp_get_theme()->get('Version')
   );
+  // wp_enqueue_script(
+  //   'jquery-script',
+  //   get_template_directory_uri() . '/js/jquery-3.3.1.min.js',
+  //   [],
+  //   wp_get_theme()->get('Version')
+  // );
   wp_enqueue_script(
     'origami-script',
     get_template_directory_uri() . '/js/main.js',
-    array(),
+    [],
     wp_get_theme()->get('Version')
   );
   wp_enqueue_script(
     'qrcode-script',
     get_template_directory_uri() . '/js/qrcode.min.js',
-    array(),
+    [],
     wp_get_theme()->get('Version')
   );
-  function origami_load_font_awesome()
+  wp_enqueue_script(
+    'form-script',
+    get_template_directory_uri() . '/js/SMValidator.min.js',
+    [],
+    wp_get_theme()->get('Version')
+  );
+  function css_js_to_footer()
   {
+    // fa图标
     wp_enqueue_style(
       'font-awesome',
       get_template_directory_uri() . '/css/font-awesome.min.css'
     );
-  }
-  add_action('wp_footer', 'origami_load_font_awesome');
-  // canvas-nest加载
-  if (get_option('origami_canvas_nest') == true) {
-    function origami_setting_canvas_nest()
-    {
+    // canvas-nest加载
+    if (get_option('origami_canvas_nest', 'true') == "true") {
       echo '<script type="text/javascript" color="0,0,0" zindex="-1" opacity="0.5" count="99" src="' .
         get_template_directory_uri() .
         '/js/canvas-nest.js"></script>';
     }
-    add_action('wp_footer', 'origami_setting_canvas_nest', '99');
-  }
-  // owo 表情加载
-  function origami_load_owo()
-  {
-    if (get_option('origami_comment_owo') == true) {
-      wp_enqueue_style(
-        'owo-style',
-        get_template_directory_uri() . '/css/OwO.min.css'
-      );
-      wp_enqueue_script(
-        'owo-script',
-        get_template_directory_uri() . '/js/OwO.min.js'
-      );
-    }
-  }
-  // 文章目录加载
-  function origami_load_tocbot()
-  {
-    wp_enqueue_style(
-      'tocbot-style',
-      get_template_directory_uri() . '/css/tocbot.css'
-    );
-    wp_enqueue_script(
-      'tocbot-script',
-      get_template_directory_uri() . '/js/tocbot.min.js'
-    );
-  }
-  // 加载代码高亮
-  function origami_load_prism()
-  {
-    wp_enqueue_style(
-      'prism-style',
-      get_template_directory_uri() . '/css/prism.css'
-    );
-    wp_enqueue_script(
-      'prism-script',
-      get_template_directory_uri() . '/js/prism.js'
-    );
-  }
-  // 加载Lazyload
-  function origami_load_lazyload()
-  {
+    // Lazyload
     $config = get_option('origami_lazyload');
     if (stripos($config, ',') == true) {
       $config = explode(',', $config);
@@ -142,10 +100,42 @@ if (!is_admin()) {
         get_template_directory_uri() . '/js/lazyload.min.js'
       );
     }
+    // 只有在文章和页面中才会加载
+    if (is_single() || is_page()) {
+      // owo 表情加载
+      if (get_option('origami_comment_owo', "true") == "true") {
+        wp_enqueue_style(
+          'owo-style',
+          get_template_directory_uri() . '/css/OwO.min.css'
+        );
+        wp_enqueue_script(
+          'owo-script',
+          get_template_directory_uri() . '/js/OwO.min.js'
+        );
+      }
+      // 文章目录加载
+      wp_enqueue_style(
+        'tocbot-style',
+        get_template_directory_uri() . '/css/tocbot.css'
+      );
+      wp_enqueue_script(
+        'tocbot-script',
+        get_template_directory_uri() . '/js/tocbot.min.js'
+      );
+      // 加载代码高亮
+      wp_enqueue_style(
+        'prism-style',
+        get_template_directory_uri() . '/css/prism.css'
+      );
+      wp_enqueue_script(
+        'prism-script',
+        get_template_directory_uri() . '/js/prism.js'
+      );
+    }
   }
-  add_action('wp_footer', 'origami_load_lazyload');
+  add_action('wp_footer', 'css_js_to_footer');
   // 加载WorkBox
-  if (get_option('origami_workbox') == true) {
+  if (get_option('origami_workbox', "true") == "true") {
     function origami_setting_workbox()
     {
       echo "<script>if ('serviceWorker' in navigator) {
@@ -184,7 +174,15 @@ if (!is_admin()) {
     );
     if (
       stripos($origami_footer_content, "www.ixk.me") == false ||
-      stripos($origami_footer_content, "origami-theme-info") == false
+      stripos($origami_footer_content, "origami-theme-info") == false ||
+      preg_match(
+        "/(<!--)((.*)www\.ixk\.me(.*)|(\n))*?-->/ig",
+        $origami_footer_content
+      ) ||
+      preg_match(
+        "/(<!--)((.*)origami-theme-info(.*)|(\n))*?-->/ig",
+        $origami_footer_content
+      )
     ) {
       function origami_add_warn()
       {
@@ -206,7 +204,7 @@ function origami_load_blocks()
   wp_enqueue_script(
     'origami_block_js',
     get_template_directory_uri() . '/js/blocks.build.js',
-    array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor'),
+    ['wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor'],
     true
   );
 }
@@ -218,7 +216,7 @@ add_action('enqueue_block_editor_assets', 'origami_load_blocks');
 function origami_async_script($tag, $handle, $src)
 {
   $async_method = 'async'; // 可将“async”改为“defer”
-  $async_exclusions = 'jquery-3.3.1.min.js'; // 排除的JS
+  $async_exclusions = ""; // 排除的JS
   $array_exclusions = !empty($async_exclusions)
     ? explode(',', $async_exclusions)
     : array();
@@ -263,7 +261,7 @@ add_filter('script_loader_tag', 'origami_async_script', 10, 3);
 function origami_auto_comment_image($comment)
 {
   global $allowedtags;
-  $allowedtags['img'] = array('src' => array(), 'alt' => array());
+  $allowedtags['img'] = ['src' => [], 'alt' => []];
   return $comment;
 }
 add_filter('preprocess_comment', 'origami_auto_comment_image');
@@ -521,143 +519,15 @@ function origami_breadcrumbs($echo = true)
  */
 function origami_footer_time_fun()
 {
-  $origami_footer_time = get_option('origami_footer_time');
+  $origami_footer_time = get_option(
+    'origami_footer_time',
+    '07/01/2017 00:00:09'
+  );
   if ($origami_footer_time != '') {
-    echo '
-            <script>// <![CDATA[
-            var now = new Date();
-            function createtime(){ var grt= new Date("' .
-      $origami_footer_time .
-      '");
-            now.setTime(now.getTime()+250);
-            days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
-            hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
-            if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
-            mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
-            seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
-            snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
-            document.getElementById("timeDate").innerHTML = ""+dnum+"天";
-            document.getElementById("times").innerHTML = hnum + "小时" + mnum + "分" + snum + "秒"; }
-            setInterval("createtime()",250);
-            // ]]></script>
-        ';
+    echo '<script>window.footerTime = "' . $origami_footer_time . '";</script>';
   }
 }
-add_action('wp_footer', 'origami_footer_time_fun');
-
-/**
- * 评论回调
- */
-function origami_comment($comment, $args, $depth)
-{
-  /* 评论者标签 - start */
-  global $wpdb;
-  $comment_mark = "";
-  $comment_mark_color = "#CBBBBA";
-  //站长邮箱
-  $adminEmail = get_option('admin_email');
-  //从数据库读取有人链接
-  $linkurls = $wpdb->get_results("SELECT link_url FROM wp_links", "ARRAY_N");
-  $other_friend_links = explode(',', get_option('origami_other_friends'));
-  foreach ($other_friend_links as $other_friend_link) {
-    $other_friend_links_arr[][0] = $other_friend_link;
-  }
-  $linkurls = array_merge($linkurls, $other_friend_links_arr);
-  //默认不是朋友，将标记为访客
-  $is_friend = false;
-  //判断是不是站长我
-  if ($comment->comment_author_email == $adminEmail) {
-    $comment_mark =
-      '<a target="_blank" href="/关于我" title="经鉴定，这货是站长">站长</a>';
-    $comment_mark_color = "#0bf";
-    $is_friend = true;
-  }
-  if (!$is_friend && $comment->comment_author_url != '') {
-    $rex = '/(https:\/\/|http:\/\/)[a-z0-9-]*\.([a-z0-9-]+\.[a-z]+).*/i';
-    $rex2 = '/(https:\/\/|http:\/\/)([a-z0-9-]+\.[a-z]+).*/i';
-    if (substr_count($comment->comment_author_url, '.') == 2) {
-      preg_match($rex, $comment->comment_author_url, $author_url_re);
-    } else {
-      preg_match($rex2, $comment->comment_author_url, $author_url_re);
-    }
-    $comment_author_url_reg = $author_url_re[2];
-    foreach ($linkurls as $linkurl) {
-      if (substr_count($linkurl[0], '.') == 2) {
-        preg_match($rex, $linkurl[0], $url_re);
-      } else {
-        preg_match($rex2, $linkurl[0], $url_re);
-      }
-      if ($comment_author_url_reg == $url_re[2]) {
-        $comment_mark =
-          '<a target="_blank" href="/links" title="友情链接认证">友人</a>';
-        $comment_mark_color = "#5EBED2";
-        $is_friend = true;
-      }
-    }
-  }
-  //若不在列表中就标记为访客
-  if ($is_friend == false) {
-    $comment_mark = "访客";
-  }
-  $comment_mark =
-    '<div class="comment-mark" style="background:' .
-    $comment_mark_color .
-    '">' .
-    $comment_mark .
-    '</div>';
-
-  /* 评论者标签 - end */
-  ?>
-
-    <div id="comment-<?php echo $comment->comment_ID; ?>" class="comment-level-<?php echo $depth; ?> comment-list">
-        <div class="comment-left">
-            <?php echo get_avatar($comment, 64); ?>
-        </div>
-        <div class="comment-right">
-            <div class="comment-header">
-                <div class="comment-author">
-                    <?php if ($comment->comment_author_url != "") {
-                      echo '<a href="' .
-                        $comment->comment_author_url .
-                        '">' .
-                        $comment->comment_author .
-                        '</a>';
-                    } else {
-                      echo $comment->comment_author;
-                    } ?>
-                </div>
-                <?php echo $comment_mark; ?>
-            </div>
-            <div class="comment-text">
-                <?php comment_text(); ?>
-            </div>
-            <div class="comment-footer">
-                <div class="comment-footer-left">
-                <div class="comment-date"><i class="fa fa-clock-o" aria-hidden="true"></i>发表于: <?php echo get_comment_time(
-                  'Y-m-d H:i'
-                ); ?></div>
-                </div>
-                <div class="comment-footer-right">
-                    <span><?php edit_comment_link('修改'); ?></span>
-                    <span title="回复">
-                        <?php if ($depth < $args['max_depth']) {
-                          echo '<i class="fa fa-reply" aria-hidden="true"></i>';
-                        } ?>
-                        <?php comment_reply_link(
-                          array_merge($args, array(
-                            'reply_text' => '回复',
-                            'depth' => $depth,
-                            'max_depth' => $args['max_depth']
-                          ))
-                        ); ?>
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="clearfix"></div>
-<?php
-}
+add_action('wp_footer', 'origami_footer_time_fun', 102);
 
 /**
  * 评论加@
@@ -676,39 +546,6 @@ function origami_comment_add_at($comment_text, $comment = '')
   return $comment_text;
 }
 add_filter('comment_text', 'origami_comment_add_at', 10, 2);
-
-/**
- * 前端获取评论
- * ?action=comments&post_id=...page_index=...
- */
-function origami_load_comments()
-{
-  if (isset($_GET['action'])) {
-    if ($_GET['action'] == 'comments') {
-      $comments = get_comments(array(
-        'post_id' => $_GET['post_id'],
-        'status' => 'approve'
-      ));
-      // 反转评论列表，使最新最新评论显示在上方
-      $comments = array_reverse($comments);
-      // 存入前端传来的页码
-      $page_index = $_GET['page_index'];
-      // 输出评论
-      echo '<div id="comment-wrapper" class="comment-wrapper">';
-      wp_list_comments(
-        'type=comment&callback=origami_comment&reverse_top_level=true&per_page=10&page=' .
-          $page_index,
-        $comments
-      );
-      echo '</div>';
-      echo '<div id="comment_page_index" style="display:none">' .
-        $page_index .
-        '</div>';
-      die();
-    }
-  }
-}
-add_action('init', 'origami_load_comments');
 
 /**
  * 有新评论时发送邮件通知
@@ -954,30 +791,13 @@ function origami_content_copyright($content)
 add_filter('the_content', 'origami_content_copyright');
 
 /**
- * 1.为标题添加id
- * 2.删除后台用来防止出现的问题pre块
+ * 1.删除后台用来防止出现的问题pre块
  */
 function origami_content_change($content)
 {
-  if (is_single() || is_feed()) {
-    // 添加id
-    $matches = array();
-    $r = "/<h[1-3]>([^<]+)<\/h[1-3]>/im";
-    if (preg_match_all($r, $content, $matches)) {
-      foreach ($matches[1] as $num => $title) {
-        $content = str_replace(
-          $matches[0][$num],
-          substr($matches[0][$num], 0, 3) .
-            ' id="title-' .
-            $num .
-            '"' .
-            substr($matches[0][$num], 3),
-          $content
-        );
-      }
-    }
+  if (is_single() || is_feed() || is_page()) {
     // 删除pre块
-    $matches = array();
+    $matches = [];
     $r = '/<pre class="fix-back-pre">([^<]+)<\/pre>/im';
     if (preg_match_all($r, $content, $matches)) {
       foreach ($matches[1] as $num => $con) {
@@ -1225,56 +1045,6 @@ function origami_lazyload_img()
   }
 }
 add_action('template_redirect', 'origami_lazyload_img');
-
-/**
- * 实时搜索
- * ?action=real_time_search&search=...
- */
-function origami_real_time_search()
-{
-  if (isset($_GET['action'])) {
-    if ($_GET['action'] == 'real_time_search') {
-      $query_args['s'] = $_GET['search'];
-      $query = new WP_Query();
-      $search_posts = $query->query($query_args);
-      echo '<ul class="blog-post-list post-list row col-xlarge-12">';
-      foreach ($search_posts as $post) {
-        echo '<li class="col-xlarge-12"><div id="post-' .
-          esc_attr($post->ID) .
-          '" ';
-        post_class(
-          'post-list-item wide-post-list-item blog-list-item post-item-left' .
-            $post->ID
-        );
-        echo 'style="padding-bottom:60px;">';
-        echo '<h3 class="font-montserrat-reg"><a href="' .
-          esc_url(get_the_permalink($post->ID)) .
-          '">' .
-          esc_attr(get_the_title($post->ID)) .
-          '</a></h3>';
-        echo '<div class="post-list-item-meta font-opensans-reg clearfix">';
-        echo '<span>' .
-          esc_attr(get_the_date(get_option('date_format'), $post->ID)) .
-          '</span>';
-        echo '<span>' .
-          esc_attr(get_the_author_meta('nickname', $post->post_author)) .
-          '</span>';
-        echo '</div>';
-        echo '<div class="page-content">' .
-          wp_trim_words($post->post_content, 100) .
-          '</div>';
-        echo '<div class="myblog-post-list-buttom">';
-        echo '<a href="' .
-          esc_url(get_the_permalink($post->ID)) .
-          '" class="primary-button font-montserrat-reg hov-bk myblog-post-list-button">Read more</a>';
-        echo '</div></div></li>';
-      }
-      echo '</ul>';
-      die();
-    }
-  }
-}
-add_action('init', 'origami_real_time_search');
 
 // New Function.php
 // 后台配置面板

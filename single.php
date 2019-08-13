@@ -67,7 +67,4 @@ if ($post_item['post_image'] == false && origami_get_other_thumbnail($post)) {
 </div>
 <?php
 // get_template_part('template-part/tools-button');
-origami_load_owo();
-origami_load_tocbot();
-origami_load_prism();
 get_footer(); ?>
