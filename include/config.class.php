@@ -118,7 +118,7 @@ class OrigamiConfig
 
     // 页脚设置
     register_setting("origami_style", "origami_footer_text");
-    register_setting("origami_fun", "origami_footer_time");
+    register_setting("origami_style", "origami_footer_time");
     add_settings_section(
       'origami_style_footer',
       __('3.页脚设置', 'origami'),
@@ -436,6 +436,7 @@ class OrigamiConfig
     register_setting("origami_fun", "origami_canvas_nest");
     register_setting("origami_fun", "origami_workbox");
     register_setting("origami_fun", "origami_lazyload");
+    register_setting("origami_fun", "origami_block_mixed");
     add_settings_section(
       'origami_fun_other',
       __('3.其他设置', 'origami'),
@@ -467,6 +468,20 @@ class OrigamiConfig
         'value' => '5',
         'type' => 'text',
         'description' => '是否开启WorkBox缓存，默认为false(true为开，false为关)'
+      ]
+    );
+    add_settings_field(
+      'origami_block_mixed',
+      __('阻止混合内容', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_other',
+      [
+        'field' => 'origami_block_mixed',
+        'value' => 'true',
+        'type' => 'text',
+        'description' =>
+          '是否阻止混合内容出现(即https中混入http，true为开，false为关)'
       ]
     );
     add_settings_field(

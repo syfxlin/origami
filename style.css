@@ -11,6 +11,19 @@ a:visited {
   color: #5755d9;
 }
 
+.lazy {
+  transition: filter 0.35s ease 0s;
+}
+
+.lazy:not(.loaded) {
+  filter: blur(5px);
+}
+
+.lazy-bg-loaded-flag {
+  width: 0;
+  height: 0;
+}
+
 .flex-rev {
   flex-direction: row-reverse;
 }
@@ -1199,6 +1212,10 @@ body:not(.home) #ori-title {
 
 .toc-show {
   display: block !important;
+}
+
+.home .tools-item {
+  display: none;
 }
 
 @media (max-width: 991px) {

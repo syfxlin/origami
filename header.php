@@ -15,7 +15,9 @@ $ori_header_logo = get_option(
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-exp.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-icons.min.css">
   <?php wp_head(); ?>
-  <meta http-equiv="Content-Security-Policy" content="block-all-mixed-content">
+  <?php if (get_option("origami_block_mixed", "true") == "true"): ?>
+    <meta http-equiv="Content-Security-Policy" content="block-all-mixed-content">
+  <?php endif; ?>
 </head>
 <body <?php body_class($GLOBALS['not_carousel'] ? 'not-car' : ''); ?>>
   <header class="p-fixed ori-header">

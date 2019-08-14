@@ -110,11 +110,17 @@ origami.scrollChange = function() {
   let target =
     document.getElementsByClassName("carousel")[0].clientHeight -
     document.getElementsByClassName("ori-header")[0].clientHeight;
+  let title = document.getElementById("ori-title");
+  let logo = document.getElementById("ori-logo");
   let scrollE = function() {
     if (window.scrollY >= target) {
       document.body.classList.add("not-car");
+      title.style.display = "none";
+      logo.style.display = "flex";
     } else {
       document.body.classList.remove("not-car");
+      title.style.display = "block";
+      logo.style.display = "none";
     }
   };
   scrollE();
@@ -693,7 +699,7 @@ origami.initComments = function() {
 };
 
 origami.loadOwO = function() {
-  if (window.is_owo) {
+  if (window.is_owo && document.querySelector(".OwO")) {
     new OwO({
       logo: "OωO表情",
       container: document.getElementsByClassName("OwO")[0],
@@ -893,13 +899,24 @@ window.addEventListener("load", function() {
   origami.tools.initToast();
   origami.loadOwO();
   origami.buildFooterTime();
-  origami.initTocbot();
-  origami.readingTransfer();
-  origami.tocToggle();
-  origami.setPosition();
+  if (
+    document.body.classList.contains("page") ||
+    document.body.classList.contains("post")
+  ) {
+    origami.initTocbot();
+    origami.readingTransfer();
+    origami.tocToggle();
+    origami.setPosition();
+  }
   new LazyLoad({
-    elements_selector: ".lazyload",
-    load_delay: 500
+    elements_selector: ".lazy",
+    load_delay: 500,
+    callback_loaded: function(ele) {
+      // fix background-image loaded
+      if (ele.classList.contains("lazy-bg-loaded-flag")) {
+        ele.parentElement.classList.add("loaded");
+      }
+    }
   });
 });
 

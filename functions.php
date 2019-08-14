@@ -176,11 +176,11 @@ if (!is_admin()) {
       stripos($origami_footer_content, "www.ixk.me") == false ||
       stripos($origami_footer_content, "origami-theme-info") == false ||
       preg_match(
-        "/(<!--)((.*)www\.ixk\.me(.*)|(\n))*?-->/ig",
+        "/(<!--)((.*)www\.ixk\.me(.*)|(\n))*?-->/i",
         $origami_footer_content
       ) ||
       preg_match(
-        "/(<!--)((.*)origami-theme-info(.*)|(\n))*?-->/ig",
+        "/(<!--)((.*)origami-theme-info(.*)|(\n))*?-->/i",
         $origami_footer_content
       )
     ) {
@@ -980,65 +980,84 @@ function origami_lazyload_img()
   }
   function origami_lazyload_img_process_callback($matches)
   {
+    $rep_src = '';
+    $rep_srcset = '';
     $img_attr = $matches[1];
-    // 替换单引号为双引号
-    if (stripos($img_attr, "'") !== false) {
-      $img_attr = str_replace("'", '"', $img_attr);
+    str_replace("'", '"', $img_attr);
+    if (preg_match('/(src="([^"]*)?")/i', $img_attr, $src_matches) !== 0) {
+      $src_attr = $src_matches[1];
+      $src_url = $src_matches[2];
+      $data_src = 'data-src="' . $src_url . '"';
+      $img_attr = str_replace($src_attr, $data_src . " " . $rep_src, $img_attr);
     }
-    $img_class = '';
-    if (stripos($img_attr, "src=") === false) {
-      return $img_attr;
-    } else {
-      preg_match('/.*(src="([^"]*)?").*/i', $img_attr, $src_matches);
-      $data_src = $src_matches[1];
-      $img_attr = str_replace($data_src, 'src=""', $img_attr);
-      if (
-        stripos($img_attr, "width=") !== false ||
-        stripos($img_attr, "width:") !== false ||
-        stripos($img_attr, "height=") !== false ||
-        stripos($img_attr, "height:") !== false
-      ) {
-        $load_src =
-          'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
-        $img_attr = substr_replace(
-          $img_attr,
-          $load_src,
-          stripos($img_attr, 'src=') + 5,
-          0
-        );
-      } else {
-        $load_src =
-          'data:image/gif;base64,R0lGODlh+gD6AIAAAP///wAAACH5BAEAAAAALAAAAAD6APoAAAL/hI+py+0Po5y02ouz3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+DwwKh8Si8YhMKpfMpvMJjUqn1Kr1is1qt9yu9wsOi8fksvmMTqvX7Lb7DY/L5/S6/Y7P6/f8vv8PGCg4SFhoeIiYqLjI2Oj4CBkpOUlZaXmJmam5ydnp+QkaKjpKWmp6ipqqusra6voKGys7S1tre4ubq7vL2+v7CxwsPExcbHyMnKy8zNzs/AwdLT1NXW19jZ2tvc3d7f0NHi4+Tl5ufo6err7O3u7+Dh8vP09fb3+Pn6+/z9/v/w8woMCBBAsaPIgwocKFDBs6fAgxosSJFCtavIgxo8aNVhw7evwIMqTIkSRLmjyJMqXKlSxbunwJM6bMmTRr2ryJM6fOnTx7+vwJNKjQoUSLGj2KNKnSpUybOn0KNarUqVSrWr2KNavWrVy7ev0KNqzYsWTLXigAADs=';
-        $img_attr = substr_replace(
-          $img_attr,
-          $load_src,
-          stripos($img_attr, 'src=') + 5,
-          0
-        );
-      }
-      $img_attr = 'data-src="' . $src_matches[2] . '" ' . $img_attr;
-    }
-    if (stripos($img_attr, "class=") !== false) {
-      $img_attr = substr_replace(
-        $img_attr,
-        'lazyload ',
-        stripos($img_attr, 'class=') + 7,
-        0
+    if (
+      preg_match('/(srcset="([^"]*)?")/i', $img_attr, $srcset_matches) !== 0
+    ) {
+      $srcset_attr = $srcset_matches[1];
+      $srcset_url = $srcset_matches[2];
+      $data_srcset = 'data-srcset="' . $srcset_url . '"';
+      $img_attr = str_replace(
+        $srcset_attr,
+        $data_srcset . " " . $rep_srcset,
+        $img_attr
       );
+    }
+    if (preg_match('/(class="([^"]*)?")/i', $img_attr, $class_matches) !== 0) {
+      $class_attr = $class_matches[1];
+      $class_val = $class_matches[2];
+      $class_out = 'class="lazy ' . $class_val . '"';
+      $img_attr = str_replace($class_attr, $class_out, $img_attr);
     } else {
-      $img_attr = 'class="lazyload" ' . $img_attr;
+      $img_attr .= ' class="lazy"';
     }
-    if (stripos($img_attr, "srcset=") !== false) {
-      $img_attr = str_replace('srcset=', 'data-srcset=', $img_attr);
+    return '<img ' . $img_attr . ' />';
+  }
+  function origami_lazyload_bg_process_callback($matches)
+  {
+    $left_attr = $matches[1];
+    $right_attr = $matches[5];
+    $bg_url = $matches[4];
+    $data_bg = 'data-bg="' . $bg_url . '"';
+    if (preg_match('/(class="([^"]*)?")/i', $left_attr, $class_matches) !== 0) {
+      $class_attr = $class_matches[1];
+      $class_val = $class_matches[2];
+      $class_out = 'class="lazy ' . $class_val . '"';
+      $left_attr = str_replace($class_attr, $class_out, $left_attr);
+    } else {
+      if (
+        preg_match('/(class="([^"]*)?")/i', $right_attr, $class_matches) !== 0
+      ) {
+        $class_attr = $class_matches[1];
+        $class_val = $class_matches[2];
+        $class_out = 'class="lazy ' . $class_val . '"';
+        $right_attr = str_replace($class_attr, $class_out, $right_attr);
+      } else {
+        $right_attr .= ' class="lazy"';
+      }
     }
-    return '<img ' . $img_attr . '>';
+    preg_match('/url\((.*)\)/i', $bg_url, $url_matches);
+    return '<' .
+      $left_attr .
+      $data_bg .
+      $right_attr .
+      '>' .
+      '<img class="lazy lazy-bg-loaded-flag" data-src="' .
+      $url_matches[1] .
+      '">';
   }
   function origami_lazyload_img_process($content)
   {
-    $regex = "/<img (.+)>/i";
+    $regex_img = "/<img (.+?)(|\/| )*>/i";
+    $regex_bg =
+      '/<([^>]*)style="((background-image|background)[ :]*(url\(.*\)))"([^>]*)>/i';
     $content = preg_replace_callback(
-      $regex,
+      $regex_img,
       "origami_lazyload_img_process_callback",
+      $content
+    );
+    $content = preg_replace_callback(
+      $regex_bg,
+      "origami_lazyload_bg_process_callback",
       $content
     );
     return $content;
