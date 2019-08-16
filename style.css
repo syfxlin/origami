@@ -1208,7 +1208,17 @@ body.menu-active .ori-footer {
 
 .timeline-title {
   font-size: 0.9rem;
+}
+
+.timeline-title a {
+  color: #3b4351;
   opacity: .85;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.timeline-title a:hover {
+  color: #5755d9;
 }
 
 .timeline-subtitle ul {

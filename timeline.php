@@ -84,7 +84,7 @@ $this_year = -1;
                         <div class="timeline-icon"></div>
                       </div>
                       <div class="timeline-content">
-                        <div class="timeline-title"><?php echo $item['post_title'] ?></div>
+                        <div class="timeline-title"><a href="<?php echo $item['post_link']; ?>"><?php echo $item['post_title']; ?></a></div>
                         <div class="text-gray timeline-subtitle">
                           <time><?php echo $item['post_date']; ?></time> • <span><?php echo $item['post_author']; ?></span> •
                           <span><?php echo $item['post_comments'] . __('条评论', 'origami'); ?></span> • 
