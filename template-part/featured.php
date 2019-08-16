@@ -18,7 +18,10 @@ if (is_author()) {
   $featured_subtitle = __("搜索", "origami");
 }
 ?>
-<section class="featured" style="background-image:url(https://ixk.me/bg.jpg)">
+<!-- TODO: 更改background链接，添加到设置 -->
+<!-- TODO: 调整成支持无大图布局 -->
+<section class="featured">
+    <div class="featured-image" style="background-image:url(https://ixk.me/bg.jpg)"></div>
     <div class="featured-container">
         <h1><?php echo $featured_title; ?></h1>
         <h2><?php echo $featured_subtitle; ?></h2>

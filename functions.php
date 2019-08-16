@@ -102,6 +102,11 @@ if (!is_admin()) {
     }
     // 只有在文章和页面中才会加载
     if (is_single() || is_page()) {
+      // Zooming
+      wp_enqueue_script(
+        'mermaid-script',
+        'https://cdn.jsdelivr.net/npm/zooming@2.1.1/build/zooming.min.js'
+      );
       // owo 表情加载
       if (get_option('origami_comment_owo', "true") == "true") {
         wp_enqueue_style(
@@ -131,6 +136,27 @@ if (!is_admin()) {
         'prism-script',
         get_template_directory_uri() . '/js/prism.js'
       );
+      // Other TODO: 添加到设置
+      wp_enqueue_script(
+        'katex-script-1',
+        'https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js'
+      );
+      wp_enqueue_script(
+        'katex-script-2',
+        'https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js'
+      );
+      wp_enqueue_style(
+        'katex-style',
+        'https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css'
+      );
+      wp_enqueue_script(
+        'mermaid-script',
+        'https://cdn.jsdelivr.net/npm/mermaid@8.0.0/dist/mermaid.min.js'
+      );
+      wp_enqueue_script(
+        'marked-script',
+        'https://cdn.jsdelivr.net/npm/marked@0.7.0/lib/marked.min.js'
+      );
     }
   }
   add_action('wp_footer', 'css_js_to_footer');
@@ -157,6 +183,38 @@ if (!is_admin()) {
     add_action('wp_footer', 'origami_remove_workbox', '101');
   }
 } else {
+  wp_enqueue_script(
+    'ace-script',
+    'https://cdn.jsdelivr.net/npm/ace-builds@1.4.4/src-noconflict/ace.min.js'
+  );
+  wp_enqueue_script(
+    'ace-script-lang-tool',
+    'https://cdn.jsdelivr.net/npm/ace-builds@1.4.4/src-noconflict/ext-language_tools.js'
+  );
+  wp_enqueue_style(
+    'prism-style',
+    get_template_directory_uri() . '/css/prism.css'
+  );
+  wp_enqueue_script(
+    'prism-script',
+    get_template_directory_uri() . '/js/prism.js'
+  );
+  wp_enqueue_script(
+    'katex-script-1',
+    'https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js'
+  );
+  wp_enqueue_script(
+    'katex-script-2',
+    'https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js'
+  );
+  wp_enqueue_style(
+    'katex-style',
+    'https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css'
+  );
+  wp_enqueue_script(
+    'mermaid-script',
+    'https://cdn.jsdelivr.net/npm/mermaid@8.0.0/dist/mermaid.min.js'
+  );
   // 加载后台编辑器样式
   function origami_mce_css($mce_css)
   {
@@ -203,9 +261,14 @@ function origami_load_blocks()
 {
   wp_enqueue_script(
     'origami_block_js',
-    get_template_directory_uri() . '/js/blocks.build.js',
+    get_template_directory_uri() . '/blocks/blocks.build.js',
     ['wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor'],
     true
+  );
+  wp_enqueue_style(
+    'origami_block_css',
+    get_template_directory_uri() . '/blocks/blocks.editor.build.css',
+    ['wp-edit-blocks']
   );
 }
 add_action('enqueue_block_editor_assets', 'origami_load_blocks');
@@ -240,7 +303,7 @@ function origami_async_script($tag, $handle, $src)
   }
   return $tag;
 }
-add_filter('script_loader_tag', 'origami_async_script', 10, 3);
+// add_filter('script_loader_tag', 'origami_async_script', 10, 3);
 
 /**
  * 块编辑器
@@ -316,7 +379,7 @@ add_action('comment_unapproved_to_approved', 'sirius_comment_approved');
 /**
  * 添加面包屑导航
  */
-function origami_breadcrumbs($echo = true)
+function origami_breadcrumbs($echo = true, $class = [])
 {
   $breadcrumbs = [];
   if ((!is_home() && !is_front_page()) || is_paged()) {
@@ -510,27 +573,47 @@ function origami_breadcrumbs($echo = true)
         $item['name'] .
         '</a></li>';
     }
-    echo '<ul class="breadcrumb">' . $str . '</ul>';
+    $class_str = " ";
+    if (is_array($class)) {
+      foreach ($class as $class_item) {
+        $class_str .= $class_item;
+        $class_str .= " ";
+      }
+    } elseif (is_string($class)) {
+      $class_str .= $class;
+    }
+    echo '<ul class="breadcrumb' . $class_str . '">' . $str . '</ul>';
   }
 }
 
 /**
- * 页脚时间
+ * 配置前端
  */
-function origami_footer_time_fun()
+function origami_frontend_config()
 {
-  $origami_footer_time = get_option(
-    'origami_footer_time',
-    '07/01/2017 00:00:09'
-  );
-  if ($origami_footer_time != '') {
-    echo '<script>window.footerTime = "' . $origami_footer_time . '";</script>';
-  }
+  // TODO: 添加到设置
+  $config = [
+    "markdownComment" => true,
+    "updateComment" =>
+      get_option("origami_enable_comment_update", "true") == "true",
+    "deleteComment" =>
+      get_option("origami_enable_comment_delete", "true") == "true",
+    "katex" => true,
+    "mermaid" => true,
+    "animate" => true,
+    "titleChange" => true,
+    "realTimeSearch" => true,
+    "owo" => get_option('origami_comment_owo', "true") == "true",
+    "footerTime" => get_option('origami_footer_time', false)
+  ];
+  echo "<script>window.origamiConfig = JSON.parse('" .
+    json_encode($config) .
+    "');</script>";
 }
-add_action('wp_footer', 'origami_footer_time_fun', 102);
+add_action('wp_footer', 'origami_frontend_config', 102);
 
 /**
- * 评论加@
+ * 评论加@ TODO: 该功能还未移植到Version 2.0
  */
 function origami_comment_add_at($comment_text, $comment = '')
 {
@@ -548,7 +631,7 @@ function origami_comment_add_at($comment_text, $comment = '')
 add_filter('comment_text', 'origami_comment_add_at', 10, 2);
 
 /**
- * 有新评论时发送邮件通知
+ * 有新评论时发送邮件通知 TODO: 该功能还未移植到Version2.0
  */
 function origami_comment_respond_email($comment_id, $comment)
 {
@@ -730,7 +813,7 @@ function origami_comment_respond_email($comment_id, $comment)
 // add_action('wp_insert_comment', 'origami_comment_respond_email', 99, 2);
 
 /**
- * 说说
+ * 说说 TODO: 该功能还未完成
  */
 function origami_shuoshuo_init()
 {
@@ -944,13 +1027,35 @@ function origami_get_other_thumbnail($post)
 {
   // <img.+src=[\'"]([^\'"]+)[\'"].+is-thum=[\'"]([^\'"]+)[\'"].*>
   $image_url = false;
-  preg_match_all(
-    '/\[image.+is-thum="true".+\]([^\'"]+)\[\/image]/i',
-    $post->post_content,
-    $matches
-  );
-  if (isset($matches[1][0])) {
-    $image_url = $matches[1][0];
+  if (
+    preg_match(
+      '/\[image.+is-thum="true".+\]([^\'"]+)\[\/image]/i',
+      $post->post_content
+    ) != 0
+  ) {
+    preg_match_all(
+      '/\[image.+is-thum="true".+\]([^\'"]+)\[\/image]/i',
+      $post->post_content,
+      $matches
+    );
+    if (isset($matches[1][0])) {
+      $image_url = $matches[1][0];
+    }
+  }
+  if (
+    preg_match(
+      '/<img.+src=[\'"]([^\'"]+)[\'"].+(data-|)is-thum=[\'"]true[\'"].*>/i',
+      $post->post_content
+    ) != 0
+  ) {
+    preg_match_all(
+      '/<img.+src=[\'"]([^\'"]+)[\'"].+(data-|)is-thum=[\'"]true[\'"].*>/i',
+      $post->post_content,
+      $matches
+    );
+    if (isset($matches[1][0])) {
+      $image_url = $matches[1][0];
+    }
   }
   return $image_url;
 }
@@ -1071,7 +1176,7 @@ require_once "include/config.class.php";
 $config_class = new OrigamiConfig();
 
 // 分页导航栏
-function origami_pagination()
+function origami_pagination($echo = true)
 {
   global $wp_query;
   $big = 999999999;
@@ -1100,7 +1205,11 @@ function origami_pagination()
     $paginate .= '</li>';
   }
   if ($paginate != '') {
-    echo '<ul class="pagination">' . $paginate . '</ul>';
+    if ($echo) {
+      echo '<ul class="pagination">' . $paginate . '</ul>';
+    } else {
+      return '<ul class="pagination">' . $paginate . '</ul>';
+    }
   }
 }
 

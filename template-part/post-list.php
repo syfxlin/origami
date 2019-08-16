@@ -42,7 +42,7 @@ $main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
     <?php foreach ($post_list as $item): ?>
       <article class="card" id="post-<?php echo $item['post_id']; ?>">
         <?php if ($item['post_image']): ?>
-          <div class="card-image post-thumb" style="background-image:url(<?php echo $item['post_image']; ?>)"></div>
+          <a class="card-image post-thumb" href="<?php echo $item['post_link'] ?>" style="background-image:url(<?php echo $item['post_image']; ?>)"></a>
         <?php endif; ?>
         <div class="card-header post-info">
           <h2 class="card-title"><a href="<?php echo $item['post_link']; ?>"><?php echo $item['post_title']; ?></a></h2>

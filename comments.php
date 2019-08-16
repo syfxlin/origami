@@ -12,6 +12,7 @@ $current_user_url = get_site_url() . '/author/' . $current_user->user_login;
 $comment_count = get_comments_number();
 
 if (comments_open()):
+    // TODO: 支持markdown的提示
 ?>
 
 <section id="comments-response" class="comments-response">
@@ -86,8 +87,6 @@ if (comments_open()):
         id="comments-list"
         data-postid="<?php echo $post->ID; ?>"
         data-pagecount="<?php echo get_comment_pages_count(); ?>"
-        data-update="<?php echo get_option("origami_enable_comment_update", "true"); ?>"
-        data-delete="<?php echo get_option("origami_enable_comment_delete", "true"); ?>"
     ></div>
     <div class="comments-nav">
         <label class="form-label">当前评论页：</label>

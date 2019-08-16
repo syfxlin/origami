@@ -1,3 +1,18 @@
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.08);
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
 body {
   background-color: #f8f9fa;
 }
@@ -9,6 +24,10 @@ code[class*="language-"] {
 
 a:visited {
   color: #5755d9;
+}
+
+a {
+  transition: color 0.3s;
 }
 
 .lazy {
@@ -66,6 +85,13 @@ a:visited {
   display: flex;
   z-index: 999;
   box-shadow: 0 0 20px #dfdfdf;
+}
+
+#read-progress {
+  position: absolute;
+  background: #5755d9;
+  width: 0;
+  transition-duration: 1s, 1s;
 }
 
 #main-content {
@@ -183,11 +209,19 @@ body:not(.home) #ori-title {
   white-space: nowrap;
 }
 
+/* TODO: 修复hover后二级sub-menu的位置 */
+#ori-h-menu li:hover > .sub-menu,
 #ori-h-menu .sub-menu:hover,
 #ori-h-menu a:hover + .sub-menu {
   visibility: visible;
   opacity: 1;
-  top: 2.7rem;
+  top: 1.7rem;
+}
+
+#ori-h-menu > li:hover > .sub-menu,
+#ori-h-menu > li > .sub-menu:hover,
+#ori-h-menu > li > a:hover + .sub-menu {
+  top: 2.3rem;
 }
 
 #ori-h-menu .sub-menu {
@@ -199,10 +233,14 @@ body:not(.home) #ori-title {
   top: 3.5rem;
   opacity: 0;
   visibility: hidden;
-  min-width: 15rem;
+  min-width: 10rem;
   padding: 0.5rem 1rem;
   box-shadow: 0 0.067em 1.2em rgba(0, 0, 0, 0.14);
   background-color: #fff;
+}
+
+#ori-h-menu .sub-menu li {
+  position: relative;
 }
 
 #ori-h-menu .sub-menu li:not(:last-child) {
@@ -222,6 +260,7 @@ body:not(.home) #ori-title {
 
 #ori-h-menu .sub-menu .sub-menu {
   margin-top: 0rem;
+  margin-left: 3rem;
 }
 
 #ori-h-search i {
@@ -297,6 +336,16 @@ body:not(.home) #ori-title {
   flex: 1;
 }
 
+.ori-search .navbar-center div {
+  flex: 1;
+}
+
+.ori-search-loading {
+  visibility: hidden;
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
 .ori-search .navbar-section div {
   margin: 1rem;
   height: 2rem;
@@ -331,8 +380,15 @@ body:not(.home) #ori-title {
 /* end */
 
 /* ori-h-menu-active */
-.ori-header.menu-active {
-  right: 30%;
+body.menu-active .ori-header {
+  right: 70%;
+}
+body.menu-active #main-content {
+  right: 70%;
+  position: absolute;
+}
+body.menu-active .ori-footer {
+  display: none;
 }
 /* end */
 
@@ -403,6 +459,7 @@ body:not(.home) #ori-title {
   flex-direction: column;
   align-items: center;
   padding: 3rem 0.8rem 0rem 0.8rem;
+  margin-top: 4rem;
 }
 
 .not-carousel h1 {
@@ -415,13 +472,20 @@ body:not(.home) #ori-title {
 
 .featured {
   height: 17rem;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
+  position: relative;
+}
+
+.featured-image {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .featured-container {
@@ -433,6 +497,7 @@ body:not(.home) #ori-title {
   justify-content: center;
   align-items: center;
   text-align: center;
+  z-index: 1;
 }
 
 .featured-container h1,
@@ -473,6 +538,7 @@ body:not(.home) #ori-title {
   right: 1rem;
   z-index: 10000;
   opacity: 0;
+  transition: opacity 0.5s;
 }
 
 .card {
@@ -1025,7 +1091,7 @@ body:not(.home) #ori-title {
 }
 
 .OwO {
-  margin-top: 2.4rem;
+  margin-top: 2.5rem;
   margin-left: 4.3rem;
   position: absolute !important;
   width: 30rem;
@@ -1127,6 +1193,39 @@ body:not(.home) #ori-title {
   transition: opacity 0.5s;
 }
 
+/* Timeline */
+.timeline-list .timeline-item {
+  padding-bottom: 0.7rem;
+}
+.timeline-list .timeline-content {
+  margin-top: -0.7rem;
+}
+
+.timeline-year {
+  font-size: 1.6rem;
+  opacity: .85;
+}
+
+.timeline-title {
+  font-size: 0.9rem;
+  opacity: .85;
+}
+
+.timeline-subtitle ul {
+  display: inline;
+  list-style: none;
+  margin: 0;
+  font-size: 0.7rem;
+}
+
+.timeline-subtitle ul li {
+  display: inline;
+}
+
+.timeline-subtitle li a {
+  color: #bcc3ce;
+}
+
 @media (max-width: 991px) {
   .tools-item {
     display: none;
@@ -1218,14 +1317,35 @@ body:not(.home) #ori-title {
   display: none;
 }
 
+.code-toolbar.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  z-index: 10001;
+  animation: elastic 1s;
+}
+
+.code-toolbar.fullscreen pre {
+  margin: 0;
+  border-radius: 0;
+  width: 100%;
+}
+
+.code-toolbar a:after {
+  height: 0;
+}
+
 @media (max-width: 991px) {
   #ori-h-menu {
     display: flex;
     position: fixed;
     flex-direction: column;
     top: 0;
-    right: -30%;
-    width: 30%;
+    right: -70%;
+    width: 70%;
     background: #fff;
     color: #5755d9;
     margin: 0;
@@ -1318,6 +1438,10 @@ body:not(.home) #ori-title {
 
   .comment-children .comment-children {
     margin-left: 0;
+  }
+
+  .ori-tools .toast {
+    max-width: 80%;
   }
 }
 
@@ -1449,5 +1573,67 @@ body:not(.home) #ori-title {
   0%,
   100% {
     transform: translate(0, 0) rotate(0);
+  }
+}
+
+.fadeInUp {
+  animation: fadeInUp 1s;
+}
+
+.fadeInDown {
+  animation: fadeInDown 1s;
+}
+
+.fadeIn {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 10rem, 0);
+    transform: translate3d(0, 10rem, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, -10rem, 0);
+    transform: translate3d(0, -10rem, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes elastic {
+  0% {
+    transform: scale(0);
+  }
+  55% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(1);
   }
 }

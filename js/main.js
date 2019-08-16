@@ -1,3 +1,16 @@
+// var origamiConfig = {
+//   markdownComment: true,
+//   updateComment: true,
+//   deleteComment: true,
+//   katex: true,
+//   mermaid: true,
+//   animate: true,
+//   titleChange: true,
+//   realTimeSearch: true,
+//   owo: true,
+//   footerTime: "07/01/2017 00:00:09"
+// };
+
 window.$httpGetParams = function(data) {
   var arr = [];
   for (var param in data) {
@@ -55,40 +68,47 @@ window.$getCookie = function(name) {
   else return null;
 };
 
-window.$getQuery = function(variable) {
+window.$getQuery = function(name) {
   var query = window.location.search.substring(1);
   var vars = query.split("&");
   for (var i = 0; i < vars.length; i++) {
     var pair = vars[i].split("=");
-    if (pair[0] == variable) {
+    if (pair[0] == name) {
       return pair[1];
     }
   }
   return false;
 };
 
+window.$getPath = function(index) {
+  let pathName = window.location.pathname.substring(1);
+  let pathArray = pathName.split("/");
+  return pathArray[index];
+};
+
 var origami = {};
 
 origami.titleChange = function() {
-  var origin = document.title;
-  var titleTime;
-  document.addEventListener("visibilitychange", function() {
-    if (document.hidden) {
-      document.title = "(つェ⊂)我藏好了哦~ " + origin;
-      clearTimeout(titleTime);
-    } else {
-      document.title = "(*´∇｀*) 被你发现啦~ " + origin;
-      titleTime = setTimeout(function() {
-        document.title = origin;
-      }, 2000);
-    }
-  });
+  if (origamiConfig.titleChange) {
+    var origin = document.title;
+    var titleTime;
+    document.addEventListener("visibilitychange", function() {
+      if (document.hidden) {
+        document.title = "(つェ⊂)我藏好了哦~ " + origin;
+        clearTimeout(titleTime);
+      } else {
+        document.title = "(*´∇｀*) 被你发现啦~ " + origin;
+        titleTime = setTimeout(function() {
+          document.title = origin;
+        }, 2000);
+      }
+    });
+  }
 };
 
 origami.scrollTop = function() {
   let scrollE = function() {
     let el = document.getElementById("scroll-top");
-    el.style.transition = "opacity 0.5s";
     if (window.scrollY > 50) {
       el.style.opacity = "1";
     } else {
@@ -107,6 +127,7 @@ origami.scrollTop = function() {
 
 origami.scrollChange = function() {
   if (!document.body.classList.contains("home")) return;
+  if (document.querySelector(".not-carousel")) return;
   let target =
     document.getElementsByClassName("carousel")[0].clientHeight -
     document.getElementsByClassName("ori-header")[0].clientHeight;
@@ -131,15 +152,14 @@ origami.mobileBtn = function() {
   document.getElementById("ori-h-m-btn").addEventListener("click", function() {
     let btn = document.getElementById("ori-h-m-btn");
     let menu = document.getElementById("ori-h-menu");
-    let header = document.getElementsByClassName("ori-header")[0];
     if (btn.classList.contains("active")) {
       btn.classList.remove("active");
       menu.classList.remove("active");
-      header.classList.remove("menu-active");
+      document.body.classList.remove("menu-active");
     } else {
       btn.classList.add("active");
       menu.classList.add("active");
-      header.classList.add("menu-active");
+      document.body.classList.add("menu-active");
     }
   });
 };
@@ -165,57 +185,74 @@ origami.searchBtn = function() {
 };
 
 origami.realTimeSearch = function() {
-  let page = 1;
   let ele = document.getElementById("ori-search-input");
-  let listEle = document.getElementById("search-list");
-  let timer = null;
-  let changeSearchList = function(list) {
-    listEle.innerHTML = "";
-    list.forEach(function(item) {
-      let str = "";
-      str += '<article class="card" id="post-' + item.id + '">';
-      str += '<div class="card-header post-info">';
-      str += '<h2 class="card-title">';
-      str += '<a href="' + item.link + '">' + item.title.rendered + "</a>";
-      str += "</h2>";
-      let d = new Date(item.date);
-      let dStr =
-        d.getFullYear() + "年" + d.getMonth() + "月" + d.getDate() + "日";
-      str +=
-        '<div class="card-subtitle text-gray"><time>' + dStr + "</time></div>";
-      str += "</div>";
-      str += '<div class="card-body">' + item.excerpt.rendered + "</div>";
-      str += '<div class="card-footer"><div class="post-tags"></div>';
-      str += '<a class="read-more" href="' + item.link + '">阅读更多</a>';
-      str += "</div>";
-      listEle.innerHTML += str;
-    });
-  };
-
-  ele.addEventListener("input", function() {
-    clearTimeout(timer);
-    timer = setTimeout(function() {
-      if (ele.value == "") {
-        listEle.innerHTML = "";
-        return;
-      }
-      $http({
-        url: "/wp-json/wp/v2/posts",
-        type: "GET",
-        dataType: "json",
-        data: {
-          search: ele.value,
-          page: page
-        },
-        success: function(response) {
-          changeSearchList(response);
-        },
-        error: function(status) {
-          console.log("状态码为" + status);
-        }
+  if (origamiConfig.realTimeSearch) {
+    let page = 1;
+    let listEle = document.getElementById("search-list");
+    let loadingEle = document.querySelector(".ori-search-loading");
+    let timer = null;
+    let changeSearchList = function(list) {
+      listEle.innerHTML = "";
+      list.forEach(function(item) {
+        let str = "";
+        str += '<article class="card" id="post-' + item.id + '">';
+        str += '<div class="card-header post-info">';
+        str += '<h2 class="card-title">';
+        str += '<a href="' + item.link + '">' + item.title.rendered + "</a>";
+        str += "</h2>";
+        let d = new Date(item.date);
+        let dStr =
+          d.getFullYear() + "年" + d.getMonth() + "月" + d.getDate() + "日";
+        str +=
+          '<div class="card-subtitle text-gray"><time>' +
+          dStr +
+          "</time></div>";
+        str += "</div>";
+        str += '<div class="card-body">' + item.excerpt.rendered + "</div>";
+        str += '<div class="card-footer"><div class="post-tags"></div>';
+        str += '<a class="read-more" href="' + item.link + '">阅读更多</a>';
+        str += "</div>";
+        listEle.innerHTML += str;
       });
-    }, 300);
-  });
+    };
+
+    ele.addEventListener("input", function() {
+      clearTimeout(timer);
+      timer = setTimeout(function() {
+        if (ele.value == "") {
+          listEle.innerHTML = "";
+          return;
+        }
+        loadingEle.style.visibility = "visible";
+        loadingEle.style.opacity = "1";
+        $http({
+          url: "/wp-json/wp/v2/posts",
+          type: "GET",
+          dataType: "json",
+          data: {
+            search: ele.value,
+            page: page
+          },
+          success: function(response) {
+            loadingEle.style.opacity = "0";
+            setTimeout(function() {
+              loadingEle.style.visibility = "hidden";
+            }, 500);
+            changeSearchList(response);
+          },
+          error: function(status) {
+            console.log("状态码为" + status);
+          }
+        });
+      }, 300);
+    });
+  } else {
+    ele.addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        window.location.href = window.location.origin + "/?s=" + ele.value;
+      }
+    });
+  }
 };
 
 origami.tools = {
@@ -287,8 +324,6 @@ origami.initComments = function() {
   let pageCount = listEle.getAttribute("data-pagecount");
   let pageOut = 1;
 
-  let enUpdate = listEle.getAttribute("data-update") == "true";
-  let enDelete = listEle.getAttribute("data-delete") == "true";
   let commentToHtml = function(item, lv = 1, option = {}) {
     let str = "";
     str +=
@@ -500,8 +535,8 @@ origami.initComments = function() {
     let newComment = new DOMParser()
       .parseFromString(
         commentToHtml(res, lv, {
-          enDelete: enDelete,
-          enUpdate: enUpdate,
+          enDelete: origamiConfig.deleteComment,
+          enUpdate: origamiConfig.updateComment,
           enCountdown: true
         }),
         "text/html"
@@ -564,10 +599,14 @@ origami.initComments = function() {
         console.log("输入有误");
         return;
       }
+      let content = contentEle.value;
+      if (origamiConfig.markdownComment) {
+        content = marked(content);
+      }
       let info = {
         post: submitEle.getAttribute("data-postid"),
         parent: submitEle.getAttribute("data-commentid"),
-        content: contentEle.value,
+        content: content,
         author_email: authorEmailEle.value,
         author_name: authorNameEle.value,
         author_url: document.getElementById("response-website").value
@@ -699,7 +738,7 @@ origami.initComments = function() {
 };
 
 origami.loadOwO = function() {
-  if (window.is_owo && document.querySelector(".OwO")) {
+  if (origamiConfig.owo && window.is_owo && document.querySelector(".OwO")) {
     new OwO({
       logo: "OωO表情",
       container: document.getElementsByClassName("OwO")[0],
@@ -713,10 +752,10 @@ origami.loadOwO = function() {
 };
 
 origami.buildFooterTime = function() {
-  if (!window.footerTime) return;
+  if (!origamiConfig.footerTime) return;
   var now = new Date();
   function createtime() {
-    var grt = new Date(window.footerTime);
+    var grt = new Date(origamiConfig.footerTime);
     now.setTime(now.getTime() + 250);
     days = (now - grt) / 1000 / 60 / 60 / 24;
     dnum = Math.floor(days);
@@ -746,6 +785,7 @@ origami.buildFooterTime = function() {
 origami.initTocbot = function() {
   let content = document.querySelector(".s-post-content,.p-post-content");
   let i = 0;
+  if (!content || !content.querySelectorAll("h1, h2, h3")) return;
   content.querySelectorAll("h1, h2, h3").forEach(function(item) {
     item.id = "title-" + i;
     i++;
@@ -755,6 +795,7 @@ origami.initTocbot = function() {
     tocSelector: ".toc",
     contentSelector: ".s-post-content,.p-post-content",
     headingSelector: "h1, h2, h3",
+    headingsOffset: offset + 21,
     onClick: function(e) {
       window.scrollTo({
         top: document.querySelector(e.target.hash).offsetTop - offset - 20,
@@ -888,7 +929,105 @@ window.notToStart = function() {
 //   });
 // };
 
+origami.codeFullScreen = function() {
+  document.querySelectorAll(".code-toolbar .toolbar").forEach(function(item) {
+    let toolbarItem = document.createElement("div");
+    toolbarItem.className = "toolbar-item";
+    let codeFullBtn = document.createElement("a");
+    codeFullBtn.className = "code-fullscreen";
+    codeFullBtn.textContent = "全屏";
+    toolbarItem.append(codeFullBtn);
+    item.append(toolbarItem);
+    let full = false;
+    codeFullBtn.addEventListener("click", function() {
+      if (!full) {
+        item.parentElement.classList.add("fullscreen");
+        codeFullBtn.textContent = "退出全屏";
+      } else {
+        item.parentElement.classList.remove("fullscreen");
+        codeFullBtn.textContent = "全屏";
+      }
+      full = !full;
+    });
+  });
+};
+
+origami.animate = function() {
+  if (origamiConfig.animate) {
+    document
+      .querySelectorAll(
+        ".home .post-list article, .home .post-pagination, .home .about-card, .home .sidebar-widget"
+      )
+      .forEach(function(item) {
+        if (window.pageYOffset + window.innerHeight > item.offsetTop) {
+          item.classList.add("fadeInUp");
+        } else {
+          let scroll = function() {
+            if (window.pageYOffset + window.innerHeight > item.offsetTop) {
+              item.classList.add("fadeInUp");
+              window.removeEventListener("scroll", scroll);
+            }
+          };
+          window.addEventListener("scroll", scroll);
+        }
+      });
+  }
+};
+
+origami.initMarkdown = function() {
+  if (origamiConfig.katex) {
+    try {
+      renderMathInElement(
+        document.querySelector(".s-post-content, .p-post-content"),
+        {
+          delimiters: [
+            { left: "$$", right: "$$" },
+            { left: "```math", right: "```" },
+            { left: "```tex", right: "```" }
+          ],
+          ignoredTags: ["script", "noscript", "style", "textarea", "code"]
+        }
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  if (origamiConfig.mermaid) {
+    try {
+      mermaid.init({ noteMargin: 10 }, ".xkeditor-mermaid");
+    } catch (error) {
+      console.log("May have errors");
+    }
+  }
+};
+
+origami.imgBox = function() {
+  new Zooming({
+    bgColor: "rgba(0,0,0,0.5)",
+    custemSize: "90%",
+    zIndex: 9999,
+    onOpen: function() {
+      origami.tools.timeToast("按住图片可放大", "success", 3000);
+    }
+  }).listen(".s-post-content img, .p-post-content img");
+};
+
+origami.readProgress = function() {
+  let progress = document.getElementById("read-progress");
+  progress.style.width =
+    (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100 +
+    "%";
+  window.addEventListener("scroll", function() {
+    progress.style.width =
+      (window.scrollY / (document.body.scrollHeight - window.innerHeight)) *
+        100 +
+      "%";
+  });
+};
+
 window.addEventListener("load", function() {
+  // document.querySelector(".carousel").classList.add("fadeInDown");
+  origami.animate();
   origami.comments = origami.initComments();
   origami.titleChange();
   origami.scrollTop();
@@ -901,12 +1040,16 @@ window.addEventListener("load", function() {
   origami.buildFooterTime();
   if (
     document.body.classList.contains("page") ||
-    document.body.classList.contains("post")
+    document.body.classList.contains("single")
   ) {
     origami.initTocbot();
     origami.readingTransfer();
     origami.tocToggle();
     origami.setPosition();
+    origami.codeFullScreen();
+    origami.initMarkdown();
+    origami.imgBox();
+    origami.readProgress();
   }
   new LazyLoad({
     elements_selector: ".lazy",

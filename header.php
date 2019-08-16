@@ -21,6 +21,7 @@ $ori_header_logo = get_option(
 </head>
 <body <?php body_class($GLOBALS['not_carousel'] ? 'not-car' : ''); ?>>
   <header class="p-fixed ori-header">
+    <div id="read-progress" class="progress"></div>
     <div class="ori-container navbar">
       <section class="navbar-section">
         <a href="<?php echo esc_url(home_url('/')); ?>" id="ori-logo">
@@ -57,10 +58,13 @@ $ori_header_logo = get_option(
           <div><i class="fa fa-search"></i></div>
         </section>
         <section class="navbar-center">
-          <input id="ori-search-input" class="form-input" type="text" placeholder="<?php echo __(
-            '快来寻找你要的文章ヾ(≧▽≦*)o...',
-            'origami'
-          ); ?>">
+          <div class="has-icon-right">
+            <input id="ori-search-input" class="form-input" type="text" placeholder="<?php echo __(
+              '快来寻找你要的文章ヾ(≧▽≦*)o...',
+              'origami'
+            ); ?>">
+            <i class="form-icon loading ori-search-loading"></i>
+          </div>
         </section>
         <section class="navbar-section">
           <div id="ori-h-search-close"><i class="fa fa-close"></i></div>

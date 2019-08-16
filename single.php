@@ -29,7 +29,7 @@ if ($post_item['post_image'] == false && origami_get_other_thumbnail($post)) {
 ?>
 <?php get_header(); ?>
 <div id="main-content">
-    <main class="ori-container columns grid-md single-post">
+    <main class="ori-container columns <?php echo $main_class; ?> grid-md single-post">
         <section class="s-post-container column <?php echo $post_list_class; ?>">
             <?php if ($post_item['post_image']): ?>
               <div class="s-post-thumb" style="background-image:url(<?php echo $post_item['post_image']; ?>)"></div>

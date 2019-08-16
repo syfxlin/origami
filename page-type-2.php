@@ -32,9 +32,10 @@ if ($post_item['post_image'] == false && origami_get_other_thumbnail($post)) {
 ?>
 <?php get_header(); ?>
 <div id="main-content">
-    <main class="ori-container columns grid-md single-post">
+    <main class="ori-container columns <?php echo $main_class; ?> grid-md single-post">
         <?php if ($post_item['post_image']): ?>
-            <div class="featured" style="background-image:url(<?php echo $post_item['post_image']; ?>)">
+            <div class="featured">
+                <div class="featured-image" style="background-image:url(<?php echo $post_item['post_image']; ?>)"></div>
                 <div class="featured-container">
                     <div class="p-post-info post-info">
                         <h2 class="card-title"><?php echo $post_item['post_title']; ?></h2>
