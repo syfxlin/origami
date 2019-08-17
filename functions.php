@@ -6,9 +6,7 @@ $origami_update_checker = new ThemeUpdateChecker(
   'https://lab.ixk.me/wordpress/Origami-theme-info.json'
 );
 
-/**
- * Update设置
- */
+// Update设置
 $origami_version = wp_get_theme()->get('Version');
 if ($origami_version <= 1.0 && !get_option('origami_first_install')) {
   update_option('origami_first_install', true);
@@ -30,18 +28,48 @@ if (get_option('origami_first_install') != "ok") {
   update_option('origami_first_install', 'ok');
 }
 
-/**
- * 加载功能
- */
+// 加载功能
 add_theme_support('title-tag');
 add_theme_support('post-thumbnails');
 add_filter('pre_option_link_manager_enabled', '__return_true');
 register_nav_menus(['main-menu' => esc_html__('主菜单')]);
 // 加载主题设置
 require get_template_directory() . '/include/customizer.php';
-/**
- * 加载主要资源
- */
+// 后台配置面板
+require_once "include/config.class.php";
+$config_class = new OrigamiConfig();
+
+// 配置前端
+function origami_frontend_config()
+{
+  $config = [
+    "markdownComment" =>
+      get_option("origami_markdown_comment", "true") == "true",
+    "updateComment" =>
+      get_option("origami_enable_comment_update", "true") == "true",
+    "deleteComment" =>
+      get_option("origami_enable_comment_delete", "true") == "true",
+    "katex" => get_option("origami_katex", "true") == "true",
+    "mermaid" => get_option("origami_mermaid", "true") == "true",
+    "animate" => get_option("origami_animate", "false") == "true",
+    "titleChange" => get_option("origami_title_change", "true") == "true",
+    "realTimeSearch" =>
+      get_option("origami_real_time_search", "true") == "true",
+    "owo" => get_option('origami_comment_owo', "true") == "true",
+    "footerTime" => get_option('origami_footer_time', false),
+    "liveChat" => get_option('origami_live_chat', false),
+    "background" => explode(",", get_option('origami_background', ""))
+  ];
+  echo "<script>window.origamiConfig = JSON.parse('" .
+    json_encode($config) .
+    "');</script>";
+}
+add_action('wp_footer', 'origami_frontend_config', 102);
+
+// 配置
+$assets_url = get_template_directory_uri();
+
+// 加载主要资源
 if (!is_admin()) {
   // 加载主要css/js文件
   wp_enqueue_style(
@@ -50,41 +78,33 @@ if (!is_admin()) {
     [],
     wp_get_theme()->get('Version')
   );
-  // wp_enqueue_script(
-  //   'jquery-script',
-  //   get_template_directory_uri() . '/js/jquery-3.3.1.min.js',
-  //   [],
-  //   wp_get_theme()->get('Version')
-  // );
   wp_enqueue_script(
     'origami-script',
-    get_template_directory_uri() . '/js/main.js',
+    $assets_url . '/js/main.js',
     [],
     wp_get_theme()->get('Version')
   );
   wp_enqueue_script(
     'qrcode-script',
-    get_template_directory_uri() . '/js/qrcode.min.js',
+    $assets_url . '/js/qrcode.min.js',
     [],
     wp_get_theme()->get('Version')
   );
   wp_enqueue_script(
     'form-script',
-    get_template_directory_uri() . '/js/SMValidator.min.js',
+    $assets_url . '/js/SMValidator.min.js',
     [],
     wp_get_theme()->get('Version')
   );
   function css_js_to_footer()
   {
+    global $assets_url;
     // fa图标
-    wp_enqueue_style(
-      'font-awesome',
-      get_template_directory_uri() . '/css/font-awesome.min.css'
-    );
+    wp_enqueue_style('font-awesome', $assets_url . '/css/font-awesome.min.css');
     // canvas-nest加载
     if (get_option('origami_canvas_nest', 'true') == "true") {
       echo '<script type="text/javascript" color="0,0,0" zindex="-1" opacity="0.5" count="99" src="' .
-        get_template_directory_uri() .
+        $assets_url .
         '/js/canvas-nest.js"></script>';
     }
     // Lazyload
@@ -95,68 +115,40 @@ if (!is_admin()) {
       $config = array('false');
     }
     if (strcmp($config[0], 'true') == 0) {
-      wp_enqueue_script(
-        'lazyload-script',
-        get_template_directory_uri() . '/js/lazyload.min.js'
-      );
+      wp_enqueue_script('lazyload-script', $assets_url . '/js/lazyload.min.js');
     }
     // 只有在文章和页面中才会加载
     if (is_single() || is_page()) {
       // Zooming
-      wp_enqueue_script(
-        'mermaid-script',
-        'https://cdn.jsdelivr.net/npm/zooming@2.1.1/build/zooming.min.js'
-      );
+      wp_enqueue_script('zooming-script', $assets_url . '/js/zooming.min.js');
       // owo 表情加载
       if (get_option('origami_comment_owo', "true") == "true") {
-        wp_enqueue_style(
-          'owo-style',
-          get_template_directory_uri() . '/css/OwO.min.css'
-        );
-        wp_enqueue_script(
-          'owo-script',
-          get_template_directory_uri() . '/js/OwO.min.js'
-        );
+        wp_enqueue_style('owo-style', $assets_url . '/css/OwO.min.css');
+        wp_enqueue_script('owo-script', $assets_url . '/js/OwO.min.js');
       }
       // 文章目录加载
-      wp_enqueue_style(
-        'tocbot-style',
-        get_template_directory_uri() . '/css/tocbot.css'
-      );
-      wp_enqueue_script(
-        'tocbot-script',
-        get_template_directory_uri() . '/js/tocbot.min.js'
-      );
+      wp_enqueue_style('tocbot-style', $assets_url . '/css/tocbot.css');
+      wp_enqueue_script('tocbot-script', $assets_url . '/js/tocbot.min.js');
       // 加载代码高亮
-      wp_enqueue_style(
-        'prism-style',
-        get_template_directory_uri() . '/css/prism.css'
-      );
-      wp_enqueue_script(
-        'prism-script',
-        get_template_directory_uri() . '/js/prism.js'
-      );
-      // Other TODO: 添加到设置
-      wp_enqueue_script(
-        'katex-script-1',
-        'https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js'
-      );
-      wp_enqueue_script(
-        'katex-script-2',
-        'https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js'
-      );
-      wp_enqueue_style(
-        'katex-style',
-        'https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css'
-      );
-      wp_enqueue_script(
-        'mermaid-script',
-        'https://cdn.jsdelivr.net/npm/mermaid@8.0.0/dist/mermaid.min.js'
-      );
-      wp_enqueue_script(
-        'marked-script',
-        'https://cdn.jsdelivr.net/npm/marked@0.7.0/lib/marked.min.js'
-      );
+      wp_enqueue_style('prism-style', $assets_url . '/css/prism.css');
+      wp_enqueue_script('prism-script', $assets_url . '/js/prism.js');
+      if (get_option('origami_katex', "true") == "true") {
+        wp_enqueue_script('katex-script-1', $assets_url . '/js/katex.min.js');
+        wp_enqueue_script(
+          'katex-script-2',
+          $assets_url . '/js/auto-render.min.js'
+        );
+        wp_enqueue_style(
+          'katex-style',
+          'https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css'
+        );
+      }
+      if (get_option('origami_mermaid', "true") == "true") {
+        wp_enqueue_script('mermaid-script', $assets_url . '/js/mermaid.min.js');
+      }
+      if (get_option('origami_markdown_comment', "true") == "true") {
+        wp_enqueue_script('marked-script', $assets_url . '/js/marked.min.js');
+      }
     }
   }
   add_action('wp_footer', 'css_js_to_footer');
@@ -191,30 +183,15 @@ if (!is_admin()) {
     'ace-script-lang-tool',
     'https://cdn.jsdelivr.net/npm/ace-builds@1.4.4/src-noconflict/ext-language_tools.js'
   );
-  wp_enqueue_style(
-    'prism-style',
-    get_template_directory_uri() . '/css/prism.css'
-  );
-  wp_enqueue_script(
-    'prism-script',
-    get_template_directory_uri() . '/js/prism.js'
-  );
-  wp_enqueue_script(
-    'katex-script-1',
-    'https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js'
-  );
-  wp_enqueue_script(
-    'katex-script-2',
-    'https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js'
-  );
+  wp_enqueue_style('prism-style', $assets_url . '/css/prism.css');
+  wp_enqueue_script('prism-script', $assets_url . '/js/prism.js');
+  wp_enqueue_script('katex-script-1', $assets_url . '/js/katex.min.js');
+  wp_enqueue_script('katex-script-2', $assets_url . '/js/auto-render.min.js');
   wp_enqueue_style(
     'katex-style',
     'https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css'
   );
-  wp_enqueue_script(
-    'mermaid-script',
-    'https://cdn.jsdelivr.net/npm/mermaid@8.0.0/dist/mermaid.min.js'
-  );
+  wp_enqueue_script('mermaid-script', $assets_url . '/js/mermaid.min.js');
   // 加载后台编辑器样式
   function origami_mce_css($mce_css)
   {
@@ -254,9 +231,7 @@ if (!is_admin()) {
   add_action('admin_menu', 'origami_copyright_warn');
 }
 
-/**
- * 添加古腾堡资源
- */
+// 添加古腾堡资源
 function origami_load_blocks()
 {
   wp_enqueue_script(
@@ -273,54 +248,7 @@ function origami_load_blocks()
 }
 add_action('enqueue_block_editor_assets', 'origami_load_blocks');
 
-/**
- * 异步加载JS
- */
-function origami_async_script($tag, $handle, $src)
-{
-  $async_method = 'async'; // 可将“async”改为“defer”
-  $async_exclusions = ""; // 排除的JS
-  $array_exclusions = !empty($async_exclusions)
-    ? explode(',', $async_exclusions)
-    : array();
-  if (false === is_admin()) {
-    if (!empty($array_exclusions)) {
-      foreach ($array_exclusions as $exclusion) {
-        $exclusion = trim($exclusion);
-        if ($exclusion != '') {
-          if (false !== strpos(strtolower($src), strtolower($exclusion))) {
-            return $tag;
-          }
-        }
-      }
-    }
-    $tag = str_replace(
-      'src=',
-      $async_method . "='" . $async_method . "' src=",
-      $tag
-    );
-    return $tag;
-  }
-  return $tag;
-}
-// add_filter('script_loader_tag', 'origami_async_script', 10, 3);
-
-/**
- * 块编辑器
- */
-// // 去除 Wordpress5.0 块编辑器样式
-// function fanly_remove_block_library_css()
-// {
-//     wp_dequeue_style('wp-block-library');
-// }
-// add_action('wp_enqueue_scripts', 'fanly_remove_block_library_css', 100);
-// // 禁用块编辑器
-// add_filter('use_block_editor_for_post', '__return_false');
-// remove_action('wp_enqueue_scripts', 'wp_common_block_scripts_and_styles');
-
-/**
- * 使评论支持图片
- */
+// 使评论支持图片
 function origami_auto_comment_image($comment)
 {
   global $allowedtags;
@@ -329,10 +257,7 @@ function origami_auto_comment_image($comment)
 }
 add_filter('preprocess_comment', 'origami_auto_comment_image');
 
-/*
- * 移除多余代码
- */
-// 去除默认jquery
+// 移除多余代码
 function remove_jquery()
 {
   wp_deregister_script('jquery');
@@ -376,9 +301,7 @@ remove_filter('oembed_dataparse', 'wp_filter_oembed_result', 10);
 remove_filter('oembed_response_data', 'get_oembed_response_data_rich', 10, 4);
 add_action('comment_unapproved_to_approved', 'sirius_comment_approved');
 
-/**
- * 添加面包屑导航
- */
+// 面包屑导航
 function origami_breadcrumbs($echo = true, $class = [])
 {
   $breadcrumbs = [];
@@ -586,54 +509,404 @@ function origami_breadcrumbs($echo = true, $class = [])
   }
 }
 
-/**
- * 配置前端
- */
-function origami_frontend_config()
+// 说说 TODO: 该功能还未完成
+function origami_shuoshuo_init()
 {
-  $config = [
-    "markdownComment" => get_option("origami_markdown_comment", "true") == "true",
-    "updateComment" =>
-      get_option("origami_enable_comment_update", "true") == "true",
-    "deleteComment" =>
-      get_option("origami_enable_comment_delete", "true") == "true",
-    "katex" => get_option("origami_katex", "true") == "true",
-    "mermaid" => get_option("origami_mermaid", "true") == "true",
-    "animate" => get_option("origami_animate", "false") == "true",
-    "titleChange" => get_option("origami_title_change", "true") == "true",
-    "realTimeSearch" => get_option("origami_real_time_search", "true") == "true",
-    "owo" => get_option('origami_comment_owo', "true") == "true",
-    "footerTime" => get_option('origami_footer_time', false),
-    "liveChat" => get_option('origami_live_chat', false),
-    "background" => explode(",", get_option('origami_background', ""))
-  ];
-  echo "<script>window.origamiConfig = JSON.parse('" .
-    json_encode($config) .
-    "');</script>";
+  $labels = array(
+    'name' => '说说',
+    'singular_name' => '说说',
+    'add_new' => '发表说说',
+    'add_new_item' => '发表说说',
+    'edit_item' => '编辑说说',
+    'new_item' => '新说说',
+    'view_item' => '查看说说',
+    'search_items' => '搜索说说',
+    'not_found' => '暂无说说',
+    'not_found_in_trash' => '没有已遗弃的说说',
+    'parent_item_colon' => '',
+    'menu_name' => '说说'
+  );
+  $args = array(
+    'labels' => $labels,
+    'public' => true,
+    'publicly_queryable' => true,
+    'show_ui' => true,
+    'show_in_menu' => true,
+    'exclude_from_search' => true,
+    'query_var' => true,
+    'rewrite' => true,
+    'capability_type' => 'post',
+    'has_archive' => false,
+    'hierarchical' => false,
+    'menu_position' => null,
+    'supports' => array('editor', 'author', 'title', 'custom-fields')
+  );
+  register_post_type('shuoshuo', $args);
 }
-add_action('wp_footer', 'origami_frontend_config', 102);
+add_action('init', 'origami_shuoshuo_init');
 
-/**
- * 评论加@ TODO: 该功能还未移植到Version 2.0
- */
-function origami_comment_add_at($comment_text, $comment = '')
+// 文末版权声明
+function origami_content_copyright($content)
 {
-  if ($comment->comment_parent > 0) {
-    $comment_text =
-      '<a rel="nofollow" class="comment_at" href="#comment-' .
-      $comment->comment_parent .
-      '">@' .
-      get_comment_author($comment->comment_parent) .
-      '：</a> ' .
-      $comment_text;
+  if (is_single() || is_feed()) {
+    $content .=
+      '<div id="content-copyright"><span style="font-weight:bold;text-shadow:0 1px 0 #ddd;font-size: 12px;">声明:</span><span style="font-size: 12px;">本文采用 <a rel="nofollow" href="http://creativecommons.org/licenses/by-nc-sa/3.0/" title="署名-非商业性使用-相同方式共享">BY-NC-SA</a> 协议进行授权，如无注明均为原创，转载请注明转自<a href="' .
+      home_url() .
+      '">' .
+      get_bloginfo('name') .
+      '</a><br>本文地址:<a rel="bookmark" title="' .
+      get_the_title() .
+      '" href="' .
+      get_permalink() .
+      '">' .
+      get_the_title() .
+      '</a></span></div>';
   }
-  return $comment_text;
+  return $content;
 }
-add_filter('comment_text', 'origami_comment_add_at', 10, 2);
+add_filter('the_content', 'origami_content_copyright');
 
-/**
- * 有新评论时发送邮件通知 TODO: 该功能还未移植到Version2.0
- */
+// 删除后台用来防止出现的问题pre块
+function origami_content_change($content)
+{
+  if (is_single() || is_feed() || is_page()) {
+    // 删除pre块
+    $matches = [];
+    $r = '/<pre class="fix-back-pre">([^<]+)<\/pre>/im';
+    if (preg_match_all($r, $content, $matches)) {
+      foreach ($matches[1] as $num => $con) {
+        $content = str_replace($matches[0][$num], $con, $content);
+      }
+    }
+  }
+  return $content;
+}
+add_filter('the_content', 'origami_content_change');
+
+// 短代码
+function origami_shortcode_process($content)
+{
+  return do_shortcode($content);
+}
+add_filter('the_content', 'origami_shortcode_process');
+
+// 短代码
+function origami_prism_shortcode_func($attr, $content)
+{
+  $line = 'clike';
+  $lang = '';
+  if (isset($attr['lang']) && !empty($attr['lang'])) {
+    $lang = $attr['lang'];
+  }
+  if (isset($attr['line-num']) && !empty($attr['line-num'])) {
+    $line_num = $attr['line-num'];
+  } else {
+    $line_num = 'true';
+  }
+  if (strcmp($line_num, 'true') == 0) {
+    $line = 'line-numbers ';
+  }
+  $output =
+    '<pre class="' .
+    $line .
+    'language-' .
+    $lang .
+    '"><code class=" language-' .
+    $lang .
+    '">' .
+    $content .
+    '</code></pre>';
+  return $output;
+}
+add_shortcode('prism', 'origami_prism_shortcode_func');
+
+// 短代码
+function origami_notebox_shortcode_func($attr, $content)
+{
+  $color = 'yellow';
+  if (isset($attr['color']) && !empty($attr['color'])) {
+    $color = $attr['color'];
+  }
+  $output =
+    '<div class="message-box ' . $color . '"><p>' . $content . '</p></div>';
+  return $output;
+}
+add_shortcode('notebox', 'origami_notebox_shortcode_func');
+
+// 短代码
+function origami_image_shortcode_func($attr, $content)
+{
+  $is_thum = 'false';
+  $is_show = 'true';
+  $alt = '';
+  if (isset($attr['is-thum']) && !empty($attr['is-thum'])) {
+    $is_thum = $attr['is-thum'];
+  }
+  if (
+    isset($attr['is-show']) &&
+    !empty($attr['is-show']) &&
+    strcmp($is_thum, 'true') == 0
+  ) {
+    $is_show = $attr['is-show'];
+  }
+  if (isset($attr['alt']) && !empty($attr['alt'])) {
+    $alt = $attr['alt'];
+  }
+  $src = $content;
+  $output =
+    '<img src="' . $src . '" alt="' . $alt . '" is-thum="' . $is_thum . '"';
+  if (strcmp($is_show, 'false') == 0) {
+    $output .= ' style="display:none"';
+  }
+  $output .= '>';
+  return $output;
+}
+add_shortcode('image', 'origami_image_shortcode_func');
+
+// 添加短代码按钮到文本编辑器
+function origami_add_html_button($mce_settings)
+{
+  ?>
+    <script type="text/javascript">
+        QTags.addButton('image_add', '添加图片', '[image alt="" is-thum="false" is-show="true"]', '[/image]');
+        QTags.addButton('prism', 'Prism.js - 代码高亮', '<pre class="fix-back-pre">[prism lang=""]', '[/prism]</pre>');
+        QTags.addButton('notebox_yellow', 'NoteBox - yellow', '[notebox color="yellow"]', '[/notebox]');
+        QTags.addButton('notebox_blue', 'NoteBox - blue', '[notebox color=blue]', '[/notebox]');
+        QTags.addButton('notebox_green', 'NoteBox - green', '[notebox color=green]', '[/notebox]');
+        QTags.addButton('notebox_red', 'NoteBox - red', '[notebox color=red]', '[/notebox]');
+    </script>
+    <?php
+}
+add_action('after_wp_tiny_mce', 'origami_add_html_button');
+
+function origami_register_button($buttons)
+{
+  array_push($buttons, " ", "origami_image_add");
+  array_push($buttons, " ", "prism");
+  array_push($buttons, " ", "notebox_yellow");
+  array_push($buttons, " ", "notebox_blue");
+  array_push($buttons, " ", "notebox_green");
+  array_push($buttons, " ", "notebox_red");
+  return $buttons;
+}
+function origami_add_plugin($plugin_array)
+{
+  $plugin_array['origami_image_add'] =
+    get_template_directory_uri() . '/js/shortcode.js';
+  $plugin_array['prism'] = get_template_directory_uri() . '/js/shortcode.js';
+  $plugin_array['notebox_yellow'] =
+    get_template_directory_uri() . '/js/shortcode.js';
+  $plugin_array['notebox_blue'] =
+    get_template_directory_uri() . '/js/shortcode.js';
+  $plugin_array['notebox_green'] =
+    get_template_directory_uri() . '/js/shortcode.js';
+  $plugin_array['notebox_red'] =
+    get_template_directory_uri() . '/js/shortcode.js';
+  return $plugin_array;
+}
+add_filter('mce_external_plugins', 'origami_add_plugin');
+add_filter('mce_buttons', 'origami_register_button');
+
+// 设置文章缩略图
+function origami_get_other_thumbnail($post)
+{
+  // <img.+src=[\'"]([^\'"]+)[\'"].+is-thum=[\'"]([^\'"]+)[\'"].*>
+  $image_url = false;
+  if (
+    preg_match(
+      '/\[image.+is-thum="true".+\]([^\'"]+)\[\/image]/i',
+      $post->post_content
+    ) != 0
+  ) {
+    preg_match_all(
+      '/\[image.+is-thum="true".+\]([^\'"]+)\[\/image]/i',
+      $post->post_content,
+      $matches
+    );
+    if (isset($matches[1][0])) {
+      $image_url = $matches[1][0];
+    }
+  }
+  if (
+    preg_match(
+      '/<img.+src=[\'"]([^\'"]+)[\'"].+(data-|)is-thum=[\'"]true[\'"].*>/i',
+      $post->post_content
+    ) != 0
+  ) {
+    preg_match_all(
+      '/<img.+src=[\'"]([^\'"]+)[\'"].+(data-|)is-thum=[\'"]true[\'"].*>/i',
+      $post->post_content,
+      $matches
+    );
+    if (isset($matches[1][0])) {
+      $image_url = $matches[1][0];
+    }
+  }
+  return $image_url;
+}
+
+// Lazyload图片
+function origami_lazyload_img()
+{
+  $config = get_option('origami_lazyload');
+  if (stripos($config, ',') == true) {
+    $config = explode(',', $config);
+  } else {
+    $config = array('false');
+  }
+  if (strcmp($config[0], 'true') == 0) {
+    if (strcmp($config[1], 'post') == 0) {
+      add_filter('the_content', 'origami_lazyload_img_process');
+    } else {
+      add_action('template_redirect', 'lazyload_img_obstart');
+      function lazyload_img_all($content)
+      {
+        return origami_lazyload_img_process($content);
+      }
+      ob_start('lazyload_img_all');
+    }
+  }
+  function origami_lazyload_img_process_callback($matches)
+  {
+    $rep_src = '';
+    $rep_srcset = '';
+    $img_attr = $matches[1];
+    str_replace("'", '"', $img_attr);
+    if (preg_match('/(src="([^"]*)?")/i', $img_attr, $src_matches) !== 0) {
+      $src_attr = $src_matches[1];
+      $src_url = $src_matches[2];
+      $data_src = 'data-src="' . $src_url . '"';
+      $img_attr = str_replace($src_attr, $data_src . " " . $rep_src, $img_attr);
+    }
+    if (
+      preg_match('/(srcset="([^"]*)?")/i', $img_attr, $srcset_matches) !== 0
+    ) {
+      $srcset_attr = $srcset_matches[1];
+      $srcset_url = $srcset_matches[2];
+      $data_srcset = 'data-srcset="' . $srcset_url . '"';
+      $img_attr = str_replace(
+        $srcset_attr,
+        $data_srcset . " " . $rep_srcset,
+        $img_attr
+      );
+    }
+    if (preg_match('/(class="([^"]*)?")/i', $img_attr, $class_matches) !== 0) {
+      $class_attr = $class_matches[1];
+      $class_val = $class_matches[2];
+      $class_out = 'class="lazy ' . $class_val . '"';
+      $img_attr = str_replace($class_attr, $class_out, $img_attr);
+    } else {
+      $img_attr .= ' class="lazy"';
+    }
+    return '<img ' . $img_attr . ' />';
+  }
+  function origami_lazyload_bg_process_callback($matches)
+  {
+    $left_attr = $matches[1];
+    $right_attr = $matches[5];
+    $bg_url = $matches[4];
+    $data_bg = 'data-bg="' . $bg_url . '"';
+    if (preg_match('/(class="([^"]*)?")/i', $left_attr, $class_matches) !== 0) {
+      $class_attr = $class_matches[1];
+      $class_val = $class_matches[2];
+      $class_out = 'class="lazy ' . $class_val . '"';
+      $left_attr = str_replace($class_attr, $class_out, $left_attr);
+    } else {
+      if (
+        preg_match('/(class="([^"]*)?")/i', $right_attr, $class_matches) !== 0
+      ) {
+        $class_attr = $class_matches[1];
+        $class_val = $class_matches[2];
+        $class_out = 'class="lazy ' . $class_val . '"';
+        $right_attr = str_replace($class_attr, $class_out, $right_attr);
+      } else {
+        $right_attr .= ' class="lazy"';
+      }
+    }
+    preg_match('/url\((.*)\)/i', $bg_url, $url_matches);
+    return '<' .
+      $left_attr .
+      $data_bg .
+      $right_attr .
+      '>' .
+      '<img class="lazy lazy-bg-loaded-flag" data-src="' .
+      $url_matches[1] .
+      '">';
+  }
+  function origami_lazyload_img_process($content)
+  {
+    $regex_img = "/<img (.+?)(|\/| )*>/i";
+    $regex_bg =
+      '/<([^>]*)style="((background-image|background)[ :]*(url\(.*\)))"([^>]*)>/i';
+    $content = preg_replace_callback(
+      $regex_img,
+      "origami_lazyload_img_process_callback",
+      $content
+    );
+    $content = preg_replace_callback(
+      $regex_bg,
+      "origami_lazyload_bg_process_callback",
+      $content
+    );
+    return $content;
+  }
+}
+add_action('template_redirect', 'origami_lazyload_img');
+
+// 分页导航栏
+function origami_pagination($echo = true)
+{
+  global $wp_query;
+  $big = 999999999;
+  $pagination_args = [
+    'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
+    'format' => '?paged=%#%',
+    'total' => $wp_query->max_num_pages,
+    'current' => max(1, get_query_var('paged')),
+    'show_all' => false,
+    'end_size' => 1,
+    'prev_next' => true,
+    'prev_text' => '<i class="icon icon-back"></i> ' . __('上一页', 'origami'),
+    'next_text' =>
+      __('下一页', 'origami') . ' <i class="icon icon-forward"></i>',
+    'type' => 'array',
+    'add_args' => false,
+    'add_fragment' => '',
+    'before_page_number' => '',
+    'after_page_number' => ''
+  ];
+  $page_arr = paginate_links($pagination_args);
+  $paginate = '';
+  foreach ($page_arr as $value) {
+    $paginate .= '<li class="page-item">';
+    $paginate .= $value;
+    $paginate .= '</li>';
+  }
+  if ($paginate != '') {
+    if ($echo) {
+      echo '<ul class="pagination">' . $paginate . '</ul>';
+    } else {
+      return '<ul class="pagination">' . $paginate . '</ul>';
+    }
+  }
+}
+
+//注册侧边栏
+function origami_sidebar_init()
+{
+  register_sidebar([
+    'name' => __('默认侧栏', 'origami'),
+    'description' => '默认的侧边栏',
+    'id' => 'default_sidebar',
+    'before_widget' => '<aside class="sidebar-widget %2$s">',
+    'after_widget' => '</aside>',
+    'before_title' => '<h3>',
+    'after_title' => '</h3>'
+  ]);
+}
+add_action('widgets_init', 'origami_sidebar_init');
+
+// 有新评论时发送邮件通知 TODO: 该功能还未移植到Version2.0
 function origami_comment_respond_email($comment_id, $comment)
 {
   if ($comment->comment_approved == 1 && $comment->comment_parent > 0) {
@@ -813,422 +1086,7 @@ function origami_comment_respond_email($comment_id, $comment)
 }
 // add_action('wp_insert_comment', 'origami_comment_respond_email', 99, 2);
 
-/**
- * 说说 TODO: 该功能还未完成
- */
-function origami_shuoshuo_init()
-{
-  $labels = array(
-    'name' => '说说',
-    'singular_name' => '说说',
-    'add_new' => '发表说说',
-    'add_new_item' => '发表说说',
-    'edit_item' => '编辑说说',
-    'new_item' => '新说说',
-    'view_item' => '查看说说',
-    'search_items' => '搜索说说',
-    'not_found' => '暂无说说',
-    'not_found_in_trash' => '没有已遗弃的说说',
-    'parent_item_colon' => '',
-    'menu_name' => '说说'
-  );
-  $args = array(
-    'labels' => $labels,
-    'public' => true,
-    'publicly_queryable' => true,
-    'show_ui' => true,
-    'show_in_menu' => true,
-    'exclude_from_search' => true,
-    'query_var' => true,
-    'rewrite' => true,
-    'capability_type' => 'post',
-    'has_archive' => false,
-    'hierarchical' => false,
-    'menu_position' => null,
-    'supports' => array('editor', 'author', 'title', 'custom-fields')
-  );
-  register_post_type('shuoshuo', $args);
-}
-add_action('init', 'origami_shuoshuo_init');
-
-/**
- * 文末版权声明
- */
-function origami_content_copyright($content)
-{
-  if (is_single() || is_feed()) {
-    $content .=
-      '<div id="content-copyright"><span style="font-weight:bold;text-shadow:0 1px 0 #ddd;font-size: 12px;">声明:</span><span style="font-size: 12px;">本文采用 <a rel="nofollow" href="http://creativecommons.org/licenses/by-nc-sa/3.0/" title="署名-非商业性使用-相同方式共享">BY-NC-SA</a> 协议进行授权，如无注明均为原创，转载请注明转自<a href="' .
-      home_url() .
-      '">' .
-      get_bloginfo('name') .
-      '</a><br>本文地址:<a rel="bookmark" title="' .
-      get_the_title() .
-      '" href="' .
-      get_permalink() .
-      '">' .
-      get_the_title() .
-      '</a></span></div>';
-  }
-  return $content;
-}
-add_filter('the_content', 'origami_content_copyright');
-
-/**
- * 1.删除后台用来防止出现的问题pre块
- */
-function origami_content_change($content)
-{
-  if (is_single() || is_feed() || is_page()) {
-    // 删除pre块
-    $matches = [];
-    $r = '/<pre class="fix-back-pre">([^<]+)<\/pre>/im';
-    if (preg_match_all($r, $content, $matches)) {
-      foreach ($matches[1] as $num => $con) {
-        $content = str_replace($matches[0][$num], $con, $content);
-      }
-    }
-  }
-  return $content;
-}
-add_filter('the_content', 'origami_content_change');
-
-/**
- * 短代码 - 处理
- */
-function origami_shortcode_process($content)
-{
-  return do_shortcode($content);
-}
-add_filter('the_content', 'origami_shortcode_process');
-
-/**
- * 短代码 - 添加
- */
-function origami_prism_shortcode_func($attr, $content)
-{
-  $line = 'clike';
-  $lang = '';
-  if (isset($attr['lang']) && !empty($attr['lang'])) {
-    $lang = $attr['lang'];
-  }
-  if (isset($attr['line-num']) && !empty($attr['line-num'])) {
-    $line_num = $attr['line-num'];
-  } else {
-    $line_num = 'true';
-  }
-  if (strcmp($line_num, 'true') == 0) {
-    $line = 'line-numbers ';
-  }
-  $output =
-    '<pre class="' .
-    $line .
-    'language-' .
-    $lang .
-    '"><code class=" language-' .
-    $lang .
-    '">' .
-    $content .
-    '</code></pre>';
-  return $output;
-}
-add_shortcode('prism', 'origami_prism_shortcode_func');
-
-function origami_notebox_shortcode_func($attr, $content)
-{
-  $color = 'yellow';
-  if (isset($attr['color']) && !empty($attr['color'])) {
-    $color = $attr['color'];
-  }
-  $output =
-    '<div class="message-box ' . $color . '"><p>' . $content . '</p></div>';
-  return $output;
-}
-add_shortcode('notebox', 'origami_notebox_shortcode_func');
-
-function origami_image_shortcode_func($attr, $content)
-{
-  $is_thum = 'false';
-  $is_show = 'true';
-  $alt = '';
-  if (isset($attr['is-thum']) && !empty($attr['is-thum'])) {
-    $is_thum = $attr['is-thum'];
-  }
-  if (
-    isset($attr['is-show']) &&
-    !empty($attr['is-show']) &&
-    strcmp($is_thum, 'true') == 0
-  ) {
-    $is_show = $attr['is-show'];
-  }
-  if (isset($attr['alt']) && !empty($attr['alt'])) {
-    $alt = $attr['alt'];
-  }
-  $src = $content;
-  $output =
-    '<img src="' . $src . '" alt="' . $alt . '" is-thum="' . $is_thum . '"';
-  if (strcmp($is_show, 'false') == 0) {
-    $output .= ' style="display:none"';
-  }
-  $output .= '>';
-  return $output;
-}
-add_shortcode('image', 'origami_image_shortcode_func');
-
-/**
- * 添加短代码按钮到文本编辑器
- */
-function origami_add_html_button($mce_settings)
-{
-  ?>
-    <script type="text/javascript">
-        QTags.addButton('image_add', '添加图片', '[image alt="" is-thum="false" is-show="true"]', '[/image]');
-        QTags.addButton('prism', 'Prism.js - 代码高亮', '<pre class="fix-back-pre">[prism lang=""]', '[/prism]</pre>');
-        QTags.addButton('notebox_yellow', 'NoteBox - yellow', '[notebox color="yellow"]', '[/notebox]');
-        QTags.addButton('notebox_blue', 'NoteBox - blue', '[notebox color=blue]', '[/notebox]');
-        QTags.addButton('notebox_green', 'NoteBox - green', '[notebox color=green]', '[/notebox]');
-        QTags.addButton('notebox_red', 'NoteBox - red', '[notebox color=red]', '[/notebox]');
-    </script>
-    <?php
-}
-add_action('after_wp_tiny_mce', 'origami_add_html_button');
-
-function origami_register_button($buttons)
-{
-  array_push($buttons, " ", "origami_image_add");
-  array_push($buttons, " ", "prism");
-  array_push($buttons, " ", "notebox_yellow");
-  array_push($buttons, " ", "notebox_blue");
-  array_push($buttons, " ", "notebox_green");
-  array_push($buttons, " ", "notebox_red");
-  return $buttons;
-}
-function origami_add_plugin($plugin_array)
-{
-  $plugin_array['origami_image_add'] =
-    get_template_directory_uri() . '/js/shortcode.js';
-  $plugin_array['prism'] = get_template_directory_uri() . '/js/shortcode.js';
-  $plugin_array['notebox_yellow'] =
-    get_template_directory_uri() . '/js/shortcode.js';
-  $plugin_array['notebox_blue'] =
-    get_template_directory_uri() . '/js/shortcode.js';
-  $plugin_array['notebox_green'] =
-    get_template_directory_uri() . '/js/shortcode.js';
-  $plugin_array['notebox_red'] =
-    get_template_directory_uri() . '/js/shortcode.js';
-  return $plugin_array;
-}
-add_filter('mce_external_plugins', 'origami_add_plugin');
-add_filter('mce_buttons', 'origami_register_button');
-
-/**
- * 设置文章缩略图
- */
-function origami_get_other_thumbnail($post)
-{
-  // <img.+src=[\'"]([^\'"]+)[\'"].+is-thum=[\'"]([^\'"]+)[\'"].*>
-  $image_url = false;
-  if (
-    preg_match(
-      '/\[image.+is-thum="true".+\]([^\'"]+)\[\/image]/i',
-      $post->post_content
-    ) != 0
-  ) {
-    preg_match_all(
-      '/\[image.+is-thum="true".+\]([^\'"]+)\[\/image]/i',
-      $post->post_content,
-      $matches
-    );
-    if (isset($matches[1][0])) {
-      $image_url = $matches[1][0];
-    }
-  }
-  if (
-    preg_match(
-      '/<img.+src=[\'"]([^\'"]+)[\'"].+(data-|)is-thum=[\'"]true[\'"].*>/i',
-      $post->post_content
-    ) != 0
-  ) {
-    preg_match_all(
-      '/<img.+src=[\'"]([^\'"]+)[\'"].+(data-|)is-thum=[\'"]true[\'"].*>/i',
-      $post->post_content,
-      $matches
-    );
-    if (isset($matches[1][0])) {
-      $image_url = $matches[1][0];
-    }
-  }
-  return $image_url;
-}
-
-/**
- * Lazyload图片
- */
-function origami_lazyload_img()
-{
-  $config = get_option('origami_lazyload');
-  if (stripos($config, ',') == true) {
-    $config = explode(',', $config);
-  } else {
-    $config = array('false');
-  }
-  if (strcmp($config[0], 'true') == 0) {
-    if (strcmp($config[1], 'post') == 0) {
-      add_filter('the_content', 'origami_lazyload_img_process');
-    } else {
-      add_action('template_redirect', 'lazyload_img_obstart');
-      function lazyload_img_all($content)
-      {
-        return origami_lazyload_img_process($content);
-      }
-      ob_start('lazyload_img_all');
-    }
-  }
-  function origami_lazyload_img_process_callback($matches)
-  {
-    $rep_src = '';
-    $rep_srcset = '';
-    $img_attr = $matches[1];
-    str_replace("'", '"', $img_attr);
-    if (preg_match('/(src="([^"]*)?")/i', $img_attr, $src_matches) !== 0) {
-      $src_attr = $src_matches[1];
-      $src_url = $src_matches[2];
-      $data_src = 'data-src="' . $src_url . '"';
-      $img_attr = str_replace($src_attr, $data_src . " " . $rep_src, $img_attr);
-    }
-    if (
-      preg_match('/(srcset="([^"]*)?")/i', $img_attr, $srcset_matches) !== 0
-    ) {
-      $srcset_attr = $srcset_matches[1];
-      $srcset_url = $srcset_matches[2];
-      $data_srcset = 'data-srcset="' . $srcset_url . '"';
-      $img_attr = str_replace(
-        $srcset_attr,
-        $data_srcset . " " . $rep_srcset,
-        $img_attr
-      );
-    }
-    if (preg_match('/(class="([^"]*)?")/i', $img_attr, $class_matches) !== 0) {
-      $class_attr = $class_matches[1];
-      $class_val = $class_matches[2];
-      $class_out = 'class="lazy ' . $class_val . '"';
-      $img_attr = str_replace($class_attr, $class_out, $img_attr);
-    } else {
-      $img_attr .= ' class="lazy"';
-    }
-    return '<img ' . $img_attr . ' />';
-  }
-  function origami_lazyload_bg_process_callback($matches)
-  {
-    $left_attr = $matches[1];
-    $right_attr = $matches[5];
-    $bg_url = $matches[4];
-    $data_bg = 'data-bg="' . $bg_url . '"';
-    if (preg_match('/(class="([^"]*)?")/i', $left_attr, $class_matches) !== 0) {
-      $class_attr = $class_matches[1];
-      $class_val = $class_matches[2];
-      $class_out = 'class="lazy ' . $class_val . '"';
-      $left_attr = str_replace($class_attr, $class_out, $left_attr);
-    } else {
-      if (
-        preg_match('/(class="([^"]*)?")/i', $right_attr, $class_matches) !== 0
-      ) {
-        $class_attr = $class_matches[1];
-        $class_val = $class_matches[2];
-        $class_out = 'class="lazy ' . $class_val . '"';
-        $right_attr = str_replace($class_attr, $class_out, $right_attr);
-      } else {
-        $right_attr .= ' class="lazy"';
-      }
-    }
-    preg_match('/url\((.*)\)/i', $bg_url, $url_matches);
-    return '<' .
-      $left_attr .
-      $data_bg .
-      $right_attr .
-      '>' .
-      '<img class="lazy lazy-bg-loaded-flag" data-src="' .
-      $url_matches[1] .
-      '">';
-  }
-  function origami_lazyload_img_process($content)
-  {
-    $regex_img = "/<img (.+?)(|\/| )*>/i";
-    $regex_bg =
-      '/<([^>]*)style="((background-image|background)[ :]*(url\(.*\)))"([^>]*)>/i';
-    $content = preg_replace_callback(
-      $regex_img,
-      "origami_lazyload_img_process_callback",
-      $content
-    );
-    $content = preg_replace_callback(
-      $regex_bg,
-      "origami_lazyload_bg_process_callback",
-      $content
-    );
-    return $content;
-  }
-}
-add_action('template_redirect', 'origami_lazyload_img');
-
-// New Function.php
-// 后台配置面板
-require_once "include/config.class.php";
-$config_class = new OrigamiConfig();
-
-// 分页导航栏
-function origami_pagination($echo = true)
-{
-  global $wp_query;
-  $big = 999999999;
-  $pagination_args = [
-    'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
-    'format' => '?paged=%#%',
-    'total' => $wp_query->max_num_pages,
-    'current' => max(1, get_query_var('paged')),
-    'show_all' => false,
-    'end_size' => 1,
-    'prev_next' => true,
-    'prev_text' => '<i class="icon icon-back"></i> ' . __('上一页', 'origami'),
-    'next_text' =>
-      __('下一页', 'origami') . ' <i class="icon icon-forward"></i>',
-    'type' => 'array',
-    'add_args' => false,
-    'add_fragment' => '',
-    'before_page_number' => '',
-    'after_page_number' => ''
-  ];
-  $page_arr = paginate_links($pagination_args);
-  $paginate = '';
-  foreach ($page_arr as $value) {
-    $paginate .= '<li class="page-item">';
-    $paginate .= $value;
-    $paginate .= '</li>';
-  }
-  if ($paginate != '') {
-    if ($echo) {
-      echo '<ul class="pagination">' . $paginate . '</ul>';
-    } else {
-      return '<ul class="pagination">' . $paginate . '</ul>';
-    }
-  }
-}
-
-//注册侧边栏
-function origami_sidebar_init()
-{
-  register_sidebar([
-    'name' => __('默认侧栏', 'origami'),
-    'description' => '默认的侧边栏',
-    'id' => 'default_sidebar',
-    'before_widget' => '<aside class="sidebar-widget %2$s">',
-    'after_widget' => '</aside>',
-    'before_title' => '<h3>',
-    'after_title' => '</h3>'
-  ]);
-}
-add_action('widgets_init', 'origami_sidebar_init');
-
+// 标记评论作者
 function comment_mark($comment)
 {
   /* 评论者标签 - start */
@@ -1292,6 +1150,19 @@ function comment_mark($comment)
   /* 评论者标签 - end */
 }
 
+// 评论加@
+function origami_comment_add_at($comment_text, $comment_parent)
+{
+  $comment_text =
+    '<a rel="nofollow" class="comment_at" href="#comment-' .
+    $comment_parent->comment_ID .
+    '">@' .
+    $comment_parent->comment_author .
+    '：</a> ' .
+    $comment_text;
+  return $comment_text;
+}
+
 // REST API 评论读取
 function origami_rest_get_comments(WP_REST_Request $request)
 {
@@ -1338,6 +1209,10 @@ function origami_rest_get_comments(WP_REST_Request $request)
         ]
       );
       $item->comment_mark = comment_mark($item);
+      $item->comment_content = origami_comment_add_at(
+        $item->comment_content,
+        $tmp
+      );
       unset($item->comment_author_email);
       unset($item->comment_author_IP);
     }
