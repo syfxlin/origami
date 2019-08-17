@@ -73,7 +73,7 @@ $main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
       <?php origami_pagination();?>
     </section>
   </section>
-  <aside class="column <?php echo $sidebar_class; ?>">
+  <aside class="column ori-sidebar <?php echo $sidebar_class; ?>">
     <?php get_sidebar(); ?>
   </aside>
 </main>

@@ -591,20 +591,21 @@ function origami_breadcrumbs($echo = true, $class = [])
  */
 function origami_frontend_config()
 {
-  // TODO: 添加到设置
   $config = [
-    "markdownComment" => true,
+    "markdownComment" => get_option("origami_markdown_comment", "true") == "true",
     "updateComment" =>
       get_option("origami_enable_comment_update", "true") == "true",
     "deleteComment" =>
       get_option("origami_enable_comment_delete", "true") == "true",
-    "katex" => true,
-    "mermaid" => true,
-    "animate" => true,
-    "titleChange" => true,
-    "realTimeSearch" => true,
+    "katex" => get_option("origami_katex", "true") == "true",
+    "mermaid" => get_option("origami_mermaid", "true") == "true",
+    "animate" => get_option("origami_animate", "false") == "true",
+    "titleChange" => get_option("origami_title_change", "true") == "true",
+    "realTimeSearch" => get_option("origami_real_time_search", "true") == "true",
     "owo" => get_option('origami_comment_owo', "true") == "true",
-    "footerTime" => get_option('origami_footer_time', false)
+    "footerTime" => get_option('origami_footer_time', false),
+    "liveChat" => get_option('origami_live_chat', false),
+    "background" => explode(",", get_option('origami_background', ""))
   ];
   echo "<script>window.origamiConfig = JSON.parse('" .
     json_encode($config) .

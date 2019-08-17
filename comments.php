@@ -43,7 +43,8 @@ if (comments_open()):
                     "class" => "response-avatar"
                 ]
             ); ?>
-            <textarea class="form-input" id="response-text" data-rule="required(请输入内容)|/.{2,}/输入的评论太短|disinput|focus" placeholder="<?php echo __('加入讨论', 'origami'); ?>"></textarea>
+            <textarea class="form-input" id="response-text" placeholder="<?php echo __('加入讨论', 'origami'); ?>"></textarea>
+            <img src="<?php echo get_template_directory_uri() . "/image/comment-1.png" ?>" class="response-img">
             <div class="OwO"></div>
         </div>
         <div class="response-footer">

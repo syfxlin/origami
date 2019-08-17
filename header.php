@@ -2,7 +2,17 @@
 $ori_header_logo = get_option(
   'origami_header_icon',
   'https://blog.ixk.me/wp-content/uploads/2018/05/blog-44.png'
-); ?>
+);
+
+if (!isset($GLOBALS['layout'])) {
+  $GLOBALS['layout'] = get_option('origami_layout_style', 'layout1');
+}
+
+$body_class = "";
+$body_class .= $GLOBALS['not_carousel'] ? 'not-car' : '';
+$body_class .= " ";
+$body_class .= $GLOBALS['layout'];
+?>
 
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -19,7 +29,7 @@ $ori_header_logo = get_option(
     <meta http-equiv="Content-Security-Policy" content="block-all-mixed-content">
   <?php endif; ?>
 </head>
-<body <?php body_class($GLOBALS['not_carousel'] ? 'not-car' : ''); ?>>
+<body <?php body_class($body_class); ?>>
   <header class="p-fixed ori-header">
     <div id="read-progress" class="progress"></div>
     <div class="ori-container navbar">
@@ -75,3 +85,5 @@ $ori_header_logo = get_option(
       </div>
     </section>
   </header>
+  <!-- Window inner background -->
+  <section class="ori-background"></section>

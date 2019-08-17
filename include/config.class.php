@@ -329,6 +329,82 @@ class OrigamiConfig
       ]
     );
 
+    register_setting("origami_style", "origami_featured_image");
+    register_setting("origami_style", "origami_timeline_sidebar");
+    register_setting("origami_style", "origami_timeline_image");
+    register_setting("origami_style", "origami_background"); // img url,img url
+    register_setting("origami_style", "origami_animate"); // true/false
+    add_settings_section(
+      'origami_style_other',
+      __('6.其他设置', 'origami'),
+      [&$this, 'origami_section'],
+      'origami_style'
+    );
+    add_settings_field(
+      'origami_featured_image',
+      __('归档/分类/标签页的特色图', 'origami'),
+      [&$this, 'settings_field_input_media'],
+      'origami_style',
+      'origami_style_other',
+      [
+        'field' => 'origami_featured_image',
+        'value' => '',
+        'type' => 'text'
+      ]
+    );
+    add_settings_field(
+      'origami_timeline_sidebar',
+      __('开启时光轴侧栏', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_style',
+      'origami_style_other',
+      [
+        'field' => 'origami_timeline_sidebar',
+        'value' => 'true',
+        'type' => 'text',
+        'description' => '填入true为开，false为关'
+      ]
+    );
+    add_settings_field(
+      'origami_timeline_image',
+      __('时光轴特色图片', 'origami'),
+      [&$this, 'settings_field_input_media'],
+      'origami_style',
+      'origami_style_other',
+      [
+        'field' => 'origami_timeline_image',
+        'value' => '',
+        'type' => 'text'
+      ]
+    );
+    add_settings_field(
+      'origami_background',
+      __('背景图', 'origami'),
+      [&$this, 'settings_field_textarea'],
+      'origami_style',
+      'origami_style_other',
+      [
+        'field' => 'origami_background',
+        'value' => '',
+        'type' => 'textarea',
+        'description' => '填入图片的地址，使用逗号分割'
+      ]
+    );
+    add_settings_field(
+      'origami_animate',
+      __('开启动画', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_style',
+      'origami_style_other',
+      [
+        'field' => 'origami_animate',
+        'value' => 'false',
+        'type' => 'text',
+        'description' =>
+          '注意此选项是开启一些影响性能的动画效果，正常情况下请不要开启(填入true为开，false为关)'
+      ]
+    );
+
     // 功能
     register_setting("origami_fun", "origami_other_friends");
     add_settings_section(
@@ -358,6 +434,7 @@ class OrigamiConfig
     register_setting("origami_fun", "origami_enable_comment_delete");
     register_setting("origami_fun", "origami_enable_comment_time");
     register_setting("origami_fun", "origami_comment_owo");
+    register_setting("origami_fun", "origami_markdown_comment");
     add_settings_section(
       'origami_fun_comment',
       __('2.评论设置', 'origami'),
@@ -425,10 +502,23 @@ class OrigamiConfig
       'origami_fun_comment',
       [
         'field' => 'origami_comment_owo',
-        'value' => '5',
+        'value' => 'true',
         'type' => 'text',
         'description' =>
           '是否开启评论区的OwO表情，默认为true(true为开，false为关)'
+      ]
+    );
+    add_settings_field(
+      'origami_markdown_comment',
+      __('Markdown评论', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_comment',
+      [
+        'field' => 'origami_markdown_comment',
+        'value' => 'true',
+        'type' => 'text',
+        'description' => '是否开启Markdown评论，默认为true(true为开，false为关)'
       ]
     );
 
@@ -437,6 +527,11 @@ class OrigamiConfig
     register_setting("origami_fun", "origami_workbox");
     register_setting("origami_fun", "origami_lazyload");
     register_setting("origami_fun", "origami_block_mixed");
+    register_setting("origami_fun", "origami_katex");
+    register_setting("origami_fun", "origami_mermaid");
+    register_setting("origami_fun", "origami_title_change");
+    register_setting("origami_fun", "origami_real_time_search");
+    register_setting("origami_fun", "origami_live_chat");
     add_settings_section(
       'origami_fun_other',
       __('3.其他设置', 'origami'),
@@ -496,6 +591,71 @@ class OrigamiConfig
         'type' => 'text',
         'description' =>
           '是否开启Lazyload加载图片，默认为false，格式为[true/false,all/post]'
+      ]
+    );
+    add_settings_field(
+      'origami_katex',
+      __('开启Katex支持', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_other',
+      [
+        'field' => 'origami_katex',
+        'value' => '5',
+        'type' => 'text',
+        'description' => 'true为开，false为关'
+      ]
+    );
+    add_settings_field(
+      'origami_mermaid',
+      __('开启流程图/时序图/甘特图支持', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_other',
+      [
+        'field' => 'origami_mermaid',
+        'value' => '5',
+        'type' => 'text',
+        'description' => 'true为开，false为关'
+      ]
+    );
+    add_settings_field(
+      'origami_title_change',
+      __('开启网页标题改变', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_other',
+      [
+        'field' => 'origami_title_change',
+        'value' => '5',
+        'type' => 'text',
+        'description' => 'true为开，false为关'
+      ]
+    );
+    add_settings_field(
+      'origami_real_time_search',
+      __('开启实时搜索功能', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_other',
+      [
+        'field' => 'origami_real_time_search',
+        'value' => '5',
+        'type' => 'text',
+        'description' => 'true为开，false为关'
+      ]
+    );
+    add_settings_field(
+      'origami_live_chat',
+      __('开启Live Chat功能', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_other',
+      [
+        'field' => 'origami_live_chat',
+        'value' => '5',
+        'type' => 'text',
+        'description' => '填入Live Chat Server地址即可开启'
       ]
     );
   }

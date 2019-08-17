@@ -42,10 +42,12 @@ if (have_posts()) {
 $pagination = origami_pagination(false);
 $count = wp_count_posts()->publish;
 
-// TODO: 添加时间轴是否显示侧栏的设置
 $sidebar_pos = get_option('origami_layout_sidebar', 'right');
 $post_list_class = $sidebar_pos == 'none' ? 'col-10 col-md-12' : 'col-8 col-md-12';
 $sidebar_class = $sidebar_pos == 'none' ? 'd-none' : 'col-4 col-md-12';
+if (get_option('origami_timeline_sidebar', 'true') != 'true') {
+  $sidebar_class = 'd-none';
+}
 $main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
 
 wp_reset_query();
@@ -54,12 +56,10 @@ get_header();
 $this_year = -1;
 ?>
 <div id="main-content">
-    <!-- TODO: 添加background到设置 -->
     <section class="featured">
-      <div class="featured-image" style="background-image:url(https://ixk.me/bg.jpg)"></div>
+      <div class="featured-image" style="background-image:url(<?php echo get_option('origami_timeline_image', '') ?>)"></div>
       <div class="featured-container">
-        <!-- TODO: 添加标题到设置 -->
-        <h1><?php echo __("时光轴", "origami"); ?></h1>
+        <h1><?php echo get_the_title(); ?></h1>
         <h2><?php echo __("目前共有", "origami") . $count . __("篇文章"); ?></h2>
       </div>
     </section>
@@ -104,7 +104,7 @@ $this_year = -1;
                 <?php echo $pagination; ?>
             </section>
         </section>
-        <aside class="column <?php echo $sidebar_class; ?>">
+        <aside class="column ori-sidebar <?php echo $sidebar_class; ?>">
             <?php get_sidebar(); ?>
         </aside>
     </main>

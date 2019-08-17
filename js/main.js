@@ -1,16 +1,3 @@
-// var origamiConfig = {
-//   markdownComment: true,
-//   updateComment: true,
-//   deleteComment: true,
-//   katex: true,
-//   mermaid: true,
-//   animate: true,
-//   titleChange: true,
-//   realTimeSearch: true,
-//   owo: true,
-//   footerTime: "07/01/2017 00:00:09"
-// };
-
 window.$httpGetParams = function(data) {
   var arr = [];
   for (var param in data) {
@@ -127,25 +114,41 @@ origami.scrollTop = function() {
 
 origami.scrollChange = function() {
   if (!document.body.classList.contains("home")) return;
-  if (document.querySelector(".not-carousel")) return;
-  let target =
-    document.getElementsByClassName("carousel")[0].clientHeight -
-    document.getElementsByClassName("ori-header")[0].clientHeight;
   let title = document.getElementById("ori-title");
   let logo = document.getElementById("ori-logo");
-  let scrollE = function() {
-    if (window.scrollY >= target) {
-      document.body.classList.add("not-car");
-      title.style.display = "none";
-      logo.style.display = "flex";
-    } else {
-      document.body.classList.remove("not-car");
-      title.style.display = "block";
-      logo.style.display = "none";
-    }
-  };
-  scrollE();
-  window.addEventListener("scroll", scrollE);
+  let header = document.querySelector(".ori-header");
+  if (!document.body.classList.contains("layout1")) {
+    let scrollE = function() {
+      if (window.scrollY >= 10) {
+        header.classList.add("active");
+        title.style.display = "none";
+        logo.style.display = "flex";
+      } else {
+        header.classList.remove("active");
+        title.style.display = "block";
+        logo.style.display = "none";
+      }
+    };
+    scrollE();
+    window.addEventListener("scroll", scrollE);
+  } else {
+    let target =
+      document.getElementsByClassName("carousel")[0].clientHeight -
+      document.getElementsByClassName("ori-header")[0].clientHeight;
+    let scrollE = function() {
+      if (window.scrollY >= target) {
+        document.body.classList.add("not-car");
+        title.style.display = "none";
+        logo.style.display = "flex";
+      } else {
+        document.body.classList.remove("not-car");
+        title.style.display = "block";
+        logo.style.display = "none";
+      }
+    };
+    scrollE();
+    window.addEventListener("scroll", scrollE);
+  }
 };
 
 origami.mobileBtn = function() {
@@ -1025,6 +1028,193 @@ origami.readProgress = function() {
   });
 };
 
+origami.liveChat = function() {
+  if (!origamiConfig.liveChat) {
+    return;
+  } else {
+    document.getElementById("live-chat").style.display = "block";
+  }
+  let chatWs = null;
+  let conn = function(
+    name,
+    callOpen = () => {},
+    callMsg = () => {},
+    callClose = () => {}
+  ) {
+    let url = origamiConfig.liveChat + "?name=" + name;
+    chatWs = new WebSocket(url);
+    chatWs.onerror = function() {
+      origami.tools.timeToast("连接Server失败!", "error", 3000);
+    };
+    chatWs.onopen = function(evt) {
+      console.log("Connection open ...");
+      callOpen(evt);
+    };
+    chatWs.onmessage = function(evt) {
+      console.log("Received Message");
+      callMsg(evt);
+    };
+    chatWs.onclose = function(evt) {
+      console.log("Connection closed.");
+      callClose(evt);
+    };
+  };
+  let bgColor = [
+    "rgba(0, 0, 0, 0.8)",
+    "#3280fc",
+    "#03b8cf",
+    "#ea644a",
+    "#38b03f",
+    "#f1a325",
+    "#bd7b46",
+    "#8666b8"
+  ];
+  let msgEle = document.getElementById("live-chat");
+  let list = msgEle.querySelector(".live-chat-list");
+  let showChat = function() {
+    list.style.visibility = "visible";
+    list.style.opacity = "1";
+  };
+  let hideChat = function() {
+    list.style.opacity = "0";
+    setTimeout(function() {
+      list.style.visibility = "hidden";
+    }, 500);
+  };
+  let inputEle = document.querySelector(".live-chat-input");
+  let inputI = inputEle.querySelector("i");
+  let inputBtn = inputEle.querySelector("button");
+  let inputInput = inputEle.querySelector("input");
+  let showInput = false;
+  let isInputName = false;
+  let commentName = null;
+  inputI.addEventListener("click", function() {
+    if (!showInput) {
+      inputEle.classList.add("active");
+      inputI.classList.replace("icon-arrow-left", "icon-arrow-right");
+      showChat();
+    } else {
+      inputEle.classList.remove("active");
+      inputI.classList.replace("icon-arrow-right", "icon-arrow-left");
+      hideChat();
+    }
+    showInput = !showInput;
+  });
+  inputBtn.addEventListener("click", function() {
+    if (!isInputName) {
+      commentName = inputInput.value;
+      conn(
+        commentName,
+        function() {
+          inputBtn.textContent = "发送";
+          inputInput.placeholder = "来一发女装宣言！";
+          inputInput.value = "";
+        },
+        function(e) {
+          let data = JSON.parse(e.data);
+          if (data.type == "message") {
+            addMsg(data.name, data.message);
+          } else if (data.type == "openSuccess") {
+            let count = data.all.length;
+            origami.tools.timeToast(
+              "目前共有：" + count + "位用户在线。",
+              "success",
+              3000
+            );
+            data.all.forEach(function(item) {
+              if (item.message !== "") {
+                addMsg(item.name, item.message);
+              }
+            });
+          } else {
+            console.log(data);
+          }
+        },
+        function() {
+          inputBtn.textContent = "开始搞事";
+          inputInput.placeholder = "输入昵称与大佬们交流";
+          inputInput.value = "";
+        }
+      );
+      isInputName = true;
+    } else {
+      let data = {
+        name: commentName,
+        message: inputInput.value
+      };
+      chatWs.send(JSON.stringify(data));
+      inputInput.value = "";
+      addMsg(data.name, data.message);
+    }
+  });
+  let addMsg = function(nameStr, contentStr) {
+    let item = document.createElement("li");
+    let name = document.createElement("div");
+    let content = document.createElement("div");
+    name.textContent = nameStr;
+    name.className = "live-chat-name";
+    content.textContent = contentStr;
+    content.className = "live-chat-content";
+    item.append(name);
+    item.append(content);
+    item.style.background = bgColor[Math.floor(Math.random() * 8)];
+    item.classList.add("fadeInUp100");
+    if (list.querySelectorAll("li").length > 4) {
+      list.firstElementChild.classList.add("fadeOutUp100");
+      setTimeout(function() {
+        list.firstElementChild.remove();
+      }, 1000);
+    }
+    setTimeout(function() {
+      item.classList.add("fadeOutUp100");
+      setTimeout(function() {
+        item.remove();
+      }, 1000);
+    }, 10000);
+    list.append(item);
+  };
+};
+
+origami.background = function() {
+  let images = origamiConfig.background;
+  let bgEle = document.querySelector(".ori-background");
+  images.forEach(function(item, index) {
+    let itemEle = document.createElement("div");
+    itemEle.style.backgroundImage = "url(" + item + ")";
+    itemEle.setAttribute("data-index", index);
+    bgEle.append(itemEle);
+  });
+  let index = 0;
+  let oldEle = bgEle.querySelector('[data-index="' + index + '"]');
+  setInterval(function() {
+    oldEle.style.opacity = "0";
+    index++;
+    if (index >= images.length) {
+      index = 0;
+    }
+    oldEle = bgEle.querySelector('[data-index="' + index + '"]');
+    oldEle.style.opacity = "1";
+  }, 10000);
+};
+
+origami.layoutImageChange = function() {
+  if (!document.body.classList.contains("home")) return;
+  if (document.body.classList.contains("layout3")) {
+    let bgEle = document.querySelector(".layout3-images");
+    let index = 1;
+    let oldEle = bgEle.querySelector('[data-index="' + index + '"]');
+    setInterval(function() {
+      oldEle.style.opacity = "0";
+      index++;
+      if (index >= 5) {
+        index = 1;
+      }
+      oldEle = bgEle.querySelector('[data-index="' + index + '"]');
+      oldEle.style.opacity = "1";
+    }, 10000);
+  }
+};
+
 window.addEventListener("load", function() {
   // document.querySelector(".carousel").classList.add("fadeInDown");
   origami.animate();
@@ -1038,6 +1228,9 @@ window.addEventListener("load", function() {
   origami.tools.initToast();
   origami.loadOwO();
   origami.buildFooterTime();
+  origami.liveChat();
+  origami.background();
+  origami.layoutImageChange();
   if (
     document.body.classList.contains("page") ||
     document.body.classList.contains("single")
@@ -1068,3 +1261,7 @@ console.log(
   "color: #fff; background: #4285f4; padding:5px 0;",
   "background: #87d1df; padding:5px 0;"
 );
+// console.log(
+//   "%c ",
+//   "background:url(https://raw.githubusercontent.com/chanshiyucx/poi/master/2019/5c0cc2b905841.png) no-repeat center;background-size:200px;padding-left:200px;padding-bottom:162px;overflow:hidden;border-radius:10px;margin:5px 0"
+// );

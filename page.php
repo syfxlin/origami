@@ -57,7 +57,7 @@ if ($post_item['post_image'] == false && origami_get_other_thumbnail($post)) {
               <?php comments_template(); ?>
             </div>
         </section>
-        <aside class="column <?php echo $sidebar_class; ?>">
+        <aside class="column ori-sidebar <?php echo $sidebar_class; ?>">
             <?php get_sidebar(); ?>
         </aside>
     </main>
