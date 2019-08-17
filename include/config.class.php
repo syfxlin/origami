@@ -40,7 +40,7 @@ class OrigamiConfig
   }
   public function ori_menu_fun()
   {
-    require_once "config_style.php";
+    require_once "config_about.php";
   }
   public function ori_menu_fun1()
   {
@@ -49,6 +49,10 @@ class OrigamiConfig
   public function ori_menu_fun2()
   {
     require_once "config_fun.php";
+  }
+  public function ori_menu_fun3()
+  {
+    require_once "config_about.php";
   }
   public function admin_init()
   {
