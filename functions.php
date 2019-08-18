@@ -457,24 +457,24 @@ function origami_breadcrumbs($echo = true, $class = [])
   }
 }
 
-// 说说 TODO: 该功能还未完成
-function origami_shuoshuo_init()
+// 灵感 TODO: 该功能还未完成
+function origami_inspiration_init()
 {
-  $labels = array(
-    'name' => '说说',
-    'singular_name' => '说说',
-    'add_new' => '发表说说',
-    'add_new_item' => '发表说说',
-    'edit_item' => '编辑说说',
-    'new_item' => '新说说',
-    'view_item' => '查看说说',
-    'search_items' => '搜索说说',
-    'not_found' => '暂无说说',
-    'not_found_in_trash' => '没有已遗弃的说说',
+  $labels = [
+    'name' => '灵感',
+    'singular_name' => '灵感',
+    'add_new' => '发表灵感',
+    'add_new_item' => '发表灵感',
+    'edit_item' => '编辑灵感',
+    'new_item' => '新灵感',
+    'view_item' => '查看灵感',
+    'search_items' => '搜索灵感',
+    'not_found' => '暂无灵感',
+    'not_found_in_trash' => '没有已遗弃的灵感',
     'parent_item_colon' => '',
-    'menu_name' => '说说'
-  );
-  $args = array(
+    'menu_name' => '灵感'
+  ];
+  $args = [
     'labels' => $labels,
     'public' => true,
     'publicly_queryable' => true,
@@ -487,11 +487,12 @@ function origami_shuoshuo_init()
     'has_archive' => false,
     'hierarchical' => false,
     'menu_position' => null,
-    'supports' => array('editor', 'author', 'title', 'custom-fields')
-  );
-  register_post_type('shuoshuo', $args);
+    'show_in_rest' => true,
+    'supports' => ['editor', 'author', 'title', 'custom-fields']
+  ];
+  register_post_type('inspiration', $args);
 }
-add_action('init', 'origami_shuoshuo_init');
+add_action('init', 'origami_inspiration_init');
 
 // 文末版权声明
 function origami_content_copyright($content)

@@ -17,6 +17,7 @@ body {
   background-color: #f8f9fa;
   font-family: "Source Serif Pro", "Noto Serif SC", -apple-system, "SF UI Text",
     "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+  font-weight: 200;
 }
 
 code[class*="language-"] {
@@ -645,9 +646,16 @@ body.menu-active .ori-footer {
   color: #fff;
 }
 
+.featured-container .card-title,
+.featured-container h1 {
+  font-size: 1.6rem;
+}
+
+.featured-container .card-subtitle,
+.featured-container .card-subtitle > *,
 .featured-container h2 {
   margin: 0;
-  font-size: 1.3rem;
+  font-size: 0.9rem;
 }
 
 .ori-footer {
@@ -955,6 +963,8 @@ body.menu-active .ori-footer {
   transform-origin: bottom left;
 }
 
+.links-list,
+.inspiration-list,
 .timeline-list,
 .s-post-container,
 .p-post-container {
@@ -972,6 +982,7 @@ body.menu-active .ori-footer {
   font-size: 0.7rem;
   font-weight: 400;
   color: #757575;
+  word-break: break-word;
 }
 
 .s-post-content h1,
@@ -1456,6 +1467,10 @@ body.menu-active .ori-footer {
   color: #5755d9;
 }
 
+.timeline-subtitle {
+  font-size: 0.7rem;
+}
+
 .timeline-subtitle ul {
   display: inline;
   list-style: none;
@@ -1469,6 +1484,173 @@ body.menu-active .ori-footer {
 
 .timeline-subtitle li a {
   color: #bcc3ce;
+}
+
+.inspiration {
+  list-style: none;
+  margin: 0;
+}
+
+.inspiration-card {
+  display: flex;
+  /* align-items: center; */
+  margin-bottom: 1rem;
+}
+
+.inspiration-card p {
+  margin: 0;
+}
+
+.inspiration-title:after {
+  height: 0.12rem;
+  width: 2.5rem;
+  background-color: #5755d9;
+  content: "";
+  display: block;
+  margin-top: 0.2rem;
+}
+
+.inspiration-avatar {
+  height: 3.2rem;
+  width: 3.2rem;
+  box-shadow: 0 0 0.3rem 0.05rem rgba(0, 0, 0, 0.2);
+  margin-top: 1rem;
+}
+
+.inspiration-right {
+  flex: 1;
+  margin-left: 0.8rem;
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 1px 20px -6px rgba(0, 0, 0, 0.2);
+  padding: 0.8rem 1rem;
+  border-right: 0.1rem solid #5755d9;
+  border-left: 0.1rem solid #5755d9;
+  position: relative;
+}
+
+.inspiration-right:before,
+.inspiration-right:after {
+  content: "";
+  position: absolute;
+  top: 2.5rem;
+  left: -0.5rem;
+  width: 0;
+  height: 0;
+  background-color: transparent;
+  border-style: solid;
+  border-width: 0 0.5rem 0.5rem 0;
+  border-color: transparent;
+  border-right-color: #5755d9;
+}
+
+.inspiration-right:before {
+  top: 2rem;
+  transform: rotate(90deg);
+}
+
+.inspiration-title {
+  font-size: 0.9rem;
+}
+
+.inspiration-title:after {
+  height: 0.12rem;
+  width: 2.5rem;
+  background-color: #5755d9;
+  content: "";
+  display: block;
+  margin-top: 0.2rem;
+}
+
+.inspiration-content {
+  padding: 0.7rem 0;
+  color: #7d7d7d;
+}
+
+.inspiration-footer-right {
+  float: right;
+}
+
+.links {
+  list-style: none;
+  margin: 0;
+}
+
+.links-card {
+  box-shadow: 0 1px 20px -6px rgba(0, 0, 0, 0.4);
+}
+
+.links-header {
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+
+.links-header:hover .links-image {
+  filter: none;
+}
+
+.links-header:hover .links-image:after {
+  background: transparent;
+}
+
+.links-header:hover .links-name {
+  transform: translateY(2rem);
+}
+
+.links-header:hover .links-avatar {
+  transform: translateY(-5rem);
+}
+
+.links-name {
+  position: absolute;
+  bottom: 0rem;
+  left: 0rem;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 0.3rem 1rem;
+  transition: transform 0.5s;
+}
+
+.links-image {
+  height: 8rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: blur(2px);
+  transition: all 0.5s;
+}
+
+.links-image:after {
+  content: "";
+  height: 8rem;
+  width: 100%;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: background 0.5s;
+}
+
+.links-avatar {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  box-shadow: 0 0 9px #666;
+  background: #fff;
+  transition: transform 0.5s;
+}
+
+.links-content {
+  padding: 0.7rem 1rem;
+}
+
+.links-author {
+  color: #7d7d7d;
+}
+
+.links-notes {
+  line-height: 1.2rem;
+  height: 2.4rem;
+  overflow: hidden;
+  word-wrap: break-word;
 }
 
 @media (max-width: 991px) {

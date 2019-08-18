@@ -47,8 +47,13 @@ $main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
         <div class="card-header post-info">
           <h2 class="card-title"><a href="<?php echo $item['post_link']; ?>"><?php echo $item['post_title']; ?></a></h2>
           <div class="card-subtitle text-gray">
-            <time><?php echo $item['post_date']; ?></time> • <span><?php echo $item['post_author']; ?></span> •
-            <span><?php echo $item['post_comments'] . __('条评论', 'origami'); ?></span> • 
+            <i class="fa fa-calendar"></i>
+            <time><?php echo $item['post_date']; ?></time>
+            <i class="fa fa-paper-plane-o"></i>
+            <span><?php echo $item['post_author']; ?></span>
+            <i class="fa fa-comment"></i>
+            <span><?php echo $item['post_comments'] . __('条评论', 'origami'); ?></span>
+            <i class="fa fa-bookmark"></i> 
             <ul>
               <?php foreach ($item['post_category'] as $cat): ?>
                 <li><a href="<?php echo get_category_link($cat); ?>"><?php echo get_cat_name($cat); ?></a></li>

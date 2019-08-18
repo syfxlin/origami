@@ -335,9 +335,10 @@ class OrigamiConfig
 
     register_setting("origami_style", "origami_featured_image");
     register_setting("origami_style", "origami_timeline_sidebar");
-    register_setting("origami_style", "origami_timeline_image");
-    register_setting("origami_style", "origami_background"); // img url,img url
-    register_setting("origami_style", "origami_animate"); // true/false
+    register_setting("origami_style", "origami_links_sidebar");
+    register_setting("origami_style", "origami_inspiration_sidebar");
+    register_setting("origami_style", "origami_background");
+    register_setting("origami_style", "origami_animate");
     add_settings_section(
       'origami_style_other',
       __('6.其他设置', 'origami'),
@@ -370,15 +371,29 @@ class OrigamiConfig
       ]
     );
     add_settings_field(
-      'origami_timeline_image',
-      __('时光轴特色图片', 'origami'),
-      [&$this, 'settings_field_input_media'],
+      'origami_links_sidebar',
+      __('开启友链侧栏', 'origami'),
+      [&$this, 'settings_field_input_text'],
       'origami_style',
       'origami_style_other',
       [
-        'field' => 'origami_timeline_image',
-        'value' => '',
-        'type' => 'text'
+        'field' => 'origami_links_sidebar',
+        'value' => 'true',
+        'type' => 'text',
+        'description' => '填入true为开，false为关'
+      ]
+    );
+    add_settings_field(
+      'origami_inspiration_sidebar',
+      __('开启灵感侧栏', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_style',
+      'origami_style_other',
+      [
+        'field' => 'origami_inspiration_sidebar',
+        'value' => 'true',
+        'type' => 'text',
+        'description' => '填入true为开，false为关'
       ]
     );
     add_settings_field(

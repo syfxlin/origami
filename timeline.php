@@ -57,7 +57,7 @@ $this_year = -1;
 ?>
 <div id="main-content">
     <section class="featured">
-      <div class="featured-image" style="background-image:url(<?php echo get_option('origami_timeline_image', '') ?>)"></div>
+      <div class="featured-image" style="background-image:url(<?php echo wp_get_attachment_url(get_post_thumbnail_id($post->ID)); ?>)"></div>
       <div class="featured-container">
         <h1><?php echo get_the_title(); ?></h1>
         <h2><?php echo __("目前共有", "origami") . $count . __("篇文章"); ?></h2>
@@ -65,48 +65,57 @@ $this_year = -1;
     </section>
     <main class="ori-container columns <?php echo $main_class; ?> grid-md">
         <section class="timeline-list column <?php echo $post_list_class; ?>">
-            <div class="timeline">
-                <?php foreach ($post_list as $item): ?>
-                  <?php if ($item['post_year'] != $this_year): $this_year = $item['post_year']; ?>
-                    <div class="timeline-item">
-                      <div class="timeline-left">
-                        <div class="timeline-icon icon-lg"></div>
-                      </div>
-                      <div class="timeline-content">
-                        <div class="timeline-year">
-                          <?php echo $this_year; ?>
-                        </div>
+          <article <?php post_class("p-post-content"); ?> id="post-<?php the_ID(); ?>">
+              <?php the_content(); ?>
+          </article>
+          <div class="timeline">
+              <?php foreach ($post_list as $item): ?>
+                <?php if ($item['post_year'] != $this_year): $this_year = $item['post_year']; ?>
+                  <div class="timeline-item">
+                    <div class="timeline-left">
+                      <div class="timeline-icon icon-lg"></div>
+                    </div>
+                    <div class="timeline-content">
+                      <div class="timeline-year">
+                        <?php echo $this_year; ?>
                       </div>
                     </div>
-                  <?php else: ?>
-                    <div class="timeline-item">
-                      <div class="timeline-left">
-                        <div class="timeline-icon"></div>
-                      </div>
-                      <div class="timeline-content">
-                        <div class="timeline-title"><a href="<?php echo $item['post_link']; ?>"><?php echo $item['post_title']; ?></a></div>
-                        <div class="text-gray timeline-subtitle">
-                          <time><?php echo $item['post_date']; ?></time> • <span><?php echo $item['post_author']; ?></span> •
-                          <span><?php echo $item['post_comments'] . __('条评论', 'origami'); ?></span> • 
-                          <ul>
-                            <?php foreach ($item['post_category'] as $cat): ?>
-                              <li><a href="<?php echo get_category_link($cat); ?>"><?php echo get_cat_name($cat); ?></a></li>
-                            <?php endforeach; ?>
-                          </ul>
-                        </div>
-                      </div>
+                  </div>
+                <?php endif; ?>
+                <div class="timeline-item">
+                  <div class="timeline-left">
+                    <div class="timeline-icon"></div>
+                  </div>
+                  <div class="timeline-content">
+                    <div class="timeline-title"><a href="<?php echo $item['post_link']; ?>"><?php echo $item['post_title']; ?></a></div>
+                    <div class="text-gray timeline-subtitle">
+                      <i class="fa fa-calendar"></i>
+                      <time><?php echo $item['post_date']; ?></time>
+                      <i class="fa fa-paper-plane-o"></i>
+                      <span><?php echo $item['post_author']; ?></span>
+                      <i class="fa fa-comment"></i>
+                      <span><?php echo $item['post_comments'] . __('条评论', 'origami'); ?></span>
+                      <i class="fa fa-bookmark"></i> 
+                      <ul>
+                        <?php foreach ($item['post_category'] as $cat): ?>
+                          <li><a href="<?php echo get_category_link($cat); ?>"><?php echo get_cat_name($cat); ?></a></li>
+                        <?php endforeach; ?>
+                      </ul>
                     </div>
-                  <?php endif; ?>
-
-                <?php endforeach; ?>
-            </div>
-            <section class="post-pagination">
-                <?php echo $pagination; ?>
-            </section>
-        </section>
-        <aside class="column ori-sidebar <?php echo $sidebar_class; ?>">
-            <?php get_sidebar(); ?>
-        </aside>
+                  </div>
+                </div>
+              <?php endforeach; ?>
+          </div>
+          <section class="post-pagination">
+              <?php echo $pagination; ?>
+          </section>
+          <div class="p-post-comments">
+            <?php comments_template(); ?>
+          </div>
+      </section>
+      <aside class="column ori-sidebar <?php echo $sidebar_class; ?>">
+          <?php get_sidebar(); ?>
+      </aside>
     </main>
 </div>
 <?php get_footer(); ?>
