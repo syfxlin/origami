@@ -44,6 +44,7 @@ $body_class .= $GLOBALS['layout'];
         </a>
       </section>
       <section class="navbar-section">
+        <!-- TODO: 调整按键触发 -->
         <?php wp_nav_menu([
           'theme_location' => 'main-menu',
           'container' => false,

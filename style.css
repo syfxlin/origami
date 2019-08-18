@@ -17,11 +17,11 @@ body {
   background-color: #f8f9fa;
   font-family: "Source Serif Pro", "Noto Serif SC", -apple-system, "SF UI Text",
     "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
-  font-weight: 200;
+  font-weight: 400;
 }
 
-code[class*="language-"] {
-  font-size: 0.8rem;
+code[class*="language-"], pre[class*="language-"] {
+  font-size: 0.7rem;
   padding: 0;
 }
 
@@ -58,9 +58,13 @@ a {
   border-color: #e85600;
 }
 
+.column {
+  padding: 0;
+}
+
 .ori-container {
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 8px;
   width: 100%;
 }
 @media (min-width: 992px) {
@@ -639,6 +643,7 @@ body.menu-active .ori-footer {
   align-items: center;
   text-align: center;
   z-index: 1;
+  max-width: 80%;
 }
 
 .featured-container h1,
@@ -693,11 +698,9 @@ body.menu-active .ori-footer {
   box-shadow: 0 1px 20px -6px rgba(0, 0, 0, 0.2);
 }
 
-.post-info .card-title {
-  margin-bottom: 0.2em;
-}
-
+.post-info .card-title,
 .post-info .card-title a {
+  font-weight: 400;
   font-size: 1.25rem;
   text-decoration: none;
   color: #3b4351;
@@ -761,8 +764,12 @@ body.menu-active .ori-footer {
 }
 
 .post-list .card-body {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: #3b4351;
+}
+
+.post-list .card-body p {
+  margin: 0;
 }
 
 .post-list .card-footer {
@@ -782,6 +789,15 @@ body.menu-active .ori-footer {
   padding: 0.3rem 1rem;
   background: #fff;
   cursor: pointer;
+}
+
+.post-tags {
+  overflow-x: auto;
+  white-space: nowrap;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
 }
 
 .post-tags a {
@@ -1273,7 +1289,7 @@ body.menu-active .ori-footer {
   margin-top: 2.5rem;
   margin-left: 4.3rem;
   position: absolute !important;
-  width: 30rem;
+  width: 70%;
   max-width: 100%;
 }
 
@@ -1765,7 +1781,55 @@ body.menu-active .ori-footer {
   height: 0;
 }
 
+@media (max-width: 840px) {
+  .ori-sidebar {
+    padding: 0;
+  }
+}
+
 @media (max-width: 991px) {
+  body {
+    font-size: 0.7rem;
+  }
+  .post-list .card-image {
+    height: 10rem;
+  }
+
+  .links-list,
+  .inspiration-list,
+  .timeline-list,
+  .s-post-container,
+  .p-post-container {
+    padding: 0.6rem 1rem;
+  }
+
+  .p-post-thumb, .s-post-thumb {
+    height: 14rem;
+  }
+
+  .response-user {
+    margin-right: 0;
+    font-size: 0.7rem;
+  }
+
+  .comment-item {
+    font-size: 0.65rem;
+  }
+
+  .comment-lv1 .comment-avatar {
+    height: 3.2rem;
+    width: 3.2rem;
+  }
+
+  .comment-btn {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .comment-footer {
+    flex-direction: column;
+  }
+
   #ori-h-menu {
     display: flex;
     position: fixed;
