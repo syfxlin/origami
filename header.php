@@ -44,12 +44,12 @@ $body_class .= $GLOBALS['layout'];
         </a>
       </section>
       <section class="navbar-section">
-        <!-- TODO: 调整按键触发 -->
         <?php wp_nav_menu([
           'theme_location' => 'main-menu',
           'container' => false,
           'menu_id' => 'ori-h-menu',
-          'menu_class' => ''
+          'menu_class' => '',
+          'link_after' => '<div></div><span class="sub-drop-icon icon icon-arrow-down"></span>'
         ]); ?>
         <div id="ori-h-search">
           <i class="fa fa-search"></i>

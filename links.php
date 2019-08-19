@@ -6,7 +6,7 @@ $sidebar_pos = get_option('origami_layout_sidebar', 'right');
 $post_list_class =
   $sidebar_pos == 'none' ? 'col-10 col-md-12' : 'col-8 col-md-12';
 $sidebar_class = $sidebar_pos == 'none' ? 'd-none' : 'col-4 col-md-12';
-// TODO: 添加到设置
+
 if (get_option('origami_links_sidebar', 'true') != 'true') {
   $sidebar_class = 'd-none';
 }

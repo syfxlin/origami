@@ -20,7 +20,8 @@ body {
   font-weight: 400;
 }
 
-code[class*="language-"], pre[class*="language-"] {
+code[class*="language-"],
+pre[class*="language-"] {
   font-size: 0.7rem;
   padding: 0;
 }
@@ -97,6 +98,9 @@ a {
   z-index: 999;
   box-shadow: 0 0 20px #dfdfdf;
   position: relative;
+  transition: right 0.5s;
+  right: 0;
+  align-items: center;
 }
 
 .ori-background {
@@ -140,6 +144,7 @@ a {
   background: #5755d9;
   width: 0;
   transition-duration: 1s, 1s;
+  top: 0;
 }
 
 #main-content {
@@ -147,6 +152,8 @@ a {
   display: flex;
   align-items: center;
   flex-direction: column;
+  right: 0;
+  transition: right 0.5s;
 }
 
 #main-content main {
@@ -393,7 +400,7 @@ body:not(.home) #ori-title {
   min-width: 10rem;
   padding: 0.5rem 1rem;
   box-shadow: 0 0.067em 1.2em rgba(0, 0, 0, 0.14);
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 1);
 }
 
 #ori-h-menu .sub-menu li {
@@ -418,6 +425,23 @@ body:not(.home) #ori-title {
 #ori-h-menu .sub-menu .sub-menu {
   margin-top: 0rem;
   margin-left: 3rem;
+}
+
+#ori-h-menu .menu-item:not(.menu-item-has-children) > a > span {
+  display: none;
+}
+
+#ori-h-menu .menu-item > a {
+  display: flex;
+  align-items: center;
+}
+
+#ori-h-menu .menu-item > a > div {
+  width: 0.3rem;
+}
+
+#ori-h-menu .menu-item .menu-item > a > div {
+  flex: 1;
 }
 
 #ori-h-search i {
@@ -536,6 +560,12 @@ body:not(.home) #ori-title {
 
 #search-list .card {
   background: #fff;
+  margin: 0;
+  box-shadow: none;
+}
+
+#search-list .card:hover {
+  transform: none;
 }
 
 /* end */
@@ -785,10 +815,18 @@ body.menu-active .ori-footer {
   font-size: 0.75rem;
   color: #3b4351;
   text-decoration: none;
-  border: 1.5px solid #87d1df;
+  border: 1px solid #5755d9;
   padding: 0.3rem 1rem;
   background: #fff;
   cursor: pointer;
+  transition: all 0.5s;
+}
+
+.post-list .read-more:hover {
+  background-color: #5755d9;
+  border: 1px solid #5755d9;
+  opacity: 0.7;
+  color: #f5f5f5;
 }
 
 .post-tags {
@@ -804,7 +842,7 @@ body.menu-active .ori-footer {
   font-size: 0.65rem;
   color: #3b4351;
   background-color: rgba(255, 255, 255, 0.7);
-  border: 1.5px solid #87d1df;
+  border: 1px solid #5755d9;
   text-decoration: none;
   padding: 0.2rem 0.6rem;
   margin-right: 0.2rem;
@@ -812,8 +850,9 @@ body.menu-active .ori-footer {
 }
 
 .post-tags a:hover {
-  background-color: #b6dfe9;
-  border: 1.5px solid #b6dfe9;
+  background-color: #5755d9;
+  border: 1px solid #5755d9;
+  opacity: 0.7;
   color: #f5f5f5;
 }
 
@@ -1361,9 +1400,11 @@ body.menu-active .ori-footer {
   left: 20px;
   width: 45px;
   height: 45px;
-  border: 2px solid #b6dfe9;
+  border: 1px solid #5755d9;
   text-align: center;
   background: rgba(255, 255, 255, 0.7);
+  font-size: 0.6rem;
+  cursor: pointer;
 }
 
 .tools-item > i {
@@ -1704,7 +1745,7 @@ body.menu-active .ori-footer {
   max-width: 500px;
   height: 50px;
   background: #fff;
-  border: 1.5px solid #b6dfe9;
+  border: 1px solid #5755d9;
   border-bottom: 0px;
   padding: 0px 10px;
   transition: opacity 0.5s;
@@ -1722,7 +1763,7 @@ body.menu-active .ori-footer {
   margin-top: 25px;
   margin-left: 5px;
   padding: 5px 20px;
-  border: 1.5px solid #b6dfe9;
+  border: 1px solid #5755d9;
 }
 
 #toc-button {
@@ -1803,7 +1844,8 @@ body.menu-active .ori-footer {
     padding: 0.6rem 1rem;
   }
 
-  .p-post-thumb, .s-post-thumb {
+  .p-post-thumb,
+  .s-post-thumb {
     height: 14rem;
   }
 
@@ -1842,6 +1884,8 @@ body.menu-active .ori-footer {
     margin: 0;
     height: 100%;
     border-left: 1px solid #dfdfdf;
+    padding: 0.5rem 0.3rem;
+    transition: right 0.5s;
   }
 
   #ori-h-menu.active {
@@ -1850,6 +1894,14 @@ body.menu-active .ori-footer {
 
   #ori-h-menu > .menu-item > a {
     color: #5755d9 !important;
+  }
+
+  #ori-h-menu .menu-item > a > div {
+    flex: 1;
+  }
+
+  #ori-h-menu .menu-item:not(.menu-item-has-children) > a > span {
+    display: none;
   }
 
   #ori-h-menu li {
@@ -1870,6 +1922,11 @@ body.menu-active .ori-footer {
     margin-bottom: 0 !important;
     box-shadow: none;
     display: none;
+    padding-right: 0.8rem;
+  }
+
+  #ori-h-menu .sub-menu .sub-menu {
+    margin-left: 0;
   }
 
   #ori-h-menu .sub-menu li {
@@ -1880,33 +1937,8 @@ body.menu-active .ori-footer {
     background: none;
   }
 
-  #ori-h-menu .sub-menu li a {
-    font-size: unset;
-  }
-
   #ori-h-menu .menu-item-has-children.active > .sub-menu {
     display: block;
-  }
-
-  #ori-h-menu .menu-item-has-children a:before {
-    color: #5755d9;
-    transform: translate(-50%, -50%) rotate(225deg);
-    border: 0.1rem solid currentColor;
-    border-bottom: 0;
-    border-right: 0;
-    height: 0.65em;
-    width: 0.65em;
-    content: "";
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: 5%;
-  }
-
-  #ori-h-menu .menu-item-has-children.active a:before {
-    border: 0.1rem solid currentColor;
-    border-top: 0;
-    border-left: 0;
   }
 
   #ori-h-m-btn {

@@ -151,7 +151,7 @@ origami.scrollChange = function() {
   }
 };
 
-origami.mobileBtn = function() {
+origami.mobileMenu = function() {
   document.getElementById("ori-h-m-btn").addEventListener("click", function() {
     let btn = document.getElementById("ori-h-m-btn");
     let menu = document.getElementById("ori-h-menu");
@@ -165,6 +165,20 @@ origami.mobileBtn = function() {
       document.body.classList.add("menu-active");
     }
   });
+  document
+    .querySelectorAll(".menu-item-has-children > a > .sub-drop-icon")
+    .forEach(function(item) {
+      item.addEventListener("click", function(e) {
+        let menu = item.parentElement.parentElement.classList;
+        if (menu.contains("active")) {
+          menu.remove("active");
+        } else {
+          menu.add("active");
+        }
+        e.stopPropagation();
+        e.preventDefault();
+      });
+    });
 };
 
 origami.searchBtn = function() {
@@ -887,6 +901,14 @@ window.toStart = function() {
     top: 0,
     behavior: "smooth"
   });
+  let url = window.location.href;
+  let index = "index=" + $getQuery("index");
+  url = url
+    .replace(index + "&", "")
+    .replace("&" + index, "")
+    .replace("?" + index, "")
+    .replace(index, "");
+  window.history.pushState(null, document.title, url);
   notToStart();
 };
 window.notToStart = function() {
@@ -1222,7 +1244,7 @@ window.addEventListener("load", function() {
   origami.titleChange();
   origami.scrollTop();
   origami.scrollChange();
-  origami.mobileBtn();
+  origami.mobileMenu();
   origami.searchBtn();
   origami.realTimeSearch();
   origami.tools.initToast();

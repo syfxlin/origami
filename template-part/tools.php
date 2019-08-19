@@ -23,7 +23,11 @@
         <div class="toc"></div>
     </div>
     <div id="qrcode" class="tools-item" title="阅读转移"><div id="qrcode-img"></div><i class="fa fa-laptop fa-2x" aria-hidden="true"></i></div>
-    <div id="if-to-start"><span>已跳转到上次阅读的位置，从头阅读？</span><a href="javascript:notToStart();">否</a><a href="javascript:toStart();">是</a></div>
+    <div id="if-to-start">
+        <span>已跳转到上次阅读的位置，从头阅读？</span>
+        <a class="btn" href="javascript:notToStart();">否</a>
+        <a class="btn" href="javascript:toStart();">是</a>
+    </div>
     <div id="live-chat">
         <ul class="live-chat-list">
         </ul>
