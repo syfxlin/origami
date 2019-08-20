@@ -1197,9 +1197,19 @@ origami.liveChat = function() {
   };
 };
 
-origami.background = function() {
-  let images = origamiConfig.background;
+origami.background = function(data = "init") {
+  let themeIndex;
+  if (data === "init") {
+    themeIndex = $getCookie("theme");
+    if (!themeIndex) {
+      themeIndex = 0;
+    }
+  } else {
+    themeIndex = data;
+  }
+  let images = origamiConfig.background[themeIndex].background;
   let bgEle = document.querySelector(".ori-background");
+  bgEle.innerHTML = "";
   images.forEach(function(item, index) {
     let itemEle = document.createElement("div");
     itemEle.style.backgroundImage = "url(" + item + ")";
@@ -1237,6 +1247,86 @@ origami.layoutImageChange = function() {
   }
 };
 
+origami.paperPlane = function() {
+  let mask = document.querySelector(".paper-plane-mask");
+  let body = document.querySelector(".paper-plane-body");
+  let add = function(data) {
+    body.innerHTML = "";
+    data.forEach(function(item) {
+      if (!item) return;
+      let li = document.createElement("li");
+      li.className = "col-6 col-md-12";
+      let title = document.createElement("div");
+      title.className = "title";
+      title.textContent = item.name;
+      let content = document.createElement("div");
+      content.className = "content";
+      content.style.backgroundImage = "url(" + item.background[0] + ")";
+      li.append(title);
+      li.append(content);
+      body.append(li);
+    });
+  };
+  let open = false;
+  let index = 0;
+  let planeEle = document.getElementById("paper-plane");
+  planeEle.addEventListener("click", function() {
+    if (!open) {
+      planeEle.classList.add("flyaway");
+      setTimeout(function() {
+        planeEle.classList.remove("flyaway");
+      }, 1500);
+      mask.style.visibility = "visible";
+      mask.style.transform = "scale(1)";
+      open = true;
+      add([
+        origamiConfig.background[index],
+        origamiConfig.background[index + 1]
+      ]);
+      index = index + 2;
+    }
+  });
+  document
+    .querySelector(".paper-plane-content .close")
+    .addEventListener("click", function(e) {
+      mask.style.visibility = "hidden";
+      mask.style.transform = "scale(0)";
+      index = 0;
+      open = false;
+      e.stopPropagation();
+    });
+};
+
+origami.copy = function() {
+  let inner = function(e) {
+    e.preventDefault();
+    let html =
+      window.getSelection().toString() +
+      "<br><br>本文采用 CC BY-NC-SA 3.0 许可协议，著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。<br>作者：" +
+      document.querySelector(".post-info .card-subtitle span").textContent +
+      "<br>来源：" +
+      document.title +
+      "<br>链接：" +
+      window.location.href;
+    let plain =
+      window.getSelection().toString() +
+      "\n\n本文采用 CC BY-NC-SA 3.0 许可协议，著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。\n作者：" +
+      document.querySelector(".post-info .card-subtitle span").textContent +
+      "\n来源：" +
+      document.title +
+      "\n链接：" +
+      window.location.href;
+    e.clipboardData.setData("text/html", html);
+    e.clipboardData.setData("text/plain", plain);
+    if (window.clipboardData) return window.clipboardData.setData("text", html);
+  };
+  document.body.addEventListener("copy", function(e) {
+    if (window.getSelection().toString().length > 10) {
+      inner(e);
+    }
+  });
+};
+
 window.addEventListener("load", function() {
   // document.querySelector(".carousel").classList.add("fadeInDown");
   origami.animate();
@@ -1253,6 +1343,8 @@ window.addEventListener("load", function() {
   origami.liveChat();
   origami.background();
   origami.layoutImageChange();
+  origami.paperPlane();
+  origami.copy();
   if (
     document.body.classList.contains("page") ||
     document.body.classList.contains("single")
@@ -1285,12 +1377,16 @@ console.log(
 );
 
 console.log(
-  "\n %c Origami 折纸主题 %c https://blog.ixk.me/theme-origami.html \n",
+  "\n %c Origami 折纸主题 | Version | Otstar Lin" +
+    document.querySelector('meta[name="origami-version"]').content +
+    " %c https://blog.ixk.me/theme-origami.html \n",
   "color: #fff; background: #4285f4; padding:5px 0;",
   "background: #87d1df; padding:5px 0;"
 );
 
 console.log(
   "%c ",
-  "background:url(wp-content/themes/Origami/image/comment-1.png) no-repeat center;background-size:200px;padding-left:200px;padding-bottom:162px;overflow:hidden;border-radius:10px;margin:5px 0"
+  "background:url(" +
+    window.location.origin +
+    "/wp-content/themes/Origami/image/comment-1.png) no-repeat center;background-size:200px;padding-left:200px;padding-bottom:162px;overflow:hidden;border-radius:10px;margin:5px 0"
 );

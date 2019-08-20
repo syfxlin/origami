@@ -1,3 +1,15 @@
+/*
+Theme Name: Origami
+Theme URI: https://blog.ixk.me/theme-origami.html
+Author: Otstar Lin
+Author URI: https://www.ixk.me
+Description: 简约平面化风格的主题
+Version: 1.1.0
+License: GNU General Public License v3 or later
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
+Tags: black,cyan-blue,flat,responsive
+*/
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -13,11 +25,24 @@
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
+.lazy-image-wrapper {
+  width: 90%;
+  height: 0;
+  padding-bottom: 66.67%;
+  border: 2px solid white;
+  position: relative;
+}
+.lazy-image-wrapper > img {
+  width: 100%;
+  position: absolute;
+}
+
 body {
   background-color: #f8f9fa;
   font-family: "Source Serif Pro", "Noto Serif SC", -apple-system, "SF UI Text",
     "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   font-weight: 400;
+  color: #757575;
 }
 
 code[class*="language-"],
@@ -444,6 +469,10 @@ body:not(.home) #ori-title {
   flex: 1;
 }
 
+#ori-h-search {
+  cursor: pointer;
+}
+
 #ori-h-search i {
   font-size: 1rem;
   margin: 0 0.4rem;
@@ -469,7 +498,7 @@ body:not(.home) #ori-title {
   left: 0;
   border-radius: 2px;
   transform: rotate(0);
-  transition: 0.25s ease-in-out;
+  transition: 0.5s ease-in-out;
 }
 
 #ori-h-m-btn span:nth-child(1) {
@@ -846,14 +875,19 @@ body.menu-active .ori-footer {
   text-decoration: none;
   padding: 0.2rem 0.6rem;
   margin-right: 0.2rem;
-  transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
+.tag-cloud-link {
+  transition: all 0.5s ease-in-out;
+}
+
+.tag-cloud-link:hover,
 .post-tags a:hover {
   background-color: #5755d9;
   border: 1px solid #5755d9;
   opacity: 0.7;
-  color: #f5f5f5;
+  color: #f5f5f5 !important;
 }
 
 .pagination {
@@ -892,6 +926,9 @@ body.menu-active .ori-footer {
 .about-card-image {
   height: 6rem;
   width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .about-card-avatar {
@@ -1030,6 +1067,7 @@ body.menu-active .ori-footer {
 
 .ori-sidebar {
   padding: 0 1rem;
+  padding-right: 0;
 }
 
 .p-post-content,
@@ -1396,7 +1434,7 @@ body.menu-active .ori-footer {
 
 .tools-item {
   position: fixed;
-  bottom: 20px;
+  bottom: 75px;
   left: 20px;
   width: 45px;
   height: 45px;
@@ -1405,6 +1443,7 @@ body.menu-active .ori-footer {
   background: rgba(255, 255, 255, 0.7);
   font-size: 0.6rem;
   cursor: pointer;
+  color: #5755d980;
 }
 
 .tools-item > i {
@@ -1494,6 +1533,132 @@ body.menu-active .ori-footer {
 
 .live-chat-input input {
   margin-right: 0.2rem;
+}
+
+#paper-plane {
+  visibility: visible;
+  display: block;
+  bottom: 20px;
+  z-index: 1001;
+}
+
+#paper-plane.flyaway {
+  border: none;
+  background: transparent;
+}
+
+.paper-plane-mask {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column;
+  cursor: auto;
+  transform: scale(0);
+  transition: all 0.5s;
+}
+
+.paper-plane-content {
+  width: 28rem;
+  max-width: 90%;
+  max-height: 90%;
+  height: 16rem;
+  box-shadow: 0 1px 20px -6px rgba(0, 0, 0, 0.5);
+  background: #fff;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.paper-plane-title {
+  width: 100%;
+  height: 3rem;
+  border-bottom: 0.1rem solid #5755d9;
+}
+
+.paper-plane-body {
+  width: 100%;
+  flex: 1;
+  margin: 0;
+  padding: 1.7rem;
+  padding-top: 0.7rem;
+  display: flex;
+  overflow: hidden;
+  flex-wrap: wrap;
+  list-style: none;
+}
+
+.paper-plane-body li {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0.6rem;
+}
+
+.paper-plane-body li > * {
+  width: 100%;
+}
+
+.paper-plane-body .title {
+  font-size: 0.9rem;
+  padding-bottom: 0.5rem;
+  text-align: center;
+}
+
+.paper-plane-body .content {
+  width: 100%;
+  height: 60%;
+  border: 0.1rem solid #5755d9;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.paper-plane-content button {
+  position: absolute;
+  width: 2.5rem !important;
+  height: 2.5rem;
+  font-size: 1rem;
+}
+
+.paper-plane-content button.left {
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, 0);
+}
+
+.paper-plane-content button.right {
+  right: 0;
+  top: 50%;
+  transform: translate(50%, 0);
+}
+
+.paper-plane-content button.close {
+  right: 0;
+  top: 0;
+  width: 1.8rem !important;
+  height: 1.8rem;
+  font-size: 0.8rem;
+}
+
+.paper-plane-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  max-height: 10rem;
+}
+
+.paper-plane-img img {
+  width: 5rem;
+  height: 5rem;
 }
 
 /* Timeline */
@@ -1767,7 +1932,7 @@ body.menu-active .ori-footer {
 }
 
 #toc-button {
-  bottom: 75px;
+  bottom: 130px;
   visibility: visible;
   z-index: 1001;
 }
@@ -1778,7 +1943,7 @@ body.menu-active .ori-footer {
 
 .toc {
   position: fixed;
-  bottom: 120px;
+  bottom: 175px;
   left: 20px;
   font-size: 15px;
   max-width: 10vw;
@@ -1787,6 +1952,7 @@ body.menu-active .ori-footer {
   background: rgba(255, 255, 255, 0.9);
   display: none;
   box-shadow: 0 0 20px #b6dfe9;
+  color: #757575;
 }
 
 .toc:hover {
@@ -2195,4 +2361,55 @@ body.menu-active .ori-footer {
   100% {
     transform: scale(1);
   }
+}
+
+@keyframes flyaway {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  5% {
+    transform: translate(15px, -2px) rotate(10deg) scale(1.2);
+  }
+  20% {
+    transform: translate(130px, -2px) rotate(-20deg) scale(1.5);
+  }
+  40% {
+    transform: translate(280px, -40px) rotate(10deg) scale(0.8);
+    opacity: 0.8;
+  }
+  60% {
+    transform: translate(500px, -90px) rotate(30deg) scale(0.6);
+    opacity: 0.6;
+  }
+  80% {
+    transform: translate(700px, -140px) rotate(50deg) scale(0.2);
+    opacity: 0.2;
+  }
+  100% {
+    transform: translate(1000px, -200px) rotate(60deg) scale(0);
+    opacity: 0;
+  }
+}
+
+.flyaway {
+  animation: flyaway 1.5s linear;
+}
+
+@keyframes up {
+  to {
+    margin-top: -100px;
+  }
+}
+
+@keyframes rotate {
+  50% {
+    transform: rotate(-15deg);
+  }
+  75% {
+    transform: rotate(20deg);
+  }
+}
+
+.airplane {
+  animation: up 2s ease-in-out infinite alternate, rotate 4s ease-out infinite;
 }

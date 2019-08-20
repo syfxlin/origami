@@ -620,7 +620,7 @@ class OrigamiConfig
       'origami_fun_other',
       [
         'field' => 'origami_katex',
-        'value' => '5',
+        'value' => 'true',
         'type' => 'text',
         'description' => 'true为开，false为关'
       ]
@@ -633,7 +633,7 @@ class OrigamiConfig
       'origami_fun_other',
       [
         'field' => 'origami_mermaid',
-        'value' => '5',
+        'value' => 'true',
         'type' => 'text',
         'description' => 'true为开，false为关'
       ]
@@ -646,7 +646,7 @@ class OrigamiConfig
       'origami_fun_other',
       [
         'field' => 'origami_title_change',
-        'value' => '5',
+        'value' => 'true',
         'type' => 'text',
         'description' => 'true为开，false为关'
       ]
@@ -659,7 +659,7 @@ class OrigamiConfig
       'origami_fun_other',
       [
         'field' => 'origami_real_time_search',
-        'value' => '5',
+        'value' => 'true',
         'type' => 'text',
         'description' => 'true为开，false为关'
       ]
@@ -672,7 +672,7 @@ class OrigamiConfig
       'origami_fun_other',
       [
         'field' => 'origami_live_chat',
-        'value' => '5',
+        'value' => '',
         'type' => 'text',
         'description' => '填入Live Chat Server地址即可开启'
       ]

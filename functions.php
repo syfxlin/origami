@@ -55,7 +55,7 @@ function origami_frontend_config()
     "owo" => get_option('origami_comment_owo', "true") == "true",
     "footerTime" => get_option('origami_footer_time', false),
     "liveChat" => get_option('origami_live_chat', false),
-    "background" => explode(",", get_option('origami_background', ""))
+    "background" => json_decode(get_option('origami_background', ""))
   ];
   echo "<script>window.origamiConfig = JSON.parse('" .
     json_encode($config) .
@@ -593,16 +593,10 @@ function origami_lazyload_img()
   }
   function origami_lazyload_img_process_callback($matches)
   {
-    $rep_src = '';
     $rep_srcset = '';
     $img_attr = $matches[1];
+    $has_srcset = false;
     str_replace("'", '"', $img_attr);
-    if (preg_match('/(src="([^"]*)?")/i', $img_attr, $src_matches) !== 0) {
-      $src_attr = $src_matches[1];
-      $src_url = $src_matches[2];
-      $data_src = 'data-src="' . $src_url . '"';
-      $img_attr = str_replace($src_attr, $data_src . " " . $rep_src, $img_attr);
-    }
     if (
       preg_match('/(srcset="([^"]*)?")/i', $img_attr, $srcset_matches) !== 0
     ) {
@@ -614,6 +608,27 @@ function origami_lazyload_img()
         $data_srcset . " " . $rep_srcset,
         $img_attr
       );
+      $has_srcset = true;
+    }
+    if (preg_match('/(src="([^"]*)?")/i', $img_attr, $src_matches) !== 0) {
+      $src_attr = $src_matches[1];
+      $src_url = $src_matches[2];
+      $data_src = 'data-src="' . $src_url . '"';
+      $data_srcset = 'data-srcset="' . $src_url . '"';
+      $origin_src = 'src="' . $src_url . '"';
+      if ($has_srcset) {
+        $img_attr = str_replace(
+          $src_attr,
+          $data_src . " " . $origin_src,
+          $img_attr
+        );
+      } else {
+        $img_attr = str_replace(
+          $src_attr,
+          $data_srcset . " " . $data_src . " " . $origin_src,
+          $img_attr
+        );
+      }
     }
     if (preg_match('/(class="([^"]*)?")/i', $img_attr, $class_matches) !== 0) {
       $class_attr = $class_matches[1];

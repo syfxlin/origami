@@ -22,7 +22,26 @@
         <i class="fa fa-indent fa-2x" aria-hidden="true"></i>
         <div class="toc"></div>
     </div>
-    <div id="qrcode" class="tools-item" title="阅读转移"><div id="qrcode-img"></div><i class="fa fa-laptop fa-2x" aria-hidden="true"></i></div>
+    <div id="qrcode" class="tools-item" title="阅读转移">
+        <div id="qrcode-img"></div>
+        <i class="fa fa-laptop fa-2x" aria-hidden="true"></i>
+    </div>
+    <div id="paper-plane" class="tools-item" title="乘上通往云端的纸飞机吧">
+        <i class="fa fa-paper-plane-o fa-2x"></i>
+    </div>
+    <div class="paper-plane-mask" title>
+        <div class="paper-plane-content">
+            <div class="paper-plane-title"></div>
+            <ul class="paper-plane-body grid-md"></ul>
+            <button class="btn btn-primary btn-action s-circle left"><i class="icon icon-arrow-left"></i></button>
+            <button class="btn btn-primary btn-action s-circle right"><i class="icon icon-arrow-right"></i></button>
+            <button class="btn btn-link close"><i class="icon icon-cross"></i></button>
+        </div>
+        <div class="paper-plane-img">
+            <img class="airplane" src="<?php echo get_template_directory_uri() .
+              "/image/origami.png"; ?>">
+        </div>
+    </div>
     <div id="if-to-start">
         <span>已跳转到上次阅读的位置，从头阅读？</span>
         <a class="btn" href="javascript:notToStart();">否</a>

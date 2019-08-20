@@ -21,6 +21,9 @@ $body_class .= $GLOBALS['layout'];
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>"/>
   <meta name="theme-color" content="#87d1df">
+  <meta name="origami-version" content="<?php echo wp_get_theme()->get(
+    'Version'
+  ); ?>">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-exp.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-icons.min.css">
@@ -49,7 +52,8 @@ $body_class .= $GLOBALS['layout'];
           'container' => false,
           'menu_id' => 'ori-h-menu',
           'menu_class' => '',
-          'link_after' => '<div></div><span class="sub-drop-icon icon icon-arrow-down"></span>'
+          'link_after' =>
+            '<div></div><span class="sub-drop-icon icon icon-arrow-down"></span>'
         ]); ?>
         <div id="ori-h-search">
           <i class="fa fa-search"></i>
