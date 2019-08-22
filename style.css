@@ -1458,7 +1458,7 @@ body.menu-active .ori-footer {
 
 #qrcode-img {
   position: fixed;
-  bottom: 70px;
+  bottom: 125px;
   left: 20px;
   box-shadow: 0 0 20px #b6dfe9;
   padding: 25px;
@@ -1579,6 +1579,11 @@ body.menu-active .ori-footer {
   width: 100%;
   height: 3rem;
   border-bottom: 0.1rem solid #5755d9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  color: #5755d9;
 }
 
 .paper-plane-body {

@@ -1248,14 +1248,26 @@ origami.layoutImageChange = function() {
 };
 
 origami.paperPlane = function() {
+  let index = 0;
   let mask = document.querySelector(".paper-plane-mask");
   let body = document.querySelector(".paper-plane-body");
   let add = function(data) {
+    if (index - 2 < 0) {
+      left.classList.add("disabled");
+    } else {
+      left.classList.remove("disabled");
+    }
+    if (index + 2 >= origamiConfig.background.length) {
+      right.classList.add("disabled");
+    } else {
+      right.classList.remove("disabled");
+    }
     body.innerHTML = "";
-    data.forEach(function(item) {
+    data.forEach(function(item, i) {
       if (!item) return;
       let li = document.createElement("li");
       li.className = "col-6 col-md-12";
+      li.setAttribute("data-index", index + i);
       let title = document.createElement("div");
       title.className = "title";
       title.textContent = item.name;
@@ -1268,7 +1280,6 @@ origami.paperPlane = function() {
     });
   };
   let open = false;
-  let index = 0;
   let planeEle = document.getElementById("paper-plane");
   planeEle.addEventListener("click", function() {
     if (!open) {
@@ -1283,7 +1294,6 @@ origami.paperPlane = function() {
         origamiConfig.background[index],
         origamiConfig.background[index + 1]
       ]);
-      index = index + 2;
     }
   });
   document
@@ -1295,6 +1305,24 @@ origami.paperPlane = function() {
       open = false;
       e.stopPropagation();
     });
+  let left = document.querySelector(".paper-plane-content .left");
+  let right = document.querySelector(".paper-plane-content .right");
+  left.addEventListener("click", function(e) {
+    e.stopPropagation();
+    if (index - 2 < 0) {
+      return;
+    }
+    index = index - 2;
+    add([origamiConfig.background[index], origamiConfig.background[index + 1]]);
+  });
+  right.addEventListener("click", function(e) {
+    e.stopPropagation();
+    if (index + 2 >= origamiConfig.background.length) {
+      return;
+    }
+    index = index + 2;
+    add([origamiConfig.background[index], origamiConfig.background[index + 1]]);
+  });
 };
 
 origami.copy = function() {
@@ -1377,9 +1405,9 @@ console.log(
 );
 
 console.log(
-  "\n %c Origami 折纸主题 | Version | Otstar Lin" +
+  "\n %c Origami 折纸主题 | Version " +
     document.querySelector('meta[name="origami-version"]').content +
-    " %c https://blog.ixk.me/theme-origami.html \n",
+    " | Otstar Lin %c https://blog.ixk.me/theme-origami.html \n",
   "color: #fff; background: #4285f4; padding:5px 0;",
   "background: #87d1df; padding:5px 0;"
 );

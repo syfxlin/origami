@@ -24,9 +24,6 @@ $body_class .= $GLOBALS['layout'];
   <meta name="origami-version" content="<?php echo wp_get_theme()->get(
     'Version'
   ); ?>">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-exp.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-icons.min.css">
   <?php wp_head(); ?>
   <?php if (get_option("origami_block_mixed", "true") == "true"): ?>
     <meta http-equiv="Content-Security-Policy" content="block-all-mixed-content">

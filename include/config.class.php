@@ -425,10 +425,31 @@ class OrigamiConfig
     );
 
     // 功能
+    register_setting("origami_fun", "origami_assets_url");
+    add_settings_section(
+      'origami_fun_assets',
+      __('1.静态资源设置', 'origami'),
+      [&$this, 'origami_section'],
+      'origami_fun'
+    );
+    add_settings_field(
+      'origami_assets_url',
+      __('静态资源入口', 'origami'),
+      [&$this, 'settings_field_textarea'],
+      'origami_fun',
+      'origami_fun_assets',
+      [
+        'field' => 'origami_assets_url',
+        'value' => 'local',
+        'type' => 'textarea',
+        'description' =>
+          '填入静态资源入口的JSON，若填入local则使用本地的静态资源，jsdeliver则使用jsDeliver CDN，JSON格式请查看js目录下的assets.json'
+      ]
+    );
     register_setting("origami_fun", "origami_other_friends");
     add_settings_section(
       'origami_fun_friend',
-      __('1.友链设置', 'origami'),
+      __('2.友链设置', 'origami'),
       [&$this, 'origami_section'],
       'origami_fun'
     );
@@ -456,7 +477,7 @@ class OrigamiConfig
     register_setting("origami_fun", "origami_markdown_comment");
     add_settings_section(
       'origami_fun_comment',
-      __('2.评论设置', 'origami'),
+      __('3.评论设置', 'origami'),
       [&$this, 'origami_section'],
       'origami_fun'
     );
@@ -553,7 +574,7 @@ class OrigamiConfig
     register_setting("origami_fun", "origami_live_chat");
     add_settings_section(
       'origami_fun_other',
-      __('3.其他设置', 'origami'),
+      __('4.其他设置', 'origami'),
       [&$this, 'origami_section'],
       'origami_fun'
     );

@@ -64,45 +64,107 @@ function origami_frontend_config()
 add_action('wp_footer', 'origami_frontend_config', 102);
 
 // 配置
-$assets_url = get_template_directory_uri();
+$tem_url = get_template_directory_uri();
+$local_assets_url = [
+  "spectre_css" => $tem_url . "/css/spectre.min.css",
+  "spectre_exp_css" => $tem_url . "/css/spectre-exp.min.css",
+  "spectre_icons_css" => $tem_url . "/css/spectre-icons.min.css",
+  "origami_js" => $tem_url . "/js/main.js",
+  "origami_css" => get_stylesheet_uri(),
+  "qrcode_js" => $tem_url . "/js/qrcode.min.js",
+  "SMValidator_js" => $tem_url . "/js/SMValidator.min.js",
+  "font_awesome_css" => $tem_url . "/css/font-awesome.min.css",
+  "canvas_nest_js" => $tem_url . "/js/canvas-nest.js",
+  "lazyload_js" => $tem_url . "/js/lazyload.min.js",
+  "zooming_js" => $tem_url . "/js/zooming.min.js",
+  "owo_css" => $tem_url . "/css/OwO.min.css",
+  "owo_js" => $tem_url . "/js/OwO.min.js",
+  "tocbot_css" => $tem_url . "/css/tocbot.css",
+  "tocbot_js" => $tem_url . "/js/tocbot.min.js",
+  "prism_css" => $tem_url . "/css/prism.css",
+  "prism_js" => $tem_url . "/js/prism.js",
+  "katex_js_1" => $tem_url . "/js/katex.min.js",
+  "katex_js_2" => $tem_url . "/js/auto-render.min.js",
+  "katex_css" => "https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css",
+  "mermaid_js" => $tem_url . "/js/mermaid.min.js",
+  "marked_js" => $tem_url . "/js/marked.min.js"
+];
+
+$jsdelivr_assets_url = [
+  "spectre_css" =>
+    "https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre.min.css",
+  "spectre_exp_css" =>
+    "https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre.min.css",
+  "spectre_icons_css" =>
+    "https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-icons.min.css",
+  "origami_js" => "/wp-content/themes/Origami/js/main.js",
+  "origami_css" => "/wp-content/themes/Origami/style.css",
+  "qrcode_js" => "https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js",
+  "SMValidator_js" =>
+    "https://cdn.jsdelivr.net/npm/SMValidator@1.2.7/dist/SMValidator.min.js",
+  "font_awesome_css" =>
+    "https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css",
+  "canvas_nest_js" =>
+    "https://cdn.jsdelivr.net/npm/canvas-nest.js@2.0.4/dist/canvas-nest.js",
+  "lazyload_js" =>
+    "https://cdn.jsdelivr.net/npm/vanilla-lazyload@12.0.0/dist/lazyload.min.js",
+  "zooming_js" =>
+    "https://cdn.jsdelivr.net/npm/zooming@2.1.1/build/zooming.min.js",
+  "owo_css" => "https://cdn.jsdelivr.net/npm/owo@1.0.2/dist/OwO.min.css",
+  "owo_js" => "https://cdn.jsdelivr.net/npm/owo@1.0.2/dist/OwO.min.js",
+  "tocbot_css" => "https://cdn.jsdelivr.net/npm/tocbot@4.7.1/dist/tocbot.css",
+  "tocbot_js" => "https://cdn.jsdelivr.net/npm/tocbot@4.7.1/dist/tocbot.min.js",
+  "prism_css" => "/wp-content/themes/Origami/css/prism.css",
+  "prism_js" => "/wp-content/themes/Origami/js/prism.js",
+  "katex_js_1" => "https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.js",
+  "katex_js_2" =>
+    "https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/contrib/auto-render.min.js",
+  "katex_css" => "https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css",
+  "mermaid_js" =>
+    "https://cdn.jsdelivr.net/npm/mermaid@8.2.3/dist/mermaid.min.js",
+  "marked_js" => "https://cdn.jsdelivr.net/npm/marked@0.7.0/lib/marked.min.js"
+];
+
+$assets_url = "";
+$assets_str = get_option("origami_assets_url", "local");
+if ($assets_str === "local") {
+  $assets_url = $local_assets_url;
+} elseif ($assets_str === "jsdeliver") {
+  $assets_url = $jsdelivr_assets_url;
+} else {
+  $assets_url = json_decode($assets_str, true);
+}
 
 // 加载主要资源
 if (!is_admin()) {
   // 加载主要css/js文件
+  wp_enqueue_style('spectre_css', $assets_url["spectre_css"]);
+  wp_enqueue_style('spectre_exp_css', $assets_url["spectre_exp_css"]);
+  wp_enqueue_style('spectre_icons_css', $assets_url["spectre_icons_css"]);
   wp_enqueue_style(
-    'origami-style',
-    get_stylesheet_uri(),
+    'origami_css',
+    $assets_url["origami_css"],
     [],
     wp_get_theme()->get('Version')
   );
   wp_enqueue_script(
-    'origami-script',
-    $assets_url . '/js/main.js',
+    'origami_js',
+    $assets_url["origami_js"],
     [],
     wp_get_theme()->get('Version')
   );
-  wp_enqueue_script(
-    'qrcode-script',
-    $assets_url . '/js/qrcode.min.js',
-    [],
-    wp_get_theme()->get('Version')
-  );
-  wp_enqueue_script(
-    'form-script',
-    $assets_url . '/js/SMValidator.min.js',
-    [],
-    wp_get_theme()->get('Version')
-  );
+  wp_enqueue_script('qrcode_js', $assets_url["qrcode_js"]);
+  wp_enqueue_script('SMValidator_js', $assets_url["SMValidator_js"]);
   function css_js_to_footer()
   {
     global $assets_url;
     // fa图标
-    wp_enqueue_style('font-awesome', $assets_url . '/css/font-awesome.min.css');
+    wp_enqueue_style('font_awesome_css', $assets_url["font_awesome_css"]);
     // canvas-nest加载
     if (get_option('origami_canvas_nest', 'true') == "true") {
       echo '<script type="text/javascript" color="0,0,0" zindex="-1" opacity="0.5" count="99" src="' .
-        $assets_url .
-        '/js/canvas-nest.js"></script>';
+        $assets_url["canvas_nest_js"] .
+        '"></script>';
     }
     // Lazyload
     $config = get_option('origami_lazyload');
@@ -112,39 +174,33 @@ if (!is_admin()) {
       $config = array('false');
     }
     if (strcmp($config[0], 'true') == 0) {
-      wp_enqueue_script('lazyload-script', $assets_url . '/js/lazyload.min.js');
+      wp_enqueue_script('lazyload_js', $assets_url["lazyload_js"]);
     }
     // 只有在文章和页面中才会加载
     if (is_single() || is_page()) {
       // Zooming
-      wp_enqueue_script('zooming-script', $assets_url . '/js/zooming.min.js');
+      wp_enqueue_script('zooming_js', $assets_url["zooming_js"]);
       // owo 表情加载
       if (get_option('origami_comment_owo', "true") == "true") {
-        wp_enqueue_style('owo-style', $assets_url . '/css/OwO.min.css');
-        wp_enqueue_script('owo-script', $assets_url . '/js/OwO.min.js');
+        wp_enqueue_style('owo_css', $assets_url["owo_css"]);
+        wp_enqueue_script('owo_js', $assets_url["owo_js"]);
       }
       // 文章目录加载
-      wp_enqueue_style('tocbot-style', $assets_url . '/css/tocbot.css');
-      wp_enqueue_script('tocbot-script', $assets_url . '/js/tocbot.min.js');
+      wp_enqueue_style('tocbot_css', $assets_url["tocbot_css"]);
+      wp_enqueue_script('tocbot_js', $assets_url["tocbot_js"]);
       // 加载代码高亮
-      wp_enqueue_style('prism-style', $assets_url . '/css/prism.css');
-      wp_enqueue_script('prism-script', $assets_url . '/js/prism.js');
+      wp_enqueue_style('prism_css', $assets_url["prism_css"]);
+      wp_enqueue_script('prism_js', $assets_url["prism_js"]);
       if (get_option('origami_katex', "true") == "true") {
-        wp_enqueue_script('katex-script-1', $assets_url . '/js/katex.min.js');
-        wp_enqueue_script(
-          'katex-script-2',
-          $assets_url . '/js/auto-render.min.js'
-        );
-        wp_enqueue_style(
-          'katex-style',
-          'https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css'
-        );
+        wp_enqueue_script('katex_js_1', $assets_url["katex_js_1"]);
+        wp_enqueue_script('katex_js_2', $assets_url["katex_js_2"]);
+        wp_enqueue_style('katex_css', $assets_url["katex_css"]);
       }
       if (get_option('origami_mermaid', "true") == "true") {
-        wp_enqueue_script('mermaid-script', $assets_url . '/js/mermaid.min.js');
+        wp_enqueue_script('mermaid_js', $assets_url["mermaid_js"]);
       }
       if (get_option('origami_markdown_comment', "true") == "true") {
-        wp_enqueue_script('marked-script', $assets_url . '/js/marked.min.js');
+        wp_enqueue_script('marked_js', $assets_url["marked_js"]);
       }
     }
   }
@@ -204,22 +260,22 @@ if (!is_admin()) {
   require_once "include/config.class.php";
   $config_class = new OrigamiConfig();
   wp_enqueue_script(
-    'ace-script',
+    'ace_js',
     'https://cdn.jsdelivr.net/npm/ace-builds@1.4.4/src-noconflict/ace.min.js'
   );
   wp_enqueue_script(
-    'ace-script-lang-tool',
+    'ace_js_lang_tool',
     'https://cdn.jsdelivr.net/npm/ace-builds@1.4.4/src-noconflict/ext-language_tools.js'
   );
-  wp_enqueue_style('prism-style', $assets_url . '/css/prism.css');
-  wp_enqueue_script('prism-script', $assets_url . '/js/prism.js');
-  wp_enqueue_script('katex-script-1', $assets_url . '/js/katex.min.js');
-  wp_enqueue_script('katex-script-2', $assets_url . '/js/auto-render.min.js');
+  wp_enqueue_style('prism_css', $assets_url["prism_css"]);
+  wp_enqueue_script('prism_js', $assets_url["prism_js"]);
+  wp_enqueue_script('katex_js_1', $assets_url["katex_js_1"]);
+  wp_enqueue_script('katex_js_2', $assets_url["katex_js_2"]);
   wp_enqueue_style(
-    'katex-style',
+    'katex_css',
     'https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css'
   );
-  wp_enqueue_script('mermaid-script', $assets_url . '/js/mermaid.min.js');
+  wp_enqueue_script('mermaid_js', $assets_url["mermaid_js"]);
   // 加载后台编辑器样式
   function origami_mce_css($mce_css)
   {
@@ -457,7 +513,7 @@ function origami_breadcrumbs($echo = true, $class = [])
   }
 }
 
-// 灵感 TODO: 该功能还未完成
+// 灵感
 function origami_inspiration_init()
 {
   $labels = [
