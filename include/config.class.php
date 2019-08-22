@@ -40,19 +40,19 @@ class OrigamiConfig
   }
   public function ori_menu_fun()
   {
-    require_once "config_about.php";
+    require_once 'config_about.php';
   }
   public function ori_menu_fun1()
   {
-    require_once "config_style.php";
+    require_once 'config_style.php';
   }
   public function ori_menu_fun2()
   {
-    require_once "config_fun.php";
+    require_once 'config_fun.php';
   }
   public function ori_menu_fun3()
   {
-    require_once "config_about.php";
+    require_once 'config_about.php';
   }
   public function admin_init()
   {
@@ -63,8 +63,8 @@ class OrigamiConfig
     );
 
     // 布局设置
-    register_setting("origami_style", "origami_layout_style");
-    register_setting("origami_style", "origami_layout_sidebar");
+    register_setting('origami_style', 'origami_layout_style');
+    register_setting('origami_style', 'origami_layout_sidebar');
     add_settings_section(
       'origami_style_layout',
       __('1.布局', 'origami'),
@@ -100,7 +100,7 @@ class OrigamiConfig
     );
 
     // 导航栏设置
-    register_setting("origami_style", "origami_header_icon");
+    register_setting('origami_style', 'origami_header_icon');
     add_settings_section(
       'origami_style_header',
       __('2.导航栏设置', 'origami'),
@@ -121,8 +121,8 @@ class OrigamiConfig
     );
 
     // 页脚设置
-    register_setting("origami_style", "origami_footer_text");
-    register_setting("origami_style", "origami_footer_time");
+    register_setting('origami_style', 'origami_footer_text');
+    register_setting('origami_style', 'origami_footer_time');
     add_settings_section(
       'origami_style_footer',
       __('3.页脚设置', 'origami'),
@@ -159,10 +159,10 @@ class OrigamiConfig
     );
 
     //About card设置
-    register_setting("origami_style", "origami_about_card_enable");
-    register_setting("origami_style", "origami_about_card_image");
-    register_setting("origami_style", "origami_about_card_avatar");
-    register_setting("origami_style", "origami_about_card_content");
+    register_setting('origami_style', 'origami_about_card_enable');
+    register_setting('origami_style', 'origami_about_card_image');
+    register_setting('origami_style', 'origami_about_card_avatar');
+    register_setting('origami_style', 'origami_about_card_content');
     add_settings_section(
       'origami_style_about_card',
       __('4.侧栏关于卡片设置', 'origami'),
@@ -222,14 +222,14 @@ class OrigamiConfig
     );
 
     // 首页设置
-    register_setting("origami_style", "origami_carousel_1");
-    register_setting("origami_style", "origami_carousel_2");
-    register_setting("origami_style", "origami_carousel_3");
-    register_setting("origami_style", "origami_carousel_4");
-    register_setting("origami_style", "origami_carousel_title");
-    register_setting("origami_style", "origami_carousel_subtitle");
-    register_setting("origami_style", "origami_carousel_btn_content");
-    register_setting("origami_style", "origami_carousel_btn_url");
+    register_setting('origami_style', 'origami_carousel_1');
+    register_setting('origami_style', 'origami_carousel_2');
+    register_setting('origami_style', 'origami_carousel_3');
+    register_setting('origami_style', 'origami_carousel_4');
+    register_setting('origami_style', 'origami_carousel_title');
+    register_setting('origami_style', 'origami_carousel_subtitle');
+    register_setting('origami_style', 'origami_carousel_btn_content');
+    register_setting('origami_style', 'origami_carousel_btn_url');
     add_settings_section(
       'origami_style_home',
       __('5.首页设置', 'origami'),
@@ -333,12 +333,12 @@ class OrigamiConfig
       ]
     );
 
-    register_setting("origami_style", "origami_featured_image");
-    register_setting("origami_style", "origami_timeline_sidebar");
-    register_setting("origami_style", "origami_links_sidebar");
-    register_setting("origami_style", "origami_inspiration_sidebar");
-    register_setting("origami_style", "origami_background");
-    register_setting("origami_style", "origami_animate");
+    register_setting('origami_style', 'origami_featured_image');
+    register_setting('origami_style', 'origami_timeline_sidebar');
+    register_setting('origami_style', 'origami_links_sidebar');
+    register_setting('origami_style', 'origami_inspiration_sidebar');
+    register_setting('origami_style', 'origami_background');
+    register_setting('origami_style', 'origami_animate');
     add_settings_section(
       'origami_style_other',
       __('6.其他设置', 'origami'),
@@ -425,7 +425,7 @@ class OrigamiConfig
     );
 
     // 功能
-    register_setting("origami_fun", "origami_assets_url");
+    register_setting('origami_fun', 'origami_assets_url');
     add_settings_section(
       'origami_fun_assets',
       __('1.静态资源设置', 'origami'),
@@ -446,7 +446,7 @@ class OrigamiConfig
           '填入静态资源入口的JSON，若填入local则使用本地的静态资源，jsdeliver则使用jsDeliver CDN，JSON格式请查看js目录下的assets.json'
       ]
     );
-    register_setting("origami_fun", "origami_other_friends");
+    register_setting('origami_fun', 'origami_other_friends');
     add_settings_section(
       'origami_fun_friend',
       __('2.友链设置', 'origami'),
@@ -469,12 +469,12 @@ class OrigamiConfig
     );
 
     // 评论
-    register_setting("origami_fun", "origami_comment_key");
-    register_setting("origami_fun", "origami_enable_comment_update");
-    register_setting("origami_fun", "origami_enable_comment_delete");
-    register_setting("origami_fun", "origami_enable_comment_time");
-    register_setting("origami_fun", "origami_comment_owo");
-    register_setting("origami_fun", "origami_markdown_comment");
+    register_setting('origami_fun', 'origami_comment_key');
+    register_setting('origami_fun', 'origami_enable_comment_update');
+    register_setting('origami_fun', 'origami_enable_comment_delete');
+    register_setting('origami_fun', 'origami_enable_comment_time');
+    register_setting('origami_fun', 'origami_comment_owo');
+    register_setting('origami_fun', 'origami_markdown_comment');
     add_settings_section(
       'origami_fun_comment',
       __('3.评论设置', 'origami'),
@@ -563,15 +563,15 @@ class OrigamiConfig
     );
 
     // 其他
-    register_setting("origami_fun", "origami_canvas_nest");
-    register_setting("origami_fun", "origami_workbox");
-    register_setting("origami_fun", "origami_lazyload");
-    register_setting("origami_fun", "origami_block_mixed");
-    register_setting("origami_fun", "origami_katex");
-    register_setting("origami_fun", "origami_mermaid");
-    register_setting("origami_fun", "origami_title_change");
-    register_setting("origami_fun", "origami_real_time_search");
-    register_setting("origami_fun", "origami_live_chat");
+    register_setting('origami_fun', 'origami_canvas_nest');
+    register_setting('origami_fun', 'origami_workbox');
+    register_setting('origami_fun', 'origami_lazyload');
+    register_setting('origami_fun', 'origami_block_mixed');
+    register_setting('origami_fun', 'origami_katex');
+    register_setting('origami_fun', 'origami_mermaid');
+    register_setting('origami_fun', 'origami_title_change');
+    register_setting('origami_fun', 'origami_real_time_search');
+    register_setting('origami_fun', 'origami_live_chat');
     add_settings_section(
       'origami_fun_other',
       __('4.其他设置', 'origami'),

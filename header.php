@@ -8,9 +8,9 @@ if (!isset($GLOBALS['layout'])) {
   $GLOBALS['layout'] = get_option('origami_layout_style', 'layout1');
 }
 
-$body_class = "";
+$body_class = '';
 $body_class .= $GLOBALS['not_carousel'] ? 'not-car' : '';
-$body_class .= " ";
+$body_class .= ' ';
 $body_class .= $GLOBALS['layout'];
 ?>
 
@@ -25,7 +25,7 @@ $body_class .= $GLOBALS['layout'];
     'Version'
   ); ?>">
   <?php wp_head(); ?>
-  <?php if (get_option("origami_block_mixed", "true") == "true"): ?>
+  <?php if (get_option('origami_block_mixed', 'true') == 'true'): ?>
     <meta http-equiv="Content-Security-Policy" content="block-all-mixed-content">
   <?php endif; ?>
 </head>
