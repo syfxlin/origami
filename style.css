@@ -4,7 +4,7 @@ Theme URI: https://blog.ixk.me/theme-origami.html
 Author: Otstar Lin
 Author URI: https://www.ixk.me
 Description: 简约平面化风格的主题
-Version: 1.1.0
+Version: 2.0.0-beta1
 License: GNU General Public License v3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Tags: black,cyan-blue,flat,responsive
@@ -39,14 +39,14 @@ Tags: black,cyan-blue,flat,responsive
 
 body {
   background-color: #f8f9fa;
-  font-family: "Source Serif Pro", "Noto Serif SC", -apple-system, "SF UI Text",
-    "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+  font-family: 'Source Serif Pro', 'Noto Serif SC', -apple-system, 'SF UI Text',
+    'PingFang SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif;
   font-weight: 400;
   color: #757575;
 }
 
-code[class*="language-"],
-pre[class*="language-"] {
+code[class*='language-'],
+pre[class*='language-'] {
   font-size: 0.7rem;
   padding: 0;
 }
@@ -155,7 +155,7 @@ a {
 
 .ori-background:after {
   position: fixed;
-  content: "";
+  content: '';
   top: 0;
   left: 0;
   width: 100%;
@@ -310,7 +310,7 @@ a {
 
 .layout3-images:after {
   position: absolute;
-  content: "";
+  content: '';
   top: 0;
   left: 0;
   width: 100%;
@@ -736,7 +736,7 @@ body.menu-active .ori-footer {
   text-align: center;
   padding-top: 1rem;
   padding-bottom: 1.3rem;
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   color: #666;
 }
 
@@ -792,7 +792,7 @@ body.menu-active .ori-footer {
 }
 
 .post-info .card-subtitle li:not(:last-child):after {
-  content: " , ";
+  content: ' , ';
 }
 
 .post-info .card-subtitle li a {
@@ -963,7 +963,7 @@ body.menu-active .ori-footer {
   height: 0.12rem;
   width: 2.5rem;
   background-color: #5755d9;
-  content: "";
+  content: '';
   display: block;
   margin-top: 0.5rem;
 }
@@ -1026,6 +1026,11 @@ body.menu-active .ori-footer {
   text-align: center;
 }
 
+.p-post-info .card-title,
+.s-post-info .card-title {
+  font-size: 1.7rem;
+}
+
 .comments-container a,
 .p-post-content a,
 .s-post-content a {
@@ -1036,7 +1041,7 @@ body.menu-active .ori-footer {
 .comments-container a:after,
 .p-post-content a:after,
 .s-post-content a:after {
-  content: "";
+  content: '';
   position: absolute;
   width: 100%;
   transform: scaleX(0);
@@ -1081,36 +1086,42 @@ body.menu-active .ori-footer {
 .s-post-content h1,
 .s-post-content h1 {
   font-size: 1.6rem;
+  color: #3b4351;
 }
 
 .p-post-content h2,
 .s-post-content h2 {
   font-size: 1.4rem;
+  color: #3b4351;
 }
 
 .p-post-content h3,
 .s-post-content h3 {
   font-size: 1.2rem;
+  color: #3b4351;
 }
 
 .p-post-content h4,
 .s-post-content h4 {
   font-size: 1rem;
+  color: #3b4351;
 }
 
 .p-post-content h5,
 .s-post-content h5 {
   font-size: 0.8rem;
+  color: #3b4351;
 }
 
 .p-post-content h6,
 .s-post-content h6 {
   font-size: 0.6rem;
+  color: #3b4351;
 }
 
 .p-post-content code,
 .s-post-content code {
-  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 }
 
 .p-post-content img,
@@ -1560,7 +1571,7 @@ body.menu-active .ori-footer {
   flex-direction: column;
   cursor: auto;
   transform: scale(0);
-  transition: all 0.5s;
+  transition: transform 0.5s;
 }
 
 .paper-plane-content {
@@ -1732,7 +1743,7 @@ body.menu-active .ori-footer {
   height: 0.12rem;
   width: 2.5rem;
   background-color: #5755d9;
-  content: "";
+  content: '';
   display: block;
   margin-top: 0.2rem;
 }
@@ -1757,7 +1768,7 @@ body.menu-active .ori-footer {
 
 .inspiration-right:before,
 .inspiration-right:after {
-  content: "";
+  content: '';
   position: absolute;
   top: 2.5rem;
   left: -0.5rem;
@@ -1783,7 +1794,7 @@ body.menu-active .ori-footer {
   height: 0.12rem;
   width: 2.5rem;
   background-color: #5755d9;
-  content: "";
+  content: '';
   display: block;
   margin-top: 0.2rem;
 }
@@ -1800,6 +1811,10 @@ body.menu-active .ori-footer {
 .links {
   list-style: none;
   margin: 0;
+}
+
+.links li {
+  padding: 0 0.2rem;
 }
 
 .links-card {
@@ -1848,7 +1863,7 @@ body.menu-active .ori-footer {
 }
 
 .links-image:after {
-  content: "";
+  content: '';
   height: 8rem;
   width: 100%;
   position: absolute;
@@ -1878,31 +1893,6 @@ body.menu-active .ori-footer {
   height: 2.4rem;
   overflow: hidden;
   word-wrap: break-word;
-}
-
-@media (max-width: 991px) {
-  .tools-item {
-    display: none;
-  }
-
-  #toc-button {
-    display: block;
-    bottom: 0px !important;
-    left: 0px;
-    background: #b6dfe9;
-    width: 22px;
-    height: 60px;
-    border-radius: 0px 5px 5px 0px;
-  }
-  #toc-button > i:before {
-    line-height: 60px;
-    font-size: 18px;
-  }
-  .toc {
-    bottom: 62px !important;
-    left: 0px !important;
-    max-width: 50vw !important;
-  }
 }
 
 #if-to-start {
@@ -1936,6 +1926,8 @@ body.menu-active .ori-footer {
   border: 1px solid #5755d9;
 }
 
+/* TODO: toc太长，修改为可滚动 */
+
 #toc-button {
   bottom: 130px;
   visibility: visible;
@@ -1958,6 +1950,7 @@ body.menu-active .ori-footer {
   display: none;
   box-shadow: 0 0 20px #b6dfe9;
   color: #757575;
+  max-height: 50vh;
 }
 
 .toc:hover {
@@ -2136,6 +2129,38 @@ body.menu-active .ori-footer {
 
   .ori-tools .toast {
     max-width: 80%;
+  }
+
+  .tools-item {
+    display: none;
+  }
+
+  #paper-plane,
+  #toc-button {
+    display: block;
+    bottom: 59px;
+    left: 0px;
+    background: #fff;
+    width: 22px;
+    height: 60px;
+    border-left: none;
+    border-radius: 0px 5px 0px 0px;
+  }
+
+  #paper-plane {
+    bottom: 0px;
+    border-radius: 0px 0px 5px 0px;
+  }
+
+  #paper-plane > i:before,
+  #toc-button > i:before {
+    line-height: 60px;
+    font-size: 18px;
+  }
+  .toc {
+    bottom: 121px;
+    left: 0px;
+    max-width: 50vw;
   }
 }
 

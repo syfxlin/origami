@@ -1,15 +1,15 @@
 window.$httpGetParams = function(data) {
   var arr = [];
   for (var param in data) {
-    arr.push(encodeURIComponent(param) + "=" + encodeURIComponent(data[param]));
+    arr.push(encodeURIComponent(param) + '=' + encodeURIComponent(data[param]));
   }
-  return arr.join("&");
+  return arr.join('&');
 };
 
 window.$http = function(options) {
   options = options || {};
-  options.type = (options.type || "GET").toUpperCase();
-  options.dataType = options.dataType || "json";
+  options.type = (options.type || 'GET').toUpperCase();
+  options.dataType = options.dataType || 'json';
   if (options.async === undefined) {
     options.async = true;
   }
@@ -18,13 +18,13 @@ window.$http = function(options) {
   if (window.XMLHttpRequest) {
     xhr = new XMLHttpRequest();
   } else {
-    xhr = new ActiveXObject("Microsoft.XMLHTTP");
+    xhr = new ActiveXObject('Microsoft.XMLHTTP');
   }
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4) {
       var status = xhr.status;
       if (status >= 200 && status < 300) {
-        if (options.dataType === "json") {
+        if (options.dataType === 'json') {
           options.success && options.success(JSON.parse(xhr.responseText));
         } else {
           options.success && options.success(xhr.responseText);
@@ -34,32 +34,32 @@ window.$http = function(options) {
       }
     }
   };
-  if (options.type == "GET") {
-    xhr.open("GET", options.url + "?" + params, options.async);
+  if (options.type == 'GET') {
+    xhr.open('GET', options.url + '?' + params, options.async);
     xhr.send(null);
-  } else if (options.type == "POST") {
-    xhr.open("POST", options.url, options.async);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  } else if (options.type == 'POST') {
+    xhr.open('POST', options.url, options.async);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(params);
   } else {
     xhr.open(options.type, options.url, options.async);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(params);
   }
 };
 
 window.$getCookie = function(name) {
   var arr,
-    reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+    reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)');
   if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
   else return null;
 };
 
 window.$getQuery = function(name) {
   var query = window.location.search.substring(1);
-  var vars = query.split("&");
+  var vars = query.split('&');
   for (var i = 0; i < vars.length; i++) {
-    var pair = vars[i].split("=");
+    var pair = vars[i].split('=');
     if (pair[0] == name) {
       return pair[1];
     }
@@ -69,7 +69,7 @@ window.$getQuery = function(name) {
 
 window.$getPath = function(index) {
   let pathName = window.location.pathname.substring(1);
-  let pathArray = pathName.split("/");
+  let pathArray = pathName.split('/');
   return pathArray[index];
 };
 
@@ -79,12 +79,12 @@ origami.titleChange = function() {
   if (origamiConfig.titleChange) {
     var origin = document.title;
     var titleTime;
-    document.addEventListener("visibilitychange", function() {
+    document.addEventListener('visibilitychange', function() {
       if (document.hidden) {
-        document.title = "(つェ⊂)我藏好了哦~ " + origin;
+        document.title = '(つェ⊂)我藏好了哦~ ' + origin;
         clearTimeout(titleTime);
       } else {
-        document.title = "(*´∇｀*) 被你发现啦~ " + origin;
+        document.title = '(*´∇｀*) 被你发现啦~ ' + origin;
         titleTime = setTimeout(function() {
           document.title = origin;
         }, 2000);
@@ -95,85 +95,85 @@ origami.titleChange = function() {
 
 origami.scrollTop = function() {
   let scrollE = function() {
-    let el = document.getElementById("scroll-top");
+    let el = document.getElementById('scroll-top');
     if (window.scrollY > 50) {
-      el.style.opacity = "1";
+      el.style.opacity = '1';
     } else {
-      el.style.opacity = "0";
+      el.style.opacity = '0';
     }
   };
   scrollE();
-  window.addEventListener("scroll", scrollE);
-  document.getElementById("scroll-top").addEventListener("click", function() {
+  window.addEventListener('scroll', scrollE);
+  document.getElementById('scroll-top').addEventListener('click', function() {
     window.scrollTo({
       top: 0,
-      behavior: "smooth"
+      behavior: 'smooth'
     });
   });
 };
 
 origami.scrollChange = function() {
-  if (!document.body.classList.contains("home")) return;
-  let title = document.getElementById("ori-title");
-  let logo = document.getElementById("ori-logo");
-  let header = document.querySelector(".ori-header");
-  if (!document.body.classList.contains("layout1")) {
+  if (!document.body.classList.contains('home')) return;
+  let title = document.getElementById('ori-title');
+  let logo = document.getElementById('ori-logo');
+  let header = document.querySelector('.ori-header');
+  if (!document.body.classList.contains('layout1')) {
     let scrollE = function() {
       if (window.scrollY >= 10) {
-        header.classList.add("active");
-        title.style.display = "none";
-        logo.style.display = "flex";
+        header.classList.add('active');
+        title.style.display = 'none';
+        logo.style.display = 'flex';
       } else {
-        header.classList.remove("active");
-        title.style.display = "block";
-        logo.style.display = "none";
+        header.classList.remove('active');
+        title.style.display = 'block';
+        logo.style.display = 'none';
       }
     };
     scrollE();
-    window.addEventListener("scroll", scrollE);
+    window.addEventListener('scroll', scrollE);
   } else {
     let target =
-      document.getElementsByClassName("carousel")[0].clientHeight -
-      document.getElementsByClassName("ori-header")[0].clientHeight;
+      document.getElementsByClassName('carousel')[0].clientHeight -
+      document.getElementsByClassName('ori-header')[0].clientHeight;
     let scrollE = function() {
       if (window.scrollY >= target) {
-        document.body.classList.add("not-car");
-        title.style.display = "none";
-        logo.style.display = "flex";
+        document.body.classList.add('not-car');
+        title.style.display = 'none';
+        logo.style.display = 'flex';
       } else {
-        document.body.classList.remove("not-car");
-        title.style.display = "block";
-        logo.style.display = "none";
+        document.body.classList.remove('not-car');
+        title.style.display = 'block';
+        logo.style.display = 'none';
       }
     };
     scrollE();
-    window.addEventListener("scroll", scrollE);
+    window.addEventListener('scroll', scrollE);
   }
 };
 
 origami.mobileMenu = function() {
-  document.getElementById("ori-h-m-btn").addEventListener("click", function() {
-    let btn = document.getElementById("ori-h-m-btn");
-    let menu = document.getElementById("ori-h-menu");
-    if (btn.classList.contains("active")) {
-      btn.classList.remove("active");
-      menu.classList.remove("active");
-      document.body.classList.remove("menu-active");
+  document.getElementById('ori-h-m-btn').addEventListener('click', function() {
+    let btn = document.getElementById('ori-h-m-btn');
+    let menu = document.getElementById('ori-h-menu');
+    if (btn.classList.contains('active')) {
+      btn.classList.remove('active');
+      menu.classList.remove('active');
+      document.body.classList.remove('menu-active');
     } else {
-      btn.classList.add("active");
-      menu.classList.add("active");
-      document.body.classList.add("menu-active");
+      btn.classList.add('active');
+      menu.classList.add('active');
+      document.body.classList.add('menu-active');
     }
   });
   document
-    .querySelectorAll(".menu-item-has-children > a > .sub-drop-icon")
+    .querySelectorAll('.menu-item-has-children > a > .sub-drop-icon')
     .forEach(function(item) {
-      item.addEventListener("click", function(e) {
+      item.addEventListener('click', function(e) {
         let menu = item.parentElement.parentElement.classList;
-        if (menu.contains("active")) {
-          menu.remove("active");
+        if (menu.contains('active')) {
+          menu.remove('active');
         } else {
-          menu.add("active");
+          menu.add('active');
         }
         e.stopPropagation();
         e.preventDefault();
@@ -182,91 +182,91 @@ origami.mobileMenu = function() {
 };
 
 origami.searchBtn = function() {
-  document.getElementById("ori-h-search").addEventListener("click", function() {
-    let el = document.getElementsByClassName("ori-search")[0];
-    el.style.display = "block";
-    document.getElementById("ori-search-input").focus();
-    el.style.transition = "opacity 0.5s";
-    el.style.opacity = "1";
+  document.getElementById('ori-h-search').addEventListener('click', function() {
+    let el = document.getElementsByClassName('ori-search')[0];
+    el.style.display = 'block';
+    document.getElementById('ori-search-input').focus();
+    el.style.transition = 'opacity 0.5s';
+    el.style.opacity = '1';
   });
   document
-    .getElementById("ori-h-search-close")
-    .addEventListener("click", function() {
-      let el = document.getElementsByClassName("ori-search")[0];
+    .getElementById('ori-h-search-close')
+    .addEventListener('click', function() {
+      let el = document.getElementsByClassName('ori-search')[0];
       setTimeout(function() {
-        el.style.display = "none";
+        el.style.display = 'none';
       }, 500);
-      el.style.transition = "opacity 0.5s";
-      el.style.opacity = "0";
+      el.style.transition = 'opacity 0.5s';
+      el.style.opacity = '0';
     });
 };
 
 origami.realTimeSearch = function() {
-  let ele = document.getElementById("ori-search-input");
+  let ele = document.getElementById('ori-search-input');
   if (origamiConfig.realTimeSearch) {
     let page = 1;
-    let listEle = document.getElementById("search-list");
-    let loadingEle = document.querySelector(".ori-search-loading");
+    let listEle = document.getElementById('search-list');
+    let loadingEle = document.querySelector('.ori-search-loading');
     let timer = null;
     let changeSearchList = function(list) {
-      listEle.innerHTML = "";
+      listEle.innerHTML = '';
       list.forEach(function(item) {
-        let str = "";
+        let str = '';
         str += '<article class="card" id="post-' + item.id + '">';
         str += '<div class="card-header post-info">';
         str += '<h2 class="card-title">';
-        str += '<a href="' + item.link + '">' + item.title.rendered + "</a>";
-        str += "</h2>";
+        str += '<a href="' + item.link + '">' + item.title.rendered + '</a>';
+        str += '</h2>';
         let d = new Date(item.date);
         let dStr =
-          d.getFullYear() + "年" + d.getMonth() + "月" + d.getDate() + "日";
+          d.getFullYear() + '年' + d.getMonth() + '月' + d.getDate() + '日';
         str +=
           '<div class="card-subtitle text-gray"><time>' +
           dStr +
-          "</time></div>";
-        str += "</div>";
-        str += '<div class="card-body">' + item.excerpt.rendered + "</div>";
+          '</time></div>';
+        str += '</div>';
+        str += '<div class="card-body">' + item.excerpt.rendered + '</div>';
         str += '<div class="card-footer"><div class="post-tags"></div>';
         str += '<a class="read-more" href="' + item.link + '">阅读更多</a>';
-        str += "</div>";
+        str += '</div>';
         listEle.innerHTML += str;
       });
     };
 
-    ele.addEventListener("input", function() {
+    ele.addEventListener('input', function() {
       clearTimeout(timer);
       timer = setTimeout(function() {
-        if (ele.value == "") {
-          listEle.innerHTML = "";
+        if (ele.value == '') {
+          listEle.innerHTML = '';
           return;
         }
-        loadingEle.style.visibility = "visible";
-        loadingEle.style.opacity = "1";
+        loadingEle.style.visibility = 'visible';
+        loadingEle.style.opacity = '1';
         $http({
-          url: "/wp-json/wp/v2/posts",
-          type: "GET",
-          dataType: "json",
+          url: '/wp-json/wp/v2/posts',
+          type: 'GET',
+          dataType: 'json',
           data: {
             search: ele.value,
             page: page
           },
           success: function(response) {
-            loadingEle.style.opacity = "0";
+            loadingEle.style.opacity = '0';
             setTimeout(function() {
-              loadingEle.style.visibility = "hidden";
+              loadingEle.style.visibility = 'hidden';
             }, 500);
             changeSearchList(response);
           },
           error: function(status) {
-            console.log("状态码为" + status);
+            console.log('状态码为' + status);
           }
         });
       }, 300);
     });
   } else {
-    ele.addEventListener("keydown", function(e) {
-      if (e.key === "Enter") {
-        window.location.href = window.location.origin + "/?s=" + ele.value;
+    ele.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        window.location.href = window.location.origin + '/?s=' + ele.value;
       }
     });
   }
@@ -274,20 +274,20 @@ origami.realTimeSearch = function() {
 
 origami.tools = {
   showToast: function(massage, status) {
-    let className = "toast-" + status;
-    let toast = document.querySelector(".ori-tools .toast");
+    let className = 'toast-' + status;
+    let toast = document.querySelector('.ori-tools .toast');
     toast.classList.add(className);
-    toast.querySelector("p").innerHTML = massage;
-    toast.style.visibility = "visible";
-    toast.style.opacity = "1";
+    toast.querySelector('p').innerHTML = massage;
+    toast.style.visibility = 'visible';
+    toast.style.opacity = '1';
   },
   hideToast: function() {
-    let toast = document.querySelector(".ori-tools .toast");
-    toast.style.opacity = "0";
+    let toast = document.querySelector('.ori-tools .toast');
+    toast.style.opacity = '0';
     setTimeout(function() {
-      toast.style.visibility = "hidden";
-      toast.className = "toast";
-      toast.querySelector("p").innerHTML = "";
+      toast.style.visibility = 'hidden';
+      toast.className = 'toast';
+      toast.querySelector('p').innerHTML = '';
     }, 500);
   },
   timeToast: function(massage, status, delay) {
@@ -296,53 +296,53 @@ origami.tools = {
   },
   initToast: function() {
     document
-      .querySelector(".ori-tools .toast .btn-clear")
-      .addEventListener("click", function() {
+      .querySelector('.ori-tools .toast .btn-clear')
+      .addEventListener('click', function() {
         origami.tools.hideToast();
       });
   },
   showModal: function(title, content, confirm = () => {}, cancel = () => {}) {
-    let modal = document.querySelector(".ori-tools .modal");
-    modal.querySelector(".modal-title").textContent = title;
-    modal.querySelector(".modal-body .content").textContent = content;
-    let confirmEle = modal.querySelector(".confirm");
+    let modal = document.querySelector('.ori-tools .modal');
+    modal.querySelector('.modal-title').textContent = title;
+    modal.querySelector('.modal-body .content').textContent = content;
+    let confirmEle = modal.querySelector('.confirm');
     let confirmFun = function(e) {
       confirm(e);
       origami.tools.hideModal();
-      confirmEle.removeEventListener("click", confirmFun);
+      confirmEle.removeEventListener('click', confirmFun);
     };
-    confirmEle.addEventListener("click", confirmFun);
-    let cancelEle = modal.querySelector(".cancel");
+    confirmEle.addEventListener('click', confirmFun);
+    let cancelEle = modal.querySelector('.cancel');
     let cancelFun = function(e) {
       cancel(e);
       origami.tools.hideModal();
-      cancelEle.removeEventListener("click", cancelFun);
+      cancelEle.removeEventListener('click', cancelFun);
     };
-    cancelEle.addEventListener("click", cancelFun);
-    modal.classList.add("active");
-    modal.style.visibility = "visible";
+    cancelEle.addEventListener('click', cancelFun);
+    modal.classList.add('active');
+    modal.style.visibility = 'visible';
   },
   hideModal: function() {
-    let modal = document.querySelector(".ori-tools .modal");
-    modal.style.visibility = "hidden";
-    modal.classList.remove("active");
+    let modal = document.querySelector('.ori-tools .modal');
+    modal.style.visibility = 'hidden';
+    modal.classList.remove('active');
   }
 };
 
 origami.initComments = function() {
-  let listEle = document.getElementById("comments-list");
+  let listEle = document.getElementById('comments-list');
   if (!listEle) return;
-  let nav = document.getElementsByClassName("comments-nav")[0];
-  let select = document.getElementById("comments-select");
-  let nextBtn = document.getElementById("comments-next");
-  let prevBtn = document.getElementById("comments-prev");
+  let nav = document.getElementsByClassName('comments-nav')[0];
+  let select = document.getElementById('comments-select');
+  let nextBtn = document.getElementById('comments-next');
+  let prevBtn = document.getElementById('comments-prev');
   let isOne = true;
-  let postId = listEle.getAttribute("data-postid");
-  let pageCount = listEle.getAttribute("data-pagecount");
+  let postId = listEle.getAttribute('data-postid');
+  let pageCount = listEle.getAttribute('data-pagecount');
   let pageOut = 1;
 
   let commentToHtml = function(item, lv = 1, option = {}) {
-    let str = "";
+    let str = '';
     str +=
       '<div id="comment-' +
       item.comment_ID +
@@ -351,29 +351,29 @@ origami.initComments = function() {
       ' comment-item">';
     str += item.comment_avatar;
     str += '<div class="comment-content"><div class="comment-header">';
-    if (item.comment_author_url == "") {
-      str += '<div class="comment-author">' + item.comment_author + "</div>";
+    if (item.comment_author_url == '') {
+      str += '<div class="comment-author">' + item.comment_author + '</div>';
     } else {
       str +=
         '<div class="comment-author"><a href="' +
         item.comment_author_url +
         '">' +
         item.comment_author +
-        "</a></div>";
+        '</a></div>';
     }
     str += item.comment_mark;
     if (option.enCountdown) {
       str += '<div class="countdown">可操作剩余时间：<span></span></div>';
     }
-    if (item.comment_approved != "1") {
+    if (item.comment_approved != '1') {
       str += '<div class="not-approved">您的评论还在等待审核</div>';
     }
-    str += "</div>";
-    str += '<div class="comment-body">' + item.comment_content + "</div>";
+    str += '</div>';
+    str += '<div class="comment-body">' + item.comment_content + '</div>';
     str += '<div class="comment-footer">';
     str +=
       '<div class="comment-date"><i class="fa fa-clock-o" aria-hidden="true"></i>';
-    str += "发表于: <time>" + item.comment_date + "</time></div>";
+    str += '发表于: <time>' + item.comment_date + '</time></div>';
     str += '<div class="comment-btn">';
     if (option.enUpdate) {
       str += '<span title="修改"><i class="fa fa-edit"></i>';
@@ -385,7 +385,7 @@ origami.initComments = function() {
         '" data-lv="' +
         lv +
         '">修改</a>';
-      str += "</span>";
+      str += '</span>';
     }
     if (option.enDelete) {
       str += '<span title="删除"><i class="fa fa-trash"></i>';
@@ -397,7 +397,7 @@ origami.initComments = function() {
         '" data-lv="' +
         lv +
         '">删除</a>';
-      str += "</span>";
+      str += '</span>';
     }
     str += '<span title="回复"><i class="fa fa-reply"></i>';
     str +=
@@ -408,33 +408,33 @@ origami.initComments = function() {
       '" data-lv="' +
       lv +
       '">回复</a>';
-    str += "</span>";
-    str += "</div></div></div></div>";
+    str += '</span>';
+    str += '</div></div></div></div>';
     return str;
   };
   let commentsToList = function(list, lv = 1) {
-    let str = "";
+    let str = '';
     list.forEach(function(item) {
       str += commentToHtml(item, lv);
       if (item.sub != []) {
         str +=
           '<ul class="comment-children">' +
           commentsToList(item.sub, lv + 1) +
-          "</ul>";
+          '</ul>';
       }
     });
     return str;
   };
   let changeNav = function() {
     if (pageOut == 1) {
-      prevBtn.style.display = "none";
+      prevBtn.style.display = 'none';
     } else {
-      prevBtn.style.display = "block";
+      prevBtn.style.display = 'block';
     }
     if (pageOut == pageCount) {
-      nextBtn.style.display = "none";
+      nextBtn.style.display = 'none';
     } else {
-      nextBtn.style.display = "block";
+      nextBtn.style.display = 'block';
     }
     select.value = pageOut;
   };
@@ -442,15 +442,15 @@ origami.initComments = function() {
     if (page == -1) {
       page = pageOut;
     }
-    let loading = document.getElementById("comments-loading");
+    let loading = document.getElementById('comments-loading');
     if (!isOne) {
       window.scrollTo({
         top: loading.offsetTop - 200,
-        behavior: "smooth"
+        behavior: 'smooth'
       });
     }
-    loading.style.height = "4rem";
-    listEle.style.height = "0px";
+    loading.style.height = '4rem';
+    listEle.style.height = '0px';
     if (page <= 0) {
       page = 1;
     }
@@ -459,26 +459,26 @@ origami.initComments = function() {
     }
     let loadF = function() {
       $http({
-        url: "/wp-json/origami/v1/comments",
-        type: "GET",
-        dataType: "json",
+        url: '/wp-json/origami/v1/comments',
+        type: 'GET',
+        dataType: 'json',
         data: {
           id: postId,
           page: page
         },
         success: function(response) {
-          loading.style.height = "0";
+          loading.style.height = '0';
           listEle.innerHTML = commentsToList(response);
-          listEle.style.height = listEle.scrollHeight + "px";
+          listEle.style.height = listEle.scrollHeight + 'px';
           setTimeout(function() {
-            listEle.style.height = "unset";
+            listEle.style.height = 'unset';
           }, 600);
           pageOut = page;
           changeNav();
           callback(pageOut, response);
         },
         error: function(status) {
-          console.log("状态码为" + status);
+          console.log('状态码为' + status);
         }
       });
     };
@@ -500,9 +500,9 @@ origami.initComments = function() {
   let submit = function(info, callback = () => {}, isUpdate = false) {
     if (!isUpdate) {
       $http({
-        url: "/wp-json/origami/v1/comments",
-        type: "POST",
-        dataType: "json",
+        url: '/wp-json/origami/v1/comments',
+        type: 'POST',
+        dataType: 'json',
         data: {
           author_email: info.author_email,
           author_name: info.author_name,
@@ -515,14 +515,14 @@ origami.initComments = function() {
           callback(res);
         },
         error: function(error) {
-          console.log("状态码为" + status);
+          console.log('状态码为' + status);
         }
       });
     } else {
       $http({
-        url: "/wp-json/origami/v1/comments",
-        type: "PUT",
-        dataType: "json",
+        url: '/wp-json/origami/v1/comments',
+        type: 'PUT',
+        dataType: 'json',
         data: {
           author_email: info.author_email,
           author_name: info.author_name,
@@ -535,19 +535,19 @@ origami.initComments = function() {
           callback(res);
         },
         error: function(error) {
-          console.log("状态码为" + status);
+          console.log('状态码为' + status);
         }
       });
     }
   };
   let submitError = function(res) {
-    origami.tools.timeToast(res.massage, "error", 5000);
+    origami.tools.timeToast(res.massage, 'error', 5000);
   };
   let submitSuccess = function(res, lv = 1) {
     // 显示和定时隐藏提示
-    origami.tools.timeToast("评论成功ヾ(≧▽≦*)o", "success", 3000);
+    origami.tools.timeToast('评论成功ヾ(≧▽≦*)o', 'success', 3000);
     // 清空评论框中的值
-    document.getElementById("response-text").value = "";
+    document.getElementById('response-text').value = '';
     // 构造新的comment节点
     let newComment = new DOMParser()
       .parseFromString(
@@ -556,24 +556,24 @@ origami.initComments = function() {
           enUpdate: origamiConfig.updateComment,
           enCountdown: true
         }),
-        "text/html"
+        'text/html'
       )
-      .getElementsByClassName("comment-item")[0];
-    let time = $getCookie("change_comment_time");
+      .getElementsByClassName('comment-item')[0];
+    let time = $getCookie('change_comment_time');
     let countdown = setInterval(function() {
       let last = parseInt(time) - Math.round(Date.now() / 1000);
       if (last == 0) {
         clearInterval(countdown);
-        newComment.querySelector(".comment-update-link").parentElement.remove();
-        newComment.querySelector(".comment-delete-link").parentElement.remove();
-        newComment.querySelector(".countdown").remove();
+        newComment.querySelector('.comment-update-link').parentElement.remove();
+        newComment.querySelector('.comment-delete-link').parentElement.remove();
+        newComment.querySelector('.countdown').remove();
       }
-      newComment.querySelector(".countdown span").textContent = last;
+      newComment.querySelector('.countdown span').textContent = last;
     }, 1000);
-    let responseForm = document.getElementById("comments-form");
-    let respondMain = document.getElementById("comments-response");
+    let responseForm = document.getElementById('comments-form');
+    let respondMain = document.getElementById('comments-response');
     let parent = responseForm.parentElement;
-    if (parent.id == "comments-response") {
+    if (parent.id == 'comments-response') {
       listEle.insertBefore(newComment, listEle.firstChild);
     } else {
       parent.replaceChild(newComment, responseForm);
@@ -587,33 +587,33 @@ origami.initComments = function() {
     if (pageCount <= 1) {
       return;
     } else {
-      nav.style.display = "flex";
+      nav.style.display = 'flex';
     }
-    let str = "";
+    let str = '';
     for (let i = 1; i <= pageCount; i++) {
-      str += '<option value="' + i + '">第' + i + "页</option>";
+      str += '<option value="' + i + '">第' + i + '页</option>';
     }
     select.innerHTML = str;
-    select.addEventListener("change", function() {
+    select.addEventListener('change', function() {
       load(select.value);
     });
-    nextBtn.addEventListener("click", loadNext);
-    prevBtn.addEventListener("click", loadPrev);
+    nextBtn.addEventListener('click', loadNext);
+    prevBtn.addEventListener('click', loadPrev);
   };
   let initSubmit = function() {
-    new SMValidator("form");
-    let submitEle = document.getElementById("response-submit");
-    submitEle.addEventListener("click", function(e) {
-      let loadingEle = document.getElementsByClassName("response-loading")[0];
-      let authorNameEle = document.getElementById("response-author");
-      let authorEmailEle = document.getElementById("response-email");
-      let contentEle = document.getElementById("response-text");
+    new SMValidator('form');
+    let submitEle = document.getElementById('response-submit');
+    submitEle.addEventListener('click', function(e) {
+      let loadingEle = document.getElementsByClassName('response-loading')[0];
+      let authorNameEle = document.getElementById('response-author');
+      let authorEmailEle = document.getElementById('response-email');
+      let contentEle = document.getElementById('response-text');
       if (
         contentEle.style.color ||
         authorEmailEle.style.color ||
         authorNameEle.style.color
       ) {
-        console.log("输入有误");
+        console.log('输入有误');
         return;
       }
       let content = contentEle.value;
@@ -621,120 +621,120 @@ origami.initComments = function() {
         content = marked(content);
       }
       let info = {
-        post: submitEle.getAttribute("data-postid"),
-        parent: submitEle.getAttribute("data-commentid"),
+        post: submitEle.getAttribute('data-postid'),
+        parent: submitEle.getAttribute('data-commentid'),
         content: content,
         author_email: authorEmailEle.value,
         author_name: authorNameEle.value,
-        author_url: document.getElementById("response-website").value
+        author_url: document.getElementById('response-website').value
       };
-      loadingEle.style.opacity = "1";
+      loadingEle.style.opacity = '1';
       submit(
         info,
         function(res) {
-          loadingEle.style.opacity = "0";
+          loadingEle.style.opacity = '0';
           if (res.code) {
             submitError(res);
             return;
           }
-          submitSuccess(res, submitEle.getAttribute("data-lv"));
+          submitSuccess(res, submitEle.getAttribute('data-lv'));
         },
-        submitEle.getAttribute("data-isupdate") == "true"
+        submitEle.getAttribute('data-isupdate') == 'true'
       );
       e.preventDefault();
     });
   };
   let initReply = function() {
-    let response = document.getElementById("comments-response");
-    let form = document.getElementById("comments-form");
-    let submitEle = document.getElementById("response-submit");
-    let closeResponse = document.getElementById("close-response");
-    closeResponse.addEventListener("click", function() {
+    let response = document.getElementById('comments-response');
+    let form = document.getElementById('comments-form');
+    let submitEle = document.getElementById('response-submit');
+    let closeResponse = document.getElementById('close-response');
+    closeResponse.addEventListener('click', function() {
       form.remove();
       response.appendChild(form);
-      submitEle.setAttribute("data-commentid", 0);
-      submitEle.setAttribute("data-lv", 1);
-      closeResponse.style.visibility = "hidden";
+      submitEle.setAttribute('data-commentid', 0);
+      submitEle.setAttribute('data-lv', 1);
+      closeResponse.style.visibility = 'hidden';
     });
-    document.querySelectorAll(".comment-reply-link").forEach(function(item) {
-      item.addEventListener("click", function() {
-        let parentId = item.getAttribute("data-commentid");
+    document.querySelectorAll('.comment-reply-link').forEach(function(item) {
+      item.addEventListener('click', function() {
+        let parentId = item.getAttribute('data-commentid');
         form.remove();
         document
-          .querySelector("#comment-" + parentId)
+          .querySelector('#comment-' + parentId)
           .nextElementSibling.appendChild(form);
-        submitEle.setAttribute("data-commentid", parentId);
+        submitEle.setAttribute('data-commentid', parentId);
         submitEle.setAttribute(
-          "data-lv",
-          parseInt(item.getAttribute("data-lv")) + 1
+          'data-lv',
+          parseInt(item.getAttribute('data-lv')) + 1
         );
-        closeResponse.style.visibility = "visible";
+        closeResponse.style.visibility = 'visible';
       });
     });
   };
   let initBtn = function() {
-    let deleteBtn = document.getElementsByClassName("comment-delete-link")[0];
-    deleteBtn.addEventListener("click", function() {
-      origami.tools.showModal("删除评论", "确定要删除这条评论？", function() {
+    let deleteBtn = document.getElementsByClassName('comment-delete-link')[0];
+    deleteBtn.addEventListener('click', function() {
+      origami.tools.showModal('删除评论', '确定要删除这条评论？', function() {
         $http({
-          url: "/wp-json/origami/v1/comments",
-          type: "DELETE",
-          dataType: "json",
+          url: '/wp-json/origami/v1/comments',
+          type: 'DELETE',
+          dataType: 'json',
           data: {
-            id: deleteBtn.getAttribute("data-commentid")
+            id: deleteBtn.getAttribute('data-commentid')
           },
           success: function(res) {
-            if (res || res == "true") {
+            if (res || res == 'true') {
               document
                 .getElementById(
-                  "comment-" + deleteBtn.getAttribute("data-commentid")
+                  'comment-' + deleteBtn.getAttribute('data-commentid')
                 )
                 .remove();
-              origami.tools.timeToast("删除评论成功！", "success", 3000);
+              origami.tools.timeToast('删除评论成功！', 'success', 3000);
             }
           }
         });
       });
     });
 
-    let updateBtn = document.getElementsByClassName("comment-update-link")[0];
-    updateBtn.addEventListener("click", function() {
-      let form = document.getElementById("comments-form");
-      let submitEle = document.getElementById("response-submit");
-      let closeResponse = document.getElementById("close-response");
-      let commentId = updateBtn.getAttribute("data-commentid");
-      let commentEle = document.getElementById("comment-" + commentId);
-      submitEle.setAttribute("data-commentid", commentId);
+    let updateBtn = document.getElementsByClassName('comment-update-link')[0];
+    updateBtn.addEventListener('click', function() {
+      let form = document.getElementById('comments-form');
+      let submitEle = document.getElementById('response-submit');
+      let closeResponse = document.getElementById('close-response');
+      let commentId = updateBtn.getAttribute('data-commentid');
+      let commentEle = document.getElementById('comment-' + commentId);
+      submitEle.setAttribute('data-commentid', commentId);
       submitEle.setAttribute(
-        "data-lv",
-        parseInt(updateBtn.getAttribute("data-lv"))
+        'data-lv',
+        parseInt(updateBtn.getAttribute('data-lv'))
       );
-      submitEle.setAttribute("data-isupdate", "true");
+      submitEle.setAttribute('data-isupdate', 'true');
       let parent = commentEle.parentElement;
       let next = commentEle.nextElementSibling;
       form.remove();
       parent.replaceChild(form, commentEle);
-      document.getElementById("response-text").value = commentEle.querySelector(
-        ".comment-body"
+      document.getElementById('response-text').value = commentEle.querySelector(
+        '.comment-body'
       ).innerHTML;
-      closeResponse.style.visibility = "visible";
+      closeResponse.style.visibility = 'visible';
       let repl = function() {
         parent.insertBefore(commentEle, next);
-        document.getElementById("response-text").value = "";
-        submitEle.removeAttribute("data-isupdate");
-        closeResponse.removeEventListener("click", repl);
+        document.getElementById('response-text').value = '';
+        submitEle.removeAttribute('data-isupdate');
+        closeResponse.removeEventListener('click', repl);
       };
-      closeResponse.addEventListener("click", repl);
+      closeResponse.addEventListener('click', repl);
     });
   };
   let init = function() {
-    let commentPage = $getQuery("comment_page");
+    let commentPage = $getQuery('comment_page');
     if (commentPage) {
       pageOut = commentPage;
     }
     initNav();
     load(-1, function() {
-      if (window.location.hash != "") {
+      if (window.location.hash != '') {
         setTimeout(function() {
           window.scrollTo({
             top: document.querySelector(window.location.hash).offsetTop
@@ -755,15 +755,15 @@ origami.initComments = function() {
 };
 
 origami.loadOwO = function() {
-  if (origamiConfig.owo && window.is_owo && document.querySelector(".OwO")) {
+  if (origamiConfig.owo && window.is_owo && document.querySelector('.OwO')) {
     new OwO({
-      logo: "OωO表情",
-      container: document.getElementsByClassName("OwO")[0],
-      target: document.getElementById("response-text"),
-      api: location.origin + "/wp-content/themes/Origami/js/OwO.json",
-      position: "down",
-      width: "100%",
-      maxHeight: "250px"
+      logo: 'OωO表情',
+      container: document.getElementsByClassName('OwO')[0],
+      target: document.getElementById('response-text'),
+      api: location.origin + '/wp-content/themes/Origami/js/OwO.json',
+      position: 'down',
+      width: '100%',
+      maxHeight: '250px'
     });
   }
 };
@@ -779,44 +779,44 @@ origami.buildFooterTime = function() {
     hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
     hnum = Math.floor(hours);
     if (String(hnum).length == 1) {
-      hnum = "0" + hnum;
+      hnum = '0' + hnum;
     }
     minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
     mnum = Math.floor(minutes);
     if (String(mnum).length == 1) {
-      mnum = "0" + mnum;
+      mnum = '0' + mnum;
     }
     seconds =
       (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
     snum = Math.round(seconds);
     if (String(snum).length == 1) {
-      snum = "0" + snum;
+      snum = '0' + snum;
     }
-    document.getElementById("timeDate").innerHTML = "" + dnum + "天";
-    document.getElementById("times").innerHTML =
-      hnum + "小时" + mnum + "分" + snum + "秒";
+    document.getElementById('timeDate').innerHTML = '' + dnum + '天';
+    document.getElementById('times').innerHTML =
+      hnum + '小时' + mnum + '分' + snum + '秒';
   }
   setInterval(createtime, 250);
 };
 
 origami.initTocbot = function() {
-  let content = document.querySelector(".s-post-content,.p-post-content");
+  let content = document.querySelector('.s-post-content,.p-post-content');
   let i = 0;
-  if (!content || !content.querySelectorAll("h1, h2, h3")) return;
-  content.querySelectorAll("h1, h2, h3").forEach(function(item) {
-    item.id = "title-" + i;
+  if (!content || !content.querySelectorAll('h1, h2, h3')) return;
+  content.querySelectorAll('h1, h2, h3').forEach(function(item) {
+    item.id = 'title-' + i;
     i++;
   });
-  let offset = document.querySelector(".ori-header").clientHeight;
+  let offset = document.querySelector('.ori-header').clientHeight;
   tocbot.init({
-    tocSelector: ".toc",
-    contentSelector: ".s-post-content,.p-post-content",
-    headingSelector: "h1, h2, h3",
+    tocSelector: '.toc',
+    contentSelector: '.s-post-content,.p-post-content',
+    headingSelector: 'h1, h2, h3',
     headingsOffset: offset + 21,
     onClick: function(e) {
       window.scrollTo({
         top: document.querySelector(e.target.hash).offsetTop - offset - 20,
-        behavior: "smooth"
+        behavior: 'smooth'
       });
       e.stopPropagation();
       return false;
@@ -828,30 +828,30 @@ origami.readingTransfer = function() {
   let url = encodeURI(location.href);
   let select = true;
   let container = document.querySelector(
-    ".s-post-container, .p-post-container"
+    '.s-post-container, .p-post-container'
   );
-  let qrImg = document.getElementById("qrcode-img");
-  document.getElementById("qrcode").addEventListener("click", function() {
+  let qrImg = document.getElementById('qrcode-img');
+  document.getElementById('qrcode').addEventListener('click', function() {
     if (select) {
-      qrImg.innerHTML = "";
-      new QRCode(document.getElementById("qrcode-img"), {
+      qrImg.innerHTML = '';
+      new QRCode(document.getElementById('qrcode-img'), {
         text:
           url +
-          "?index=" +
+          '?index=' +
           (window.scrollY - container.offsetTop) / container.clientHeight,
         width: 180,
         height: 180,
-        colorDark: "#000000",
-        colorLight: "#ffffff",
+        colorDark: '#000000',
+        colorLight: '#ffffff',
         correctLevel: QRCode.CorrectLevel.L
       });
-      qrImg.style.visibility = "visible";
-      qrImg.style.opacity = "1";
+      qrImg.style.visibility = 'visible';
+      qrImg.style.opacity = '1';
       select = false;
     } else {
-      qrImg.style.opacity = "0";
+      qrImg.style.opacity = '0';
       setTimeout(function() {
-        qrImg.style.visibility = "hidden";
+        qrImg.style.visibility = 'hidden';
       }, 500);
       select = true;
     }
@@ -861,18 +861,18 @@ origami.readingTransfer = function() {
 origami.tocToggle = function() {
   let select = true;
   if (window.innerWidth > 991) {
-    let toc = document.getElementsByClassName("toc")[0];
+    let toc = document.getElementsByClassName('toc')[0];
     document
-      .getElementById("toc-button")
-      .addEventListener("click", function(e) {
-        if (e.target.className == "fa fa-indent fa-2x") {
+      .getElementById('toc-button')
+      .addEventListener('click', function(e) {
+        if (e.target.className == 'fa fa-indent fa-2x') {
           if (select) {
-            toc.classList.add("toc-show");
-            toc.style.boxShadow = "none";
+            toc.classList.add('toc-show');
+            toc.style.boxShadow = 'none';
             select = false;
           } else {
-            toc.classList.remove("toc-show");
-            toc.style.boxShadow = "0 0 20px #B6DFE9";
+            toc.classList.remove('toc-show');
+            toc.style.boxShadow = '0 0 20px #B6DFE9';
             select = true;
           }
         }
@@ -881,41 +881,41 @@ origami.tocToggle = function() {
 };
 
 origami.setPosition = function() {
-  let index = $getQuery("index");
+  let index = $getQuery('index');
   let container = document.querySelector(
-    ".s-post-container, .p-post-container"
+    '.s-post-container, .p-post-container'
   );
   if (index) {
     index = container.offsetTop + container.clientHeight * index;
     window.scrollTo({
       top: index,
-      behavior: "smooth"
+      behavior: 'smooth'
     });
-    let ifToStart = document.getElementById("if-to-start");
-    ifToStart.style.visibility = "visible";
-    ifToStart.style.opacity = "1";
+    let ifToStart = document.getElementById('if-to-start');
+    ifToStart.style.visibility = 'visible';
+    ifToStart.style.opacity = '1';
   }
 };
 window.toStart = function() {
   window.scrollTo({
     top: 0,
-    behavior: "smooth"
+    behavior: 'smooth'
   });
   let url = window.location.href;
-  let index = "index=" + $getQuery("index");
+  let index = 'index=' + $getQuery('index');
   url = url
-    .replace(index + "&", "")
-    .replace("&" + index, "")
-    .replace("?" + index, "")
-    .replace(index, "");
+    .replace(index + '&', '')
+    .replace('&' + index, '')
+    .replace('?' + index, '')
+    .replace(index, '');
   window.history.pushState(null, document.title, url);
   notToStart();
 };
 window.notToStart = function() {
-  let ifToStart = document.getElementById("if-to-start");
-  ifToStart.style.opacity = "0";
+  let ifToStart = document.getElementById('if-to-start');
+  ifToStart.style.opacity = '0';
   setTimeout(function() {
-    ifToStart.style.visibility = "visible";
+    ifToStart.style.visibility = 'visible';
   }, 500);
 };
 
@@ -955,22 +955,22 @@ window.notToStart = function() {
 // };
 
 origami.codeFullScreen = function() {
-  document.querySelectorAll(".code-toolbar .toolbar").forEach(function(item) {
-    let toolbarItem = document.createElement("div");
-    toolbarItem.className = "toolbar-item";
-    let codeFullBtn = document.createElement("a");
-    codeFullBtn.className = "code-fullscreen";
-    codeFullBtn.textContent = "全屏";
+  document.querySelectorAll('.code-toolbar .toolbar').forEach(function(item) {
+    let toolbarItem = document.createElement('div');
+    toolbarItem.className = 'toolbar-item';
+    let codeFullBtn = document.createElement('a');
+    codeFullBtn.className = 'code-fullscreen';
+    codeFullBtn.textContent = '全屏';
     toolbarItem.append(codeFullBtn);
     item.append(toolbarItem);
     let full = false;
-    codeFullBtn.addEventListener("click", function() {
+    codeFullBtn.addEventListener('click', function() {
       if (!full) {
-        item.parentElement.classList.add("fullscreen");
-        codeFullBtn.textContent = "退出全屏";
+        item.parentElement.classList.add('fullscreen');
+        codeFullBtn.textContent = '退出全屏';
       } else {
-        item.parentElement.classList.remove("fullscreen");
-        codeFullBtn.textContent = "全屏";
+        item.parentElement.classList.remove('fullscreen');
+        codeFullBtn.textContent = '全屏';
       }
       full = !full;
     });
@@ -981,19 +981,19 @@ origami.animate = function() {
   if (origamiConfig.animate) {
     document
       .querySelectorAll(
-        ".home .post-list article, .home .post-pagination, .home .about-card, .home .sidebar-widget"
+        '.home .post-list article, .home .post-pagination, .home .about-card, .home .sidebar-widget'
       )
       .forEach(function(item) {
         if (window.pageYOffset + window.innerHeight > item.offsetTop) {
-          item.classList.add("fadeInUp");
+          item.classList.add('fadeInUp');
         } else {
           let scroll = function() {
             if (window.pageYOffset + window.innerHeight > item.offsetTop) {
-              item.classList.add("fadeInUp");
-              window.removeEventListener("scroll", scroll);
+              item.classList.add('fadeInUp');
+              window.removeEventListener('scroll', scroll);
             }
           };
-          window.addEventListener("scroll", scroll);
+          window.addEventListener('scroll', scroll);
         }
       });
   }
@@ -1003,14 +1003,14 @@ origami.initMarkdown = function() {
   if (origamiConfig.katex) {
     try {
       renderMathInElement(
-        document.querySelector(".s-post-content, .p-post-content"),
+        document.querySelector('.s-post-content, .p-post-content'),
         {
           delimiters: [
-            { left: "$$", right: "$$" },
-            { left: "```math", right: "```" },
-            { left: "```tex", right: "```" }
+            { left: '$$', right: '$$' },
+            { left: '```math', right: '```' },
+            { left: '```tex', right: '```' }
           ],
-          ignoredTags: ["script", "noscript", "style", "textarea", "code"]
+          ignoredTags: ['script', 'noscript', 'style', 'textarea', 'code']
         }
       );
     } catch (e) {
@@ -1019,34 +1019,34 @@ origami.initMarkdown = function() {
   }
   if (origamiConfig.mermaid) {
     try {
-      mermaid.init({ noteMargin: 10 }, ".xkeditor-mermaid");
+      mermaid.init({ noteMargin: 10 }, '.xkeditor-mermaid');
     } catch (error) {
-      console.log("May have errors");
+      console.log('May have errors');
     }
   }
 };
 
 origami.imgBox = function() {
   new Zooming({
-    bgColor: "rgba(0,0,0,0.5)",
-    custemSize: "90%",
+    bgColor: 'rgba(0,0,0,0.5)',
+    custemSize: '90%',
     zIndex: 9999,
     onOpen: function() {
-      origami.tools.timeToast("按住图片可放大", "success", 3000);
+      origami.tools.timeToast('按住图片可放大', 'success', 3000);
     }
-  }).listen(".s-post-content img, .p-post-content img");
+  }).listen('.s-post-content img, .p-post-content img');
 };
 
 origami.readProgress = function() {
-  let progress = document.getElementById("read-progress");
+  let progress = document.getElementById('read-progress');
   progress.style.width =
     (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100 +
-    "%";
-  window.addEventListener("scroll", function() {
+    '%';
+  window.addEventListener('scroll', function() {
     progress.style.width =
       (window.scrollY / (document.body.scrollHeight - window.innerHeight)) *
         100 +
-      "%";
+      '%';
   });
 };
 
@@ -1054,7 +1054,7 @@ origami.liveChat = function() {
   if (!origamiConfig.liveChat) {
     return;
   } else {
-    document.getElementById("live-chat").style.display = "block";
+    document.getElementById('live-chat').style.display = 'block';
   }
   let chatWs = null;
   let conn = function(
@@ -1063,99 +1063,103 @@ origami.liveChat = function() {
     callMsg = () => {},
     callClose = () => {}
   ) {
-    let url = origamiConfig.liveChat + "?name=" + name;
+    let url = origamiConfig.liveChat + '?name=' + name;
     chatWs = new WebSocket(url);
     chatWs.onerror = function() {
-      origami.tools.timeToast("连接Server失败!", "error", 3000);
+      origami.tools.timeToast('连接Server失败!', 'error', 3000);
     };
     chatWs.onopen = function(evt) {
-      console.log("Connection open ...");
+      console.log('Connection open ...');
       callOpen(evt);
     };
     chatWs.onmessage = function(evt) {
-      console.log("Received Message");
+      console.log('Received Message');
       callMsg(evt);
     };
     chatWs.onclose = function(evt) {
-      console.log("Connection closed.");
+      console.log('Connection closed.');
       callClose(evt);
     };
   };
   let bgColor = [
-    "rgba(0, 0, 0, 0.8)",
-    "#3280fc",
-    "#03b8cf",
-    "#ea644a",
-    "#38b03f",
-    "#f1a325",
-    "#bd7b46",
-    "#8666b8"
+    'rgba(0, 0, 0, 0.8)',
+    '#3280fc',
+    '#03b8cf',
+    '#ea644a',
+    '#38b03f',
+    '#f1a325',
+    '#bd7b46',
+    '#8666b8'
   ];
-  let msgEle = document.getElementById("live-chat");
-  let list = msgEle.querySelector(".live-chat-list");
+  let msgEle = document.getElementById('live-chat');
+  let list = msgEle.querySelector('.live-chat-list');
   let showChat = function() {
-    list.style.visibility = "visible";
-    list.style.opacity = "1";
+    list.style.visibility = 'visible';
+    list.style.opacity = '1';
   };
   let hideChat = function() {
-    list.style.opacity = "0";
+    list.style.opacity = '0';
     setTimeout(function() {
-      list.style.visibility = "hidden";
+      list.style.visibility = 'hidden';
     }, 500);
   };
-  let inputEle = document.querySelector(".live-chat-input");
-  let inputI = inputEle.querySelector("i");
-  let inputBtn = inputEle.querySelector("button");
-  let inputInput = inputEle.querySelector("input");
+  let inputEle = document.querySelector('.live-chat-input');
+  let inputI = inputEle.querySelector('i');
+  let inputBtn = inputEle.querySelector('button');
+  let inputInput = inputEle.querySelector('input');
   let showInput = false;
   let isInputName = false;
   let commentName = null;
-  inputI.addEventListener("click", function() {
+  inputI.addEventListener('click', function() {
     if (!showInput) {
-      inputEle.classList.add("active");
-      inputI.classList.replace("icon-arrow-left", "icon-arrow-right");
+      inputEle.classList.add('active');
+      inputI.classList.replace('icon-arrow-left', 'icon-arrow-right');
       showChat();
     } else {
-      inputEle.classList.remove("active");
-      inputI.classList.replace("icon-arrow-right", "icon-arrow-left");
+      inputEle.classList.remove('active');
+      inputI.classList.replace('icon-arrow-right', 'icon-arrow-left');
       hideChat();
     }
     showInput = !showInput;
   });
-  inputBtn.addEventListener("click", function() {
+  let enter = function() {
     if (!isInputName) {
       commentName = inputInput.value;
       conn(
         commentName,
         function() {
-          inputBtn.textContent = "发送";
-          inputInput.placeholder = "来一发女装宣言！";
-          inputInput.value = "";
+          inputBtn.textContent = '发送';
+          inputInput.placeholder = '来一发女装宣言！';
+          inputInput.value = '';
         },
         function(e) {
           let data = JSON.parse(e.data);
-          if (data.type == "message") {
+          if (data.type == 'message') {
             addMsg(data.name, data.message);
-          } else if (data.type == "openSuccess") {
+          } else if (data.type == 'openSuccess') {
             let count = data.all.length;
             origami.tools.timeToast(
-              "目前共有：" + count + "位用户在线。",
-              "success",
+              '目前共有：' + count + '位用户在线。',
+              'success',
               3000
             );
             data.all.forEach(function(item) {
-              if (item.message !== "") {
+              if (item.message !== '') {
                 addMsg(item.name, item.message);
               }
             });
+          } else if (data.type == 'join') {
+            origami.tools.timeToast(data.message, 'success', 3000);
+          } else if (data.type == 'close') {
+            origami.tools.timeToast(data.message, 'warning', 3000);
           } else {
             console.log(data);
           }
         },
         function() {
-          inputBtn.textContent = "开始搞事";
-          inputInput.placeholder = "输入昵称与大佬们交流";
-          inputInput.value = "";
+          inputBtn.textContent = '开始搞事';
+          inputInput.placeholder = '输入昵称与大佬们交流';
+          inputInput.value = '';
         }
       );
       isInputName = true;
@@ -1165,30 +1169,36 @@ origami.liveChat = function() {
         message: inputInput.value
       };
       chatWs.send(JSON.stringify(data));
-      inputInput.value = "";
+      inputInput.value = '';
       addMsg(data.name, data.message);
     }
+  };
+  inputInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      enter();
+    }
   });
+  inputBtn.addEventListener('click', enter);
   let addMsg = function(nameStr, contentStr) {
-    let item = document.createElement("li");
-    let name = document.createElement("div");
-    let content = document.createElement("div");
+    let item = document.createElement('li');
+    let name = document.createElement('div');
+    let content = document.createElement('div');
     name.textContent = nameStr;
-    name.className = "live-chat-name";
+    name.className = 'live-chat-name';
     content.textContent = contentStr;
-    content.className = "live-chat-content";
+    content.className = 'live-chat-content';
     item.append(name);
     item.append(content);
     item.style.background = bgColor[Math.floor(Math.random() * 8)];
-    item.classList.add("fadeInUp100");
-    if (list.querySelectorAll("li").length > 4) {
-      list.firstElementChild.classList.add("fadeOutUp100");
+    item.classList.add('fadeInUp100');
+    if (list.querySelectorAll('li').length > 4) {
+      list.firstElementChild.classList.add('fadeOutUp100');
       setTimeout(function() {
         list.firstElementChild.remove();
       }, 1000);
     }
     setTimeout(function() {
-      item.classList.add("fadeOutUp100");
+      item.classList.add('fadeOutUp100');
       setTimeout(function() {
         item.remove();
       }, 1000);
@@ -1197,10 +1207,10 @@ origami.liveChat = function() {
   };
 };
 
-origami.background = function(data = "init") {
+origami.background = function(data = 'init') {
   let themeIndex;
-  if (data === "init") {
-    themeIndex = $getCookie("theme");
+  if (data === 'init') {
+    themeIndex = $getCookie('theme');
     if (!themeIndex) {
       themeIndex = 0;
     }
@@ -1208,87 +1218,87 @@ origami.background = function(data = "init") {
     themeIndex = data;
   }
   let images = origamiConfig.background[themeIndex].background;
-  let bgEle = document.querySelector(".ori-background");
-  bgEle.innerHTML = "";
+  let bgEle = document.querySelector('.ori-background');
+  bgEle.innerHTML = '';
   images.forEach(function(item, index) {
-    let itemEle = document.createElement("div");
-    itemEle.style.backgroundImage = "url(" + item + ")";
-    itemEle.setAttribute("data-index", index);
+    let itemEle = document.createElement('div');
+    itemEle.style.backgroundImage = 'url(' + item + ')';
+    itemEle.setAttribute('data-index', index);
     bgEle.append(itemEle);
   });
   let index = 0;
   let oldEle = bgEle.querySelector('[data-index="' + index + '"]');
   setInterval(function() {
-    oldEle.style.opacity = "0";
+    oldEle.style.opacity = '0';
     index++;
     if (index >= images.length) {
       index = 0;
     }
     oldEle = bgEle.querySelector('[data-index="' + index + '"]');
-    oldEle.style.opacity = "1";
+    oldEle.style.opacity = '1';
   }, 10000);
 };
 
 origami.layoutImageChange = function() {
-  if (!document.body.classList.contains("home")) return;
-  if (document.body.classList.contains("layout3")) {
-    let bgEle = document.querySelector(".layout3-images");
+  if (!document.body.classList.contains('home')) return;
+  if (document.body.classList.contains('layout3')) {
+    let bgEle = document.querySelector('.layout3-images');
     let index = 1;
     let oldEle = bgEle.querySelector('[data-index="' + index + '"]');
     setInterval(function() {
-      oldEle.style.opacity = "0";
+      oldEle.style.opacity = '0';
       index++;
       if (index >= 5) {
         index = 1;
       }
       oldEle = bgEle.querySelector('[data-index="' + index + '"]');
-      oldEle.style.opacity = "1";
+      oldEle.style.opacity = '1';
     }, 10000);
   }
 };
 
 origami.paperPlane = function() {
   let index = 0;
-  let mask = document.querySelector(".paper-plane-mask");
-  let body = document.querySelector(".paper-plane-body");
+  let mask = document.querySelector('.paper-plane-mask');
+  let body = document.querySelector('.paper-plane-body');
   let add = function(data) {
     if (index - 2 < 0) {
-      left.classList.add("disabled");
+      left.classList.add('disabled');
     } else {
-      left.classList.remove("disabled");
+      left.classList.remove('disabled');
     }
     if (index + 2 >= origamiConfig.background.length) {
-      right.classList.add("disabled");
+      right.classList.add('disabled');
     } else {
-      right.classList.remove("disabled");
+      right.classList.remove('disabled');
     }
-    body.innerHTML = "";
+    body.innerHTML = '';
     data.forEach(function(item, i) {
       if (!item) return;
-      let li = document.createElement("li");
-      li.className = "col-6 col-md-12";
-      li.setAttribute("data-index", index + i);
-      let title = document.createElement("div");
-      title.className = "title";
+      let li = document.createElement('li');
+      li.className = 'col-6 col-md-12';
+      li.setAttribute('data-index', index + i);
+      let title = document.createElement('div');
+      title.className = 'title';
       title.textContent = item.name;
-      let content = document.createElement("div");
-      content.className = "content";
-      content.style.backgroundImage = "url(" + item.background[0] + ")";
+      let content = document.createElement('div');
+      content.className = 'content';
+      content.style.backgroundImage = 'url(' + item.background[0] + ')';
       li.append(title);
       li.append(content);
       body.append(li);
     });
   };
   let open = false;
-  let planeEle = document.getElementById("paper-plane");
-  planeEle.addEventListener("click", function() {
+  let planeEle = document.getElementById('paper-plane');
+  planeEle.addEventListener('click', function() {
     if (!open) {
-      planeEle.classList.add("flyaway");
+      planeEle.classList.add('flyaway');
       setTimeout(function() {
-        planeEle.classList.remove("flyaway");
+        planeEle.classList.remove('flyaway');
       }, 1500);
-      mask.style.visibility = "visible";
-      mask.style.transform = "scale(1)";
+      mask.style.visibility = 'visible';
+      mask.style.transform = 'scale(1)';
       open = true;
       add([
         origamiConfig.background[index],
@@ -1297,17 +1307,17 @@ origami.paperPlane = function() {
     }
   });
   document
-    .querySelector(".paper-plane-content .close")
-    .addEventListener("click", function(e) {
-      mask.style.visibility = "hidden";
-      mask.style.transform = "scale(0)";
+    .querySelector('.paper-plane-content .close')
+    .addEventListener('click', function(e) {
+      mask.style.visibility = 'hidden';
+      mask.style.transform = 'scale(0)';
       index = 0;
       open = false;
       e.stopPropagation();
     });
-  let left = document.querySelector(".paper-plane-content .left");
-  let right = document.querySelector(".paper-plane-content .right");
-  left.addEventListener("click", function(e) {
+  let left = document.querySelector('.paper-plane-content .left');
+  let right = document.querySelector('.paper-plane-content .right');
+  left.addEventListener('click', function(e) {
     e.stopPropagation();
     if (index - 2 < 0) {
       return;
@@ -1315,7 +1325,7 @@ origami.paperPlane = function() {
     index = index - 2;
     add([origamiConfig.background[index], origamiConfig.background[index + 1]]);
   });
-  right.addEventListener("click", function(e) {
+  right.addEventListener('click', function(e) {
     e.stopPropagation();
     if (index + 2 >= origamiConfig.background.length) {
       return;
@@ -1330,32 +1340,32 @@ origami.copy = function() {
     e.preventDefault();
     let html =
       window.getSelection().toString() +
-      "<br><br>本文采用 CC BY-NC-SA 3.0 许可协议，著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。<br>作者：" +
-      document.querySelector(".post-info .card-subtitle span").textContent +
-      "<br>来源：" +
+      '<br><br>本文采用 CC BY-NC-SA 3.0 许可协议，著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。<br>作者：' +
+      document.querySelector('.post-info .card-subtitle span').textContent +
+      '<br>来源：' +
       document.title +
-      "<br>链接：" +
+      '<br>链接：' +
       window.location.href;
     let plain =
       window.getSelection().toString() +
-      "\n\n本文采用 CC BY-NC-SA 3.0 许可协议，著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。\n作者：" +
-      document.querySelector(".post-info .card-subtitle span").textContent +
-      "\n来源：" +
+      '\n\n本文采用 CC BY-NC-SA 3.0 许可协议，著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。\n作者：' +
+      document.querySelector('.post-info .card-subtitle span').textContent +
+      '\n来源：' +
       document.title +
-      "\n链接：" +
+      '\n链接：' +
       window.location.href;
-    e.clipboardData.setData("text/html", html);
-    e.clipboardData.setData("text/plain", plain);
-    if (window.clipboardData) return window.clipboardData.setData("text", html);
+    e.clipboardData.setData('text/html', html);
+    e.clipboardData.setData('text/plain', plain);
+    if (window.clipboardData) return window.clipboardData.setData('text', html);
   };
-  document.body.addEventListener("copy", function(e) {
+  document.body.addEventListener('copy', function(e) {
     if (window.getSelection().toString().length > 10) {
       inner(e);
     }
   });
 };
 
-window.addEventListener("load", function() {
+window.addEventListener('load', function() {
   // document.querySelector(".carousel").classList.add("fadeInDown");
   origami.animate();
   origami.comments = origami.initComments();
@@ -1374,8 +1384,8 @@ window.addEventListener("load", function() {
   origami.paperPlane();
   origami.copy();
   if (
-    document.body.classList.contains("page") ||
-    document.body.classList.contains("single")
+    document.body.classList.contains('page') ||
+    document.body.classList.contains('single')
   ) {
     origami.initTocbot();
     origami.readingTransfer();
@@ -1387,12 +1397,12 @@ window.addEventListener("load", function() {
     origami.readProgress();
   }
   new LazyLoad({
-    elements_selector: ".lazy",
+    elements_selector: '.lazy',
     load_delay: 500,
     callback_loaded: function(ele) {
       // fix background-image loaded
-      if (ele.classList.contains("lazy-bg-loaded-flag")) {
-        ele.parentElement.classList.add("loaded");
+      if (ele.classList.contains('lazy-bg-loaded-flag')) {
+        ele.parentElement.classList.add('loaded');
       }
     }
   });
@@ -1400,21 +1410,21 @@ window.addEventListener("load", function() {
 
 console.log(
   "\n %c Otstar's Blog %c https://blog.ixk.me/ \n",
-  "color: #fff; background: #4285f4; padding:5px 0;",
-  "background: #87d1df; padding:5px 0;"
+  'color: #fff; background: #4285f4; padding:5px 0;',
+  'background: #87d1df; padding:5px 0;'
 );
 
 console.log(
-  "\n %c Origami 折纸主题 | Version " +
+  '\n %c 🎉 Origami 折纸主题 | Version ' +
     document.querySelector('meta[name="origami-version"]').content +
-    " | Otstar Lin %c https://blog.ixk.me/theme-origami.html \n",
-  "color: #fff; background: #4285f4; padding:5px 0;",
-  "background: #87d1df; padding:5px 0;"
+    ' | Otstar Lin %c https://blog.ixk.me/theme-origami.html \n',
+  'color: #fff; background: #4285f4; padding:5px 0;',
+  'background: #87d1df; padding:5px 0;'
 );
 
 console.log(
-  "%c ",
-  "background:url(" +
+  '%c ',
+  'background:url(' +
     window.location.origin +
-    "/wp-content/themes/Origami/image/comment-1.png) no-repeat center;background-size:200px;padding-left:200px;padding-bottom:162px;overflow:hidden;border-radius:10px;margin:5px 0"
+    '/wp-content/themes/Origami/image/comment-1.png) no-repeat center;background-size:200px;padding-left:200px;padding-bottom:162px;overflow:hidden;border-radius:10px;margin:5px 0'
 );

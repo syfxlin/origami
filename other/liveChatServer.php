@@ -13,8 +13,7 @@ class WebSocketServer
     // 实例化配置
     $this->config = [
       'host' => '0.0.0.0',
-      'origin' => 'http://origami.test',
-      'port' => 8086,
+      'port' => 2019,
       'redis' => [
         'scheme' => 'tcp',
         'host' => '0.0.0.0',
@@ -56,6 +55,7 @@ class WebSocketServer
         'type' => 'openSuccess'
       ])
     );
+    $this->pushMessage($server, $user['name'] . '进来了', 'join', $user['fd']);
   }
 
   private function allUser()
@@ -131,7 +131,7 @@ class WebSocketServer
   public function close(\swoole_websocket_server $server, int $fd)
   {
     $user = $this->table->get($fd);
-    $this->pushMessage($server, $user['name'] . "离开了", 'close', $fd);
+    $this->pushMessage($server, $user['name'] . '离开了', 'close', $fd);
     $this->table->del($fd);
   }
 

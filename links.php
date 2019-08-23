@@ -32,29 +32,33 @@ retain_key_shuffle($links);
 $count = count($links);
 
 foreach ($links as $link) {
-  $name_arr = explode(",", $link->link_name);
+  $name_arr = explode(',', $link->link_name);
   $link->link_name = $name_arr[0];
-  $link->link_author = $name_arr[0];
-  $image_arr = explode(",", $link->link_image);
+  $link->link_author = $name_arr[1];
+  $image_arr = explode(',', $link->link_image);
   $link->link_image = $image_arr[0];
-  $link->link_avatar = $link->link_rss;
+  $link->link_avatar = $image_arr[1];
 }
 wp_reset_query();
 get_header();
 ?>
 <div id="main-content">
     <section class="featured">
-      <div class="featured-image" style="background-image:url(<?php echo wp_get_attachment_url(get_post_thumbnail_id($post->ID)); ?>)"></div>
+      <div class="featured-image" style="background-image:url(<?php echo wp_get_attachment_url(
+        get_post_thumbnail_id($post->ID)
+      ); ?>)"></div>
       <div class="featured-container">
         <h1><?php echo get_the_title(); ?></h1>
-        <h2><?php echo __("目前共有", "origami") .
+        <h2><?php echo __('目前共有', 'origami') .
           $count .
-          __("个友链"); ?></h2>
+          __('个友链'); ?></h2>
       </div>
     </section>
     <main class="ori-container columns <?php echo $main_class; ?> grid-md">
       <section class="links-list column <?php echo $post_list_class; ?>">
-          <article <?php post_class("p-post-content"); ?> id="post-<?php the_ID(); ?>">
+          <article <?php post_class(
+            'p-post-content'
+          ); ?> id="post-<?php the_ID(); ?>">
               <?php the_content(); ?>
           </article>
           <ul class="links columns grid-md">

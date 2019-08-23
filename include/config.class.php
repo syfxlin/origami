@@ -475,6 +475,10 @@ class OrigamiConfig
     register_setting('origami_fun', 'origami_enable_comment_time');
     register_setting('origami_fun', 'origami_comment_owo');
     register_setting('origami_fun', 'origami_markdown_comment');
+    register_setting('origami_fun', 'origami_mail_notice_icon');
+    register_setting('origami_fun', 'origami_mail_notice_title');
+    register_setting('origami_fun', 'origami_mail_notice_salute');
+    register_setting('origami_fun', 'origami_mail_notice_footer');
     add_settings_section(
       'origami_fun_comment',
       __('3.评论设置', 'origami'),
