@@ -581,33 +581,33 @@ class OrigamiConfig
     add_settings_field(
       'origami_mail_notice_title',
       __('评论通知标题', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_textarea'],
       'origami_fun',
       'origami_fun_comment',
       [
         'field' => 'origami_mail_notice_title',
         'value' => '<span>Otstar</span>&nbsp;<span style="color:#8bb7c5">Cloud</span>',
-        'type' => 'text',
+        'type' => 'textarea',
         'description' => '通知邮件的标题'
       ]
     );
     add_settings_field(
       'origami_mail_notice_salute',
       __('评论通知致敬', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_textarea'],
       'origami_fun',
       'origami_fun_comment',
       [
         'field' => 'origami_mail_notice_salute',
         'value' => '此致<br />' . wp_specialchars_decode(get_option('blogname'), ENT_QUOTES) .'敬上',
-        'type' => 'text',
+        'type' => 'textarea',
         'description' => '通知邮件的致敬字段'
       ]
     );
     add_settings_field(
       'origami_mail_notice_footer',
       __('评论通知底部信息', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_textarea'],
       'origami_fun',
       'origami_fun_comment',
       [
@@ -617,7 +617,7 @@ class OrigamiConfig
         '" style="text-decoration:none;color:#4285f4" target="_blank">' .
         wp_specialchars_decode(get_option('blogname'), ENT_QUOTES) .
         '</a>。',
-        'type' => 'text',
+        'type' => 'textarea',
         'description' => '通知邮件的底部信息'
       ]
     );
