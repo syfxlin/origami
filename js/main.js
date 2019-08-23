@@ -54,6 +54,19 @@ window.$getCookie = function(name) {
   if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
   else return null;
 };
+window.$clearCookie = function(name) {
+  $setCookie(name, '', -1);
+};
+window.$setCookie = function(name, value, seconds) {
+  seconds = seconds || 0;
+  var expires = '';
+  if (seconds != 0) {
+    var date = new Date();
+    date.setTime(date.getTime() + seconds * 1000);
+    expires = '; expires=' + date.toGMTString();
+  }
+  document.cookie = name + '=' + escape(value) + expires + '; path=/';
+};
 
 window.$getQuery = function(name) {
   var query = window.location.search.substring(1);
@@ -1261,6 +1274,16 @@ origami.paperPlane = function() {
   let index = 0;
   let mask = document.querySelector('.paper-plane-mask');
   let body = document.querySelector('.paper-plane-body');
+  let setTheme = function(i) {
+    $setCookie('theme', i, 86400);
+    origami.background(i);
+    mask.style.transform = 'scale(0)';
+    setTimeout(function() {
+      mask.style.visibility = 'hidden';
+    }, 5000);
+    index = 0;
+    open = false;
+  };
   let add = function(data) {
     if (index - 2 < 0) {
       left.classList.add('disabled');
@@ -1287,6 +1310,9 @@ origami.paperPlane = function() {
       li.append(title);
       li.append(content);
       body.append(li);
+      li.addEventListener('click', function() {
+        setTheme(li.getAttribute('data-index'));
+      });
     });
   };
   let open = false;
@@ -1309,8 +1335,10 @@ origami.paperPlane = function() {
   document
     .querySelector('.paper-plane-content .close')
     .addEventListener('click', function(e) {
-      mask.style.visibility = 'hidden';
       mask.style.transform = 'scale(0)';
+      setTimeout(function() {
+        mask.style.visibility = 'hidden';
+      }, 5000);
       index = 0;
       open = false;
       e.stopPropagation();

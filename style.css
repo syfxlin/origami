@@ -1616,6 +1616,7 @@ body.menu-active .ori-footer {
   justify-content: center;
   align-items: center;
   padding: 0 0.6rem;
+  cursor: pointer;
 }
 
 .paper-plane-body li > * {
