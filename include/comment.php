@@ -46,6 +46,8 @@ function origami_comment_respond_email($comment_id, $comment)
     $comment_parent = get_comment($comment->comment_parent);
     $comment_post_id = $comment_parent->comment_post_ID;
     $comment_parent_author_name = $comment_parent->comment_author;
+    $pat = '/\/comment-page-(\d+)/';
+    $comment_link = preg_replace($pat, '?comment_page=$1',get_comment_link($comment_parent->comment_ID));
 
     $headers =
       "Content-Type: text/html; charset=\"" .
@@ -176,11 +178,10 @@ function origami_comment_respond_email($comment_id, $comment)
                                         <td
                                           style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:13px;color:#202020;line-height:1.5"
                                         >
-                                          您对[' . $blog_name . ']上 《<span
+                                          您对[' . $blog_name . ']上 《<a
                                             style="white-space:nowrap;color:#40ceff"
                                             href="' . get_permalink($comment_post_id) . '"
-                                            >' . get_the_title($comment_post_id) . '</span
-                                          >》
+                                            >' . get_the_title($comment_post_id) . '</a>》
                                           一文的评论有新回复，欢迎您前来继续参与讨论。<br /><br />这是您发表的原始评论
                                           <ol
                                             style="background:#e0e0e0;margin:5px;padding:20px 40px 20px"
@@ -198,7 +199,7 @@ function origami_comment_respond_email($comment_id, $comment)
                                           <br />如有需要，您可以<a
                                             style="text-decoration:none;color:#4285f4"
                                             target="_blank"
-                                            href="' . get_comment_link($comment_parent->comment_ID) . '"
+                                            href="' . $comment_link . '"
                                             >查看有关此回复的详细信息</a
                                           >。
                                         </td>

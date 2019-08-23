@@ -565,6 +565,62 @@ class OrigamiConfig
         'description' => '是否开启Markdown评论，默认为true(true为开，false为关)'
       ]
     );
+    add_settings_field(
+      'origami_mail_notice_icon',
+      __('评论通知icon', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_comment',
+      [
+        'field' => 'origami_mail_notice_icon',
+        'value' => 'https://www.ixk.me/avatar-lite.png',
+        'type' => 'text',
+        'description' => '通知邮件的icon'
+      ]
+    );
+    add_settings_field(
+      'origami_mail_notice_title',
+      __('评论通知标题', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_comment',
+      [
+        'field' => 'origami_mail_notice_title',
+        'value' => '<span>Otstar</span>&nbsp;<span style="color:#8bb7c5">Cloud</span>',
+        'type' => 'text',
+        'description' => '通知邮件的标题'
+      ]
+    );
+    add_settings_field(
+      'origami_mail_notice_salute',
+      __('评论通知致敬', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_comment',
+      [
+        'field' => 'origami_mail_notice_salute',
+        'value' => '此致<br />' . wp_specialchars_decode(get_option('blogname'), ENT_QUOTES) .'敬上',
+        'type' => 'text',
+        'description' => '通知邮件的致敬字段'
+      ]
+    );
+    add_settings_field(
+      'origami_mail_notice_footer',
+      __('评论通知底部信息', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_comment',
+      [
+        'field' => 'origami_mail_notice_footer',
+        'value' => '此电子邮件地址无法接收回复。如需更多信息，请访问<a href="' .
+        wp_specialchars_decode(home_url(), ENT_QUOTES) .
+        '" style="text-decoration:none;color:#4285f4" target="_blank">' .
+        wp_specialchars_decode(get_option('blogname'), ENT_QUOTES) .
+        '</a>。',
+        'type' => 'text',
+        'description' => '通知邮件的底部信息'
+      ]
+    );
 
     // 其他
     register_setting('origami_fun', 'origami_canvas_nest');
