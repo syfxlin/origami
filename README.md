@@ -2,30 +2,40 @@
 
 > 简洁，轻快
 
-![Version](https://img.shields.io/github/release/syfxlin/origami.svg?label=Version&style=flat-square) ![Author](https://img.shields.io/badge/Author-Otstar%20Lin-blue.svg?style=flat-square) ![WordPress](https://img.shields.io/badge/WordPress-4.4%2B-orange.svg?style=flat-square) ![PHP](https://img.shields.io/badge/php-5.6%2B-green.svg?style=flat-square) ![license](https://img.shields.io/badge/license-GPL%20v3-orange.svg?style=flat-square)
+![Version](https://img.shields.io/github/release/syfxlin/origami.svg?label=Version&style=flat-square) ![Author](https://img.shields.io/badge/Author-Otstar%20Lin-blue.svg?style=flat-square) ![WordPress](https://img.shields.io/badge/WordPress-5.0%2B-orange.svg?style=flat-square) ![PHP](https://img.shields.io/badge/php-7.0%2B-green.svg?style=flat-square) ![license](https://img.shields.io/badge/license-GPL%20v3-orange.svg?style=flat-square)
 
 ------
 
 ## 目录 Contents
 
-- [目录 Contents](#%E7%9B%AE%E5%BD%95-contents)
-- [简介 Introduction](#%E7%AE%80%E4%BB%8B-introduction)
-- [Feature 特性](#feature-%E7%89%B9%E6%80%A7)
-- [Loading speed 加载速度](#loading-speed-%E5%8A%A0%E8%BD%BD%E9%80%9F%E5%BA%A6)
-- [演示 Demo](#%E6%BC%94%E7%A4%BA-demo)
-- [安装 Install](#%E5%AE%89%E8%A3%85-install)
-- [文档 Docs](#%E6%96%87%E6%A1%A3-docs)
-- [维护者 Maintainer](#%E7%BB%B4%E6%8A%A4%E8%80%85-maintainer)
-- [许可证 License](#%E8%AE%B8%E5%8F%AF%E8%AF%81-license)
+- [目录 Contents](#%e7%9b%ae%e5%bd%95-contents)
+- [简介 Introduction](#%e7%ae%80%e4%bb%8b-introduction)
+- [Feature 特性](#feature-%e7%89%b9%e6%80%a7)
+- [Loading speed 加载速度](#loading-speed-%e5%8a%a0%e8%bd%bd%e9%80%9f%e5%ba%a6)
+- [演示 Demo](#%e6%bc%94%e7%a4%ba-demo)
+- [安装 Install](#%e5%ae%89%e8%a3%85-install)
+- [文档 Docs](#%e6%96%87%e6%a1%a3-docs)
+- [维护者 Maintainer](#%e7%bb%b4%e6%8a%a4%e8%80%85-maintainer)
+- [许可证 License](#%e8%ae%b8%e5%8f%af%e8%af%81-license)
 
 ## 简介 Introduction
 
 Origami - 一个拥有许多强大功能，简洁，轻快的WordPress主题
 
 ## Feature 特性
-- [独家] 评论完全动态加载（包括首次加载），可在完全静态化的情况下加载评论
-- Ajax提交评论
-- 实时搜索 – [后端处理数据]
+- [**独家**] REST API加载，发布评论
+- [**独家**] 评论者可在设置的时间内修改或删除评论，不必担心评论错误
+- [**独家**] Origami Markdown区块(支持补全高亮，Gutenberg区块)
+- [**独家**] Origami 代码区块(支持补全高亮，Gutenberg区块)
+- Live Chat实时聊天
+- REST API实时搜索
+- 前端修改主题
+- 3种布局风格
+- 侧栏右置/左置/不显示
+- 灵感/时光轴/友链模板
+- Markdown评论
+- 流程图/时序图/甘特图/Katex支持
+- Lazyload
 - WorkBox注册和卸载
 - OwO表情
 - 页脚显示建站至今的时间
@@ -36,7 +46,6 @@ Origami - 一个拥有许多强大功能，简洁，轻快的WordPress主题
 - 代码高亮
 - 文章目录
 - ImgBox
-- 代码块新窗口显示
 - 评论页面选单
 - …
 
@@ -56,13 +65,15 @@ Origami - 一个拥有许多强大功能，简洁，轻快的WordPress主题
 
 前往 [Releases](https://github.com/syfxlin/origami/releases) 下载，然后上传到WordPress中，确保主题文件夹名称为Origami
 
-首次安装请先将主题自定义中的【Origami主题设置】选项卡里面的设置全部设置一遍
+**首次安装请先将对主题进行设置，防止出现未知问题**
+
+**从v1版本升级请在升级后重新对主题进行设置**
 
 若要启用WordBox，请先将主题文件夹下的js文件夹中的sw.js复制至WordPress根目录
 
 > 已经修复了WorkBox的缓存规则，这里说明一下，启用WorkBox会使用户的浏览器的请求完全被WorkBox接管，一旦启用后，页面的加载速度将得到质的提升，但是若要删除就必须加载卸载WorkBox的js，否则用户访问的页面将不会更新
 
-> 若站点使用https，同时又需要引用http的资源，请将`header.php`文件中的`<meta http-equiv="Content-Security-Policy" content="block-all-mixed-content">`字段删除。
+> 若站点使用https，同时又需要引用http的资源，请将功能设置中的阻止混合内容关闭
 
 ## 文档 Docs
 
