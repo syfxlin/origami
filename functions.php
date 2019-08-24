@@ -63,7 +63,7 @@ function origami_frontend_config()
     json_encode($config) .
     "');</script>";
 }
-add_action('wp_footer', 'origami_frontend_config', 102);
+add_action('wp_footer', 'origami_frontend_config', 1);
 
 // 配置
 $tem_url = get_template_directory_uri();
@@ -149,17 +149,17 @@ if (!is_admin()) {
     [],
     wp_get_theme()->get('Version')
   );
-  wp_enqueue_script(
-    'origami_js',
-    $assets_url['origami_js'],
-    [],
-    wp_get_theme()->get('Version')
-  );
-  wp_enqueue_script('qrcode_js', $assets_url['qrcode_js']);
-  wp_enqueue_script('SMValidator_js', $assets_url['SMValidator_js']);
   function css_js_to_footer()
   {
     global $assets_url;
+    wp_enqueue_script(
+      'origami_js',
+      $assets_url['origami_js'],
+      [],
+      wp_get_theme()->get('Version')
+    );
+    wp_enqueue_script('qrcode_js', $assets_url['qrcode_js']);
+    wp_enqueue_script('SMValidator_js', $assets_url['SMValidator_js']);
     // fa图标
     wp_enqueue_style('font_awesome_css', $assets_url['font_awesome_css']);
     // canvas-nest加载
@@ -651,10 +651,16 @@ function origami_lazyload_img()
   }
   function origami_lazyload_img_process_callback($matches)
   {
+    $rep_src = '';
     $rep_srcset = '';
     $img_attr = $matches[1];
-    $has_srcset = false;
     str_replace("'", '"', $img_attr);
+    if (preg_match('/(src="([^"]*)?")/i', $img_attr, $src_matches) !== 0) {
+      $src_attr = $src_matches[1];
+      $src_url = $src_matches[2];
+      $data_src = 'data-src="' . $src_url . '"';
+      $img_attr = str_replace($src_attr, $data_src . " " . $rep_src, $img_attr);
+    }
     if (
       preg_match('/(srcset="([^"]*)?")/i', $img_attr, $srcset_matches) !== 0
     ) {
@@ -663,30 +669,9 @@ function origami_lazyload_img()
       $data_srcset = 'data-srcset="' . $srcset_url . '"';
       $img_attr = str_replace(
         $srcset_attr,
-        $data_srcset . ' ' . $rep_srcset,
+        $data_srcset . " " . $rep_srcset,
         $img_attr
       );
-      $has_srcset = true;
-    }
-    if (preg_match('/(src="([^"]*)?")/i', $img_attr, $src_matches) !== 0) {
-      $src_attr = $src_matches[1];
-      $src_url = $src_matches[2];
-      $data_src = 'data-src="' . $src_url . '"';
-      $data_srcset = 'data-srcset="' . $src_url . '"';
-      $origin_src = 'src="' . $src_url . '"';
-      if ($has_srcset) {
-        $img_attr = str_replace(
-          $src_attr,
-          $data_src . ' ' . $origin_src,
-          $img_attr
-        );
-      } else {
-        $img_attr = str_replace(
-          $src_attr,
-          $data_srcset . ' ' . $data_src . ' ' . $origin_src,
-          $img_attr
-        );
-      }
     }
     if (preg_match('/(class="([^"]*)?")/i', $img_attr, $class_matches) !== 0) {
       $class_attr = $class_matches[1];

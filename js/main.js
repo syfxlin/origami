@@ -768,7 +768,7 @@ origami.initComments = function() {
 };
 
 origami.loadOwO = function() {
-  if (origamiConfig.owo && window.is_owo && document.querySelector('.OwO')) {
+  if (origamiConfig.owo && document.querySelector('.OwO')) {
     new OwO({
       logo: 'OωO表情',
       container: document.getElementsByClassName('OwO')[0],
@@ -1393,36 +1393,42 @@ origami.copy = function() {
   });
 };
 
+// Run
+var isPost =
+  document.body.classList.contains('page') ||
+  document.body.classList.contains('single');
+
+origami.animate();
+origami.scrollChange();
+origami.tools.initToast();
+origami.titleChange();
+origami.buildFooterTime();
+origami.scrollTop();
+origami.mobileMenu();
+origami.searchBtn();
+origami.realTimeSearch();
+origami.layoutImageChange();
+origami.copy();
+
+if (isPost) {
+  origami.readProgress();
+}
+
 window.addEventListener('load', function() {
   // document.querySelector(".carousel").classList.add("fadeInDown");
-  origami.animate();
-  origami.comments = origami.initComments();
-  origami.titleChange();
-  origami.scrollTop();
-  origami.scrollChange();
-  origami.mobileMenu();
-  origami.searchBtn();
-  origami.realTimeSearch();
-  origami.tools.initToast();
-  origami.loadOwO();
-  origami.buildFooterTime();
   origami.liveChat();
   origami.background();
-  origami.layoutImageChange();
   origami.paperPlane();
-  origami.copy();
-  if (
-    document.body.classList.contains('page') ||
-    document.body.classList.contains('single')
-  ) {
-    origami.initTocbot();
+  if (isPost) {
     origami.readingTransfer();
-    origami.tocToggle();
     origami.setPosition();
     origami.codeFullScreen();
     origami.initMarkdown();
     origami.imgBox();
-    origami.readProgress();
+    origami.comments = origami.initComments();
+    origami.initTocbot();
+    origami.tocToggle();
+    origami.loadOwO();
   }
   new LazyLoad({
     elements_selector: '.lazy',
