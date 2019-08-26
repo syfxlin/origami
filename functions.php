@@ -57,7 +57,11 @@ function origami_frontend_config()
     'owo' => get_option('origami_comment_owo', 'true') == 'true',
     'footerTime' => get_option('origami_footer_time', false),
     'liveChat' => get_option('origami_live_chat', false),
-    'background' => json_decode(get_option('origami_background', ''))
+    'background' => json_decode(get_option('origami_background', '')),
+    'lastInspirationTime' => get_the_time('U', get_posts([
+      'numberposts' => 1,
+      'post_type' => 'inspiration'
+    ])[0])
   ];
   echo "<script>window.origamiConfig = JSON.parse('" .
     json_encode($config) .

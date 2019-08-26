@@ -286,6 +286,7 @@ origami.realTimeSearch = function() {
 };
 
 origami.tools = {
+  toastList: [],
   showToast: function(massage, status) {
     let className = 'toast-' + status;
     let toast = document.querySelector('.ori-tools .toast');
@@ -294,18 +295,37 @@ origami.tools = {
     toast.style.visibility = 'visible';
     toast.style.opacity = '1';
   },
-  hideToast: function() {
+  hideToast: function(callback = () => {}) {
     let toast = document.querySelector('.ori-tools .toast');
     toast.style.opacity = '0';
     setTimeout(function() {
       toast.style.visibility = 'hidden';
       toast.className = 'toast';
       toast.querySelector('p').innerHTML = '';
+      callback();
     }, 500);
   },
+  popToast: function() {
+    let toast = origami.tools.toastList[0];
+    origami.tools.showToast(toast.massage, toast.status);
+    setTimeout(function() {
+      origami.tools.hideToast(function() {
+        origami.tools.toastList.shift();
+        if (origami.tools.toastList.length !== 0) {
+          origami.tools.popToast();
+        }
+      });
+    }, toast.delay);
+  },
   timeToast: function(massage, status, delay) {
-    origami.tools.showToast(massage, status);
-    setTimeout(origami.tools.hideToast, delay);
+    origami.tools.toastList.push({
+      massage: massage,
+      status: status,
+      delay: delay
+    });
+    if (origami.tools.toastList.length === 1) {
+      origami.tools.popToast();
+    }
   },
   initToast: function() {
     document
@@ -1393,6 +1413,23 @@ origami.copy = function() {
   });
 };
 
+origami.hasNewInspiration = function() {
+  if (origamiConfig.lastInspirationTime) {
+    let oldTime = window.localStorage.getItem('inspirationTime');
+    if (!oldTime || oldTime < origamiConfig.lastInspirationTime) {
+      origami.tools.timeToast(
+        '有新灵感发布哦，要记得去看哟。ヾ(≧▽≦*)o',
+        'success',
+        5000
+      );
+    }
+    window.localStorage.setItem(
+      'inspirationTime',
+      origamiConfig.lastInspirationTime
+    );
+  }
+};
+
 // Run
 var isPost =
   document.body.classList.contains('page') ||
@@ -1419,6 +1456,7 @@ window.addEventListener('load', function() {
   origami.liveChat();
   origami.background();
   origami.paperPlane();
+  origami.hasNewInspiration();
   if (isPost) {
     origami.readingTransfer();
     origami.setPosition();
