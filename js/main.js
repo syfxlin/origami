@@ -1430,6 +1430,101 @@ origami.hasNewInspiration = function() {
   }
 };
 
+origami.initGitCard = function() {
+  let inner = (cardEle, user, repo, content, star, platform) => {
+    let head =
+      '<a href="' +
+      user.url +
+      '">' +
+      user.name +
+      '</a>' +
+      '/' +
+      '<a href="' +
+      repo.url +
+      '">' +
+      repo.name +
+      '</a>';
+    let headEle = cardEle.querySelector('.gitcard-head');
+    headEle.innerHTML = head;
+    headEle.style.visibility = 'visible';
+    let body =
+      content.description +
+      ' <a href="' +
+      content.homepage +
+      '">' +
+      content.homepage +
+      '</a>';
+    let bodyEle = cardEle.querySelector('.gitcard-body');
+    bodyEle.innerHTML = body;
+    bodyEle.classList.remove('loading');
+    cardEle.querySelector('.gitcard-footer').style.visibility = 'visible';
+    cardEle.querySelector('.gitcard-star').innerHTML = '★' + star;
+    cardEle.querySelector('.gitcard-to').innerHTML =
+      '<a href="' + repo.url + '"><i class="icon icon-arrow-right"></i></a>';
+  };
+  document.querySelectorAll('.gitcard').forEach(cardEle => {
+    let repo = cardEle.getAttribute('data-repo');
+    let platform = cardEle.getAttribute('data-platform');
+    if (platform === 'github') {
+      $http({
+        url: 'https://api.github.com/repos/' + repo,
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+          inner(
+            cardEle,
+            {
+              url: res.owner.html_url,
+              name: res.owner.login
+            },
+            {
+              url: res.html_url,
+              name: res.name
+            },
+            {
+              description: res.description,
+              homepage: res.homepage
+            },
+            res.stargazers_count,
+            platform
+          );
+        },
+        error: function(status) {
+          console.log('状态码为' + status);
+        }
+      });
+    } else if (platform === 'gitlab') {
+      $http({
+        url: 'https://gitlab.com/api/v4/projects/' + encodeURIComponent(repo),
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+          inner(
+            cardEle,
+            {
+              url: res.namespace.web_url,
+              name: res.namespace.path
+            },
+            {
+              url: res.web_url,
+              name: res.path
+            },
+            {
+              description: res.description,
+              homepage: ''
+            },
+            res.star_count,
+            platform
+          );
+        },
+        error: function(status) {
+          console.log('状态码为' + status);
+        }
+      });
+    }
+  });
+};
+
 // Run
 var isPost =
   document.body.classList.contains('page') ||
@@ -1467,6 +1562,7 @@ window.addEventListener('load', function() {
     origami.initTocbot();
     origami.tocToggle();
     origami.loadOwO();
+    origami.initGitCard();
   }
   new LazyLoad({
     elements_selector: '.lazy',
