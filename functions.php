@@ -764,10 +764,12 @@ function origami_pagination($echo = true)
   ];
   $page_arr = paginate_links($pagination_args);
   $paginate = '';
-  foreach ($page_arr as $value) {
-    $paginate .= '<li class="page-item">';
-    $paginate .= $value;
-    $paginate .= '</li>';
+  if ($page_arr) {
+    foreach ($page_arr as $value) {
+      $paginate .= '<li class="page-item">';
+      $paginate .= $value;
+      $paginate .= '</li>';
+    }
   }
   if ($paginate != '') {
     if ($echo) {

@@ -1571,16 +1571,18 @@ window.addEventListener('load', function() {
     origami.loadOwO();
     origami.initGitCard();
   }
-  new LazyLoad({
-    elements_selector: '.lazy',
-    load_delay: 500,
-    callback_loaded: function(ele) {
-      // fix background-image loaded
-      if (ele.classList.contains('lazy-bg-loaded-flag')) {
-        ele.parentElement.classList.add('loaded');
+  if (LazyLoad) {
+    new LazyLoad({
+      elements_selector: '.lazy',
+      load_delay: 500,
+      callback_loaded: function(ele) {
+        // fix background-image loaded
+        if (ele.classList.contains('lazy-bg-loaded-flag')) {
+          ele.parentElement.classList.add('loaded');
+        }
       }
-    }
-  });
+    });
+  }
 });
 
 console.log(
