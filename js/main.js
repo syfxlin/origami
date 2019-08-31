@@ -804,6 +804,9 @@ origami.loadOwO = function() {
 origami.buildFooterTime = function() {
   if (!origamiConfig.footerTime) return;
   var now = new Date();
+  let dateEle = document.getElementById('timeDate');
+  let timeEle = document.getElementById('times');
+  if (!dateEle && !timeEle) return;
   function createtime() {
     var grt = new Date(origamiConfig.footerTime);
     now.setTime(now.getTime() + 250);
@@ -825,9 +828,12 @@ origami.buildFooterTime = function() {
     if (String(snum).length == 1) {
       snum = '0' + snum;
     }
-    document.getElementById('timeDate').innerHTML = '' + dnum + '天';
-    document.getElementById('times').innerHTML =
-      hnum + '小时' + mnum + '分' + snum + '秒';
+    if (dateEle) {
+      dateEle.innerHTML = '' + dnum + '天';
+    }
+    if (timeEle) {
+      timeEle.innerHTML = hnum + '小时' + mnum + '分' + snum + '秒';
+    }
   }
   setInterval(createtime, 250);
 };
@@ -1241,6 +1247,7 @@ origami.liveChat = function() {
 };
 
 origami.background = function(data = 'init') {
+  if (!origamiConfig.background) return;
   let themeIndex;
   if (data === 'init') {
     themeIndex = $getCookie('theme');
