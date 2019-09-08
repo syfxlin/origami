@@ -623,6 +623,8 @@ class OrigamiConfig
     );
 
     // 其他
+    register_setting('origami_fun', 'origami_copy_add_copyright');
+    register_setting('origami_fun', 'origami_toc_level');
     register_setting('origami_fun', 'origami_canvas_nest');
     register_setting('origami_fun', 'origami_workbox');
     register_setting('origami_fun', 'origami_lazyload');
@@ -637,6 +639,34 @@ class OrigamiConfig
       __('4.其他设置', 'origami'),
       [&$this, 'origami_section'],
       'origami_fun'
+    );
+    add_settings_field(
+      'origami_copy_add_copyright',
+      __('复制时添加版权信息', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_other',
+      [
+        'field' => 'origami_copy_add_copyright',
+        'value' => 'ncode',
+        'type' => 'text',
+        'description' =>
+          'all表示不管复制什么内容都会添加版权信息，ncode表示除代码部分外复制内容会添加版权信息，none表示不启用复制添加版权信息的功能'
+      ]
+    );
+    add_settings_field(
+      'origami_toc_level',
+      __('生成目录的级别', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_other',
+      [
+        'field' => 'origami_toc_level',
+        'value' => 'h1,h2,h3',
+        'type' => 'text',
+        'description' =>
+          '设置生成目录的级别（文章目录），默认为h1,h2,h3'
+      ]
     );
     add_settings_field(
       'origami_canvas_nest',

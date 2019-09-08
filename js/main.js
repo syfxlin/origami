@@ -839,10 +839,11 @@ origami.buildFooterTime = function() {
 };
 
 origami.initTocbot = function() {
+  let tocLevel = origamiConfig.tocLevel ? origamiConfig.tocLevel : 'h1, h2, h3';
   let content = document.querySelector('.s-post-content,.p-post-content');
   let i = 0;
-  if (!content || !content.querySelectorAll('h1, h2, h3')) return;
-  content.querySelectorAll('h1, h2, h3').forEach(function(item) {
+  if (!content || !content.querySelectorAll(tocLevel)) return;
+  content.querySelectorAll(tocLevel).forEach(function(item) {
     item.id = 'title-' + i;
     i++;
   });
@@ -850,7 +851,7 @@ origami.initTocbot = function() {
   tocbot.init({
     tocSelector: '.toc',
     contentSelector: '.s-post-content,.p-post-content',
-    headingSelector: 'h1, h2, h3',
+    headingSelector: tocLevel,
     headingsOffset: offset + 21,
     onClick: function(e) {
       window.scrollTo({
@@ -1391,7 +1392,10 @@ origami.paperPlane = function() {
 };
 
 origami.copy = function() {
+  let setting = origamiConfig.copyAddCopyright;
   let inner = function(e) {
+    if (setting === 'none') return;
+    if (setting === 'ncode' && e.target.nodeName === 'CODE') return;
     e.preventDefault();
     let html =
       window.getSelection().toString() +

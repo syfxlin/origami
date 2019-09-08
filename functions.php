@@ -61,7 +61,9 @@ function origami_frontend_config()
     'lastInspirationTime' => get_the_time('U', get_posts([
       'numberposts' => 1,
       'post_type' => 'inspiration'
-    ])[0])
+    ])[0]),
+    'tocLevel' => get_option('origami_toc_level', 'h1,h2,h3'),
+    'copyAddCopyright' => get_option('origami_copy_add_copyright', 'ncode')
   ];
   echo "<script>window.origamiConfig = JSON.parse('" .
     json_encode($config) .
