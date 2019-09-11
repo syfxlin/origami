@@ -4,7 +4,7 @@ Theme URI: https://blog.ixk.me/theme-origami.html
 Author: Otstar Lin
 Author URI: https://www.ixk.me
 Description: 简约平面化风格的主题
-Version: 2.0.7
+Version: 2.0.8
 License: GNU General Public License v3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Tags: black,cyan-blue,flat,responsive
@@ -49,6 +49,12 @@ code[class*='language-'],
 pre[class*='language-'] {
   font-size: 0.7rem;
   padding: 0;
+}
+
+code:not([class*='language-']),
+pre:not([class*='language-']) {
+  width: 100%;
+  overflow-x: auto;
 }
 
 a:visited {
@@ -748,7 +754,7 @@ body.menu-active .ori-footer {
   position: fixed;
   bottom: 1rem;
   right: 1rem;
-  z-index: 10000;
+  z-index: 1002;
   opacity: 0;
   transition: opacity 0.5s;
 }
@@ -1681,6 +1687,7 @@ body.menu-active .ori-footer {
   cursor: auto;
   transform: scale(0);
   transition: transform 0.5s;
+  z-index: 1002;
 }
 
 .paper-plane-content {
@@ -2036,12 +2043,14 @@ body.menu-active .ori-footer {
   border: 1px solid #5755d9;
 }
 
-/* TODO: toc太长，修改为可滚动 */
-
 #toc-button {
   bottom: 130px;
-  visibility: visible;
   z-index: 1001;
+}
+
+.single #toc-button,
+.page #toc-button {
+  visibility: visible;
 }
 
 #toc-button:hover .toc {
@@ -2254,12 +2263,11 @@ body.menu-active .ori-footer {
     width: 22px;
     height: 60px;
     border-left: none;
-    border-radius: 0px 5px 0px 0px;
+    border-radius: 0px 5px 5px 0px;
   }
 
   #paper-plane {
     bottom: 0px;
-    border-radius: 0px 0px 5px 0px;
   }
 
   #paper-plane > i:before,

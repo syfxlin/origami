@@ -66,12 +66,14 @@ get_header();
               <li class="column col-6 col-md-12">
                 <div class="links-card">
                   <a class="links-header" href="<?php echo $link->link_url; ?>" target="_blank">
-                    <div class="links-image" style="background-image:url(<?php echo $link->link_image; ?>)"></div>
-                    <img class="links-avatar avatar avatar-xl" src="<?php echo $link->link_avatar; ?>" />
+                    <div class="links-image" style="background-image:url(<?php echo $link->link_image ? $link->link_image : 'https://lab.ixk.me/api/bing?size=400x240&day=' . rand(-1, 7); ?>)"></div>
+                    <?php if ($link->link_avatar): ?>
+                      <img class="links-avatar avatar avatar-xl" src="<?php echo $link->link_avatar; ?>" />
+                    <?php endif; ?>
                     <div class="links-name"><?php echo $link->link_name; ?></div>
                   </a>
                   <div class="links-content">
-                    <div class="links-author"><?php echo $link->link_author; ?></div>
+                    <div class="links-author"><?php echo $link->link_author ? $link->link_author : '&nbsp'; ?></div>
                     <div class="links-notes text-gray">
                       <?php echo $link->link_notes; ?>
                     </div>
