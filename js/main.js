@@ -86,6 +86,15 @@ window.$getPath = function(index) {
   return pathArray[index];
 };
 
+window.$getPathM = function(reg) {
+  let pathName = window.location.pathname;
+  if (reg.test(pathName)) {
+    return pathName.match(reg)[1];
+  } else {
+    return false;
+  }
+};
+
 var origami = {};
 
 origami.titleChange = function() {
@@ -762,16 +771,22 @@ origami.initComments = function() {
   };
   let init = function() {
     let commentPage = $getQuery('comment_page');
+    let commentPageP = $getPathM(/comment-page-(\d+)/i);
     if (commentPage) {
       pageOut = commentPage;
+    } else if (commentPageP) {
+      pageOut = parseInt(pageCount) + 1 - commentPageP;
     }
     initNav();
     load(-1, function() {
       if (window.location.hash != '') {
         setTimeout(function() {
           window.scrollTo({
-            top: document.querySelector(window.location.hash).offsetTop
+            top: document.querySelector(window.location.hash).offsetTop - 200
           });
+          document
+            .querySelector(window.location.hash)
+            .classList.add('changeshadow');
         }, 500);
       }
       initReply();

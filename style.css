@@ -4,7 +4,7 @@ Theme URI: https://blog.ixk.me/theme-origami.html
 Author: Otstar Lin
 Author URI: https://www.ixk.me
 Description: 简约平面化风格的主题
-Version: 2.0.8
+Version: 2.0.9
 License: GNU General Public License v3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Tags: black,cyan-blue,flat,responsive
@@ -63,6 +63,46 @@ a:visited {
 
 a {
   transition: color 0.3s;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  text-align: left;
+  width: 100%;
+  border: 0.05rem solid #dadee4;
+  margin-top: 1rem;
+}
+
+table.is-style-stripes tbody tr:nth-of-type(odd) {
+  background: #f3f4f5;
+}
+
+table tbody tr.active,
+table.is-style-stripes tbody tr.active {
+  background: #eef0f3;
+}
+
+table.table-hover tbody tr:hover {
+  background: #eef0f3;
+}
+
+table.table-scroll {
+  display: block;
+  overflow-x: auto;
+  padding-bottom: 0.75rem;
+  white-space: nowrap;
+}
+
+table td,
+table th {
+  border-bottom: 0.05rem solid #dadee4;
+  border-left: 0.05rem solid #dadee4;
+  padding: 0.6rem 0.4rem;
+}
+
+table th {
+  border-bottom-width: 0.1rem;
 }
 
 .lazy {
@@ -1285,6 +1325,8 @@ body.menu-active .ori-footer {
   height: 0;
   overflow: hidden;
   transition: height 0.5s;
+  padding-left: 0.5rem;
+  margin-left: -0.5rem;
 }
 
 #comments-loading {
@@ -2560,4 +2602,20 @@ body.menu-active .ori-footer {
 
 .airplane {
   animation: up 2s ease-in-out infinite alternate, rotate 4s ease-out infinite;
+}
+
+.changeshadow {
+  animation: changeshadow 1s ease-in 3;
+}
+
+@keyframes changeshadow {
+  0% {
+    text-shadow: 0 0 4px #5755d9;
+  }
+  50% {
+    text-shadow: 0 0 40px #5755d9;
+  }
+  100% {
+    text-shadow: 0 0 4px #5755d9;
+  }
 }
