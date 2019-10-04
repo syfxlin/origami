@@ -475,6 +475,7 @@ class OrigamiConfig
     register_setting('origami_fun', 'origami_enable_comment_time');
     register_setting('origami_fun', 'origami_comment_owo');
     register_setting('origami_fun', 'origami_markdown_comment');
+    register_setting('origami_fun', 'origami_comment_announcement');
     register_setting('origami_fun', 'origami_mail_notice_icon');
     register_setting('origami_fun', 'origami_mail_notice_title');
     register_setting('origami_fun', 'origami_mail_notice_salute');
@@ -566,6 +567,19 @@ class OrigamiConfig
       ]
     );
     add_settings_field(
+      'origami_comment_announcement',
+      __('评论公告', 'origami'),
+      [&$this, 'settings_field_textarea'],
+      'origami_fun',
+      'origami_fun_comment',
+      [
+        'field' => 'origami_comment_announcement',
+        'value' => '',
+        'type' => 'textarea',
+        'description' => '评论公告'
+      ]
+    );
+    add_settings_field(
       'origami_mail_notice_icon',
       __('评论通知icon', 'origami'),
       [&$this, 'settings_field_input_text'],
@@ -586,7 +600,8 @@ class OrigamiConfig
       'origami_fun_comment',
       [
         'field' => 'origami_mail_notice_title',
-        'value' => '<span>Otstar</span>&nbsp;<span style="color:#8bb7c5">Cloud</span>',
+        'value' =>
+          '<span>Otstar</span>&nbsp;<span style="color:#8bb7c5">Cloud</span>',
         'type' => 'textarea',
         'description' => '通知邮件的标题'
       ]
@@ -599,7 +614,10 @@ class OrigamiConfig
       'origami_fun_comment',
       [
         'field' => 'origami_mail_notice_salute',
-        'value' => '此致<br />' . wp_specialchars_decode(get_option('blogname'), ENT_QUOTES) .'敬上',
+        'value' =>
+          '此致<br />' .
+          wp_specialchars_decode(get_option('blogname'), ENT_QUOTES) .
+          '敬上',
         'type' => 'textarea',
         'description' => '通知邮件的致敬字段'
       ]
@@ -612,11 +630,12 @@ class OrigamiConfig
       'origami_fun_comment',
       [
         'field' => 'origami_mail_notice_footer',
-        'value' => '此电子邮件地址无法接收回复。如需更多信息，请访问<a href="' .
-        wp_specialchars_decode(home_url(), ENT_QUOTES) .
-        '" style="text-decoration:none;color:#4285f4" target="_blank">' .
-        wp_specialchars_decode(get_option('blogname'), ENT_QUOTES) .
-        '</a>。',
+        'value' =>
+          '此电子邮件地址无法接收回复。如需更多信息，请访问<a href="' .
+          wp_specialchars_decode(home_url(), ENT_QUOTES) .
+          '" style="text-decoration:none;color:#4285f4" target="_blank">' .
+          wp_specialchars_decode(get_option('blogname'), ENT_QUOTES) .
+          '</a>。',
         'type' => 'textarea',
         'description' => '通知邮件的底部信息'
       ]
@@ -664,8 +683,7 @@ class OrigamiConfig
         'field' => 'origami_toc_level',
         'value' => 'h1,h2,h3',
         'type' => 'text',
-        'description' =>
-          '设置生成目录的级别（文章目录），默认为h1,h2,h3'
+        'description' => '设置生成目录的级别（文章目录），默认为h1,h2,h3'
       ]
     );
     add_settings_field(

@@ -4,7 +4,7 @@ Theme URI: https://blog.ixk.me/theme-origami.html
 Author: Otstar Lin
 Author URI: https://www.ixk.me
 Description: 简约平面化风格的主题
-Version: 2.0.9
+Version: 2.1.0
 License: GNU General Public License v3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Tags: black,cyan-blue,flat,responsive
@@ -1234,6 +1234,7 @@ body.menu-active .ori-footer {
   font-size: 0.7rem;
   border-bottom: 0.5px solid #dfdfdf;
   padding: 0.5rem 0;
+  word-break: break-all;
 }
 
 .comment-avatar {
@@ -1381,6 +1382,14 @@ body.menu-active .ori-footer {
   margin-bottom: 0.5rem;
 }
 
+.response-anno:not(:empty) {
+  margin-bottom: 0.5rem;
+  background: rgba(255,255,255, 0.6);
+  border: 0.1rem solid #ddd;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.3rem;
+}
+
 .response-title {
   flex: 1;
   font-size: 1.2rem;
@@ -1394,6 +1403,11 @@ body.menu-active .ori-footer {
   width: 3.8rem;
   position: absolute;
   right: 0;
+  opacity: 0.4;
+}
+
+.response-img:hover {
+  opacity: 1;
 }
 
 .response-user {
@@ -1415,6 +1429,11 @@ body.menu-active .ori-footer {
   height: 3.8rem;
   flex: 1;
   margin-left: 0.5rem;
+}
+
+.response-md {
+  text-align: right;
+  margin-top: -0.2rem;
 }
 
 .response-footer {

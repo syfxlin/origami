@@ -12,10 +12,7 @@ if (get_option('origami_links_sidebar', 'true') != 'true') {
 }
 $main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
 
-global $wpdb;
-$qlink =
-  "select link_url,link_name,link_image,link_notes,link_description,link_rss from wp_links where link_visible='Y' order by link_id";
-$links = $wpdb->get_results($qlink);
+$links = get_bookmarks();
 function retain_key_shuffle(array &$arr)
 {
   if (!empty($arr)) {

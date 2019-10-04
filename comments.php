@@ -12,7 +12,6 @@ $current_user_url = get_site_url() . '/author/' . $current_user->user_login;
 $comment_count = get_comments_number();
 
 if (comments_open()):
-    // TODO: 支持markdown的提示
 ?>
 
 <section id="comments-response" class="comments-response">
@@ -33,6 +32,7 @@ if (comments_open()):
             </div>
             <button id="close-response" class="btn"><?php echo __('放弃治疗', 'origami');?></button>
         </div>
+        <div class="response-anno"><?php echo get_option("origami_comment_announcement", "") ?></div>
         <div class="response-body">
             <?php echo get_avatar(
                 $comment_author_email,
@@ -47,6 +47,9 @@ if (comments_open()):
             <img src="<?php echo get_template_directory_uri() . "/image/comment-1.png" ?>" class="response-img">
             <div class="OwO"></div>
         </div>
+        <?php if (get_option("origami_markdown_comment", "true") == "true"): ?>
+            <div class="response-md"><i class="fa fa-book"></i>支持Markdown语法</div>
+        <?php endif; ?>
         <div class="response-footer">
             <div class="response-input-item">
                 <div class="form-group has-icon-right">
