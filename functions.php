@@ -58,10 +58,13 @@ function origami_frontend_config()
     'footerTime' => get_option('origami_footer_time', false),
     'liveChat' => get_option('origami_live_chat', false),
     'background' => json_decode(get_option('origami_background', '')),
-    'lastInspirationTime' => get_the_time('U', get_posts([
-      'numberposts' => 1,
-      'post_type' => 'inspiration'
-    ])[0]),
+    'lastInspirationTime' => get_the_time(
+      'U',
+      get_posts([
+        'numberposts' => 1,
+        'post_type' => 'inspiration'
+      ])[0]
+    ),
     'tocLevel' => get_option('origami_toc_level', 'h1,h2,h3'),
     'copyAddCopyright' => get_option('origami_copy_add_copyright', 'ncode')
   ];
@@ -102,7 +105,7 @@ $jsdelivr_assets_url = [
   'spectre_css' =>
     'https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre.min.css',
   'spectre_exp_css' =>
-    'https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre.min.css',
+    'https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-exp.min.css',
   'spectre_icons_css' =>
     'https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-icons.min.css',
   'origami_js' => '/wp-content/themes/Origami/js/main.js',
@@ -665,7 +668,7 @@ function origami_lazyload_img()
       $src_attr = $src_matches[1];
       $src_url = $src_matches[2];
       $data_src = 'data-src="' . $src_url . '"';
-      $img_attr = str_replace($src_attr, $data_src . " " . $rep_src, $img_attr);
+      $img_attr = str_replace($src_attr, $data_src . ' ' . $rep_src, $img_attr);
     }
     if (
       preg_match('/(srcset="([^"]*)?")/i', $img_attr, $srcset_matches) !== 0
@@ -675,7 +678,7 @@ function origami_lazyload_img()
       $data_srcset = 'data-srcset="' . $srcset_url . '"';
       $img_attr = str_replace(
         $srcset_attr,
-        $data_srcset . " " . $rep_srcset,
+        $data_srcset . ' ' . $rep_srcset,
         $img_attr
       );
     }
