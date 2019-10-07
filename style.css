@@ -1384,7 +1384,7 @@ body.menu-active .ori-footer {
 
 .response-anno:not(:empty) {
   margin-bottom: 0.5rem;
-  background: rgba(255,255,255, 0.6);
+  background: rgba(255, 255, 255, 0.6);
   border: 0.1rem solid #ddd;
   padding: 0.2rem 0.6rem;
   border-radius: 0.3rem;
@@ -1531,6 +1531,7 @@ body.menu-active .ori-footer {
   color: #ac888a;
 }
 
+.articlecard,
 .gitcard {
   min-height: 120px;
   margin: 0 auto;
@@ -1547,6 +1548,24 @@ body.menu-active .ori-footer {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.articlecard {
+  background: rgb(244, 244, 244);
+  color: #414141;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.articlecard:before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: rgba(244, 244, 244, 0.6);
 }
 
 .gitcard:before {
@@ -1573,32 +1592,41 @@ body.menu-active .ori-footer {
     2px 2px/19px no-repeat;
 }
 
+.articlecard-head,
 .gitcard-head {
   font-size: 1.1rem;
   margin-top: 0.5rem;
   visibility: hidden;
 }
 
+/* .articlecard-to a,
+.articlecard-info a,
+.articlecard-head a, */
 .gitcard-to a,
 .gitcard-head a {
   color: #fff;
 }
 
+/* .articlecard-body a, */
 .gitcard-body a,
 .gitcard-head a:first-child {
   color: #fff;
   opacity: 0.5;
 }
 
+.articlecard-body,
 .gitcard-body {
   padding: 0.5rem 0;
+  z-index: 1;
 }
 
+.articlecard-footer,
 .gitcard-footer {
   display: flex;
   visibility: hidden;
 }
 
+.articlecard-to,
 .gitcard-to {
   flex: 1;
   text-align: right;

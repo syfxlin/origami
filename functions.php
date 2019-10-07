@@ -800,6 +800,45 @@ function origami_sidebar_init()
 }
 add_action('widgets_init', 'origami_sidebar_init');
 
+// 文章嵌入
+function origami_rest_pembed(WP_REST_Request $request)
+{
+  if (!isset($request['url']) || empty($request['url'])) {
+    return [
+      'code' => 'no_url',
+      'message' => 'Need url parameter',
+      'data' => ['status' => 400]
+    ];
+  }
+  $post_id = url_to_postid($request['url']);
+  if ($post_id === 0) {
+    return [
+      'code' => 'no_post_or_page',
+      'message' => 'URL does not match the post or page',
+      'data' => ['status' => 404]
+    ];
+  }
+  $post = get_post($post_id);
+  return [
+    'provider_name' => get_bloginfo('name'),
+    'provider_url' => get_bloginfo('url'),
+    'author_name' => get_the_author_meta('display_name', $post->post_author),
+    'title' => $post->post_title,
+    'description' => wp_trim_words(
+      $post->post_excerpt ? $post->post_excerpt : $post->post_content,
+      100
+    ),
+    'url' => get_permalink($post_id),
+    'thumbnail' => wp_get_attachment_url(get_post_thumbnail_id($post_id))
+  ];
+}
+add_action('rest_api_init', function () {
+  register_rest_route('origami/v1', '/pembed', [
+    'methods' => 'GET',
+    'callback' => 'origami_rest_pembed'
+  ]);
+});
+
 require_once get_template_directory() . '/include/remove.php';
 require_once get_template_directory() . '/include/shortcode.php';
 require_once get_template_directory() . '/include/aes.class.php';

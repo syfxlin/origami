@@ -1551,6 +1551,63 @@ origami.initGitCard = function() {
   });
 };
 
+origami.initArticleCard = function() {
+  let inner = (
+    cardEle,
+    title,
+    description,
+    url,
+    thumbnail,
+    author_name,
+    provider_name,
+    provider_url
+  ) => {
+    if (thumbnail) {
+      cardEle.style.backgroundImage = 'url(' + thumbnail + ')';
+    }
+    let head = '<a href="' + url + '">' + title + '</a>';
+    let headEle = cardEle.querySelector('.articlecard-head');
+    headEle.innerHTML = head;
+    headEle.style.visibility = 'visible';
+    let bodyEle = cardEle.querySelector('.articlecard-body');
+    bodyEle.innerHTML = description;
+    bodyEle.classList.remove('loading');
+    cardEle.querySelector('.articlecard-footer').style.visibility = 'visible';
+    cardEle.querySelector('.articlecard-info').innerHTML =
+      '<a href="' + provider_url + '">' + provider_name + '</a>';
+    cardEle.querySelector('.articlecard-to').innerHTML =
+      '<a href="' + url + '"><i class="icon icon-arrow-right"></i></a>';
+  };
+  document.querySelectorAll('.articlecard').forEach(cardEle => {
+    let url = cardEle.getAttribute('data-url');
+    let platform = cardEle.getAttribute('data-platform');
+    var re = /(\w+):\/\/([^\:|\/]+)(\:\d*)?(.*\/)?([^#|\?|\n]+)?(#.*)?(\?.*)?/i;
+    var m = url.match(re);
+    if (platform === 'origami') {
+      $http({
+        url: m[1] + '://' + m[2] + '/wp-json/origami/v1/pembed?url=' + url,
+        type: 'GET',
+        dataType: 'json',
+        success: function(res) {
+          inner(
+            cardEle,
+            res.title,
+            res.description,
+            res.url,
+            res.thumbnail,
+            res.author_name,
+            res.provider_name,
+            res.provider_url
+          );
+        },
+        error: function(status) {
+          console.log('状态码为' + status);
+        }
+      });
+    }
+  });
+};
+
 // Run
 var isPost =
   document.body.classList.contains('page') ||
@@ -1589,6 +1646,7 @@ window.addEventListener('load', function() {
     origami.tocToggle();
     origami.loadOwO();
     origami.initGitCard();
+    origami.initArticleCard();
   }
   if (LazyLoad) {
     new LazyLoad({
