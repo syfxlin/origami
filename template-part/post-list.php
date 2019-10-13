@@ -1,6 +1,6 @@
 <?php
+$post_list = [];
 if (have_posts()) {
-  $post_list = [];
   while (have_posts()) {
     the_post();
     $post_author_id = get_post_field('post_author', $post->ID);
@@ -33,7 +33,8 @@ if (have_posts()) {
 }
 
 $sidebar_pos = get_option('origami_layout_sidebar', 'right');
-$post_list_class = $sidebar_pos == 'none' ? 'col-10 col-md-12' : 'col-8 col-md-12';
+$post_list_class =
+  $sidebar_pos == 'none' ? 'col-10 col-md-12' : 'col-8 col-md-12';
 $sidebar_class = $sidebar_pos == 'none' ? 'd-none' : 'col-4 col-md-12';
 $main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
 ?>
@@ -45,11 +46,17 @@ $main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
           <div class="post-sticky">置顶</div>
         <?php endif; ?>
         <?php if ($item['post_image']): ?>
-          <a class="card-image post-thumb" href="<?php echo $item['post_link'] ?>" style="background-image:url(<?php echo $item['post_image']; ?>)"></a>
+          <a class="card-image post-thumb" href="<?php echo $item[
+            'post_link'
+          ]; ?>" style="background-image:url(<?php echo $item[
+  'post_image'
+]; ?>)"></a>
         <?php endif; ?>
         <div class="card-header post-info">
           <h2 class="card-title">
-            <a href="<?php echo $item['post_link']; ?>"><?php echo $item['post_title']; ?></a>
+            <a href="<?php echo $item['post_link']; ?>"><?php echo $item[
+  'post_title'
+]; ?></a>
           </h2>
           <div class="card-subtitle text-gray">
             <i class="fa fa-calendar"></i>
@@ -57,30 +64,40 @@ $main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
             <i class="fa fa-paper-plane-o"></i>
             <span><?php echo $item['post_author']; ?></span>
             <i class="fa fa-comment"></i>
-            <span><?php echo $item['post_comments'] . __('条评论', 'origami'); ?></span>
+            <span><?php echo $item['post_comments'] .
+              __('条评论', 'origami'); ?></span>
             <i class="fa fa-bookmark"></i> 
             <ul>
               <?php foreach ($item['post_category'] as $cat): ?>
-                <li><a href="<?php echo get_category_link($cat); ?>"><?php echo get_cat_name($cat); ?></a></li>
+                <li><a href="<?php echo get_category_link(
+                  $cat
+                ); ?>"><?php echo get_cat_name($cat); ?></a></li>
               <?php endforeach; ?>
             </ul>
           </div>
         </div>
         <div class="card-body">
-        <?php echo apply_filters('the_content', wp_trim_words($item['post_excerpt'], 100)); ?>
+        <?php echo apply_filters(
+          'the_content',
+          wp_trim_words($item['post_excerpt'], 100)
+        ); ?>
         </div>
         <div class="card-footer">
           <div class="post-tags">
-            <?php foreach($item['post_tag'] as $tag): ?>
-            <a href="<?php echo get_tag_link($tag); ?>"><?php echo $tag->name; ?></a>
+            <?php foreach ($item['post_tag'] as $tag): ?>
+            <a href="<?php echo get_tag_link(
+              $tag
+            ); ?>"><?php echo $tag->name; ?></a>
             <?php endforeach; ?>
           </div>
-          <a href="<?php echo $item['post_link']; ?>" class="read-more"><?php echo __('阅读全文', 'origami'); ?></a>
+          <a href="<?php echo $item[
+            'post_link'
+          ]; ?>" class="read-more"><?php echo __('阅读全文', 'origami'); ?></a>
         </div>
       </article>
     <?php endforeach; ?>
     <section class="post-pagination">
-      <?php origami_pagination();?>
+      <?php origami_pagination(); ?>
     </section>
   </section>
   <aside class="column ori-sidebar <?php echo $sidebar_class; ?>">

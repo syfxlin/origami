@@ -1604,6 +1604,27 @@ origami.initArticleCard = function() {
           console.log('状态码为' + status);
         }
       });
+    } else if (platform === 'embed') {
+      $http({
+        url: url + (url.charAt(url.length - 1) === '/' ? 'embed' : '/embed'),
+        type: 'GET',
+        dataType: 'html',
+        success: function(res) {
+          let domp = new DOMParser();
+          let d = domp.parseFromString(res, 'text/html');
+          d.querySelector('.wp-embed-more').remove();
+          inner(
+            cardEle,
+            d.querySelector('.wp-embed-heading a').innerHTML,
+            d.querySelector('.wp-embed-excerpt p').innerHTML,
+            url,
+            null,
+            '',
+            d.querySelector('.wp-embed-site-title a span').innerHTML,
+            d.querySelector('.wp-embed-site-title a').href
+          );
+        }
+      });
     }
   });
 };
