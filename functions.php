@@ -730,7 +730,7 @@ function origami_lazyload_img()
   {
     $regex_img = '/<img (.+?)(|\/| )*>/i';
     $regex_bg =
-      '/<([^>]*)style="((background-image|background)[ :]*(url\(.*\)))"([^>]*)>/i';
+      '/<([^>]*)style=".*((background-image|background)[ :]*(url\(.*\))).*"([^>]*)>/i';
     $content = preg_replace_callback(
       $regex_img,
       'origami_lazyload_img_process_callback',

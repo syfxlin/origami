@@ -111,6 +111,9 @@ table th {
 
 .lazy:not(.loaded) {
   filter: blur(5px);
+}
+
+img.lazy:not(.loaded) {
   width: 100%;
   height: 200px;
 }
