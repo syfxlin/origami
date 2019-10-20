@@ -123,6 +123,7 @@ class OrigamiConfig
     // 页脚设置
     register_setting('origami_style', 'origami_footer_text');
     register_setting('origami_style', 'origami_footer_time');
+    register_setting('origami_style', 'origami_footer_pos');
     add_settings_section(
       'origami_style_footer',
       __('3.页脚设置', 'origami'),
@@ -155,6 +156,19 @@ class OrigamiConfig
         'type' => 'text',
         'description' =>
           '是否显示页脚时间？若填写时间代表显示，格式如下</br>07/01/2017 00:00:09'
+      ]
+    );
+    add_settings_field(
+      'origami_footer_pos',
+      __('页脚时间', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_style',
+      'origami_style_footer',
+      [
+        'field' => 'origami_footer_pos',
+        'value' => 'right',
+        'type' => 'text',
+        'description' => '页脚的位置(left,center,right)'
       ]
     );
 

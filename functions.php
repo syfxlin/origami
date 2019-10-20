@@ -660,8 +660,9 @@ function origami_lazyload_img()
   }
   function origami_lazyload_img_process_callback($matches)
   {
-    $rep_src = '';
-    $rep_srcset = '';
+    $rep_src =
+      'src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="';
+    $rep_srcset = $rep_src;
     $img_attr = $matches[1];
     str_replace("'", '"', $img_attr);
     if (preg_match('/(src="([^"]*)?")/i', $img_attr, $src_matches) !== 0) {

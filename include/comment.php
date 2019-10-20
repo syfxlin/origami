@@ -5,6 +5,18 @@ function origami_auto_comment_image($comment)
 {
   global $allowedtags;
   $allowedtags['img'] = ['src' => [], 'alt' => []];
+  $allowedtags['pre'] = ['class' => true];
+  $allowedtags['code'] = ['class' => true];
+  $allowedtags['p'] = true;
+  $allowedtags['ul'] = true;
+  $allowedtags['ol'] = true;
+  $allowedtags['li'] = true;
+  $allowedtags['sub'] = true;
+  $allowedtags['sup'] = true;
+  $allowedtags['del'] = true;
+  $allowedtags['em'] = true;
+  $allowedtags['strong'] = true;
+  $allowedtags['blockquote'] = true;
   return $comment;
 }
 add_filter('preprocess_comment', 'origami_auto_comment_image');
@@ -47,7 +59,11 @@ function origami_comment_respond_email($comment_id, $comment)
     $comment_post_id = $comment_parent->comment_post_ID;
     $comment_parent_author_name = $comment_parent->comment_author;
     $pat = '/\/comment-page-(\d+)/';
-    $comment_link = preg_replace($pat, '?comment_page=$1',get_comment_link($comment_parent->comment_ID));
+    $comment_link = preg_replace(
+      $pat,
+      '?comment_page=$1',
+      get_comment_link($comment_parent->comment_ID)
+    );
 
     $headers =
       "Content-Type: text/html; charset=\"" .
@@ -56,12 +72,15 @@ function origami_comment_respond_email($comment_id, $comment)
 
     $subject = '你在 [' . get_option('blogname') . '] 上的评论有了新回复。';
 
-    $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    $message =
+      '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
       <html xmlns="http://www.w3.org/1999/xhtml">
         <head>
           <meta name="viewport" content="width=device-width" />
           <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-          <title>你在[' . $blog_name . ']上的评论有了新回复。</title>
+          <title>你在[' .
+      $blog_name .
+      ']上的评论有了新回复。</title>
         </head>
         <body>
           <table
@@ -94,14 +113,18 @@ function origami_comment_respond_email($comment_id, $comment)
                           >
                             <tbody>
                               <tr>
-                                <td align="left" style="font-size: 30px;color:#40C4FF;">' . $title . '</td>
+                                <td align="left" style="font-size: 30px;color:#40C4FF;">' .
+      $title .
+      '</td>
                                 <td align="right">
                                   <img
                                     width="32"
                                     height="32"
                                     style="display:block;width: 45px;height: 45px;border-radius:50%;"
                                     alt="avatar"
-                                    src="' . $icon . '"
+                                    src="' .
+      $icon .
+      '"
                                   />
                                 </td>
                               </tr>
@@ -170,7 +193,9 @@ function origami_comment_respond_email($comment_id, $comment)
                                         >
                                           尊敬的<span
                                             style="color:#40ceff;font-weight:bold"
-                                            >' . $comment_parent_author_name . '</span
+                                            >' .
+      $comment_parent_author_name .
+      '</span
                                           >，您好！
                                         </td>
                                       </tr>
@@ -178,28 +203,42 @@ function origami_comment_respond_email($comment_id, $comment)
                                         <td
                                           style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:13px;color:#202020;line-height:1.5"
                                         >
-                                          您对[' . $blog_name . ']上 《<a
+                                          您对[' .
+      $blog_name .
+      ']上 《<a
                                             style="white-space:nowrap;color:#40ceff"
-                                            href="' . get_permalink($comment_post_id) . '"
-                                            >' . get_the_title($comment_post_id) . '</a>》
+                                            href="' .
+      get_permalink($comment_post_id) .
+      '"
+                                            >' .
+      get_the_title($comment_post_id) .
+      '</a>》
                                           一文的评论有新回复，欢迎您前来继续参与讨论。<br /><br />这是您发表的原始评论
                                           <ol
                                             style="background:#e0e0e0;margin:5px;padding:20px 40px 20px"
                                           >
-                                            ' . $comment_parent->comment_content . '
+                                            ' .
+      $comment_parent->comment_content .
+      '
                                           </ol>
                                           <span style="color:#40ceff;font-weight:bold"
-                                            >' . $comment_author_name . '</span
+                                            >' .
+      $comment_author_name .
+      '</span
                                           >给您的回复如下
                                           <ol
                                             style="background:#e0e0e0;margin:5px;padding:20px 40px 20px"
                                           >
-                                            ' . $comment->comment_content . '
+                                            ' .
+      $comment->comment_content .
+      '
                                           </ol>
                                           <br />如有需要，您可以<a
                                             style="text-decoration:none;color:#4285f4"
                                             target="_blank"
-                                            href="' . $comment_link . '"
+                                            href="' .
+      $comment_link .
+      '"
                                             >查看有关此回复的详细信息</a
                                           >。
                                         </td>
@@ -207,7 +246,9 @@ function origami_comment_respond_email($comment_id, $comment)
                                       <tr height="26px"></tr>
                                       <tr>
                                         <td style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:13px;color:#202020;line-height:1.5">
-                                          ' . $salute . '
+                                          ' .
+      $salute .
+      '
                                         </td>
                                       </tr>
                                       <tr height="20px"></tr>
@@ -218,7 +259,9 @@ function origami_comment_respond_email($comment_id, $comment)
                                           >
                                             <tbody>
                                               <tr>
-                                                <td>' . $footer . '</td>
+                                                <td>' .
+      $footer .
+      '</td>
                                               </tr>
                                             </tbody>
                                           </table>
@@ -253,7 +296,9 @@ function origami_comment_respond_email($comment_id, $comment)
                               <tr>
                                 <td>
                                   <div style="direction: ltr;">
-                                    ©Copyright&nbsp;2019&nbsp;' . $blog_name . '
+                                    ©Copyright&nbsp;2019&nbsp;' .
+      $blog_name .
+      '
                                   </div>
                                 </td>
                               </tr>

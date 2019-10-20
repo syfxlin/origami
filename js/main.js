@@ -499,6 +499,7 @@ origami.initComments = function() {
     if (page > pageCount) {
       page = pageCount;
     }
+    closeReply();
     let loadF = function() {
       $http({
         url: '/wp-json/origami/v1/comments',
@@ -517,6 +518,7 @@ origami.initComments = function() {
           }, 600);
           pageOut = page;
           changeNav();
+          initReply();
           callback(pageOut, response);
         },
         error: function(status) {
@@ -685,6 +687,17 @@ origami.initComments = function() {
       );
       e.preventDefault();
     });
+  };
+  let closeReply = function() {
+    let response = document.getElementById('comments-response');
+    let form = document.getElementById('comments-form');
+    let submitEle = document.getElementById('response-submit');
+    let closeResponse = document.getElementById('close-response');
+    form.remove();
+    response.appendChild(form);
+    submitEle.setAttribute('data-commentid', 0);
+    submitEle.setAttribute('data-lv', 1);
+    closeResponse.style.visibility = 'hidden';
   };
   let initReply = function() {
     let response = document.getElementById('comments-response');
@@ -1669,7 +1682,7 @@ window.addEventListener('load', function() {
     origami.initGitCard();
     origami.initArticleCard();
   }
-  if (LazyLoad) {
+  if (window.LazyLoad) {
     new LazyLoad({
       elements_selector: '.lazy',
       load_delay: 500,

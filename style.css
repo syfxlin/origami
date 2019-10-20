@@ -4,7 +4,7 @@ Theme URI: https://blog.ixk.me/theme-origami.html
 Author: Otstar Lin
 Author URI: https://www.ixk.me
 Description: 简约平面化风格的主题
-Version: 2.1.0
+Version: 2.1.1
 License: GNU General Public License v3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Tags: black,cyan-blue,flat,responsive
@@ -111,6 +111,8 @@ table th {
 
 .lazy:not(.loaded) {
   filter: blur(5px);
+  width: 100%;
+  height: 200px;
 }
 
 .lazy-bg-loaded-flag {
@@ -778,6 +780,18 @@ body.menu-active .ori-footer {
   flex: 1;
 }
 
+.ori-footer .ori-container.right {
+  justify-content: flex-end;
+}
+
+.ori-footer .ori-container.left {
+  justify-content: flex-start;
+}
+
+.ori-footer .ori-container.center {
+  justify-content: center;
+}
+
 .ori-copyright {
   text-align: center;
   padding-top: 1rem;
@@ -1282,6 +1296,19 @@ body.menu-active .ori-footer {
   margin-top: 0.25rem;
 }
 
+.comment-body * {
+  margin: 0;
+}
+
+.comment-body p {
+  margin: 0;
+}
+
+.comment-body img {
+  max-height: 20vh;
+  max-width: 50%;
+}
+
 .comment-footer {
   margin-top: 0.25rem;
   display: flex;
@@ -1311,7 +1338,7 @@ body.menu-active .ori-footer {
 }
 
 .comment-children {
-  margin-left: 3rem;
+  margin-left: 1.2rem;
 }
 
 .comments-container i {
@@ -1477,11 +1504,12 @@ body.menu-active .ori-footer {
 }
 
 .OwO {
-  margin-top: 2.5rem;
+  margin-top: 3.8rem;
   margin-left: 4.3rem;
   position: absolute !important;
   width: 70%;
   max-width: 100%;
+  top: 0;
 }
 
 .OwO ul li {
