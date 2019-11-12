@@ -454,7 +454,7 @@ function origami_breadcrumbs($echo = true, $class = [])
         $parent_id = $page->post_parent;
       }
       for ($i = count($bread) - 1; $i >= 0; $i--) {
-        $breadcrumbs[] = $bread[i];
+        $breadcrumbs[] = $bread[$i];
       }
       $breadcrumbs[] = [
         'link' => false,
