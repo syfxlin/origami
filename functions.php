@@ -35,6 +35,11 @@ add_theme_support('title-tag');
 add_theme_support('post-thumbnails');
 add_filter('pre_option_link_manager_enabled', '__return_true');
 register_nav_menus(['main-menu' => esc_html__('主菜单')]);
+function origami_theme_setup()
+{
+  load_theme_textdomain('origami', get_template_directory() . '/languages');
+}
+add_action('after_setup_theme', 'origami_theme_setup');
 // 加载主题设置
 require get_template_directory() . '/include/customizer.php';
 
@@ -264,7 +269,12 @@ if (!is_admin()) {
       function origami_add_warn()
       {
         echo '<div class="notice notice-warning is-dismissible">
-                    <p>Warning：' . __('你可能修改了页脚的版权信息，请将其修正。Origami主题要求你保留页脚主题信息。', 'origami') . '</p>
+                    <p>Warning：' .
+          __(
+            '你可能修改了页脚的版权信息，请将其修正。Origami主题要求你保留页脚主题信息。',
+            'origami'
+          ) .
+          '</p>
                 </div>';
       }
       add_action('admin_notices', 'origami_add_warn');
@@ -543,7 +553,7 @@ function origami_inspiration_init()
     'not_found' => __('暂无灵感', 'origami'),
     'not_found_in_trash' => __('没有已遗弃的灵感', 'origami'),
     'parent_item_colon' => '',
-    'menu_name' => __('灵感', 'origami'),
+    'menu_name' => __('灵感', 'origami')
   ];
   $args = [
     'labels' => $labels,
