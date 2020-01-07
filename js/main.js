@@ -1095,12 +1095,16 @@ origami.initMarkdown = function() {
 };
 
 origami.imgBox = function() {
+  let opened = false;
   new Zooming({
     bgColor: 'rgba(0,0,0,0.5)',
     custemSize: '90%',
     zIndex: 9999,
-    onOpen: function() {
-      origami.tools.timeToast('按住图片可放大', 'success', 3000);
+    onOpen: () => {
+      if (!opened) {
+        origami.tools.timeToast('按住图片可放大', 'success', 3000);
+        opened = true;
+      }
     }
   }).listen('.s-post-content img, .p-post-content img');
 };
