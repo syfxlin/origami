@@ -43,20 +43,14 @@ $main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
     <?php foreach ($post_list as $item): ?>
       <article class="card" id="post-<?php echo $item['post_id']; ?>">
         <?php if (is_sticky($item['post_id'])): ?>
-          <div class="post-sticky">置顶</div>
+          <div class="post-sticky"><?php echo __('置顶', 'origami') ?></div>
         <?php endif; ?>
         <?php if ($item['post_image']): ?>
-          <a class="card-image post-thumb" href="<?php echo $item[
-            'post_link'
-          ]; ?>" style="background-image:url(<?php echo $item[
-  'post_image'
-]; ?>)"></a>
+          <a class="card-image post-thumb" href="<?php echo $item['post_link']; ?>" style="background-image:url(<?php echo $item['post_image']; ?>)"></a>
         <?php endif; ?>
         <div class="card-header post-info">
           <h2 class="card-title">
-            <a href="<?php echo $item['post_link']; ?>"><?php echo $item[
-  'post_title'
-]; ?></a>
+            <a href="<?php echo $item['post_link']; ?>"><?php echo $item['post_title']; ?></a>
           </h2>
           <div class="card-subtitle text-gray">
             <i class="fa fa-calendar"></i>

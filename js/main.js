@@ -821,7 +821,7 @@ origami.loadOwO = function() {
       logo: 'OωO表情',
       container: document.getElementsByClassName('OwO')[0],
       target: document.getElementById('response-text'),
-      api: location.origin + '/wp-content/themes/Origami/js/OwO.json',
+      api: window.origamiConfig.themeBaseURL + '/js/OwO.json',
       position: 'down',
       width: '100%',
       maxHeight: '250px'
@@ -1713,6 +1713,6 @@ console.log(
 console.log(
   '%c ',
   'background:url(' +
-    window.location.origin +
-    '/wp-content/themes/Origami/image/comment-1.png) no-repeat center;background-size:200px;padding-left:200px;padding-bottom:162px;overflow:hidden;border-radius:10px;margin:5px 0'
+    window.origamiConfig.themeBaseURL +
+    '/image/comment-1.png) no-repeat center;background-size:200px;padding-left:200px;padding-bottom:162px;overflow:hidden;border-radius:10px;margin:5px 0'
 );

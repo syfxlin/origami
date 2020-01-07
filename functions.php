@@ -38,10 +38,15 @@ register_nav_menus(['main-menu' => esc_html__('主菜单')]);
 // 加载主题设置
 require get_template_directory() . '/include/customizer.php';
 
+// 获取主题URL
+$tem_url = get_template_directory_uri();
+
 // 配置前端
 function origami_frontend_config()
 {
+  global $tem_url;
   $config = [
+    'themeBaseURL' => $tem_url,
     'markdownComment' =>
       get_option('origami_markdown_comment', 'true') == 'true',
     'updateComment' =>
@@ -75,13 +80,12 @@ function origami_frontend_config()
 add_action('wp_footer', 'origami_frontend_config', 1);
 
 // 配置
-$tem_url = get_template_directory_uri();
 $local_assets_url = [
   'spectre_css' => $tem_url . '/css/spectre.min.css',
   'spectre_exp_css' => $tem_url . '/css/spectre-exp.min.css',
   'spectre_icons_css' => $tem_url . '/css/spectre-icons.min.css',
   'origami_js' => $tem_url . '/js/main.js',
-  'origami_css' => get_stylesheet_uri(),
+  'origami_css' => $tem_url . '/style.min.css',
   'qrcode_js' => $tem_url . '/js/qrcode.min.js',
   'SMValidator_js' => $tem_url . '/js/SMValidator.min.js',
   'font_awesome_css' => $tem_url . '/css/font-awesome.min.css',
@@ -108,8 +112,8 @@ $jsdelivr_assets_url = [
     'https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-exp.min.css',
   'spectre_icons_css' =>
     'https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-icons.min.css',
-  'origami_js' => '/wp-content/themes/Origami/js/main.js',
-  'origami_css' => '/wp-content/themes/Origami/style.css',
+  'origami_js' => $tem_url . '/js/main.js',
+  'origami_css' => $tem_url . '/style.min.css',
   'qrcode_js' => 'https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js',
   'SMValidator_js' =>
     'https://cdn.jsdelivr.net/npm/SMValidator@1.2.7/dist/SMValidator.min.js',
@@ -125,8 +129,8 @@ $jsdelivr_assets_url = [
   'owo_js' => 'https://cdn.jsdelivr.net/npm/owo@1.0.2/dist/OwO.min.js',
   'tocbot_css' => 'https://cdn.jsdelivr.net/npm/tocbot@4.7.1/dist/tocbot.css',
   'tocbot_js' => 'https://cdn.jsdelivr.net/npm/tocbot@4.7.1/dist/tocbot.min.js',
-  'prism_css' => '/wp-content/themes/Origami/css/prism.css',
-  'prism_js' => '/wp-content/themes/Origami/js/prism.js',
+  'prism_css' => $tem_url . '/css/prism.css',
+  'prism_js' => $tem_url . '/js/prism.js',
   'katex_js_1' => 'https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.js',
   'katex_js_2' =>
     'https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/contrib/auto-render.min.js',
@@ -260,7 +264,7 @@ if (!is_admin()) {
       function origami_add_warn()
       {
         echo '<div class="notice notice-warning is-dismissible">
-                    <p>Warning：你可能修改了页脚的版权信息，请将其修正。Origami主题要求你保留页脚主题信息。</p>
+                    <p>Warning：' . __('你可能修改了页脚的版权信息，请将其修正。Origami主题要求你保留页脚主题信息。', 'origami') . '</p>
                 </div>';
       }
       add_action('admin_notices', 'origami_add_warn');
@@ -528,18 +532,18 @@ function origami_breadcrumbs($echo = true, $class = [])
 function origami_inspiration_init()
 {
   $labels = [
-    'name' => '灵感',
-    'singular_name' => '灵感',
-    'add_new' => '发表灵感',
-    'add_new_item' => '发表灵感',
-    'edit_item' => '编辑灵感',
-    'new_item' => '新灵感',
-    'view_item' => '查看灵感',
-    'search_items' => '搜索灵感',
-    'not_found' => '暂无灵感',
-    'not_found_in_trash' => '没有已遗弃的灵感',
+    'name' => __('灵感', 'origami'),
+    'singular_name' => __('灵感', 'origami'),
+    'add_new' => __('发表灵感', 'origami'),
+    'add_new_item' => __('发表灵感', 'origami'),
+    'edit_item' => __('编辑灵感', 'origami'),
+    'new_item' => __('新灵感', 'origami'),
+    'view_item' => __('查看灵感', 'origami'),
+    'search_items' => __('搜索灵感', 'origami'),
+    'not_found' => __('暂无灵感', 'origami'),
+    'not_found_in_trash' => __('没有已遗弃的灵感', 'origami'),
     'parent_item_colon' => '',
-    'menu_name' => '灵感'
+    'menu_name' => __('灵感', 'origami'),
   ];
   $args = [
     'labels' => $labels,
@@ -791,7 +795,7 @@ function origami_sidebar_init()
 {
   register_sidebar([
     'name' => __('默认侧栏', 'origami'),
-    'description' => '默认的侧边栏',
+    'description' => __('默认的侧边栏', 'origami'),
     'id' => 'default_sidebar',
     'before_widget' => '<aside class="sidebar-widget %2$s">',
     'after_widget' => '</aside>',

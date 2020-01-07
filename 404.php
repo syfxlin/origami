@@ -189,11 +189,11 @@
           <h2>Not Found</h2>
         </section>
         <section>
-          The requested resources is not available.
+          <?php echo __('未找到所请求的资源。', 'origami') ?>
         </section>
         <section>
-          <a href="<?php echo esc_url(home_url('/')); ?>" class="btn">Home</a>
-          <a href="javascript:history.back(-1);" class="btn">Go Back</a>
+          <a href="<?php echo esc_url(home_url('/')); ?>" class="btn"><?php echo __('首页', 'origami') ?></a>
+          <a href="javascript:history.back(-1);" class="btn"><?php echo __('返回上一页', '') ?></a>
         </section>
     </main>
     <footer class="ori-footer">

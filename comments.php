@@ -48,7 +48,7 @@ if (comments_open()):
             <div class="OwO"></div>
         </div>
         <?php if (get_option("origami_markdown_comment", "true") == "true"): ?>
-            <div class="response-md"><i class="fa fa-book"></i>支持Markdown语法</div>
+            <div class="response-md"><i class="fa fa-book"></i><?php echo __('支持Markdown语法', 'origami') ?></div>
         <?php endif; ?>
         <div class="response-footer">
             <div class="response-input-item">
@@ -93,16 +93,16 @@ if (comments_open()):
         data-pagecount="<?php echo get_comment_pages_count(); ?>"
     ></div>
     <div class="comments-nav">
-        <label class="form-label">当前评论页：</label>
+        <label class="form-label"><?php echo __('当前评论页：', 'origami') ?></label>
         <select class="form-select" id="comments-select">
         </select>
         <div class="flex-1"></div>
         <ul class="pagination">
             <li class="page-item">
-                <a class="prev" id="comments-prev"><i class="icon icon-back"></i> 上一页</a>
+                <a class="prev" id="comments-prev"><i class="icon icon-back"></i> <?php echo __('上一页', 'origami') ?></a>
             </li>
             <li class="page-item">
-                <a class="next" id="comments-next">下一页 <i class="icon icon-forward"></i></a>
+                <a class="next" id="comments-next"><?php echo __('下一页', 'origami') ?> <i class="icon icon-forward"></i></a>
             </li>
         </ul>
     </div>

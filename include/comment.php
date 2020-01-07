@@ -343,7 +343,11 @@ function comment_mark($comment)
   //判断是不是站长我
   if ($comment->comment_author_email == $adminEmail) {
     $comment_mark =
-      '<a target="_blank" href="/关于我" title="经鉴定，这货是站长">站长</a>';
+      '<a target="_blank" href="/about" title="' .
+      __('经鉴定，这货是站长', 'origami') .
+      '">' .
+      __('站长', 'origami') .
+      '</a>';
     $comment_mark_color = '#0bf';
     $is_friend = true;
   }
@@ -367,7 +371,11 @@ function comment_mark($comment)
         $comment_author_url_reg == $url_re[2]
       ) {
         $comment_mark =
-          '<a target="_blank" href="/links" title="友情链接认证">友人</a>';
+          '<a target="_blank" href="/links" title="' .
+          __('友情链接认证', 'origami') .
+          '">' .
+          __('友人', 'origami') .
+          '</a>';
         $comment_mark_color = '#5EBED2';
         $is_friend = true;
       }
@@ -375,7 +383,7 @@ function comment_mark($comment)
   }
   //若不在列表中就标记为访客
   if ($is_friend == false) {
-    $comment_mark = '访客';
+    $comment_mark = __('访客', 'origami');
   }
   return '<div class="comment-mark" style="background:' .
     $comment_mark_color .
@@ -526,7 +534,7 @@ function origami_rest_put_comments(WP_REST_Request $request)
       'data' => [
         'status' => 200
       ],
-      'massage' => '此功能未开启'
+      'massage' => __('此功能未开启', 'origami')
     ];
   }
   $comment_data = [
@@ -542,21 +550,21 @@ function origami_rest_put_comments(WP_REST_Request $request)
     'data' => [
       'status' => 401
     ],
-    'massage' => '权限不足，未读取到合法的token'
+    'massage' => __('权限不足，未读取到合法的token', 'origami')
   ];
   $error_403 = [
     'code' => 'You cannot change comments over 5 minutes',
     'data' => [
       'status' => 403
     ],
-    'massage' => '您无法更改超过5分钟的评论'
+    'massage' => __('您无法更改超过5分钟的评论', 'origami')
   ];
   $error_409 = [
     'code' => 'Submitted comment ID does not match',
     'data' => [
       'status' => 409
     ],
-    'massage' => '提交的评论ID不匹配'
+    'massage' => __('提交的评论ID不匹配', 'origami')
   ];
   if (!isset($_COOKIE['change_comment'])) {
     return $error_401;
@@ -608,7 +616,7 @@ function origami_rest_delete_comments(WP_REST_Request $request)
       'data' => [
         'status' => 200
       ],
-      'massage' => '此功能未开启'
+      'massage' => __('此功能未开启', 'origami')
     ];
   }
   $error_401 = [
@@ -616,21 +624,21 @@ function origami_rest_delete_comments(WP_REST_Request $request)
     'data' => [
       'status' => 401
     ],
-    'massage' => '权限不足，未读取到合法的token'
+    'massage' => __('权限不足，未读取到合法的token', 'origami')
   ];
   $error_403 = [
     'code' => 'You cannot change comments over 5 minutes',
     'data' => [
       'status' => 403
     ],
-    'massage' => '您无法更改超过5分钟的评论'
+    'massage' => __('您无法更改超过5分钟的评论', 'origami')
   ];
   $error_409 = [
     'code' => 'Comment ID does not found',
     'data' => [
       'status' => 400
     ],
-    'massage' => '评论ID未找到'
+    'massage' => __('评论ID未找到', 'origami')
   ];
   $comment_id = $request['id'];
   if (!isset($_COOKIE['change_comment'])) {

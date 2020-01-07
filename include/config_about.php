@@ -2,7 +2,7 @@
     <h1><?php echo __("Origami主题 - 关于", "origami"); ?></h1>
     <?php if (isset($GLOBALS['theme_edited']) && $GLOBALS['theme_edited']): ?>
         <div class="notice notice-warning">
-            <p>Warning：你可能修改了页脚的版权信息，请将其修正。Origami主题要求你保留页脚主题信息。</p>
+            <p>Warning：<?php echo __('你可能修改了页脚的版权信息，请将其修正。Origami主题要求你保留页脚主题信息。', 'origami') ?></p>
         </div>
     <?php endif; ?>
     <p class="ori-admin-img">
@@ -25,7 +25,7 @@
             function origami_update_notice()
             {
                 echo '<div class="notice notice-warning is-dismissible">
-                        <p>Origami主题有新版本可以更新啦！(￣▽￣)"</p>
+                        <p>'. __('Origami主题有新版本可以更新啦！', 'origami') .'(￣▽￣)"</p>
                     </div>';
             }
             add_action('admin_notices', 'origami_update_notice');
@@ -36,10 +36,10 @@
     <p style="font-size:12px;"><?php echo __('最新版本 v', 'origami') . $now_version; ?></p>
     <?php if ($now_version != $curr_version): ?>
         <div style="display: inline-block;line-height: 19px;padding: 0px 15px;font-size: 14px;text-align: left;background-color: #fff;border-left: 4px solid #ffba00;box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);">
-            <p>Origami主题有新版本可以更新啦！(￣▽￣)"</p>
+            <p><?php echo __('Origami主题有新版本可以更新啦！', 'origami'); ?>(￣▽￣)"</p>
         </div>
     <?php endif; ?>
-    <h2 style="font-size:19px;"><?php echo __('主题使用到的库或框架等'); ?></h2>
+    <h2 style="font-size:19px;"><?php echo __('主题使用到的库或框架等', 'origami'); ?></h2>
     <ul>
         <li><a href="https://picturepan2.github.io/spectre/">Spectre.css</a></li>
         <li><a href="https://github.com/hustcc/canvas-nest.js">Canvas-nest.js</a></li>
