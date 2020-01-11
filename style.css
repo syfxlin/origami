@@ -94,6 +94,24 @@ table th {
   border-bottom-width: 0.1rem;
 }
 
+blockquote {
+  border-left: .2rem solid #dadee4;
+}
+
+hr {
+  border: none;
+  border-bottom: 2px solid #8f98a1;
+  width: 20%;
+}
+
+hr.is-style-wide, hr.is-style-dots {
+  width: 100%;
+}
+
+.wp-block-separator.is-style-wide {
+  border-bottom-width: 2px;
+}
+
 .lazy {
   transition: filter 0.35s ease 0s;
 }
@@ -1151,7 +1169,7 @@ body.menu-active .ori-footer {
 
 .p-post-info .card-title,
 .s-post-info .card-title {
-  font-size: 1.7rem;
+  font-size: 1.4rem;
 }
 
 .comments-container a,
@@ -1226,34 +1244,67 @@ body.menu-active .ori-footer {
   margin: 0 0 0.6rem;
 }
 
+.p-post-content h1,
+.p-post-content h2,
+.p-post-content h3,
+.p-post-content h4,
+.p-post-content h5,
+.p-post-content h6,
+.s-post-content h1,
+.s-post-content h2,
+.s-post-content h3,
+.s-post-content h4,
+.s-post-content h5,
+.s-post-content h6 {
+  border-bottom: 1px dashed #ddd;
+  padding-bottom: 0.2rem;
+  color: #3b4351;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.p-post-content h1::before,
+.p-post-content h2::before,
+.p-post-content h3::before,
+.p-post-content h4::before,
+.p-post-content h5::before,
+.p-post-content h6::before,
+.s-post-content h1::before,
+.s-post-content h2::before,
+.s-post-content h3::before,
+.s-post-content h4::before,
+.s-post-content h5::before,
+.s-post-content h6::before {
+  content: "#";
+  left: 0;
+  position: absolute;
+  color: #5755d9;
+}
+
+.p-post-content h1,
+.s-post-content h1 {
+  font-size: 1.4rem;
+}
+
 .p-post-content h2,
 .s-post-content h2 {
-  font-size: 1.4rem;
-  color: #3b4351;
+  font-size: 1.2rem;
 }
 
 .p-post-content h3,
 .s-post-content h3 {
-  font-size: 1.2rem;
-  color: #3b4351;
+  font-size: 1rem;
 }
 
 .p-post-content h4,
-.s-post-content h4 {
-  font-size: 1rem;
-  color: #3b4351;
-}
-
 .p-post-content h5,
-.s-post-content h5 {
-  font-size: 0.8rem;
-  color: #3b4351;
-}
-
 .p-post-content h6,
+.s-post-content h4,
+.s-post-content h5,
 .s-post-content h6 {
-  font-size: 0.6rem;
-  color: #3b4351;
+  font-size: 0.8rem;
 }
 
 .p-post-content code,
@@ -1267,11 +1318,6 @@ body.menu-active .ori-footer {
   display: block;
   max-width: 100%;
   margin-bottom: 15px;
-}
-
-.s-post-content h1 {
-  font-size: 1.6rem;
-  color: #3b4351;
 }
 
 .p-post-tags,
