@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    <div id="toc-button" class="tools-item" title="<?php echo __("显示文章目录(点击显示或隐藏)", "origami"); ?>">
+    <div id="toc-button" class="tools-item <?php echo get_option('origami_sidebar_toc', 'false'); ?>" title="<?php echo __("显示文章目录(点击显示或隐藏)", "origami"); ?>">
         <i class="fa fa-indent fa-2x" aria-hidden="true"></i>
         <div class="toc"></div>
     </div>

@@ -368,6 +368,7 @@ class OrigamiConfig
     register_setting('origami_style', 'origami_inspiration_sidebar');
     register_setting('origami_style', 'origami_background');
     register_setting('origami_style', 'origami_animate');
+    register_setting('origami_style', 'origami_sidebar_toc');
     add_settings_section(
       'origami_style_other',
       __('6.其他设置', 'origami'),
@@ -450,6 +451,22 @@ class OrigamiConfig
         'type' => 'text',
         'description' => __(
           '注意此选项是开启一些影响性能的动画效果，正常情况下请不要开启(填入true为开，false为关)',
+          'origami'
+        )
+      ]
+    );
+    add_settings_field(
+      'origami_sidebar_toc',
+      __('开启侧栏目录', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_style',
+      'origami_style_other',
+      [
+        'field' => 'origami_sidebar_toc',
+        'value' => 'false',
+        'type' => 'text',
+        'description' => __(
+          'true为开，false为关',
           'origami'
         )
       ]

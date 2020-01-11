@@ -876,8 +876,12 @@ origami.initTocbot = function() {
     i++;
   });
   let offset = document.querySelector('.ori-header').clientHeight;
+  let selector =
+    document.querySelector('#toc-button').clientHeight === 0
+      ? '.widget_tocbot .toc'
+      : '.tools-item .toc';
   tocbot.init({
-    tocSelector: '.toc',
+    tocSelector: selector,
     contentSelector: '.s-post-content,.p-post-content',
     headingSelector: tocLevel,
     headingsOffset: offset + 21,
