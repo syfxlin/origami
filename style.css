@@ -2300,6 +2300,7 @@ body.menu-active .ori-footer {
   margin: 0;
   border-radius: 0;
   width: 100%;
+  background: #f5f2f0;
 }
 
 .code-toolbar a:after {
