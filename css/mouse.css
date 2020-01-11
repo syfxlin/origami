@@ -1,0 +1,58 @@
+#mouse-canvas {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.mouse-pointer {
+  --size: 30px;
+  pointer-events: none;
+  width: var(--size);
+  height: var(--size);
+  background: rgba(247, 56, 89, 0.2);
+  position: fixed;
+  border-radius: 50%;
+  transform: translate3d(-50%, -50%, 0) scale(0);
+  transition: transform 0.3s;
+  border: 2px solid rgba(247, 56, 89, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+.mouse-pointer:before {
+  content: '';
+  width: 80%;
+  height: 80%;
+  position: absolute;
+  display: block;
+  background: #00e0ff;
+  border-radius: 50%;
+  transition: background 0.5s, box-shadow 0.5s;
+}
+.is-pressed .mouse-pointer {
+  transform: translate3d(-50%, -50%, 0) scale(1);
+}
+.is-longpress .mouse-pointer {
+  animation: wobble 0.2s infinite alternate;
+}
+.is-longpress .mouse-pointer:before {
+  background: #faf15d;
+  box-shadow: 0 0 5px rgba(250, 241, 93, 0.5);
+  animation: wobble2 0.2s infinite alternate;
+}
+
+@keyframes wobble {
+  to {
+    transform: translate3d(-50%, -50%, 0) scale(0.5);
+  }
+}
+@keyframes wobble2 {
+  to {
+    transform: scale(0.5);
+  }
+}

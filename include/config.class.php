@@ -81,7 +81,10 @@ class OrigamiConfig
         'field' => 'origami_layout_style',
         'value' => 'layout1',
         'type' => 'text',
-        'description' => __('layout1：有大图布局，layout2：无大图布局，layout3：介于layout1和layout2的布局', 'origami')
+        'description' => __(
+          'layout1：有大图布局，layout2：无大图布局，layout3：介于layout1和layout2的布局',
+          'origami'
+        )
       ]
     );
     add_settings_field(
@@ -94,8 +97,10 @@ class OrigamiConfig
         'field' => 'origami_layout_sidebar',
         'value' => 'right',
         'type' => 'text',
-        'description' =>
-          __('right：侧边栏右置，left：侧边栏左置，none：不显示侧边栏', 'origami')
+        'description' => __(
+          'right：侧边栏右置，left：侧边栏左置，none：不显示侧边栏',
+          'origami'
+        )
       ]
     );
 
@@ -140,8 +145,10 @@ class OrigamiConfig
         'field' => 'origami_footer_text',
         'value' => '',
         'type' => 'text',
-        'description' =>
-          __('<span class="my-face"></span>中的内容会添加随机摇动效果，<span id="timeDate"></span>显示日期，<span id="times"></span>显示时间', 'origami')
+        'description' => __(
+          '<span class="my-face"></span>中的内容会添加随机摇动效果，<span id="timeDate"></span>显示日期，<span id="times"></span>显示时间',
+          'origami'
+        )
       ]
     );
     add_settings_field(
@@ -154,8 +161,10 @@ class OrigamiConfig
         'field' => 'origami_footer_time',
         'value' => '07/01/2017 00:00:09',
         'type' => 'text',
-        'description' =>
-          __('是否显示页脚时间？若填写时间代表显示，格式如下 07/01/2017 00:00:09', 'origami')
+        'description' => __(
+          '是否显示页脚时间？若填写时间代表显示，格式如下 07/01/2017 00:00:09',
+          'origami'
+        )
       ]
     );
     add_settings_field(
@@ -218,7 +227,10 @@ class OrigamiConfig
         'field' => 'origami_about_card_avatar',
         'value' => 'default',
         'type' => 'text',
-        'description' => __('如果填入default则会自动读取用户信息显示', 'origami')
+        'description' => __(
+          '如果填入default则会自动读取用户信息显示',
+          'origami'
+        )
       ]
     );
     add_settings_field(
@@ -231,7 +243,10 @@ class OrigamiConfig
         'field' => 'origami_about_card_content',
         'value' => 'default',
         'type' => 'text',
-        'description' => __('如果填入default则会自动读取用户信息显示', 'origami')
+        'description' => __(
+          '如果填入default则会自动读取用户信息显示',
+          'origami'
+        )
       ]
     );
 
@@ -433,8 +448,10 @@ class OrigamiConfig
         'field' => 'origami_animate',
         'value' => 'false',
         'type' => 'text',
-        'description' =>
-          __('注意此选项是开启一些影响性能的动画效果，正常情况下请不要开启(填入true为开，false为关)', 'origami')
+        'description' => __(
+          '注意此选项是开启一些影响性能的动画效果，正常情况下请不要开启(填入true为开，false为关)',
+          'origami'
+        )
       ]
     );
 
@@ -456,8 +473,10 @@ class OrigamiConfig
         'field' => 'origami_assets_url',
         'value' => 'local',
         'type' => 'textarea',
-        'description' =>
-          __('填入静态资源入口的JSON，若填入local则使用本地的静态资源，jsdeliver则使用jsDeliver CDN，JSON格式请查看js目录下的assets.json', 'origami')
+        'description' => __(
+          '填入静态资源入口的JSON，若填入local则使用本地的静态资源，jsdeliver则使用jsDeliver CDN，JSON格式请查看js目录下的assets.json',
+          'origami'
+        )
       ]
     );
     register_setting('origami_fun', 'origami_other_friends');
@@ -477,8 +496,10 @@ class OrigamiConfig
         'field' => 'origami_other_friends',
         'value' => '',
         'type' => 'textarea',
-        'description' =>
-          __('当友人如果有其他的链接时可以填充在这里，在评论时标记为友人，使用逗号分割', 'origami')
+        'description' => __(
+          '当友人如果有其他的链接时可以填充在这里，在评论时标记为友人，使用逗号分割',
+          'origami'
+        )
       ]
     );
 
@@ -510,8 +531,10 @@ class OrigamiConfig
         'field' => 'origami_comment_key',
         'value' => 'qwertyuiopasdfghjklzxcvbnm12345',
         'type' => 'text',
-        'description' =>
-          __('用于权限验证的key，在下方两个功能中都有使用，请填入随机字符串，尽量不要少于30位', 'origami')
+        'description' => __(
+          '用于权限验证的key，在下方两个功能中都有使用，请填入随机字符串，尽量不要少于30位',
+          'origami'
+        )
       ]
     );
     add_settings_field(
@@ -524,7 +547,10 @@ class OrigamiConfig
         'field' => 'origami_enable_comment_update',
         'value' => 'true',
         'type' => 'text',
-        'description' => __('开启评论可编辑（指定时间之内评论者可以编辑评论内容）', 'origami')
+        'description' => __(
+          '开启评论可编辑（指定时间之内评论者可以编辑评论内容）',
+          'origami'
+        )
       ]
     );
     add_settings_field(
@@ -537,7 +563,10 @@ class OrigamiConfig
         'field' => 'origami_enable_comment_delete',
         'value' => 'true',
         'type' => 'text',
-        'description' => __('开启评论可删除（指定时间之内评论者可以删除评论内容）', 'origami')
+        'description' => __(
+          '开启评论可删除（指定时间之内评论者可以删除评论内容）',
+          'origami'
+        )
       ]
     );
     add_settings_field(
@@ -550,7 +579,10 @@ class OrigamiConfig
         'field' => 'origami_enable_comment_time',
         'value' => '5',
         'type' => 'text',
-        'description' => __('评论者可以操作评论内容的有效时间，单位为分钟', 'origami')
+        'description' => __(
+          '评论者可以操作评论内容的有效时间，单位为分钟',
+          'origami'
+        )
       ]
     );
     add_settings_field(
@@ -563,8 +595,10 @@ class OrigamiConfig
         'field' => 'origami_comment_owo',
         'value' => 'true',
         'type' => 'text',
-        'description' =>
-          __('是否开启评论区的OwO表情，默认为true(true为开，false为关)', 'origami')
+        'description' => __(
+          '是否开启评论区的OwO表情，默认为true(true为开，false为关)',
+          'origami'
+        )
       ]
     );
     add_settings_field(
@@ -577,7 +611,10 @@ class OrigamiConfig
         'field' => 'origami_markdown_comment',
         'value' => 'true',
         'type' => 'text',
-        'description' => __('是否开启Markdown评论，默认为true(true为开，false为关)', 'origami')
+        'description' => __(
+          '是否开启Markdown评论，默认为true(true为开，false为关)',
+          'origami'
+        )
       ]
     );
     add_settings_field(
@@ -654,6 +691,7 @@ class OrigamiConfig
     register_setting('origami_fun', 'origami_copy_add_copyright');
     register_setting('origami_fun', 'origami_toc_level');
     register_setting('origami_fun', 'origami_canvas_nest');
+    register_setting('origami_fun', 'origami_canvas_mouse');
     register_setting('origami_fun', 'origami_workbox');
     register_setting('origami_fun', 'origami_lazyload');
     register_setting('origami_fun', 'origami_block_mixed');
@@ -678,8 +716,10 @@ class OrigamiConfig
         'field' => 'origami_copy_add_copyright',
         'value' => 'ncode',
         'type' => 'text',
-        'description' =>
-          __('all表示不管复制什么内容都会添加版权信息，ncode表示除代码部分外复制内容会添加版权信息，none表示不启用复制添加版权信息的功能', 'origami')
+        'description' => __(
+          'all表示不管复制什么内容都会添加版权信息，ncode表示除代码部分外复制内容会添加版权信息，none表示不启用复制添加版权信息的功能',
+          'origami'
+        )
       ]
     );
     add_settings_field(
@@ -692,7 +732,10 @@ class OrigamiConfig
         'field' => 'origami_toc_level',
         'value' => 'h1,h2,h3',
         'type' => 'text',
-        'description' => __('设置生成目录的级别（文章目录），默认为h1,h2,h3', 'origami')
+        'description' => __(
+          '设置生成目录的级别（文章目录），默认为h1,h2,h3',
+          'origami'
+        )
       ]
     );
     add_settings_field(
@@ -703,10 +746,28 @@ class OrigamiConfig
       'origami_fun_other',
       [
         'field' => 'origami_canvas_nest',
-        'value' => '5',
+        'value' => 'true',
         'type' => 'text',
-        'description' =>
-          __('是否开启Canvas-Nest背景，默认为true(true为开，false为关)', 'origami')
+        'description' => __(
+          '是否开启Canvas-Nest背景，默认为true(true为开，false为关)',
+          'origami'
+        )
+      ]
+    );
+    add_settings_field(
+      'origami_canvas_mouse',
+      __('Canvas-Mouse特效', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_other',
+      [
+        'field' => 'origami_canvas_mouse',
+        'value' => 'true',
+        'type' => 'text',
+        'description' => __(
+          '是否开启Canvas-Mouse特效，默认为true(true为开，false为关)',
+          'origami'
+        )
       ]
     );
     add_settings_field(
@@ -719,7 +780,10 @@ class OrigamiConfig
         'field' => 'origami_workbox',
         'value' => '5',
         'type' => 'text',
-        'description' => __('是否开启WorkBox缓存，默认为false(true为开，false为关)', 'origami')
+        'description' => __(
+          '是否开启WorkBox缓存，默认为false(true为开，false为关)',
+          'origami'
+        )
       ]
     );
     add_settings_field(
@@ -732,8 +796,10 @@ class OrigamiConfig
         'field' => 'origami_block_mixed',
         'value' => 'true',
         'type' => 'text',
-        'description' =>
-          __('是否阻止混合内容出现(即https中混入http，true为开，false为关)', 'origami')
+        'description' => __(
+          '是否阻止混合内容出现(即https中混入http，true为开，false为关)',
+          'origami'
+        )
       ]
     );
     add_settings_field(
@@ -746,8 +812,10 @@ class OrigamiConfig
         'field' => 'origami_lazyload',
         'value' => '5',
         'type' => 'text',
-        'description' =>
-          __('是否开启Lazyload加载图片，默认为false，格式为[true/false,all/post]', 'origami')
+        'description' => __(
+          '是否开启Lazyload加载图片，默认为false，格式为[true/false,all/post]',
+          'origami'
+        )
       ]
     );
     add_settings_field(

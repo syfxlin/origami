@@ -107,7 +107,9 @@ $local_assets_url = [
   'katex_js_2' => $tem_url . '/js/auto-render.min.js',
   'katex_css' => 'https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css',
   'mermaid_js' => $tem_url . '/js/mermaid.min.js',
-  'marked_js' => $tem_url . '/js/marked.min.js'
+  'marked_js' => $tem_url . '/js/marked.min.js',
+  'mouse_css' => $tem_url . '/css/mouse.css',
+  'mouse_js' => $tem_url . '/js/mouse.js'
 ];
 
 $jsdelivr_assets_url = [
@@ -142,7 +144,9 @@ $jsdelivr_assets_url = [
   'katex_css' => 'https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css',
   'mermaid_js' =>
     'https://cdn.jsdelivr.net/npm/mermaid@8.2.3/dist/mermaid.min.js',
-  'marked_js' => 'https://cdn.jsdelivr.net/npm/marked@0.7.0/lib/marked.min.js'
+  'marked_js' => 'https://cdn.jsdelivr.net/npm/marked@0.7.0/lib/marked.min.js',
+  'mouse_css' => $tem_url . '/css/mouse.css',
+  'mouse_js' => $tem_url . '/js/mouse.js'
 ];
 
 $assets_url = '';
@@ -169,7 +173,7 @@ if (!is_admin()) {
   );
   function css_js_to_footer()
   {
-    global $assets_url;
+    global $assets_url, $tem_url;
     wp_enqueue_script(
       'origami_js',
       $assets_url['origami_js'],
@@ -180,12 +184,6 @@ if (!is_admin()) {
     wp_enqueue_script('SMValidator_js', $assets_url['SMValidator_js']);
     // fa图标
     wp_enqueue_style('font_awesome_css', $assets_url['font_awesome_css']);
-    // canvas-nest加载
-    if (get_option('origami_canvas_nest', 'true') == 'true') {
-      echo '<script type="text/javascript" color="0,0,0" zindex="-1" opacity="0.5" count="99" src="' .
-        $assets_url['canvas_nest_js'] .
-        '"></script>';
-    }
     // Lazyload
     $config = get_option('origami_lazyload');
     if (stripos($config, ',') == true) {
@@ -195,6 +193,17 @@ if (!is_admin()) {
     }
     if (strcmp($config[0], 'true') == 0) {
       wp_enqueue_script('lazyload_js', $assets_url['lazyload_js']);
+    }
+    // canvas-nest加载
+    if (get_option('origami_canvas_nest', 'true') == 'true') {
+      echo '<script type="text/javascript" color="0,0,0" zindex="-1" opacity="0.5" count="99" src="' .
+        $assets_url['canvas_nest_js'] .
+        '"></script>';
+    }
+    // 鼠标点击特效
+    if (get_option('origami_canvas_mouse', 'true') == 'true') {
+      wp_enqueue_style('mouse_css', $assets_url['mouse_css']);
+      wp_enqueue_script('mouse_js', $assets_url['mouse_js']);
     }
     // 只有在文章和页面中才会加载
     if (is_single() || is_page()) {
