@@ -192,7 +192,6 @@ window.addEventListener(
 
 document.addEventListener('selectionchange', function() {
   if (pressed) {
-    console.log('select');
     clearInterval(longPress);
     longPressed = false;
     document.body.classList.remove('is-pressed');

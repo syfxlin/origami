@@ -1805,6 +1805,89 @@ body.menu-active {
 	text-align: right;
 }
 
+.run-code-output,
+.run-code-input {
+	display: flex;
+	align-items: center;
+	position: relative;
+	width: 100%;
+	font-family: courier;
+
+	code,
+	textarea {
+		width: 100%;
+		height: 100px;
+		margin: 0 0.8rem;
+		white-space: pre;
+		vertical-align: middle;
+		word-break: break-word;
+		overflow-y: auto;
+		background-color: #fff !important;
+		margin: 0;
+		border: 0.05rem solid #bcc3ce;
+		box-shadow: 2px 2px 5px -2px rgba(0, 0, 0, 0.1);
+		padding: 0.5rem 0.7rem !important;
+	}
+}
+
+.run-code-input {
+	textarea {
+		height: 3rem;
+		border-radius: unset;
+	}
+}
+
+.run-code-output {
+	code {
+		color: inherit;
+
+		&:empty {
+			display: none;
+			margin: 0;
+		}
+
+		span {
+			&.process {
+				color: #3280fc;
+			}
+
+			&.success {
+				color: #32b643;
+			}
+
+			&.error {
+				color: #ea644a;
+			}
+
+			&.o1 {
+				color: #f1a325;
+			}
+		}
+	}
+}
+
+.run-code-btn,
+.reset-code-btn,
+.input-code-btn {
+	display: inline-block;
+	background-color: #fff;
+	color: #333;
+	padding: 0.3rem;
+	border: 2px solid #333;
+	width: 3.5rem;
+	font-size: 0.8rem;
+	line-height: 1;
+	cursor: pointer;
+	margin-right: 0.5rem;
+	margin-bottom: 0.5rem;
+	transition: all 0.5s;
+
+	&:hover {
+		background-color: #333;
+		color: #fff;
+	}
+}
+
 /* 工具栏 */
 
 .ori-tools {

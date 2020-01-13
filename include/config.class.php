@@ -144,7 +144,7 @@ class OrigamiConfig
       [
         'field' => 'origami_footer_text',
         'value' => '',
-        'type' => 'text',
+        'type' => 'textarea',
         'description' => __(
           '<span class="my-face"></span>中的内容会添加随机摇动效果，<span id="timeDate"></span>显示日期，<span id="times"></span>显示时间',
           'origami'
@@ -465,10 +465,7 @@ class OrigamiConfig
         'field' => 'origami_sidebar_toc',
         'value' => 'false',
         'type' => 'text',
-        'description' => __(
-          'true为开，false为关',
-          'origami'
-        )
+        'description' => __('true为开，false为关', 'origami')
       ]
     );
 
@@ -717,6 +714,8 @@ class OrigamiConfig
     register_setting('origami_fun', 'origami_title_change');
     register_setting('origami_fun', 'origami_real_time_search');
     register_setting('origami_fun', 'origami_live_chat');
+    register_setting('origami_fun', 'origami_judge0api');
+    register_setting('origami_fun', 'origami_runcode_lang_list');
     add_settings_section(
       'origami_fun_other',
       __('4.其他设置', 'origami'),
@@ -859,6 +858,33 @@ class OrigamiConfig
         'value' => 'true',
         'type' => 'text',
         'description' => __('true为开，false为关', 'origami')
+      ]
+    );
+    add_settings_field(
+      'origami_judge0api',
+      __('Judge0API地址', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_other',
+      [
+        'field' => 'origami_judge0api',
+        'value' => '',
+        'type' => 'text',
+        'description' => __('输入Judge0API服务器地址', 'origami')
+      ]
+    );
+    add_settings_field(
+      'origami_runcode_lang_list',
+      __('Run-Code语言列表', 'origami'),
+      [&$this, 'settings_field_textarea'],
+      'origami_fun',
+      'origami_fun_other',
+      [
+        'field' => 'origami_runcode_lang_list',
+        'value' =>
+          '{"c": 1,"cpp": 2,"bash": 3,"csharp": 4,"go": 5,"java": 6,"node": 7,"php": 8,"python": 9,"python2": 10,"ruby": 11,"rust": 12,"scala": 13,"typescript": 14}',
+        'type' => 'textarea',
+        'description' => __('填入Run-Code语言列表JSON', 'origami')
       ]
     );
     add_settings_field(

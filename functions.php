@@ -76,13 +76,21 @@ function origami_frontend_config()
       ])[0]
     ),
     'tocLevel' => get_option('origami_toc_level', 'h1,h2,h3'),
-    'copyAddCopyright' => get_option('origami_copy_add_copyright', 'ncode')
+    'copyAddCopyright' => get_option('origami_copy_add_copyright', 'ncode'),
+    'judge0API' => get_option('origami_judge0api', ''),
+    'runCodeLangList' => json_decode(
+      get_option(
+        'origami_runcode_lang_list',
+        '{"c": 1,"cpp": 2,"bash": 3,"csharp": 4,"go": 5,"java": 6,"node": 7,"php": 8,"python": 9,"python2": 10,"ruby": 11,"rust": 12,"scala": 13,"typescript": 14}'
+      )
+    )
   ];
   echo "<script>window.origamiConfig = JSON.parse('" .
     json_encode($config) .
     "');</script>";
 }
 add_action('wp_footer', 'origami_frontend_config', 1);
+add_action('admin_menu', 'origami_frontend_config', 1);
 
 // 配置
 $local_assets_url = [

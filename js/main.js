@@ -1650,6 +1650,220 @@ origami.initArticleCard = function() {
   });
 };
 
+origami.initRunCode = function() {
+  /* eslint-disable quotes */
+  const consoleUtils = {
+    formatArray: input => {
+      var output = '';
+      for (var i = 0, l = input.length; i < l; i++) {
+        if (typeof input[i] === 'string') {
+          output += '"' + input[i] + '"';
+        } else if (Array.isArray(input[i])) {
+          output += 'Array [';
+          output += consoleUtils.formatArray(input[i]);
+          output += ']';
+        } else {
+          output += consoleUtils.formatOutput(input[i]);
+        }
+        if (i < input.length - 1) {
+          output += ', ';
+        }
+      }
+      return output;
+    },
+    formatObject: input => {
+      var bufferDataViewRegExp = /^(ArrayBuffer|SharedArrayBuffer|DataView)$/;
+      var complexArrayRegExp = /^(Int8Array|Int16Array|Int32Array|Uint8Array|Uint16Array|Uint32Array|Uint8ClampedArray|Float32Array|Float64Array|BigInt64Array|BigUint64Array)$/;
+      var objectName = input.constructor.name;
+      if (objectName === 'String') {
+        return `String { "${input.valueOf()}" }`;
+      }
+      if (input === JSON) {
+        return `JSON {}`;
+      }
+      if (objectName.match(bufferDataViewRegExp)) {
+        return objectName + ' {}';
+      }
+      if (objectName.match(complexArrayRegExp)) {
+        var arrayLength = input.length;
+        if (arrayLength > 0) {
+          return objectName + ' [' + consoleUtils.formatArray(input) + ']';
+        } else {
+          return objectName + ' []';
+        }
+      }
+      if (objectName === 'Symbol' && input !== undefined) {
+        return input.toString();
+      }
+      if (objectName === 'Object') {
+        var formattedChild = '';
+        var start = true;
+        for (var key in input) {
+          if (start) {
+            start = false;
+          } else {
+            formattedChild = formattedChild + ', ';
+          }
+          formattedChild =
+            formattedChild + key + ': ' + consoleUtils.formatOutput(input[key]);
+        }
+        return objectName + ' { ' + formattedChild + ' }';
+      }
+      return input;
+    },
+    formatOutput: input => {
+      if (input === undefined || input === null || typeof input === 'boolean') {
+        return String(input);
+      } else if (typeof input === 'number') {
+        if (Object.is(input, -0)) {
+          return '-0';
+        }
+        return String(input);
+        // eslint-disable-next-line valid-typeof
+      } else if (typeof input === 'bigint') {
+        return String(input) + 'n';
+      } else if (typeof input === 'string') {
+        return '"' + input + '"';
+      } else if (Array.isArray(input)) {
+        return 'Array [' + consoleUtils.formatArray(input) + ']';
+      } else {
+        return consoleUtils.formatObject(input);
+      }
+    },
+    writeOutput: (content, output) => {
+      var outputContent = output.textContent;
+      var newLogItem = '> ' + content + '\n';
+      output.textContent = outputContent + newLogItem;
+    }
+  };
+
+  function runJS(code, outputEle) {
+    const console = {
+      error: function(loggedItem) {
+        consoleUtils.writeOutput(loggedItem);
+        window.console.error.apply(console, arguments);
+      },
+      log: function() {
+        var formattedList = [];
+        for (var i = 0, l = arguments.length; i < l; i++) {
+          var formatted = consoleUtils.formatOutput(arguments[i]);
+          formattedList.push(formatted);
+        }
+        var output = formattedList.join(' ');
+        consoleUtils.writeOutput(output, outputEle);
+        window.console.log.apply(console, arguments);
+      }
+    };
+    outputEle.textContent = '';
+    // eslint-disable-next-line no-eval
+    eval(code);
+  }
+
+  function runJudge0(code, languageId, input, outputEle) {
+    outputEle.innerHTML = '<span class="process"># Processing...</span>';
+    $http({
+      url:
+        window.origamiConfig.judge0API +
+        '/submissions?base64_encoded=false&wait=false',
+      type: 'POST',
+      dataType: 'json',
+      data: {
+        source_code: code,
+        language_id: languageId,
+        stdin: input
+      },
+      success: function(res) {
+        let timer = null;
+        let count = 0;
+        let fetchOut = () => {
+          $http({
+            url:
+              window.origamiConfig.judge0API +
+              '/submissions/' +
+              res.token +
+              '?base64_encoded=false',
+            type: 'GET',
+            dataType: 'json',
+            success: function(res) {
+              count++;
+              // eslint-disable-next-line eqeqeq
+              if (res.status.id == 3) {
+                outputEle.innerHTML =
+                  '<span class="success"># Accepted Time: ' +
+                  res.time +
+                  ' Memory: ' +
+                  res.memory +
+                  'KB</span>\n' +
+                  '> ' +
+                  res.stdout.replace(/\n/g, '\n  ');
+                return;
+              }
+              if ((count < 30 && res.status.id === 1) || res.status.id === 2) {
+                setTimeout(fetchOut, 500);
+                // eslint-disable-next-line no-useless-return
+                return;
+              } else {
+                outputEle.innerHTML =
+                  '<span class="error"># ' +
+                  res.status.description +
+                  ' Time: ' +
+                  res.time +
+                  ' Memory: ' +
+                  res.memory +
+                  'KB</span>\n<span class="o1">compile_output: </span>' +
+                  res.compile_output +
+                  '\n<span class="o1">stderr: </span>' +
+                  res.stderr;
+              }
+            },
+            error: function(status) {
+              clearTimeout(timer);
+              outputEle.innerHTML =
+                '<span class="error"># ' + status + '</span>';
+            }
+          });
+        };
+        fetchOut();
+      },
+      error: function(status) {
+        clearTimeout(timer);
+        outputEle.innerHTML = '<span class="error"># ' + status + '</span>';
+      }
+    });
+  }
+
+  function runCode(code, lang, input, outputEle) {
+    if (lang === 'javascript' || lang === 'js') {
+      runJS(code, outputEle);
+    } else {
+      runJudge0(
+        code,
+        window.origamiConfig.runCodeLangList[lang],
+        input,
+        outputEle
+      );
+    }
+  }
+
+  document.querySelectorAll('.run-code-btn').forEach(item => {
+    let code =
+      item.parentElement.previousElementSibling.children[0].textContent;
+    let lang = item.getAttribute('data-lang');
+    let inputEle = item.parentElement.querySelector('.run-code-input textarea');
+    let outputEle = item.parentElement.querySelector('.run-code-output code');
+    item.addEventListener('click', e =>
+      runCode(code, lang, inputEle.value, outputEle)
+    );
+    item.nextElementSibling.nextElementSibling.addEventListener('click', e => {
+      inputEle.classList.toggle('d-none');
+    });
+    item.nextElementSibling.addEventListener('click', e => {
+      inputEle.classList.add('d-none');
+      outputEle.innerHTML = '';
+    });
+  });
+};
+
 // Run
 var isPost =
   document.body.classList.contains('page') ||
@@ -1689,6 +1903,7 @@ window.addEventListener('load', function() {
     origami.loadOwO();
     origami.initGitCard();
     origami.initArticleCard();
+    origami.initRunCode();
   }
   if (window.LazyLoad) {
     new LazyLoad({
