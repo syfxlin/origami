@@ -253,6 +253,7 @@ hr {
 	flex-direction: column;
 	right: 0;
 	transition: right 0.5s;
+	position: relative;
 
 	main {
 		justify-content: center;
@@ -295,7 +296,7 @@ hr {
 		box-shadow: 0 0 20px #dfdfdf;
 		background-color: rgba(255, 255, 255, 0.85);
 		color: #5755d9;
-		transition: background 0.5s, box-shadow 0.5s;
+		transition: all 0.5s;
 
 		.btn {
 			color: #5755d9;
@@ -334,17 +335,8 @@ hr {
 	}
 }
 
+.layout2,
 .layout3 {
-	#main-content {
-		padding-top: 4rem;
-	}
-
-	.featured-image {
-		display: none;
-	}
-}
-
-.layout2 {
 	#main-content {
 		padding-top: 4rem;
 	}
@@ -362,10 +354,6 @@ hr {
 			background-color: transparent;
 			box-shadow: none;
 		}
-	}
-
-	&.layout2,
-	&.layout3 {
 
 		.ori-header.active,
 		.ori-header:hover {
@@ -726,7 +714,6 @@ body.menu-active {
 
 	#main-content {
 		right: 70%;
-		position: absolute;
 	}
 
 	.ori-footer {
@@ -799,7 +786,7 @@ body.menu-active {
 }
 
 .featured {
-	height: 17rem;
+	height: 15rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -818,7 +805,7 @@ body.menu-active {
 
 .featured-container {
 	width: 27rem;
-	height: 12rem;
+	height: 10rem;
 	background-color: rgba(0, 0, 0, 0.3);
 	display: flex;
 	flex-direction: column;
@@ -894,7 +881,7 @@ body.menu-active {
 	position: fixed;
 	bottom: 1rem;
 	right: 1rem;
-	z-index: 1002;
+	z-index: 998;
 	opacity: 0;
 	transition: opacity 0.5s;
 }
@@ -1581,6 +1568,7 @@ body.menu-active {
 
 #close-response {
 	visibility: hidden;
+	margin-left: 0.5rem;
 }
 
 .response-avatar {
@@ -1927,7 +1915,7 @@ body.menu-active {
 
 #qrcode {
 	visibility: visible;
-	z-index: 1001;
+	z-index: 998;
 }
 
 #qrcode-img {
@@ -1942,12 +1930,18 @@ body.menu-active {
 	transition: opacity 0.5s;
 }
 
+.archive {
+	#qrcode {
+		visibility: hidden;
+	}
+}
+
 #live-chat {
 	visibility: visible;
 	position: fixed;
 	top: 30%;
 	right: 0;
-	z-index: 1000;
+	z-index: 998;
 	margin-right: 1.5rem;
 	display: none;
 
@@ -2013,7 +2007,7 @@ body.menu-active {
 	visibility: visible;
 	display: block;
 	bottom: 20px;
-	z-index: 1001;
+	z-index: 998;
 
 	&.flyaway {
 		border: none;
@@ -2035,7 +2029,7 @@ body.menu-active {
 	cursor: auto;
 	transform: scale(0);
 	transition: transform 0.5s;
-	z-index: 1002;
+	z-index: 998;
 }
 
 .paper-plane-content {
@@ -2402,7 +2396,7 @@ body.menu-active {
 
 #toc-button {
 	bottom: 130px;
-	z-index: 1001;
+	z-index: 998;
 }
 
 .single #toc-button,
@@ -2423,7 +2417,7 @@ body.menu-active {
 	bottom: 175px;
 	left: 20px;
 	font-size: 15px;
-	max-width: 10vw;
+	max-width: 20vw;
 	padding: 20px;
 	padding-bottom: 15px;
 	background: rgba(255, 255, 255, 0.9);
@@ -2655,6 +2649,29 @@ body.menu-active {
 
 	.widget_tocbot {
 		display: none;
+	}
+
+	.p-post-thumb,
+	.s-post-thumb {
+		margin: -0.6rem -1rem 0 -1rem;
+	}
+
+	.response-footer {
+		flex-direction: column;
+
+		.response-input-item {
+			margin-right: 0;
+			max-width: 100%;
+			width: 100%;
+		}
+	}
+
+	.featured {
+		height: 12rem;
+
+		.featured-container {
+			height: 8rem;
+		}
 	}
 }
 
