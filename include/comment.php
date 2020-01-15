@@ -343,7 +343,9 @@ function comment_mark($comment)
   //判断是不是站长我
   if ($comment->comment_author_email == $adminEmail) {
     $comment_mark =
-      '<a target="_blank" href="/about" title="' .
+      '<a target="_blank" href="' .
+      get_option('origami_comment_admin_url', '/about') .
+      '" title="' .
       __('经鉴定，这货是站长', 'origami') .
       '">' .
       __('站长', 'origami') .
@@ -371,7 +373,9 @@ function comment_mark($comment)
         $comment_author_url_reg == $url_re[2]
       ) {
         $comment_mark =
-          '<a target="_blank" href="/links" title="' .
+          '<a target="_blank" href="' .
+          get_option('origami_comment_friend_url', '/links') .
+          '" title="' .
           __('友情链接认证', 'origami') .
           '">' .
           __('友人', 'origami') .

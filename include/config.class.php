@@ -529,6 +529,8 @@ class OrigamiConfig
     register_setting('origami_fun', 'origami_mail_notice_title');
     register_setting('origami_fun', 'origami_mail_notice_salute');
     register_setting('origami_fun', 'origami_mail_notice_footer');
+    register_setting('origami_fun', 'origami_comment_admin_url');
+    register_setting('origami_fun', 'origami_comment_friend_url');
     add_settings_section(
       'origami_fun_comment',
       __('3.评论设置', 'origami'),
@@ -698,6 +700,30 @@ class OrigamiConfig
           wp_specialchars_decode(get_option('blogname'), ENT_QUOTES) .
           '</a>。',
         'type' => 'textarea'
+      ]
+    );
+    add_settings_field(
+      'origami_comment_admin_url',
+      __('评论标记URL（admin）', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_comment',
+      [
+        'field' => 'origami_comment_admin_url',
+        'value' => '/about',
+        'type' => 'text'
+      ]
+    );
+    add_settings_field(
+      'origami_comment_friend_url',
+      __('评论标记URL（friend）', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_comment',
+      [
+        'field' => 'origami_comment_friend_url',
+        'value' => '/links',
+        'type' => 'text'
       ]
     );
 
