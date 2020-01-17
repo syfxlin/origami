@@ -257,10 +257,14 @@ if (!is_admin()) {
     function origami_remove_workbox()
     {
       echo "<script>window.addEventListener('load', () => {
+              if (navigator.serviceWorker) {
                 navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                for(let registration of registrations) {
-                    registration.unregister()
-                } });})</script>";
+                  for(let registration of registrations) {
+                      registration.unregister()
+                  }
+                });
+              }
+            })</script>";
     }
     add_action('wp_footer', 'origami_remove_workbox', '101');
   }

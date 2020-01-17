@@ -31,7 +31,6 @@ $body_class .= $GLOBALS['layout'];
 </head>
 <body <?php body_class($body_class); ?>>
   <header class="p-fixed ori-header">
-    <div id="read-progress" class="progress"></div>
     <div class="ori-container navbar">
       <section class="navbar-section">
         <a href="<?php echo esc_url(home_url('/')); ?>" id="ori-logo">
@@ -89,3 +88,4 @@ $body_class .= $GLOBALS['layout'];
   </header>
   <!-- Window inner background -->
   <section class="ori-background"></section>
+  <div id="read-progress" class="progress"></div>

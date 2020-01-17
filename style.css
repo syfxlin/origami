@@ -191,7 +191,7 @@ hr.is-style-wide, hr.is-style-dots {
   z-index: 999;
   box-shadow: 0 0 20px #dfdfdf;
   position: relative;
-  transition: right 0.5s;
+  transition: right 0.5s, transform 0.5s;
   right: 0;
   align-items: center;
 }
@@ -233,11 +233,12 @@ hr.is-style-wide, hr.is-style-dots {
 }
 
 #read-progress {
-  position: absolute;
+  position: fixed;
   background: #5755d9;
   width: 0;
   transition-duration: 1s, 1s;
   top: 0;
+  z-index: 1000;
 }
 
 #main-content {
@@ -1250,6 +1251,7 @@ body.menu-active .ori-footer {
   position: -webkit-sticky;
   position: sticky;
   top: 5rem;
+  transition: top 0.5s;
 }
 
 .p-post-content,
