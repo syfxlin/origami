@@ -24,7 +24,10 @@ if ($enable == 'true'): ?>
 </div>
 <?php endif;
 ?>
-<?php if (get_option('origami_sidebar_toc', 'false') == 'true'): ?>
+<?php if (
+  get_option('origami_sidebar_toc', 'false') == 'true' &&
+  (is_single() || is_page())
+): ?>
 <aside class="sidebar-widget widget_tocbot">
   <h3>目录</h3>
   <div class="toc"></div>
