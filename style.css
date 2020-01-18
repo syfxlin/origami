@@ -1408,6 +1408,12 @@ body.menu-active .ori-footer {
   margin-bottom: 15px;
 }
 
+.p-post-content img.lazy:not(.loaded),
+.s-post-content img.lazy:not(.loaded) {
+  width: 100%;
+  padding-bottom: 40%;
+}
+
 .p-post-tags,
 .s-post-tags,
 .p-post-nav,

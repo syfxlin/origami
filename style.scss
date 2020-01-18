@@ -1394,6 +1394,12 @@ body.menu-active {
 		display: block;
 		max-width: 100%;
 		margin-bottom: 15px;
+
+		&.lazy:not(.loaded) {
+			width: 100%;
+			// height: 200px;
+			padding-bottom: 40%;
+		}
 	}
 }
 
