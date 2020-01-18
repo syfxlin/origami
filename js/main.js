@@ -1870,7 +1870,7 @@ origami.scrollHide = function() {
   let sidebar = document.querySelector('.ori-sidebar');
   window.addEventListener('scroll', function() {
     if (window.scrollY - prevScrollY > 10) {
-      header.style.transform = 'translateY(-100%)';
+      header.style.transform = 'translate3d(0, -100%, 0)';
       sidebar.style.top = '1rem';
     } else if (window.scrollY - prevScrollY < -10) {
       header.style.transform = 'unset';
