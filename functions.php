@@ -98,7 +98,7 @@ $local_assets_url = [
   'spectre_exp_css' => $tem_url . '/css/spectre-exp.min.css',
   'spectre_icons_css' => $tem_url . '/css/spectre-icons.min.css',
   'origami_js' => $tem_url . '/js/main.js',
-  'origami_css' => $tem_url . '/style.min.css',
+  'origami_css' => $tem_url . '/style.css',
   'qrcode_js' => $tem_url . '/js/qrcode.min.js',
   'SMValidator_js' => $tem_url . '/js/SMValidator.min.js',
   'font_awesome_css' => $tem_url . '/css/font-awesome.min.css',
@@ -128,7 +128,7 @@ $jsdelivr_assets_url = [
   'spectre_icons_css' =>
     'https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-icons.min.css',
   'origami_js' => $tem_url . '/js/main.js',
-  'origami_css' => $tem_url . '/style.min.css',
+  'origami_css' => $tem_url . '/style.css',
   'qrcode_js' => 'https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js',
   'SMValidator_js' =>
     'https://cdn.jsdelivr.net/npm/SMValidator@1.2.7/dist/SMValidator.min.js',
