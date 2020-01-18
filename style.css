@@ -220,6 +220,8 @@ hr:not(.is-style-dots)::before {
   transition: right 0.5s, transform 0.5s, -webkit-transform 0.5s;
   right: 0;
   align-items: center;
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
 }
 
 .ori-background {
@@ -290,6 +292,8 @@ hr:not(.is-style-dots)::before {
 .home .ori-header {
   box-shadow: none;
   background-color: transparent;
+  -webkit-backdrop-filter: unset;
+          backdrop-filter: unset;
   color: #fff;
 }
 
@@ -364,6 +368,8 @@ hr:not(.is-style-dots)::before {
 .home.layout2 .ori-header, .home.layout3 .ori-header {
   background-color: transparent;
   box-shadow: none;
+  -webkit-backdrop-filter: unset;
+          backdrop-filter: unset;
 }
 
 .home.layout2 .ori-header.active,

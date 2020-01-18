@@ -219,6 +219,7 @@ hr {
 	transition: right 0.5s, transform 0.5s;
 	right: 0;
 	align-items: center;
+	backdrop-filter: blur(5px);
 }
 
 .ori-background {
@@ -291,6 +292,7 @@ hr {
 	.ori-header {
 		box-shadow: none;
 		background-color: transparent;
+		backdrop-filter: unset;
 		color: #fff;
 
 		.btn {
@@ -373,6 +375,7 @@ hr {
 		.ori-header {
 			background-color: transparent;
 			box-shadow: none;
+			backdrop-filter: unset;
 		}
 
 		.ori-header.active,
