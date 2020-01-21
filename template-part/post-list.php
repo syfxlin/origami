@@ -33,24 +33,37 @@ if (have_posts()) {
 }
 
 $sidebar_pos = get_option('origami_layout_sidebar', 'right');
-$post_list_class =
-  $sidebar_pos == 'none' ? 'col-10 col-md-12' : 'col-8 col-md-12';
-$sidebar_class = $sidebar_pos == 'none' ? 'd-none' : 'col-4 col-md-12';
-$main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
+if ($sidebar_pos === 'right' || $sidebar_pos === 'left') {
+  $post_list_class = 'col-8 col-md-12';
+  $sidebar_class = 'col-4 col-md-12';
+  $main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
+} elseif ($sidebar_pos === 'none') {
+  $post_list_class = 'col-10 col-md-12';
+  $sidebar_class = 'd-none';
+} elseif ($sidebar_pos === 'down') {
+  $post_list_class = 'col-10 col-md-12';
+  $sidebar_class = 'col-10 col-md-12';
+}
 ?>
 <main class="ori-container columns <?php echo $main_class; ?> grid-md">
   <section class="post-list column <?php echo $post_list_class; ?>">
     <?php foreach ($post_list as $item): ?>
       <article class="card" id="post-<?php echo $item['post_id']; ?>">
         <?php if (is_sticky($item['post_id'])): ?>
-          <div class="post-sticky"><?php echo __('置顶', 'origami') ?></div>
+          <div class="post-sticky"><?php echo __('置顶', 'origami'); ?></div>
         <?php endif; ?>
         <?php if ($item['post_image']): ?>
-          <a class="card-image post-thumb" href="<?php echo $item['post_link']; ?>" style="background-image:url(<?php echo $item['post_image']; ?>)"></a>
+          <a class="card-image post-thumb" href="<?php echo $item[
+            'post_link'
+          ]; ?>" style="background-image:url(<?php echo $item[
+  'post_image'
+]; ?>)"></a>
         <?php endif; ?>
         <div class="card-header post-info">
           <h2 class="card-title">
-            <a href="<?php echo $item['post_link']; ?>"><?php echo $item['post_title']; ?></a>
+            <a href="<?php echo $item['post_link']; ?>"><?php echo $item[
+  'post_title'
+]; ?></a>
           </h2>
           <div class="card-subtitle text-gray">
             <i class="fa fa-calendar"></i>

@@ -168,6 +168,11 @@ hr:not(.is-style-dots)::before {
   flex-direction: row-reverse;
 }
 
+.flex-rev .ori-sidebar {
+  padding-left: 0;
+  padding-right: 1rem;
+}
+
 .flex-1 {
   flex: 1;
 }
@@ -1308,6 +1313,10 @@ body.menu-active .ori-footer {
   position: sticky;
   top: 5rem;
   transition: top 0.5s;
+}
+
+.ori-sidebar.col-10 {
+  padding: 0;
 }
 
 .p-post-content,

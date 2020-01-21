@@ -1,9 +1,16 @@
 <?php
 $sidebar_pos = get_option('origami_layout_sidebar', 'right');
-$post_list_class =
-  $sidebar_pos == 'none' ? 'col-10 col-md-12' : 'col-8 col-md-12';
-$sidebar_class = $sidebar_pos == 'none' ? 'd-none' : 'col-4 col-md-12';
-$main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
+if ($sidebar_pos === 'right' || $sidebar_pos === 'left') {
+  $post_list_class = 'col-8 col-md-12';
+  $sidebar_class = 'col-4 col-md-12';
+  $main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
+} elseif ($sidebar_pos === 'none') {
+  $post_list_class = 'col-10 col-md-12';
+  $sidebar_class = 'd-none';
+} elseif ($sidebar_pos === 'down') {
+  $post_list_class = 'col-10 col-md-12';
+  $sidebar_class = 'col-10 col-md-12';
+}
 the_post();
 $post_author_id = get_post_field('post_author', $post->ID);
 $post_item = [
@@ -32,22 +39,35 @@ if ($post_item['post_image'] == false && origami_get_other_thumbnail($post)) {
     <main class="ori-container columns <?php echo $main_class; ?> grid-md single-post">
         <section class="s-post-container column <?php echo $post_list_class; ?>">
             <?php if ($post_item['post_image']): ?>
-              <div class="s-post-thumb" style="background-image:url(<?php echo $post_item['post_image']; ?>)"></div>
+              <div class="s-post-thumb" style="background-image:url(<?php echo $post_item[
+                'post_image'
+              ]; ?>)"></div>
             <?php endif; ?>
-            <?php origami_breadcrumbs();?>
+            <?php origami_breadcrumbs(); ?>
             <div class="s-post-info post-info">
-                <h2 class="card-title"><?php echo $post_item['post_title']; ?></h2>
+                <h2 class="card-title"><?php echo $post_item[
+                  'post_title'
+                ]; ?></h2>
                 <div class="card-subtitle text-gray">
-                    <time><?php echo $post_item['post_date']; ?></time> • <span><?php echo $post_item['post_author']; ?></span> •
-                    <span><?php echo $post_item['post_comments'] . __('条评论', 'origami'); ?></span> • 
+                    <time><?php echo $post_item[
+                      'post_date'
+                    ]; ?></time> • <span><?php echo $post_item[
+  'post_author'
+]; ?></span> •
+                    <span><?php echo $post_item['post_comments'] .
+                      __('条评论', 'origami'); ?></span> • 
                     <ul>
                     <?php foreach ($post_item['post_category'] as $cat): ?>
-                        <li><a href="<?php echo get_category_link($cat); ?>"><?php echo get_cat_name($cat); ?></a></li>
+                        <li><a href="<?php echo get_category_link(
+                          $cat
+                        ); ?>"><?php echo get_cat_name($cat); ?></a></li>
                     <?php endforeach; ?>
                     </ul>
                 </div>
             </div>
-            <article <?php post_class("s-post-content"); ?> id="post-<?php the_ID(); ?>">
+            <article <?php post_class(
+              's-post-content'
+            ); ?> id="post-<?php the_ID(); ?>">
                 <?php the_content(); ?>
             </article>
             <div class="s-post-tags">
@@ -65,6 +85,5 @@ if ($post_item['post_image'] == false && origami_get_other_thumbnail($post)) {
         </aside>
     </main>
 </div>
-<?php
-// get_template_part('template-part/tools-button');
+<?php // get_template_part('template-part/tools-button');
 get_footer(); ?>

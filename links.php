@@ -3,14 +3,21 @@
  * Template Name: Links
  */
 $sidebar_pos = get_option('origami_layout_sidebar', 'right');
-$post_list_class =
-  $sidebar_pos == 'none' ? 'col-10 col-md-12' : 'col-8 col-md-12';
-$sidebar_class = $sidebar_pos == 'none' ? 'd-none' : 'col-4 col-md-12';
+if ($sidebar_pos === 'right' || $sidebar_pos === 'left') {
+  $post_list_class = 'col-8 col-md-12';
+  $sidebar_class = 'col-4 col-md-12';
+  $main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
+} elseif ($sidebar_pos === 'none') {
+  $post_list_class = 'col-10 col-md-12';
+  $sidebar_class = 'd-none';
+} elseif ($sidebar_pos === 'down') {
+  $post_list_class = 'col-10 col-md-12';
+  $sidebar_class = 'col-10 col-md-12';
+}
 
 if (get_option('origami_links_sidebar', 'true') != 'true') {
   $sidebar_class = 'd-none';
 }
-$main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
 
 $links = get_bookmarks();
 function retain_key_shuffle(array &$arr)
@@ -63,14 +70,19 @@ get_header();
               <li class="column col-6 col-md-12">
                 <div class="links-card">
                   <a class="links-header" href="<?php echo $link->link_url; ?>" target="_blank">
-                    <div class="links-image" style="background-image:url(<?php echo $link->link_image ? $link->link_image : 'https://lab.ixk.me/api/bing?size=400x240&day=' . rand(-1, 7); ?>)"></div>
+                    <div class="links-image" style="background-image:url(<?php echo $link->link_image
+                      ? $link->link_image
+                      : 'https://lab.ixk.me/api/bing?size=400x240&day=' .
+                        rand(-1, 7); ?>)"></div>
                     <?php if ($link->link_avatar): ?>
                       <img class="links-avatar avatar avatar-xl" src="<?php echo $link->link_avatar; ?>" />
                     <?php endif; ?>
                     <div class="links-name"><?php echo $link->link_name; ?></div>
                   </a>
                   <div class="links-content">
-                    <div class="links-author"><?php echo $link->link_author ? $link->link_author : '&nbsp'; ?></div>
+                    <div class="links-author"><?php echo $link->link_author
+                      ? $link->link_author
+                      : '&nbsp'; ?></div>
                     <div class="links-notes text-gray">
                       <?php echo $link->link_notes; ?>
                     </div>

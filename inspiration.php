@@ -3,21 +3,28 @@
  * Template Name: Inspiration
  */
 $sidebar_pos = get_option('origami_layout_sidebar', 'right');
-$post_list_class =
-  $sidebar_pos == 'none' ? 'col-10 col-md-12' : 'col-8 col-md-12';
-$sidebar_class = $sidebar_pos == 'none' ? 'd-none' : 'col-4 col-md-12';
+if ($sidebar_pos === 'right' || $sidebar_pos === 'left') {
+  $post_list_class = 'col-8 col-md-12';
+  $sidebar_class = 'col-4 col-md-12';
+  $main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
+} elseif ($sidebar_pos === 'none') {
+  $post_list_class = 'col-10 col-md-12';
+  $sidebar_class = 'd-none';
+} elseif ($sidebar_pos === 'down') {
+  $post_list_class = 'col-10 col-md-12';
+  $sidebar_class = 'col-10 col-md-12';
+}
 
 if (get_option('origami_inspiration_sidebar', 'true') != 'true') {
   $sidebar_class = 'd-none';
 }
-$main_class = $sidebar_pos == 'left' ? 'flex-rev' : '';
 
 $paged = get_query_var('paged') ? get_query_var('paged') : 1;
 query_posts([
-  "post_type" => "inspiration",
-  "post_status" => "publish",
-  "posts_per_page" => 30,
-  "paged" => $paged
+  'post_type' => 'inspiration',
+  'post_status' => 'publish',
+  'posts_per_page' => 30,
+  'paged' => $paged
 ]);
 if (have_posts()) {
   $post_list = [];
@@ -43,10 +50,10 @@ if (have_posts()) {
       'post_author_avatar' => get_avatar(
         get_the_author_email(),
         64,
-        get_option("avatar_default"),
-        "",
+        get_option('avatar_default'),
+        '',
         [
-          "class" => "inspiration-avatar"
+          'class' => 'inspiration-avatar'
         ]
       ),
       'post_category' => wp_get_post_categories($post->ID),
@@ -64,24 +71,28 @@ if (have_posts()) {
   }
 }
 $pagination = origami_pagination(false);
-$count = wp_count_posts("inspiration")->publish;
+$count = wp_count_posts('inspiration')->publish;
 
 wp_reset_query();
 get_header();
 ?>
 <div id="main-content">
     <section class="featured">
-      <div class="featured-image" style="background-image:url(<?php echo wp_get_attachment_url(get_post_thumbnail_id($post->ID)); ?>)"></div>
+      <div class="featured-image" style="background-image:url(<?php echo wp_get_attachment_url(
+        get_post_thumbnail_id($post->ID)
+      ); ?>)"></div>
       <div class="featured-container">
         <h1><?php echo get_the_title(); ?></h1>
-        <h2><?php echo __("目前共有", "origami") .
+        <h2><?php echo __('目前共有', 'origami') .
           $count .
-          __("篇灵感"); ?></h2>
+          __('篇灵感'); ?></h2>
       </div>
     </section>
     <main class="ori-container columns <?php echo $main_class; ?> grid-md">
         <section class="inspiration-list column <?php echo $post_list_class; ?>">
-          <article <?php post_class("p-post-content"); ?> id="post-<?php the_ID(); ?>">
+          <article <?php post_class(
+            'p-post-content'
+          ); ?> id="post-<?php the_ID(); ?>">
               <?php the_content(); ?>
           </article>
           <ul class="inspiration">

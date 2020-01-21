@@ -98,7 +98,7 @@ class OrigamiConfig
         'value' => 'right',
         'type' => 'text',
         'description' => __(
-          'right：侧边栏右置，left：侧边栏左置，none：不显示侧边栏',
+          'right：侧边栏右置，left：侧边栏左置，none：不显示侧边栏，down: 侧边栏下置',
           'origami'
         )
       ]
@@ -742,6 +742,7 @@ class OrigamiConfig
     register_setting('origami_fun', 'origami_live_chat');
     register_setting('origami_fun', 'origami_judge0api');
     register_setting('origami_fun', 'origami_runcode_lang_list');
+    register_setting('origami_fun', 'origami_enable_jquery');
     add_settings_section(
       'origami_fun_other',
       __('4.其他设置', 'origami'),
@@ -950,6 +951,19 @@ class OrigamiConfig
         'value' => '',
         'type' => 'text',
         'description' => __('填入Live Chat Server地址即可开启', 'origami')
+      ]
+    );
+    add_settings_field(
+      'origami_enable_jquery',
+      __('取消禁用jQuery', 'origami'),
+      [&$this, 'settings_field_input_text'],
+      'origami_fun',
+      'origami_fun_other',
+      [
+        'field' => 'origami_enable_jquery',
+        'value' => 'false',
+        'type' => 'text',
+        'description' => __('true为开，false为关', 'origami')
       ]
     );
   }

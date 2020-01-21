@@ -167,6 +167,11 @@ hr {
 
 .flex-rev {
 	flex-direction: row-reverse;
+
+	.ori-sidebar {
+		padding-left: 0;
+		padding-right: 1rem;
+	}
 }
 
 .flex-1 {
@@ -1327,6 +1332,10 @@ body.menu-active {
 	position: sticky;
 	top: 5rem;
 	transition: top 0.5s;
+
+	&.col-10 {
+		padding: 0;
+	}
 }
 
 .p-post-content,
