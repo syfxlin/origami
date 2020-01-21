@@ -33,6 +33,8 @@ body {
 	font-weight: 400;
 	color: #757575;
 	overflow: unset;
+	scrollbar-color: rgba(87,85,217, 0.7) rgba(255, 255, 255, 0.7);
+	scrollbar-width: thin;
 }
 
 code[class*='language-'],
@@ -219,7 +221,7 @@ hr {
 	transition: right 0.5s, transform 0.5s;
 	right: 0;
 	align-items: center;
-	backdrop-filter: blur(5px);
+	// backdrop-filter: blur(5px);
 }
 
 .ori-background {
@@ -292,7 +294,7 @@ hr {
 	.ori-header {
 		box-shadow: none;
 		background-color: transparent;
-		backdrop-filter: unset;
+		// backdrop-filter: unset;
 		color: #fff;
 
 		.btn {
@@ -375,14 +377,14 @@ hr {
 		.ori-header {
 			background-color: transparent;
 			box-shadow: none;
-			backdrop-filter: unset;
+			// backdrop-filter: unset;
 		}
 
 		.ori-header.active,
 		.ori-header:hover {
 			box-shadow: 0 0 20px #dfdfdf;
 			background-color: rgba(255, 255, 255, 0.85);
-			backdrop-filter: blur(5px);
+			// backdrop-filter: blur(5px);
 		}
 	}
 }
