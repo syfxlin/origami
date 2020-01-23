@@ -855,6 +855,10 @@ function origami_rest_pembed(WP_REST_Request $request)
     ];
   }
   $post = get_post($post_id);
+  $post_thumb = wp_get_attachment_url(get_post_thumbnail_id($post_id));
+  if ($post_thumb == false) {
+    $post_thumb = origami_get_other_thumbnail($post);
+  }
   return [
     'provider_name' => get_bloginfo('name'),
     'provider_url' => get_bloginfo('url'),
@@ -865,7 +869,7 @@ function origami_rest_pembed(WP_REST_Request $request)
       100
     ),
     'url' => get_permalink($post_id),
-    'thumbnail' => wp_get_attachment_url(get_post_thumbnail_id($post_id))
+    'thumbnail' => $post_thumb
   ];
 }
 add_action('rest_api_init', function () {

@@ -3414,6 +3414,10 @@ body.menu-active .ori-footer {
 }
 
 @-webkit-keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
   50% {
     -webkit-transform: rotate(-15deg);
             transform: rotate(-15deg);
@@ -3421,10 +3425,18 @@ body.menu-active .ori-footer {
   75% {
     -webkit-transform: rotate(20deg);
             transform: rotate(20deg);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
   }
 }
 
 @keyframes rotate {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
   50% {
     -webkit-transform: rotate(-15deg);
             transform: rotate(-15deg);
@@ -3432,6 +3444,10 @@ body.menu-active .ori-footer {
   75% {
     -webkit-transform: rotate(20deg);
             transform: rotate(20deg);
+  }
+  100% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
   }
 }
 
