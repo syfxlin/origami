@@ -267,26 +267,36 @@ origami.realTimeSearch = function() {
       }
       loadingEle.style.visibility = 'visible';
       loadingEle.style.opacity = '1';
-      $http({
-        url: '/wp-json/wp/v2/posts',
-        type: 'GET',
-        dataType: 'json',
-        data: {
-          search: ele.value,
-          page: page,
-          per_page: 10
-        },
-        success: function(response) {
-          loadingEle.style.opacity = '0';
-          setTimeout(function() {
-            loadingEle.style.visibility = 'hidden';
-          }, 500);
-          changeSearchList(response);
-        },
-        error: function(status) {
-          console.log('状态码为' + status);
-        }
-      });
+      let currKey = 'ori_s_' + page + '_' + ele.value;
+      if (sessionStorage.getItem(currKey)) {
+        loadingEle.style.opacity = '0';
+        setTimeout(function() {
+          loadingEle.style.visibility = 'hidden';
+        }, 500);
+        changeSearchList(JSON.parse(sessionStorage.getItem(currKey)));
+      } else {
+        $http({
+          url: '/wp-json/wp/v2/posts',
+          type: 'GET',
+          dataType: 'json',
+          data: {
+            search: ele.value,
+            page: page,
+            per_page: 10
+          },
+          success: function(response) {
+            loadingEle.style.opacity = '0';
+            setTimeout(function() {
+              loadingEle.style.visibility = 'hidden';
+            }, 500);
+            changeSearchList(response);
+            sessionStorage.setItem(currKey, JSON.stringify(response));
+          },
+          error: function(status) {
+            console.log('状态码为' + status);
+          }
+        });
+      }
     }, 300);
   };
   if (origamiConfig.realTimeSearch) {
@@ -1887,6 +1897,11 @@ origami.initShareCard = function() {
   let card = document.querySelector('.share-card');
   let source = document.querySelector('#share-card-source');
   let gen = ele => {
+    let currKey = 'ori_share_card_' + encodeURI(location.pathname);
+    if (sessionStorage.getItem(currKey)) {
+      ele.innerHTML = sessionStorage.getItem(currKey);
+      return;
+    }
     let siteTitle = document.querySelector('#ori-title').innerHTML;
     let imageUrl = 'https://lab.ixk.me/api/bing/?size=1024x768';
     let thumb = document.querySelector('.s-thumb');
@@ -1952,6 +1967,7 @@ origami.initShareCard = function() {
             img.src = canvas.toDataURL('image/jpeg');
             ele.innerHTML = img.outerHTML;
             source.innerHTML = '';
+            sessionStorage.setItem(currKey, img.outerHTML);
           });
         });
       }
