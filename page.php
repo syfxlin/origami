@@ -37,14 +37,14 @@ if ($post_item['post_image'] == false && origami_get_other_thumbnail($post)) {
 <?php get_header(); ?>
 <div id="main-content">
     <main class="ori-container columns <?php echo $main_class; ?> grid-md single-post">
-        <section class="p-post-container column <?php echo $post_list_class; ?>">
+        <section class="p-container column <?php echo $post_list_class; ?>">
             <?php if ($post_item['post_image']): ?>
-              <div class="p-post-thumb" style="background-image:url(<?php echo $post_item[
+              <div class="p-thumb" style="background-image:url(<?php echo $post_item[
                 'post_image'
               ]; ?>)"></div>
             <?php endif; ?>
             <?php origami_breadcrumbs(); ?>
-            <div class="p-post-info post-info">
+            <div class="p-info post-info">
                 <h2 class="card-title"><?php echo $post_item[
                   'post_title'
                 ]; ?></h2>
@@ -66,14 +66,14 @@ if ($post_item['post_image'] == false && origami_get_other_thumbnail($post)) {
                 </div>
             </div>
             <article <?php post_class(
-              'p-post-content'
+              'p-content'
             ); ?> id="post-<?php the_ID(); ?>">
                 <?php the_content(); ?>
             </article>
-            <div class="p-post-tags">
+            <div class="p-tags">
               <?php get_template_part('template-part/post-tags'); ?>
             </div>
-            <div class="p-post-comments">
+            <div class="p-comments">
               <?php comments_template(); ?>
             </div>
         </section>

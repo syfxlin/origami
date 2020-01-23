@@ -174,9 +174,9 @@ origami.scrollChange = function() {
 };
 
 origami.mobileMenu = function() {
-  document.getElementById('ori-h-m-btn').addEventListener('click', function() {
-    let btn = document.getElementById('ori-h-m-btn');
-    let menu = document.getElementById('ori-h-menu');
+  document.getElementById('ori-m-btn').addEventListener('click', function() {
+    let btn = document.getElementById('ori-m-btn');
+    let menu = document.getElementById('ori-menu');
     if (btn.classList.contains('active')) {
       btn.classList.remove('active');
       menu.classList.remove('active');
@@ -204,7 +204,7 @@ origami.mobileMenu = function() {
 };
 
 origami.searchBtn = function() {
-  document.getElementById('ori-h-search').addEventListener('click', function() {
+  document.getElementById('ori-s-btn').addEventListener('click', function() {
     let el = document.getElementsByClassName('ori-search')[0];
     el.style.display = 'block';
     document.getElementById('ori-search-input').focus();
@@ -212,7 +212,7 @@ origami.searchBtn = function() {
     el.style.opacity = '1';
   });
   document
-    .getElementById('ori-h-search-close')
+    .getElementById('ori-search-close')
     .addEventListener('click', function() {
       let el = document.getElementsByClassName('ori-search')[0];
       setTimeout(function() {
@@ -868,7 +868,7 @@ origami.buildFooterTime = function() {
 
 origami.initTocbot = function() {
   let tocLevel = origamiConfig.tocLevel ? origamiConfig.tocLevel : 'h1, h2, h3';
-  let content = document.querySelector('.s-post-content,.p-post-content');
+  let content = document.querySelector('.s-content,.p-content');
   let i = 0;
   if (!content || !content.querySelectorAll(tocLevel)) return;
   content.querySelectorAll(tocLevel).forEach(function(item) {
@@ -882,7 +882,7 @@ origami.initTocbot = function() {
       : '.tools-item .toc';
   tocbot.init({
     tocSelector: selector,
-    contentSelector: '.s-post-content,.p-post-content',
+    contentSelector: '.s-content,.p-content',
     headingSelector: tocLevel,
     headingsOffset: offset + 21,
     onClick: function(e) {
@@ -900,7 +900,7 @@ origami.readingTransfer = function() {
   let url = encodeURI(location.href);
   let select = true;
   let container = document.querySelector(
-    '.s-post-container, .p-post-container'
+    '.s-container, .p-container'
   );
   let qrImg = document.getElementById('qrcode-img');
   document.getElementById('qrcode').addEventListener('click', function() {
@@ -955,7 +955,7 @@ origami.tocToggle = function() {
 origami.setPosition = function() {
   let index = $getQuery('index');
   let container = document.querySelector(
-    '.s-post-container, .p-post-container'
+    '.s-container, .p-container'
   );
   if (index) {
     index = container.offsetTop + container.clientHeight * index;
@@ -1053,7 +1053,7 @@ origami.animate = function() {
   if (origamiConfig.animate) {
     document
       .querySelectorAll(
-        '.home .post-list article, .home .post-pagination, .home .about-card, .home .sidebar-widget'
+        '.home .post-list article, .home .pagination, .home .about-card, .home .sidebar-widget'
       )
       .forEach(function(item) {
         if (window.pageYOffset + window.innerHeight > item.offsetTop) {
@@ -1075,7 +1075,7 @@ origami.initMarkdown = function() {
   if (origamiConfig.katex) {
     try {
       renderMathInElement(
-        document.querySelector('.s-post-content, .p-post-content'),
+        document.querySelector('.s-content, .p-content'),
         {
           delimiters: [
             { left: '$$', right: '$$' },
@@ -1110,7 +1110,7 @@ origami.imgBox = function() {
         opened = true;
       }
     }
-  }).listen('.s-post-content img, .p-post-content img');
+  }).listen('.s-content img, .p-content img');
 };
 
 origami.readProgress = function() {

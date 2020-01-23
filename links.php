@@ -61,7 +61,7 @@ get_header();
     <main class="ori-container columns <?php echo $main_class; ?> grid-md">
       <section class="links-list column <?php echo $post_list_class; ?>">
           <article <?php post_class(
-            'p-post-content'
+            'p-content'
           ); ?> id="post-<?php the_ID(); ?>">
               <?php the_content(); ?>
           </article>
@@ -91,7 +91,7 @@ get_header();
               </li>
               <?php endforeach; ?>
           </ul>
-          <div class="p-post-comments">
+          <div class="p-comments">
             <?php comments_template(); ?>
           </div>
       </section>

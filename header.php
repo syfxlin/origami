@@ -30,7 +30,7 @@ $body_class .= $GLOBALS['layout'];
   <?php endif; ?>
 </head>
 <body <?php body_class($body_class); ?>>
-  <header class="p-fixed ori-header">
+  <header class="ori-header">
     <div class="ori-container navbar">
       <section class="navbar-section">
         <a href="<?php echo esc_url(home_url('/')); ?>" id="ori-logo">
@@ -46,15 +46,15 @@ $body_class .= $GLOBALS['layout'];
         <?php wp_nav_menu([
           'theme_location' => 'main-menu',
           'container' => false,
-          'menu_id' => 'ori-h-menu',
+          'menu_id' => 'ori-menu',
           'menu_class' => '',
           'link_after' =>
             '<div></div><span class="sub-drop-icon icon icon-arrow-down"></span>'
         ]); ?>
-        <div id="ori-h-search">
+        <div id="ori-s-btn">
           <i class="fa fa-search"></i>
         </div>
-        <div id="ori-h-m-btn">
+        <div id="ori-m-btn">
           <span></span>
           <span></span>
           <span></span>
@@ -78,7 +78,7 @@ $body_class .= $GLOBALS['layout'];
           </div>
         </section>
         <section class="navbar-section">
-          <div id="ori-h-search-close"><i class="fa fa-close"></i></div>
+          <div id="ori-search-close"><i class="fa fa-close"></i></div>
         </section>
       </div>
       <div class="ori-search-mask grid-md">

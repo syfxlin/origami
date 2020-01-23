@@ -46,7 +46,7 @@ if ($post_item['post_image'] == false && origami_get_other_thumbnail($post)) {
                   'post_image'
                 ]; ?>)"></div>
                 <div class="featured-container">
-                    <div class="p-post-info post-info">
+                    <div class="p-info post-info">
                         <h2 class="card-title"><?php echo $post_item[
                           'post_title'
                         ]; ?></h2>
@@ -78,10 +78,10 @@ if ($post_item['post_image'] == false && origami_get_other_thumbnail($post)) {
                 </div>
             </div>
         <?php endif; ?>
-        <section class="p-post-container column <?php echo $post_list_class; ?>">
+        <section class="p-container column <?php echo $post_list_class; ?>">
             <?php origami_breadcrumbs(); ?>
             <?php if (!$post_item['post_image']): ?>
-                <div class="p-post-info post-info">
+                <div class="p-info post-info">
                     <h2 class="card-title"><?php echo $post_item[
                       'post_title'
                     ]; ?></h2>
@@ -105,14 +105,14 @@ if ($post_item['post_image'] == false && origami_get_other_thumbnail($post)) {
                 </div>
             <?php endif; ?>
             <article <?php post_class(
-              'p-post-content'
+              'p-content'
             ); ?> id="post-<?php the_ID(); ?>">
                 <?php the_content(); ?>
             </article>
-            <div class="p-post-tags">
+            <div class="p-tags">
               <?php get_template_part('template-part/post-tags'); ?>
             </div>
-            <div class="p-post-comments">
+            <div class="p-comments">
               <?php comments_template(); ?>
             </div>
         </section>

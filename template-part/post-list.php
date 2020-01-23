@@ -103,9 +103,7 @@ if ($sidebar_pos === 'right' || $sidebar_pos === 'left') {
         </div>
       </article>
     <?php endforeach; ?>
-    <section class="post-pagination">
-      <?php origami_pagination(); ?>
-    </section>
+    <?php origami_pagination(); ?>
   </section>
   <aside class="column ori-sidebar <?php echo $sidebar_class; ?>">
     <?php get_sidebar(); ?>

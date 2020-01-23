@@ -78,7 +78,7 @@ $this_year = -1;
     <main class="ori-container columns <?php echo $main_class; ?> grid-md">
         <section class="timeline-list column <?php echo $post_list_class; ?>">
           <article <?php post_class(
-            'p-post-content'
+            'p-content'
           ); ?> id="post-<?php the_ID(); ?>">
               <?php the_content(); ?>
           </article>
@@ -127,10 +127,8 @@ $this_year = -1;
                 </div>
               <?php endforeach; ?>
           </div>
-          <section class="post-pagination">
-              <?php echo $pagination; ?>
-          </section>
-          <div class="p-post-comments">
+          <?php echo $pagination; ?>
+          <div class="p-comments">
             <?php comments_template(); ?>
           </div>
       </section>

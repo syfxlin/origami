@@ -91,7 +91,7 @@ get_header();
     <main class="ori-container columns <?php echo $main_class; ?> grid-md">
         <section class="inspiration-list column <?php echo $post_list_class; ?>">
           <article <?php post_class(
-            'p-post-content'
+            'p-content'
           ); ?> id="post-<?php the_ID(); ?>">
               <?php the_content(); ?>
           </article>
@@ -120,10 +120,8 @@ get_header();
               </li>
             <?php endforeach; ?>
           </ul>
-          <section class="post-pagination">
-              <?php echo $pagination; ?>
-          </section>
-          <div class="p-post-comments">
+          <?php echo $pagination; ?>
+          <div class="p-comments">
             <?php comments_template(); ?>
           </div>
       </section>
