@@ -738,9 +738,18 @@ body:not(.home) #ori-title {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-justify-content: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.search-unmore {
+  background: #fff;
+  text-align: center;
+  padding: 0.7rem;
 }
 
 #search-list {

@@ -225,73 +225,93 @@ origami.searchBtn = function() {
 
 origami.realTimeSearch = function() {
   let ele = document.getElementById('ori-search-input');
-  if (origamiConfig.realTimeSearch) {
-    let page = 1;
-    let listEle = document.getElementById('search-list');
-    let loadingEle = document.querySelector('.ori-search-loading');
-    let timer = null;
-    let changeSearchList = function(list) {
-      listEle.innerHTML = '';
-      list.forEach(function(item) {
-        let str = '';
-        str += '<article class="card" id="post-' + item.id + '">';
-        str += '<div class="card-header post-info">';
-        str += '<h2 class="card-title">';
-        str += '<a href="' + item.link + '">' + item.title.rendered + '</a>';
-        str += '</h2>';
-        let d = new Date(item.date);
-        let dStr =
-          d.getFullYear() + '年' + d.getMonth() + '月' + d.getDate() + '日';
-        str +=
-          '<div class="card-subtitle text-gray"><time>' +
-          dStr +
-          '</time></div>';
-        str += '</div>';
-        str += '<div class="card-body">' + item.excerpt.rendered + '</div>';
-        str += '<div class="card-footer"><div class="post-tags"></div>';
-        str += '<a class="read-more" href="' + item.link + '">阅读更多</a>';
-        str += '</div>';
-        listEle.innerHTML += str;
-      });
-    };
-
-    ele.addEventListener('input', function() {
-      clearTimeout(timer);
-      timer = setTimeout(function() {
-        if (ele.value == '') {
-          listEle.innerHTML = '';
-          return;
-        }
-        loadingEle.style.visibility = 'visible';
-        loadingEle.style.opacity = '1';
-        $http({
-          url: '/wp-json/wp/v2/posts',
-          type: 'GET',
-          dataType: 'json',
-          data: {
-            search: ele.value,
-            page: page
-          },
-          success: function(response) {
-            loadingEle.style.opacity = '0';
-            setTimeout(function() {
-              loadingEle.style.visibility = 'hidden';
-            }, 500);
-            changeSearchList(response);
-          },
-          error: function(status) {
-            console.log('状态码为' + status);
-          }
-        });
-      }, 300);
+  let page = 1;
+  let currCount = 0;
+  let listEle = document.getElementById('search-list');
+  let loadingEle = document.querySelector('.ori-search-loading');
+  let timer = null;
+  let changeSearchList = function(list) {
+    currCount = list.length;
+    listEle.innerHTML = '';
+    list.forEach(function(item) {
+      let str = '';
+      str += '<article class="card" id="post-' + item.id + '">';
+      str += '<div class="card-header post-info">';
+      str += '<h2 class="card-title">';
+      str += '<a href="' + item.link + '">' + item.title.rendered + '</a>';
+      str += '</h2>';
+      let d = new Date(item.date);
+      let dStr =
+        d.getFullYear() + '年' + d.getMonth() + '月' + d.getDate() + '日';
+      str +=
+        '<div class="card-subtitle text-gray"><time>' + dStr + '</time></div>';
+      str += '</div>';
+      str += '<div class="card-body">' + item.excerpt.rendered + '</div>';
+      str += '<div class="card-footer"><div class="post-tags"></div>';
+      str += '<a class="read-more" href="' + item.link + '">阅读更多</a>';
+      str += '</div>';
+      listEle.innerHTML += str;
     });
-  } else {
-    ele.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
-        window.location.href = window.location.origin + '/?s=' + ele.value;
+    if (currCount === 10) {
+      listEle.innerHTML +=
+        '<div class="search-unmore">仅显示匹配的第一页，要查看更多请按下回车前往搜索结果页面，或者使用PageUp,PageDown换页。</div>';
+    }
+  };
+
+  let getSearchList = function() {
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      if (ele.value == '') {
+        listEle.innerHTML = '';
+        return;
       }
+      loadingEle.style.visibility = 'visible';
+      loadingEle.style.opacity = '1';
+      $http({
+        url: '/wp-json/wp/v2/posts',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+          search: ele.value,
+          page: page,
+          per_page: 10
+        },
+        success: function(response) {
+          loadingEle.style.opacity = '0';
+          setTimeout(function() {
+            loadingEle.style.visibility = 'hidden';
+          }, 500);
+          changeSearchList(response);
+        },
+        error: function(status) {
+          console.log('状态码为' + status);
+        }
+      });
+    }, 300);
+  };
+  if (origamiConfig.realTimeSearch) {
+    ele.addEventListener('input', () => {
+      page = 1;
+      currCount = 0;
+      getSearchList();
     });
   }
+  ele.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      window.location.href = window.location.origin + '/?s=' + ele.value;
+    }
+    if (origamiConfig.realTimeSearch) {
+      let tmp = page;
+      if (e.key === 'PageUp') {
+        page = page - 1 > 0 ? page - 1 : page;
+      } else if (e.key === 'PageDown') {
+        page = currCount < 10 ? page : page + 1;
+      }
+      if (page !== tmp) {
+        getSearchList();
+      }
+    }
+  });
 };
 
 origami.tools = {
@@ -1863,22 +1883,6 @@ origami.initRunCode = function() {
   });
 };
 
-origami.scrollHide = function() {
-  let prevScrollY = window.scrollY;
-  let header = document.querySelector('.ori-header');
-  let sidebar = document.querySelector('.ori-sidebar');
-  window.addEventListener('scroll', function() {
-    if (window.scrollY - prevScrollY > 10) {
-      header.style.transform = 'translate3d(0, -100%, 0)';
-      sidebar.style.top = '1rem';
-    } else if (window.scrollY - prevScrollY < -10) {
-      header.style.transform = 'unset';
-      sidebar.style.top = '5rem';
-    }
-    prevScrollY = window.scrollY;
-  });
-};
-
 origami.initShareCard = function() {
   let card = document.querySelector('.share-card');
   let source = document.querySelector('#share-card-source');
@@ -1963,6 +1967,8 @@ origami.initShareCard = function() {
     .querySelector('.share-card .btn')
     .addEventListener('click', function() {
       card.classList.remove('active');
+      card.querySelector('.modal-body').innerHTML =
+        '<div class="loading"></div><div>生成中，请稍后...</div>';
     });
 };
 
@@ -1982,7 +1988,6 @@ origami.searchBtn();
 origami.realTimeSearch();
 origami.layoutImageChange();
 origami.copy();
-origami.scrollHide();
 
 if (isPost) {
   origami.readProgress();
