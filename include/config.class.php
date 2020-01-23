@@ -273,7 +273,7 @@ class OrigamiConfig
       'origami_style_home',
       [
         'field' => 'origami_carousel_1',
-        'value' => 'https://lab.ixk.me/api/bing?size=1024x768&day=1',
+        'value' => 'https://lab.ixk.me/api/bing/?size=1024x768&day=1',
         'type' => 'text'
       ]
     );
@@ -285,7 +285,7 @@ class OrigamiConfig
       'origami_style_home',
       [
         'field' => 'origami_carousel_2',
-        'value' => 'https://lab.ixk.me/api/bing?size=1024x768&day=2',
+        'value' => 'https://lab.ixk.me/api/bing/?size=1024x768&day=2',
         'type' => 'text'
       ]
     );
@@ -297,7 +297,7 @@ class OrigamiConfig
       'origami_style_home',
       [
         'field' => 'origami_carousel_3',
-        'value' => 'https://lab.ixk.me/api/bing?size=1024x768&day=3',
+        'value' => 'https://lab.ixk.me/api/bing/?size=1024x768&day=3',
         'type' => 'text'
       ]
     );
@@ -309,7 +309,7 @@ class OrigamiConfig
       'origami_style_home',
       [
         'field' => 'origami_carousel_4',
-        'value' => 'https://lab.ixk.me/api/bing?size=1024x768&day=4',
+        'value' => 'https://lab.ixk.me/api/bing/?size=1024x768&day=4',
         'type' => 'text'
       ]
     );

@@ -200,6 +200,10 @@ hr {
   @include card-shadow();
 }
 
+.modal.active {
+  z-index: 1000;
+}
+
 .ori-container {
   margin: 0 auto;
   padding: 0 8px;
@@ -1539,6 +1543,8 @@ body.menu-active {
   .pagination {
     margin: 0;
     padding: 0;
+    background: transparent;
+    box-shadow: none;
   }
 }
 
@@ -1905,7 +1911,7 @@ body.menu-active {
 /* 工具栏 */
 
 .ori-tools {
-  > * {
+  > div {
     visibility: hidden;
   }
 
@@ -1918,32 +1924,85 @@ body.menu-active {
     opacity: 0;
     transition: opacity 0.5s;
   }
-}
 
-.tools-item {
-  position: fixed;
-  bottom: 75px;
-  left: 20px;
-  width: 45px;
-  height: 45px;
-  border: 1px solid primary-color();
-  text-align: center;
-  background: primary-bg();
-  font-size: 0.6rem;
-  cursor: pointer;
-  color: primary-color(0.5);
+  .ori-tools-btns {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 45px;
+    text-align: center;
+    font-size: 0.6rem;
+    color: primary-color(0.5);
+    visibility: visible;
+    z-index: 998;
 
-  > i {
-    display: inline;
-    line-height: 45px;
+    > div {
+      height: 45px;
+      margin-top: 10px;
+      border: 1px solid primary-color();
+      background: #fff;
+      cursor: pointer;
+      transition: all 0.5s;
+
+      > i {
+        display: inline;
+        line-height: 45px;
+      }
+
+      &:hover {
+        color: #fff;
+        background: #807fe2;
+      }
+    }
   }
 }
 
-#qrcode {
-  visibility: visible;
-  z-index: 998;
+body:not(.page):not(.single) {
+  #toc-btn,
+  #share-card-btn,
+  #qrcode-btn {
+    display: none;
+  }
 }
 
+/* 目录 */
+#toc-btn {
+  position: relative;
+}
+
+#toc-btn:hover .toc {
+  display: block;
+}
+
+#toc-btn.true {
+  display: none;
+}
+
+.toc {
+  position: absolute;
+  bottom: 45px;
+  left: 0;
+  font-size: 15px;
+  max-width: 20vw;
+  padding: 20px;
+  padding-bottom: 15px;
+  background: primary-bg(0.9);
+  display: none;
+  box-shadow: 0 0 20px #b6dfe9;
+  color: #757575;
+  max-height: 50vh;
+
+  &:hover {
+    display: block;
+  }
+}
+
+.toc-show {
+  display: block !important;
+}
+/* end */
+
+/* qrcode */
 #qrcode-img {
   position: fixed;
   bottom: 125px;
@@ -1954,14 +2013,17 @@ body.menu-active {
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.5s;
+  z-index: 999;
 }
 
 .archive {
-  #qrcode {
+  #qrcode-btn {
     visibility: hidden;
   }
 }
+/*end*/
 
+/* 实时聊天 */
 #live-chat {
   visibility: visible;
   position: fixed;
@@ -2028,11 +2090,12 @@ body.menu-active {
     margin-right: 0.2rem;
   }
 }
+/* end */
 
+/* 更换主题 */
 #paper-plane {
   visibility: visible;
   display: block;
-  bottom: 20px;
   z-index: 998;
 
   &.flyaway {
@@ -2068,6 +2131,33 @@ body.menu-active {
   position: relative;
   display: flex;
   flex-direction: column;
+
+  button {
+    position: absolute;
+    width: 2.5rem !important;
+    height: 2.5rem;
+    font-size: 1rem;
+
+    &.left {
+      left: 0;
+      top: 50%;
+      transform: translate(-50%, 0);
+    }
+
+    &.right {
+      right: 0;
+      top: 50%;
+      transform: translate(50%, 0);
+    }
+
+    &.close {
+      right: 0;
+      top: 0;
+      width: 1.8rem !important;
+      height: 1.8rem;
+      font-size: 0.8rem;
+    }
+  }
 }
 
 .paper-plane-title {
@@ -2120,33 +2210,6 @@ body.menu-active {
   }
 }
 
-.paper-plane-content button {
-  position: absolute;
-  width: 2.5rem !important;
-  height: 2.5rem;
-  font-size: 1rem;
-
-  &.left {
-    left: 0;
-    top: 50%;
-    transform: translate(-50%, 0);
-  }
-
-  &.right {
-    right: 0;
-    top: 50%;
-    transform: translate(50%, 0);
-  }
-
-  &.close {
-    right: 0;
-    top: 0;
-    width: 1.8rem !important;
-    height: 1.8rem;
-    font-size: 0.8rem;
-  }
-}
-
 .paper-plane-img {
   display: flex;
   align-items: center;
@@ -2159,6 +2222,110 @@ body.menu-active {
     height: 5rem;
   }
 }
+/* end */
+
+/* 是否回到顶部 */
+#if-to-start {
+  opacity: 0;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0px;
+  width: 100%;
+  max-width: 500px;
+  height: 50px;
+  background: #fff;
+  border: 1px solid primary-color();
+  border-bottom: 0px;
+  padding: 0px 10px;
+  transition: opacity 0.5s;
+
+  > {
+    span {
+      line-height: 50px;
+      font-size: 15px;
+    }
+
+    a {
+      display: block;
+      float: right;
+      transform: translateY(-50%);
+      margin-top: 25px;
+      margin-left: 5px;
+      padding: 5px 20px;
+      border: 1px solid primary-color();
+    }
+  }
+}
+/* end */
+
+/* 分享卡片 */
+#share-card-source {
+  background: #ffffff;
+  width: 20rem;
+  position: fixed;
+  top: 0;
+  left: -20rem;
+  visibility: visible;
+
+  > * {
+    background: #ffffff;
+  }
+
+  .card-image {
+    position: relative;
+    max-height: 15rem;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    > h2 {
+      position: absolute;
+      background: #ffffff;
+      bottom: 0;
+      left: 0;
+      font-size: 1.3rem;
+      color: #5755d9;
+      padding: 0.3rem 1rem;
+      margin: 0;
+    }
+  }
+
+  .card-footer {
+    div {
+      background: #efefef;
+      border-radius: 0.5rem;
+      display: flex;
+      align-items: center;
+
+      p {
+        margin: 0;
+        flex: 1;
+        padding-left: 0.5rem;
+      }
+
+      img {
+        width: 3rem;
+        height: 3rem;
+        margin: 0.5rem;
+      }
+    }
+  }
+}
+
+.share-card {
+  &.active {
+    visibility: visible;
+  }
+
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+/* end */
 
 /* Timeline */
 
@@ -2382,84 +2549,6 @@ body.menu-active {
   word-wrap: break-word;
 }
 
-#if-to-start {
-  opacity: 0;
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 0px;
-  width: 100%;
-  max-width: 500px;
-  height: 50px;
-  background: #fff;
-  border: 1px solid primary-color();
-  border-bottom: 0px;
-  padding: 0px 10px;
-  transition: opacity 0.5s;
-
-  > {
-    span {
-      line-height: 50px;
-      font-size: 15px;
-    }
-
-    a {
-      display: block;
-      float: right;
-      transform: translateY(-50%);
-      margin-top: 25px;
-      margin-left: 5px;
-      padding: 5px 20px;
-      border: 1px solid primary-color();
-    }
-  }
-}
-
-#toc-button {
-  bottom: 130px;
-  z-index: 998;
-}
-
-.single #toc-button,
-.page #toc-button {
-  visibility: visible;
-}
-
-#toc-button:hover .toc {
-  display: block;
-}
-
-#toc-button.true {
-  display: none;
-}
-
-.toc {
-  position: fixed;
-  bottom: 175px;
-  left: 20px;
-  font-size: 15px;
-  max-width: 20vw;
-  padding: 20px;
-  padding-bottom: 15px;
-  background: primary-bg(0.9);
-  display: none;
-  box-shadow: 0 0 20px #b6dfe9;
-  color: #757575;
-  max-height: 50vh;
-
-  &:hover {
-    display: block;
-  }
-}
-
-.toc-show {
-  display: block !important;
-}
-
-.home .tools-item {
-  display: none;
-}
-
 .code-toolbar {
   &.fullscreen {
     position: fixed;
@@ -2632,40 +2721,9 @@ body.menu-active {
     max-width: 80%;
   }
 
-  .tools-item {
-    display: none;
-  }
-
-  #paper-plane,
-  #toc-button {
-    display: block !important;
-    bottom: 59px;
-    left: 0px;
-    background: #fff;
-    width: 22px;
-    height: 60px;
-    border-left: none;
-    border-radius: 0px 5px 5px 0px;
-  }
-
-  #paper-plane {
-    bottom: 0px;
-
-    > i:before {
-      line-height: 60px;
-      font-size: 18px;
-    }
-  }
-
-  #toc-button > i:before {
-    line-height: 60px;
-    font-size: 18px;
-  }
-
   .toc {
-    bottom: 121px;
-    left: 0px;
     max-width: 50vw;
+    bottom: 60px;
   }
 
   .widget_tocbot {
@@ -2692,6 +2750,29 @@ body.menu-active {
 
     .featured-container {
       height: 8rem;
+    }
+  }
+
+  .ori-tools .ori-tools-btns {
+    left: 0;
+    > div {
+      display: block;
+      left: 0;
+      background: #fff;
+      width: 22px;
+      height: 60px;
+      border-left: none;
+      border-radius: 0px 5px 5px 0px;
+      margin: 0;
+
+      > i:before {
+        line-height: 60px;
+        font-size: 18px;
+      }
+    }
+
+    #qrcode-btn {
+      display: none;
     }
   }
 }

@@ -117,7 +117,8 @@ $local_assets_url = [
   'mermaid_js' => $tem_url . '/js/mermaid.min.js',
   'marked_js' => $tem_url . '/js/marked.min.js',
   'mouse_css' => $tem_url . '/css/mouse.css',
-  'mouse_js' => $tem_url . '/js/mouse.js'
+  'mouse_js' => $tem_url . '/js/mouse.js',
+  'html2canvas_js' => $tem_url . '/js/html2canvas.min.js'
 ];
 
 $jsdelivr_assets_url = [
@@ -129,7 +130,8 @@ $jsdelivr_assets_url = [
     'https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-icons.min.css',
   'origami_js' => $tem_url . '/js/main.js',
   'origami_css' => $tem_url . '/style.css',
-  'qrcode_js' => 'https://cdn.jsdelivr.net/npm/qrcode_js@1.0.0/qrcode.min.js',
+  'qrcode_js' =>
+    'https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js',
   'SMValidator_js' =>
     'https://cdn.jsdelivr.net/npm/SMValidator@1.2.7/dist/SMValidator.min.js',
   'font_awesome_css' =>
@@ -154,7 +156,9 @@ $jsdelivr_assets_url = [
     'https://cdn.jsdelivr.net/npm/mermaid@8.2.3/dist/mermaid.min.js',
   'marked_js' => 'https://cdn.jsdelivr.net/npm/marked@0.7.0/lib/marked.min.js',
   'mouse_css' => $tem_url . '/css/mouse.css',
-  'mouse_js' => $tem_url . '/js/mouse.js'
+  'mouse_js' => $tem_url . '/js/mouse.js',
+  'html2canvas_js' =>
+    'https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js'
 ];
 
 $assets_url = '';
@@ -238,6 +242,10 @@ if (!is_admin()) {
       }
       if (get_option('origami_markdown_comment', 'true') == 'true') {
         wp_enqueue_script('marked_js', $assets_url['marked_js']);
+      }
+      // 生成分享卡片
+      if (get_option('origami_sharecard', 'true') == 'true') {
+        wp_enqueue_script('html2canvas_js', $assets_url['html2canvas_js']);
       }
     }
   }

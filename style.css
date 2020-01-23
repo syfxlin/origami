@@ -187,6 +187,10 @@ hr:not(.is-style-dots)::before {
   box-shadow: 0 1px 20px -6px rgba(0, 0, 0, 0.2);
 }
 
+.modal.active {
+  z-index: 1000;
+}
+
 .ori-container {
   margin: 0 auto;
   padding: 0 8px;
@@ -1676,6 +1680,8 @@ body.menu-active .ori-footer {
 .comments-nav .pagination {
   margin: 0;
   padding: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 #comments-next,
@@ -2060,7 +2066,7 @@ body.menu-active .ori-footer {
 }
 
 /* 工具栏 */
-.ori-tools > * {
+.ori-tools > div {
   visibility: hidden;
 }
 
@@ -2074,30 +2080,81 @@ body.menu-active .ori-footer {
   transition: opacity 0.5s;
 }
 
-.tools-item {
+.ori-tools .ori-tools-btns {
   position: fixed;
-  bottom: 75px;
+  bottom: 20px;
   left: 20px;
   width: 45px;
-  height: 45px;
-  border: 1px solid #5755d9;
   text-align: center;
-  background: rgba(255, 255, 255, 0.7);
   font-size: 0.6rem;
-  cursor: pointer;
   color: rgba(87, 85, 217, 0.5);
-}
-
-.tools-item > i {
-  display: inline;
-  line-height: 45px;
-}
-
-#qrcode {
   visibility: visible;
   z-index: 998;
 }
 
+.ori-tools .ori-tools-btns > div {
+  height: 45px;
+  margin-top: 10px;
+  border: 1px solid #5755d9;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.ori-tools .ori-tools-btns > div > i {
+  display: inline;
+  line-height: 45px;
+}
+
+.ori-tools .ori-tools-btns > div:hover {
+  color: #fff;
+  background: #807fe2;
+}
+
+body:not(.page):not(.single) #toc-btn,
+body:not(.page):not(.single) #share-card-btn,
+body:not(.page):not(.single) #qrcode-btn {
+  display: none;
+}
+
+/* 目录 */
+#toc-btn {
+  position: relative;
+}
+
+#toc-btn:hover .toc {
+  display: block;
+}
+
+#toc-btn.true {
+  display: none;
+}
+
+.toc {
+  position: absolute;
+  bottom: 45px;
+  left: 0;
+  font-size: 15px;
+  max-width: 20vw;
+  padding: 20px;
+  padding-bottom: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  display: none;
+  box-shadow: 0 0 20px #b6dfe9;
+  color: #757575;
+  max-height: 50vh;
+}
+
+.toc:hover {
+  display: block;
+}
+
+.toc-show {
+  display: block !important;
+}
+
+/* end */
+/* qrcode */
 #qrcode-img {
   position: fixed;
   bottom: 125px;
@@ -2108,12 +2165,15 @@ body.menu-active .ori-footer {
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.5s;
+  z-index: 999;
 }
 
-.archive #qrcode {
+.archive #qrcode-btn {
   visibility: hidden;
 }
 
+/*end*/
+/* 实时聊天 */
 #live-chat {
   visibility: visible;
   position: fixed;
@@ -2185,10 +2245,11 @@ body.menu-active .ori-footer {
   margin-right: 0.2rem;
 }
 
+/* end */
+/* 更换主题 */
 #paper-plane {
   visibility: visible;
   display: block;
-  bottom: 20px;
   z-index: 998;
 }
 
@@ -2239,6 +2300,35 @@ body.menu-active .ori-footer {
   -webkit-flex-direction: column;
       -ms-flex-direction: column;
           flex-direction: column;
+}
+
+.paper-plane-content button {
+  position: absolute;
+  width: 2.5rem !important;
+  height: 2.5rem;
+  font-size: 1rem;
+}
+
+.paper-plane-content button.left {
+  left: 0;
+  top: 50%;
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+}
+
+.paper-plane-content button.right {
+  right: 0;
+  top: 50%;
+  -webkit-transform: translate(50%, 0);
+          transform: translate(50%, 0);
+}
+
+.paper-plane-content button.close {
+  right: 0;
+  top: 0;
+  width: 1.8rem !important;
+  height: 1.8rem;
+  font-size: 0.8rem;
 }
 
 .paper-plane-title {
@@ -2313,35 +2403,6 @@ body.menu-active .ori-footer {
   background-size: cover;
 }
 
-.paper-plane-content button {
-  position: absolute;
-  width: 2.5rem !important;
-  height: 2.5rem;
-  font-size: 1rem;
-}
-
-.paper-plane-content button.left {
-  left: 0;
-  top: 50%;
-  -webkit-transform: translate(-50%, 0);
-          transform: translate(-50%, 0);
-}
-
-.paper-plane-content button.right {
-  right: 0;
-  top: 50%;
-  -webkit-transform: translate(50%, 0);
-          transform: translate(50%, 0);
-}
-
-.paper-plane-content button.close {
-  right: 0;
-  top: 0;
-  width: 1.8rem !important;
-  height: 1.8rem;
-  font-size: 0.8rem;
-}
-
 .paper-plane-img {
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -2363,6 +2424,124 @@ body.menu-active .ori-footer {
   height: 5rem;
 }
 
+/* end */
+/* 是否回到顶部 */
+#if-to-start {
+  opacity: 0;
+  position: fixed;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  bottom: 0px;
+  width: 100%;
+  max-width: 500px;
+  height: 50px;
+  background: #fff;
+  border: 1px solid #5755d9;
+  border-bottom: 0px;
+  padding: 0px 10px;
+  transition: opacity 0.5s;
+}
+
+#if-to-start > span {
+  line-height: 50px;
+  font-size: 15px;
+}
+
+#if-to-start > a {
+  display: block;
+  float: right;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  margin-top: 25px;
+  margin-left: 5px;
+  padding: 5px 20px;
+  border: 1px solid #5755d9;
+}
+
+/* end */
+/* 分享卡片 */
+#share-card-source {
+  background: #ffffff;
+  width: 20rem;
+  position: fixed;
+  top: 0;
+  left: -20rem;
+  visibility: visible;
+}
+
+#share-card-source > * {
+  background: #ffffff;
+}
+
+#share-card-source .card-image {
+  position: relative;
+  max-height: 15rem;
+  overflow: hidden;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#share-card-source .card-image > h2 {
+  position: absolute;
+  background: #ffffff;
+  bottom: 0;
+  left: 0;
+  font-size: 1.3rem;
+  color: #5755d9;
+  padding: 0.3rem 1rem;
+  margin: 0;
+}
+
+#share-card-source .card-footer div {
+  background: #efefef;
+  border-radius: 0.5rem;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#share-card-source .card-footer div p {
+  margin: 0;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding-left: 0.5rem;
+}
+
+#share-card-source .card-footer div img {
+  width: 3rem;
+  height: 3rem;
+  margin: 0.5rem;
+}
+
+.share-card.active {
+  visibility: visible;
+}
+
+.share-card .modal-body {
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+/* end */
 /* Timeline */
 .timeline-list .timeline-item {
   padding-bottom: 0.7rem;
@@ -2593,84 +2772,6 @@ body.menu-active .ori-footer {
   word-wrap: break-word;
 }
 
-#if-to-start {
-  opacity: 0;
-  position: fixed;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
-  bottom: 0px;
-  width: 100%;
-  max-width: 500px;
-  height: 50px;
-  background: #fff;
-  border: 1px solid #5755d9;
-  border-bottom: 0px;
-  padding: 0px 10px;
-  transition: opacity 0.5s;
-}
-
-#if-to-start > span {
-  line-height: 50px;
-  font-size: 15px;
-}
-
-#if-to-start > a {
-  display: block;
-  float: right;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  margin-top: 25px;
-  margin-left: 5px;
-  padding: 5px 20px;
-  border: 1px solid #5755d9;
-}
-
-#toc-button {
-  bottom: 130px;
-  z-index: 998;
-}
-
-.single #toc-button,
-.page #toc-button {
-  visibility: visible;
-}
-
-#toc-button:hover .toc {
-  display: block;
-}
-
-#toc-button.true {
-  display: none;
-}
-
-.toc {
-  position: fixed;
-  bottom: 175px;
-  left: 20px;
-  font-size: 15px;
-  max-width: 20vw;
-  padding: 20px;
-  padding-bottom: 15px;
-  background: rgba(255, 255, 255, 0.9);
-  display: none;
-  box-shadow: 0 0 20px #b6dfe9;
-  color: #757575;
-  max-height: 50vh;
-}
-
-.toc:hover {
-  display: block;
-}
-
-.toc-show {
-  display: block !important;
-}
-
-.home .tools-item {
-  display: none;
-}
-
 .code-toolbar.fullscreen {
   position: fixed;
   top: 0;
@@ -2823,35 +2924,9 @@ body.menu-active .ori-footer {
   .ori-tools .toast {
     max-width: 80%;
   }
-  .tools-item {
-    display: none;
-  }
-  #paper-plane,
-  #toc-button {
-    display: block !important;
-    bottom: 59px;
-    left: 0px;
-    background: #fff;
-    width: 22px;
-    height: 60px;
-    border-left: none;
-    border-radius: 0px 5px 5px 0px;
-  }
-  #paper-plane {
-    bottom: 0px;
-  }
-  #paper-plane > i:before {
-    line-height: 60px;
-    font-size: 18px;
-  }
-  #toc-button > i:before {
-    line-height: 60px;
-    font-size: 18px;
-  }
   .toc {
-    bottom: 121px;
-    left: 0px;
     max-width: 50vw;
+    bottom: 60px;
   }
   .widget_tocbot {
     display: none;
@@ -2875,6 +2950,26 @@ body.menu-active .ori-footer {
   }
   .featured .featured-container {
     height: 8rem;
+  }
+  .ori-tools .ori-tools-btns {
+    left: 0;
+  }
+  .ori-tools .ori-tools-btns > div {
+    display: block;
+    left: 0;
+    background: #fff;
+    width: 22px;
+    height: 60px;
+    border-left: none;
+    border-radius: 0px 5px 5px 0px;
+    margin: 0;
+  }
+  .ori-tools .ori-tools-btns > div > i:before {
+    line-height: 60px;
+    font-size: 18px;
+  }
+  .ori-tools .ori-tools-btns #qrcode-btn {
+    display: none;
   }
 }
 

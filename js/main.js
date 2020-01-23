@@ -877,9 +877,9 @@ origami.initTocbot = function() {
   });
   let offset = document.querySelector('.ori-header').clientHeight;
   let selector =
-    document.querySelector('#toc-button').clientHeight === 0
+    document.querySelector('#toc-btn').clientHeight === 0
       ? '.widget_tocbot .toc'
-      : '.tools-item .toc';
+      : '#toc-btn .toc';
   tocbot.init({
     tocSelector: selector,
     contentSelector: '.s-content,.p-content',
@@ -899,27 +899,33 @@ origami.initTocbot = function() {
 origami.readingTransfer = function() {
   let url = encodeURI(location.href);
   let select = true;
-  let container = document.querySelector(
-    '.s-container, .p-container'
-  );
+  let container = document.querySelector('.s-container, .p-container');
   let qrImg = document.getElementById('qrcode-img');
-  document.getElementById('qrcode').addEventListener('click', function() {
+  document.getElementById('qrcode-btn').addEventListener('click', function() {
     if (select) {
       qrImg.innerHTML = '';
-      new QRCode(document.getElementById('qrcode-img'), {
-        text:
-          url +
+      QRCode.toDataURL(
+        url +
           '?index=' +
           (window.scrollY - container.offsetTop) / container.clientHeight,
-        width: 180,
-        height: 180,
-        colorDark: '#000000',
-        colorLight: '#ffffff',
-        correctLevel: QRCode.CorrectLevel.L
-      });
-      qrImg.style.visibility = 'visible';
-      qrImg.style.opacity = '1';
-      select = false;
+        {
+          width: 180,
+          margin: 0,
+          color: {
+            dark: '#000000',
+            light: '#ffffff',
+            errorCorrectionLevel: 'H'
+          }
+        },
+        (err, url) => {
+          let img = document.createElement('img');
+          img.src = url;
+          document.getElementById('qrcode-img').append(img);
+          qrImg.style.visibility = 'visible';
+          qrImg.style.opacity = '1';
+          select = false;
+        }
+      );
     } else {
       qrImg.style.opacity = '0';
       setTimeout(function() {
@@ -934,29 +940,25 @@ origami.tocToggle = function() {
   let select = true;
   if (window.innerWidth > 991) {
     let toc = document.getElementsByClassName('toc')[0];
-    document
-      .getElementById('toc-button')
-      .addEventListener('click', function(e) {
-        if (e.target.className == 'fa fa-indent fa-2x') {
-          if (select) {
-            toc.classList.add('toc-show');
-            toc.style.boxShadow = 'none';
-            select = false;
-          } else {
-            toc.classList.remove('toc-show');
-            toc.style.boxShadow = '0 0 20px #B6DFE9';
-            select = true;
-          }
+    document.getElementById('toc-btn').addEventListener('click', function(e) {
+      if (e.target.className == 'fa fa-indent fa-2x') {
+        if (select) {
+          toc.classList.add('toc-show');
+          toc.style.boxShadow = 'none';
+          select = false;
+        } else {
+          toc.classList.remove('toc-show');
+          toc.style.boxShadow = '0 0 20px #B6DFE9';
+          select = true;
         }
-      });
+      }
+    });
   }
 };
 
 origami.setPosition = function() {
   let index = $getQuery('index');
-  let container = document.querySelector(
-    '.s-container, .p-container'
-  );
+  let container = document.querySelector('.s-container, .p-container');
   if (index) {
     index = container.offsetTop + container.clientHeight * index;
     window.scrollTo({
@@ -1074,17 +1076,14 @@ origami.animate = function() {
 origami.initMarkdown = function() {
   if (origamiConfig.katex) {
     try {
-      renderMathInElement(
-        document.querySelector('.s-content, .p-content'),
-        {
-          delimiters: [
-            { left: '$$', right: '$$' },
-            { left: '```math', right: '```' },
-            { left: '```tex', right: '```' }
-          ],
-          ignoredTags: ['script', 'noscript', 'style', 'textarea', 'code']
-        }
-      );
+      renderMathInElement(document.querySelector('.s-content, .p-content'), {
+        delimiters: [
+          { left: '$$', right: '$$' },
+          { left: '```math', right: '```' },
+          { left: '```tex', right: '```' }
+        ],
+        ignoredTags: ['script', 'noscript', 'style', 'textarea', 'code']
+      });
     } catch (e) {
       console.log(e);
     }
@@ -1880,6 +1879,93 @@ origami.scrollHide = function() {
   });
 };
 
+origami.initShareCard = function() {
+  let card = document.querySelector('.share-card');
+  let source = document.querySelector('#share-card-source');
+  let gen = ele => {
+    let siteTitle = document.querySelector('#ori-title').innerHTML;
+    let imageUrl = 'https://lab.ixk.me/api/bing/?size=1024x768';
+    let thumb = document.querySelector('.s-thumb');
+    if (thumb) {
+      imageUrl = (thumb.style.backgroundImage
+        ? thumb.style.backgroundImage
+        : thumb.getAttribute('data-bg')
+      ).replace(/url\([\\"|"|']*(.*)[\\"|"|']*\)/g, '$1');
+    }
+    let info = document.querySelector('.s-info, .p-info');
+    let title = info.querySelector('.card-title').innerHTML;
+    let time = info.querySelector('time').innerHTML;
+    let author = info.querySelector('span').innerHTML;
+    let description =
+      document
+        .querySelector('.s-content')
+        .textContent.substring(1, 100)
+        .replace(/\s+/g, ' ') + ' […]';
+    QRCode.toDataURL(
+      encodeURI(location.href),
+      {
+        width: 180,
+        margin: 0,
+        color: {
+          dark: '#000000',
+          light: '#efefef',
+          errorCorrectionLevel: 'H'
+        }
+      },
+      (err, url) => {
+        let html = `
+          <div class="card-image">
+            <h2>${siteTitle}</h2>
+            <img
+                class="img-responsive"
+                src="${imageUrl}"
+            />
+          </div>
+          <div class="card-header">
+            <div class="card-title h5">${title}</div>
+            <div class="card-subtitle text-gray">
+              <i class="fa fa-calendar"></i>
+              <time>${time}</time>
+              <i class="fa fa-paper-plane-o"></i>
+              <span>${author}</span>
+            </div>
+          </div>
+          <div class="card-body">${description}</div>
+          <div class="card-footer">
+            <div>
+              <p>扫描二维码阅读</p>
+              <img src="${url}">
+            </div>
+          </div>`;
+        source.innerHTML = html;
+        source.querySelector('img').addEventListener('load', () => {
+          html2canvas(source, {
+            useCORS: true,
+            x: -source.clientWidth,
+            y: window.pageYOffset
+          }).then(canvas => {
+            let img = document.createElement('img');
+            img.src = canvas.toDataURL('image/jpeg');
+            ele.innerHTML = img.outerHTML;
+            source.innerHTML = '';
+          });
+        });
+      }
+    );
+  };
+  document
+    .querySelector('#share-card-btn')
+    .addEventListener('click', function() {
+      card.classList.add('active');
+      gen(card.querySelector('.modal-body'));
+    });
+  document
+    .querySelector('.share-card .btn')
+    .addEventListener('click', function() {
+      card.classList.remove('active');
+    });
+};
+
 // Run
 var isPost =
   document.body.classList.contains('page') ||
@@ -1921,6 +2007,7 @@ window.addEventListener('load', function() {
     origami.initGitCard();
     origami.initArticleCard();
     origami.initRunCode();
+    origami.initShareCard();
   }
   if (window.LazyLoad) {
     new LazyLoad({
