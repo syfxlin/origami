@@ -2935,7 +2935,7 @@ body:not(.page):not(.single) #qrcode-btn {
     max-width: 80%;
   }
   .toc {
-    max-width: 50vw;
+    width: 50vw;
     bottom: 60px;
   }
   .widget_tocbot {
