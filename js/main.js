@@ -300,7 +300,7 @@ origami.realTimeSearch = function() {
     }, 300);
   };
   if (origamiConfig.realTimeSearch) {
-    ele.addEventListener('input', () => {
+    ele.addEventListener('input', function() {
       page = 1;
       currCount = 0;
       getSearchList();
@@ -334,7 +334,7 @@ origami.tools = {
     toast.style.visibility = 'visible';
     toast.style.opacity = '1';
   },
-  hideToast: function(callback = () => {}) {
+  hideToast: function(callback = function() {}) {
     let toast = document.querySelector('.ori-tools .toast');
     toast.style.opacity = '0';
     setTimeout(function() {
@@ -373,7 +373,12 @@ origami.tools = {
         origami.tools.hideToast();
       });
   },
-  showModal: function(title, content, confirm = () => {}, cancel = () => {}) {
+  showModal: function(
+    title,
+    content,
+    confirm = function() {},
+    cancel = function() {}
+  ) {
     let modal = document.querySelector('.ori-tools .modal');
     modal.querySelector('.modal-title').textContent = title;
     modal.querySelector('.modal-body .content').textContent = content;
@@ -510,7 +515,7 @@ origami.initComments = function() {
     }
     select.value = pageOut;
   };
-  let load = function(page = -1, callback = () => {}) {
+  let load = function(page = -1, callback = function() {}) {
     if (page == -1) {
       page = pageOut;
     }
@@ -571,7 +576,7 @@ origami.initComments = function() {
     pageOut++;
     load(pageOut);
   };
-  let submit = function(info, callback = () => {}, isUpdate = false) {
+  let submit = function(info, callback = function() {}, isUpdate = false) {
     if (!isUpdate) {
       $http({
         url: '/wp-json/origami/v1/comments',
@@ -947,7 +952,7 @@ origami.readingTransfer = function() {
             errorCorrectionLevel: 'H'
           }
         },
-        (err, url) => {
+        function(err, url) {
           let img = document.createElement('img');
           img.src = url;
           document.getElementById('qrcode-img').append(img);
@@ -1133,7 +1138,7 @@ origami.imgBox = function() {
     bgColor: 'rgba(0,0,0,0.5)',
     custemSize: '90%',
     zIndex: 9999,
-    onOpen: () => {
+    onOpen: function() {
       if (!opened) {
         origami.tools.timeToast('按住图片可放大', 'success', 3000);
         opened = true;
@@ -1164,9 +1169,9 @@ origami.liveChat = function() {
   let chatWs = null;
   let conn = function(
     name,
-    callOpen = () => {},
-    callMsg = () => {},
-    callClose = () => {}
+    callOpen = function() {},
+    callMsg = function() {},
+    callClose = function() {}
   ) {
     let url = origamiConfig.liveChat + '?name=' + name;
     chatWs = new WebSocket(url);
@@ -1507,7 +1512,7 @@ origami.hasNewInspiration = function() {
 };
 
 origami.initGitCard = function() {
-  let inner = (cardEle, user, repo, content, star, platform) => {
+  let inner = function(cardEle, user, repo, content, star, platform) {
     let head =
       '<a href="' +
       user.url +
@@ -1538,7 +1543,7 @@ origami.initGitCard = function() {
     cardEle.querySelector('.gitcard-to').innerHTML =
       '<a href="' + repo.url + '"><i class="icon icon-arrow-right"></i></a>';
   };
-  document.querySelectorAll('.gitcard').forEach(cardEle => {
+  document.querySelectorAll('.gitcard').forEach(function(cardEle) {
     let repo = cardEle.getAttribute('data-repo');
     let platform = cardEle.getAttribute('data-platform');
     if (platform === 'github') {
@@ -1602,7 +1607,7 @@ origami.initGitCard = function() {
 };
 
 origami.initArticleCard = function() {
-  let inner = (
+  let inner = function(
     cardEle,
     title,
     description,
@@ -1611,7 +1616,7 @@ origami.initArticleCard = function() {
     author_name,
     provider_name,
     provider_url
-  ) => {
+  ) {
     if (thumbnail) {
       cardEle.style.backgroundImage = 'url(' + thumbnail + ')';
     }
@@ -1628,7 +1633,7 @@ origami.initArticleCard = function() {
     cardEle.querySelector('.articlecard-to').innerHTML =
       '<a href="' + url + '"><i class="icon icon-arrow-right"></i></a>';
   };
-  document.querySelectorAll('.articlecard').forEach(cardEle => {
+  document.querySelectorAll('.articlecard').forEach(function(cardEle) {
     let url = cardEle.getAttribute('data-url');
     let platform = cardEle.getAttribute('data-platform');
     var re = /(\w+):\/\/([^\:|\/]+)(\:\d*)?(.*\/)?([^#|\?|\n]+)?(#.*)?(\?.*)?/i;
@@ -1682,7 +1687,7 @@ origami.initArticleCard = function() {
 origami.initRunCode = function() {
   /* eslint-disable quotes */
   const consoleUtils = {
-    formatArray: input => {
+    formatArray: function(input) {
       var output = '';
       for (var i = 0, l = input.length; i < l; i++) {
         if (typeof input[i] === 'string') {
@@ -1700,7 +1705,7 @@ origami.initRunCode = function() {
       }
       return output;
     },
-    formatObject: input => {
+    formatObject: function(input) {
       var bufferDataViewRegExp = /^(ArrayBuffer|SharedArrayBuffer|DataView)$/;
       var complexArrayRegExp = /^(Int8Array|Int16Array|Int32Array|Uint8Array|Uint16Array|Uint32Array|Uint8ClampedArray|Float32Array|Float64Array|BigInt64Array|BigUint64Array)$/;
       var objectName = input.constructor.name;
@@ -1740,7 +1745,7 @@ origami.initRunCode = function() {
       }
       return input;
     },
-    formatOutput: input => {
+    formatOutput: function(input) {
       if (input === undefined || input === null || typeof input === 'boolean') {
         return String(input);
       } else if (typeof input === 'number') {
@@ -1759,7 +1764,7 @@ origami.initRunCode = function() {
         return consoleUtils.formatObject(input);
       }
     },
-    writeOutput: (content, output) => {
+    writeOutput: function(content, output) {
       var outputContent = output.textContent;
       var newLogItem = '> ' + content + '\n';
       output.textContent = outputContent + newLogItem;
@@ -1804,7 +1809,7 @@ origami.initRunCode = function() {
       success: function(res) {
         let timer = null;
         let count = 0;
-        let fetchOut = () => {
+        let fetchOut = function() {
           $http({
             url:
               window.origamiConfig.judge0API +
@@ -1874,19 +1879,22 @@ origami.initRunCode = function() {
     }
   }
 
-  document.querySelectorAll('.run-code-btn').forEach(item => {
+  document.querySelectorAll('.run-code-btn').forEach(function(item) {
     let code =
       item.parentElement.previousElementSibling.children[0].textContent;
     let lang = item.getAttribute('data-lang');
     let inputEle = item.parentElement.querySelector('.run-code-input textarea');
     let outputEle = item.parentElement.querySelector('.run-code-output code');
-    item.addEventListener('click', e =>
-      runCode(code, lang, inputEle.value, outputEle)
-    );
-    item.nextElementSibling.nextElementSibling.addEventListener('click', e => {
-      inputEle.classList.toggle('d-none');
+    item.addEventListener('click', function(e) {
+      runCode(code, lang, inputEle.value, outputEle);
     });
-    item.nextElementSibling.addEventListener('click', e => {
+    item.nextElementSibling.nextElementSibling.addEventListener(
+      'click',
+      function(e) {
+        inputEle.classList.toggle('d-none');
+      }
+    );
+    item.nextElementSibling.addEventListener('click', function(e) {
       inputEle.classList.add('d-none');
       outputEle.innerHTML = '';
     });
@@ -1896,7 +1904,7 @@ origami.initRunCode = function() {
 origami.initShareCard = function() {
   let card = document.querySelector('.share-card');
   let source = document.querySelector('#share-card-source');
-  let gen = ele => {
+  let gen = function(ele) {
     let currKey = 'ori_share_card_' + encodeURI(location.pathname);
     if (sessionStorage.getItem(currKey)) {
       ele.innerHTML = sessionStorage.getItem(currKey);
@@ -1931,7 +1939,7 @@ origami.initShareCard = function() {
           errorCorrectionLevel: 'H'
         }
       },
-      (err, url) => {
+      function(err, url) {
         let html = `
           <div class="card-image">
             <h2>${siteTitle}</h2>
@@ -1957,12 +1965,12 @@ origami.initShareCard = function() {
             </div>
           </div>`;
         source.innerHTML = html;
-        source.querySelector('img').addEventListener('load', () => {
+        source.querySelector('img').addEventListener('load', function() {
           html2canvas(source, {
             useCORS: true,
             x: -source.clientWidth,
             y: window.pageYOffset
-          }).then(canvas => {
+          }).then(function(canvas) {
             let img = document.createElement('img');
             img.src = canvas.toDataURL('image/jpeg');
             ele.innerHTML = img.outerHTML;

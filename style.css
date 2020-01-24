@@ -2144,7 +2144,7 @@ body:not(.page):not(.single) #qrcode-btn {
   bottom: 45px;
   left: 0;
   font-size: 15px;
-  max-width: 20vw;
+  width: 20vw;
   padding: 20px;
   padding-bottom: 15px;
   background: rgba(255, 255, 255, 0.9);
