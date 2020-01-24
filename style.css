@@ -193,7 +193,7 @@ hr:not(.is-style-dots)::before {
 
 .ori-container {
   margin: 0 auto;
-  padding: 0 8px;
+  padding: 0 10px;
   width: 100%;
 }
 
@@ -754,6 +754,7 @@ body:not(.home) #ori-title {
 
 #search-list {
   overflow-y: auto;
+  height: 100%;
 }
 
 #search-list .card {
@@ -1126,12 +1127,12 @@ body.menu-active .ori-footer {
   position: absolute;
   right: 0;
   z-index: 1;
-  padding: 0.1rem 0.5rem;
+  padding: 2px 10px;
   background: #2ea9df;
   color: #fff;
-  margin: 0.5rem 0;
-  margin-right: -0.5rem;
-  padding-right: 1rem;
+  margin: 10px 0;
+  margin-right: -10px;
+  padding-right: 20px;
 }
 
 .post-sticky:after {
@@ -1143,7 +1144,7 @@ body.menu-active .ori-footer {
   height: 0;
   background-color: transparent;
   border-style: solid;
-  border-width: 0 0.5rem 0.5rem 0;
+  border-width: 0 10px 10px 0;
   border-color: transparent;
   border-right-color: #2ea9df;
   -webkit-filter: brightness(120%);
