@@ -1936,7 +1936,7 @@ origami.initShareCard = function() {
         color: {
           dark: '#000000',
           light: '#efefef',
-          errorCorrectionLevel: 'H'
+          errorCorrectionLevel: 'M'
         }
       },
       function(err, url) {

@@ -74,33 +74,36 @@ class OrigamiConfig
     add_settings_field(
       'origami_layout_style',
       __('布局方式', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_style',
       'origami_style_layout',
       [
         'field' => 'origami_layout_style',
         'value' => 'layout1',
-        'type' => 'text',
-        'description' => __(
-          'layout1：有大图布局，layout2：无大图布局，layout3：介于layout1和layout2的布局',
-          'origami'
-        )
+        'type' => 'select',
+        'options' => [
+          __('有大图布局', 'origami') => 'layout1',
+          __('无大图布局', 'origami') => 'layout2',
+          __('小图布局', 'origami') => 'layout3'
+        ]
       ]
     );
     add_settings_field(
       'origami_layout_sidebar',
       __('侧边栏位置', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_style',
       'origami_style_layout',
       [
         'field' => 'origami_layout_sidebar',
         'value' => 'right',
-        'type' => 'text',
-        'description' => __(
-          'right：侧边栏右置，left：侧边栏左置，none：不显示侧边栏，down: 侧边栏下置',
-          'origami'
-        )
+        'type' => 'select',
+        'options' => [
+          __('侧边栏右置', 'origami') => 'right',
+          __('侧边栏左置', 'origami') => 'left',
+          __('不显示侧边栏', 'origami') => 'none',
+          __('侧边栏下置', 'origami') => 'down'
+        ]
       ]
     );
 
@@ -154,7 +157,7 @@ class OrigamiConfig
     add_settings_field(
       'origami_footer_time',
       __('页脚时间', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_style',
       'origami_style_footer',
       [
@@ -169,15 +172,19 @@ class OrigamiConfig
     );
     add_settings_field(
       'origami_footer_pos',
-      __('页脚时间', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      __('页脚位置', 'origami'),
+      [&$this, 'settings_field_input'],
       'origami_style',
       'origami_style_footer',
       [
         'field' => 'origami_footer_pos',
         'value' => 'right',
-        'type' => 'text',
-        'description' => __('页脚的位置(left,center,right)', 'origami')
+        'type' => 'select',
+        'options' => [
+          __('左边', 'origami') => 'left',
+          __('中间', 'origami') => 'center',
+          __('右边', 'origami') => 'right'
+        ]
       ]
     );
 
@@ -195,14 +202,13 @@ class OrigamiConfig
     add_settings_field(
       'origami_about_card_enable',
       __('开启关于卡片', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_style',
       'origami_style_about_card',
       [
         'field' => 'origami_about_card_enable',
         'value' => 'true',
-        'type' => 'text',
-        'description' => __('填入true为开，false为关', 'origami')
+        'type' => 'checkbox'
       ]
     );
     add_settings_field(
@@ -236,7 +242,7 @@ class OrigamiConfig
     add_settings_field(
       'origami_about_card_content',
       __('关于卡片', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_style',
       'origami_style_about_card',
       [
@@ -316,7 +322,7 @@ class OrigamiConfig
     add_settings_field(
       'origami_carousel_title',
       __('首页幻灯片主标题', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_style',
       'origami_style_home',
       [
@@ -328,7 +334,7 @@ class OrigamiConfig
     add_settings_field(
       'origami_carousel_subtitle',
       __('首页幻灯片副标题', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_style',
       'origami_style_home',
       [
@@ -340,7 +346,7 @@ class OrigamiConfig
     add_settings_field(
       'origami_carousel_btn_content',
       __('首页幻灯片按钮内容', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_style',
       'origami_style_home',
       [
@@ -352,7 +358,7 @@ class OrigamiConfig
     add_settings_field(
       'origami_carousel_btn_url',
       __('首页幻灯片按钮链接', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_style',
       'origami_style_home',
       [
@@ -390,40 +396,37 @@ class OrigamiConfig
     add_settings_field(
       'origami_timeline_sidebar',
       __('开启时光轴侧栏', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_style',
       'origami_style_other',
       [
         'field' => 'origami_timeline_sidebar',
         'value' => 'true',
-        'type' => 'text',
-        'description' => __('填入true为开，false为关', 'origami')
+        'type' => 'checkbox'
       ]
     );
     add_settings_field(
       'origami_links_sidebar',
       __('开启友链侧栏', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_style',
       'origami_style_other',
       [
         'field' => 'origami_links_sidebar',
         'value' => 'true',
-        'type' => 'text',
-        'description' => __('填入true为开，false为关', 'origami')
+        'type' => 'checkbox'
       ]
     );
     add_settings_field(
       'origami_inspiration_sidebar',
       __('开启灵感侧栏', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_style',
       'origami_style_other',
       [
         'field' => 'origami_inspiration_sidebar',
         'value' => 'true',
-        'type' => 'text',
-        'description' => __('填入true为开，false为关', 'origami')
+        'type' => 'checkbox'
       ]
     );
     add_settings_field(
@@ -442,15 +445,15 @@ class OrigamiConfig
     add_settings_field(
       'origami_animate',
       __('开启动画', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_style',
       'origami_style_other',
       [
         'field' => 'origami_animate',
         'value' => 'false',
-        'type' => 'text',
+        'type' => 'checkbox',
         'description' => __(
-          '注意此选项是开启一些影响性能的动画效果，正常情况下请不要开启(填入true为开，false为关)',
+          '注意此选项是开启一些影响性能的动画效果，正常情况下请不要开启',
           'origami'
         )
       ]
@@ -458,14 +461,13 @@ class OrigamiConfig
     add_settings_field(
       'origami_sidebar_toc',
       __('开启侧栏目录', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_style',
       'origami_style_other',
       [
         'field' => 'origami_sidebar_toc',
         'value' => 'false',
-        'type' => 'text',
-        'description' => __('true为开，false为关', 'origami')
+        'type' => 'checkbox'
       ]
     );
 
@@ -540,7 +542,7 @@ class OrigamiConfig
     add_settings_field(
       'origami_comment_key',
       __('权限控制(key)', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_comment',
       [
@@ -556,45 +558,37 @@ class OrigamiConfig
     add_settings_field(
       'origami_enable_comment_update',
       __('开启评论可编辑', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_comment',
       [
         'field' => 'origami_enable_comment_update',
         'value' => 'true',
-        'type' => 'text',
-        'description' => __(
-          '开启评论可编辑（指定时间之内评论者可以编辑评论内容）',
-          'origami'
-        )
+        'type' => 'checkbox'
       ]
     );
     add_settings_field(
       'origami_enable_comment_delete',
       __('开启评论可删除', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_comment',
       [
         'field' => 'origami_enable_comment_delete',
         'value' => 'true',
-        'type' => 'text',
-        'description' => __(
-          '开启评论可删除（指定时间之内评论者可以删除评论内容）',
-          'origami'
-        )
+        'type' => 'checkbox'
       ]
     );
     add_settings_field(
       'origami_enable_comment_time',
       __('评论可操作的时间(分钟)', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_comment',
       [
         'field' => 'origami_enable_comment_time',
         'value' => '5',
-        'type' => 'text',
+        'type' => 'number',
         'description' => __(
           '评论者可以操作评论内容的有效时间，单位为分钟',
           'origami'
@@ -604,33 +598,25 @@ class OrigamiConfig
     add_settings_field(
       'origami_comment_owo',
       __('OwO表情', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_comment',
       [
         'field' => 'origami_comment_owo',
         'value' => 'true',
-        'type' => 'text',
-        'description' => __(
-          '是否开启评论区的OwO表情，默认为true(true为开，false为关)',
-          'origami'
-        )
+        'type' => 'checkbox'
       ]
     );
     add_settings_field(
       'origami_markdown_comment',
       __('Markdown评论', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_comment',
       [
         'field' => 'origami_markdown_comment',
         'value' => 'true',
-        'type' => 'text',
-        'description' => __(
-          '是否开启Markdown评论，默认为true(true为开，false为关)',
-          'origami'
-        )
+        'type' => 'checkbox'
       ]
     );
     add_settings_field(
@@ -648,7 +634,7 @@ class OrigamiConfig
     add_settings_field(
       'origami_mail_notice_icon',
       __('评论通知icon', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input_media'],
       'origami_fun',
       'origami_fun_comment',
       [
@@ -705,25 +691,25 @@ class OrigamiConfig
     add_settings_field(
       'origami_comment_admin_url',
       __('评论标记URL（admin）', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_comment',
       [
         'field' => 'origami_comment_admin_url',
         'value' => '/about',
-        'type' => 'text'
+        'type' => 'url'
       ]
     );
     add_settings_field(
       'origami_comment_friend_url',
       __('评论标记URL（friend）', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_comment',
       [
         'field' => 'origami_comment_friend_url',
         'value' => '/links',
-        'type' => 'text'
+        'type' => 'url'
       ]
     );
 
@@ -752,13 +738,18 @@ class OrigamiConfig
     add_settings_field(
       'origami_copy_add_copyright',
       __('复制时添加版权信息', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_other',
       [
         'field' => 'origami_copy_add_copyright',
         'value' => 'ncode',
-        'type' => 'text',
+        'type' => 'select',
+        'options' => [
+          __('全部添加', 'origami') => 'all',
+          __('除代码外', 'origami') => 'nocode',
+          __('不添加', 'origami') => 'none'
+        ],
         'description' => __(
           'all表示不管复制什么内容都会添加版权信息，ncode表示除代码部分外复制内容会添加版权信息，none表示不启用复制添加版权信息的功能',
           'origami'
@@ -768,7 +759,7 @@ class OrigamiConfig
     add_settings_field(
       'origami_toc_level',
       __('生成目录的级别', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_other',
       [
@@ -784,63 +775,51 @@ class OrigamiConfig
     add_settings_field(
       'origami_canvas_nest',
       __('Canvas-Nest背景', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_other',
       [
         'field' => 'origami_canvas_nest',
         'value' => 'true',
-        'type' => 'text',
-        'description' => __(
-          '是否开启Canvas-Nest背景，默认为true(true为开，false为关)',
-          'origami'
-        )
+        'type' => 'checkbox'
       ]
     );
     add_settings_field(
       'origami_canvas_mouse',
       __('Canvas-Mouse特效', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_other',
       [
         'field' => 'origami_canvas_mouse',
         'value' => 'true',
-        'type' => 'text',
-        'description' => __(
-          '是否开启Canvas-Mouse特效，默认为true(true为开，false为关)',
-          'origami'
-        )
+        'type' => 'checkbox'
       ]
     );
     add_settings_field(
       'origami_workbox',
       __('WorkBox缓存', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_other',
       [
         'field' => 'origami_workbox',
         'value' => '5',
-        'type' => 'text',
-        'description' => __(
-          '是否开启WorkBox缓存，默认为false(true为开，false为关)',
-          'origami'
-        )
+        'type' => 'checkbox'
       ]
     );
     add_settings_field(
       'origami_block_mixed',
       __('阻止混合内容', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_other',
       [
         'field' => 'origami_block_mixed',
         'value' => 'true',
-        'type' => 'text',
+        'type' => 'checkbox',
         'description' => __(
-          '是否阻止混合内容出现(即https中混入http，true为开，false为关)',
+          '是否阻止混合内容出现(即https中混入http)',
           'origami'
         )
       ]
@@ -848,7 +827,7 @@ class OrigamiConfig
     add_settings_field(
       'origami_lazyload',
       __('LazyLoad加载图片', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_other',
       [
@@ -864,39 +843,37 @@ class OrigamiConfig
     add_settings_field(
       'origami_katex',
       __('开启Katex支持', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_other',
       [
         'field' => 'origami_katex',
         'value' => 'true',
-        'type' => 'text',
-        'description' => __('true为开，false为关', 'origami')
+        'type' => 'checkbox'
       ]
     );
     add_settings_field(
       'origami_mermaid',
       __('开启流程图/时序图/甘特图支持', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_other',
       [
         'field' => 'origami_mermaid',
         'value' => 'true',
-        'type' => 'text',
-        'description' => __('true为开，false为关', 'origami')
+        'type' => 'checkbox'
       ]
     );
     add_settings_field(
       'origami_judge0api',
       __('Judge0API地址', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_other',
       [
         'field' => 'origami_judge0api',
         'value' => '',
-        'type' => 'text',
+        'type' => 'url',
         'description' => __('输入Judge0API服务器地址', 'origami')
       ]
     );
@@ -917,33 +894,31 @@ class OrigamiConfig
     add_settings_field(
       'origami_title_change',
       __('开启网页标题改变', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_other',
       [
         'field' => 'origami_title_change',
         'value' => 'true',
-        'type' => 'text',
-        'description' => __('true为开，false为关', 'origami')
+        'type' => 'checkbox'
       ]
     );
     add_settings_field(
       'origami_real_time_search',
       __('开启实时搜索功能', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_other',
       [
         'field' => 'origami_real_time_search',
         'value' => 'true',
-        'type' => 'text',
-        'description' => __('true为开，false为关', 'origami')
+        'type' => 'checkbox'
       ]
     );
     add_settings_field(
       'origami_live_chat',
       __('开启Live Chat功能', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_other',
       [
@@ -956,14 +931,13 @@ class OrigamiConfig
     add_settings_field(
       'origami_enable_jquery',
       __('取消禁用jQuery', 'origami'),
-      [&$this, 'settings_field_input_text'],
+      [&$this, 'settings_field_input'],
       'origami_fun',
       'origami_fun_other',
       [
         'field' => 'origami_enable_jquery',
         'value' => 'false',
-        'type' => 'text',
-        'description' => __('true为开，false为关', 'origami')
+        'type' => 'checkbox'
       ]
     );
   }
@@ -990,7 +964,7 @@ class OrigamiConfig
       echo '<p>' . htmlspecialchars($description) . '</p>';
     }
   }
-  public function settings_field_input_text($args)
+  public function settings_field_input($args)
   {
     $field = $args['field'];
     $type = $args['type'];
@@ -999,13 +973,37 @@ class OrigamiConfig
     if ($value === false) {
       $value = $args['value'];
     }
-    echo sprintf(
-      '<input type="%s" name="%s" id="%s" value="%s"/>',
-      $type,
-      $field,
-      $field,
-      $value
-    );
+    if ($type === 'checkbox' || $type === 'select') {
+      $options = '';
+      if ($type === 'checkbox') {
+        $args['options'] = [
+          __('开启', 'origami') => 'true',
+          __('关闭', 'origami') => 'false'
+        ];
+      }
+      foreach ($args['options'] as $k => $v) {
+        $options .= sprintf(
+          '<option value="%s" %s>%s</option>',
+          $v,
+          $value === $v ? 'selected="selected"' : '',
+          $k
+        );
+      }
+      echo sprintf(
+        '<select name="%s" id="%s">%s</select>',
+        $field,
+        $field,
+        $options
+      );
+    } else {
+      echo sprintf(
+        '<input type="%s" name="%s" id="%s" value="%s"/>',
+        $type,
+        $field,
+        $field,
+        $value
+      );
+    }
     if ($description) {
       echo '<p>' . htmlspecialchars($description) . '</p>';
     }
