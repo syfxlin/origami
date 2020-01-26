@@ -25,10 +25,13 @@
         </div>
     </div>
     <div id="if-to-start">
-        <span><?php echo __(
+        <span title="<?php echo __(
           '已跳转到上次阅读的位置，从头阅读？',
           'origami'
-        ); ?></span>
+        ); ?>"><?php echo __(
+  '已跳转到上次阅读的位置，从头阅读？',
+  'origami'
+); ?></span>
         <a class="btn" href="javascript:notToStart();"><?php echo __(
           '否',
           'oirgami'

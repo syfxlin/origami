@@ -934,15 +934,26 @@ origami.initTocbot = function() {
 origami.readingTransfer = function() {
   let url = encodeURI(location.href);
   let select = true;
-  let container = document.querySelector('.s-container, .p-container');
+  let headerHeight = document.querySelector('.ori-header').clientHeight;
+  let contentEles = Array.from(
+    document.querySelector('.s-content, .p-content').children
+  );
   let qrImg = document.getElementById('qrcode-img');
   document.getElementById('qrcode-btn').addEventListener('click', function() {
+    let index = 1;
+    for (let i = 0; i < contentEles.length; i++) {
+      if (
+        contentEles[i].getClientRects().length > 0 &&
+        contentEles[i].getClientRects()[0].top - headerHeight >= 0
+      ) {
+        index = i;
+        break;
+      }
+    }
     if (select) {
       qrImg.innerHTML = '';
       QRCode.toDataURL(
-        url +
-          '?index=' +
-          (window.scrollY - container.offsetTop) / container.clientHeight,
+        url + '?index=' + index,
         {
           width: 180,
           margin: 0,
@@ -993,11 +1004,13 @@ origami.tocToggle = function() {
 
 origami.setPosition = function() {
   let index = $getQuery('index');
-  let container = document.querySelector('.s-container, .p-container');
-  if (index) {
-    index = container.offsetTop + container.clientHeight * index;
+  let indexEle = document.querySelector('.s-content, .p-content').children[
+    index
+  ];
+  let headerHeight = document.querySelector('.ori-header').clientHeight;
+  if (indexEle) {
     window.scrollTo({
-      top: index,
+      top: indexEle.offsetTop - headerHeight,
       behavior: 'smooth'
     });
     let ifToStart = document.getElementById('if-to-start');
