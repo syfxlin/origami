@@ -887,6 +887,29 @@ add_action('rest_api_init', function () {
   ]);
 });
 
+//彩色标签云
+function color_tagcloud($text)
+{
+  if (get_option('origami_color_tagcloud', 'false') == 'false') {
+    return $text;
+  } else {
+    $text = preg_replace_callback(
+      '|<a (.+?)>|i',
+      'color_tagloud_callback',
+      $text
+    );
+    return $text;
+  }
+}
+function color_tagloud_callback($matches)
+{
+  $color = dechex(rand(0, 16777215));
+  $pattern = '/style=(\'|\")(.*)(\'|\")/i';
+  $text = preg_replace($pattern, "style=\"color:#$color;$2;\"", $matches[1]);
+  return "<a $text>";
+}
+add_filter('wp_tag_cloud', 'color_tagcloud', 1);
+
 require_once get_template_directory() . '/include/remove.php';
 require_once get_template_directory() . '/include/shortcode.php';
 require_once get_template_directory() . '/include/aes.class.php';

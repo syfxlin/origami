@@ -375,6 +375,7 @@ class OrigamiConfig
     register_setting('origami_style', 'origami_background');
     register_setting('origami_style', 'origami_animate');
     register_setting('origami_style', 'origami_sidebar_toc');
+    register_setting('origami_style', 'origami_color_tagcloud');
     add_settings_section(
       'origami_style_other',
       __('6.其他设置', 'origami'),
@@ -466,6 +467,18 @@ class OrigamiConfig
       'origami_style_other',
       [
         'field' => 'origami_sidebar_toc',
+        'value' => 'false',
+        'type' => 'checkbox'
+      ]
+    );
+    add_settings_field(
+      'origami_color_tagcloud',
+      __('彩色标签云', 'origami'),
+      [&$this, 'settings_field_input'],
+      'origami_style',
+      'origami_style_other',
+      [
+        'field' => 'origami_color_tagcloud',
         'value' => 'false',
         'type' => 'checkbox'
       ]

@@ -91,7 +91,11 @@ table {
   margin-top: 1rem;
 
   &.is-style-stripes tbody tr:nth-of-type(odd) {
-    background: #f3f4f5;
+    background: #f3f4f5 !important;
+  }
+
+  &.is-style-stripes tbody tr:nth-of-type(even) {
+    background: #ffffff !important;
   }
 
   tbody tr.active,

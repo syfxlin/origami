@@ -71,7 +71,11 @@ table {
 }
 
 table.is-style-stripes tbody tr:nth-of-type(odd) {
-  background: #f3f4f5;
+  background: #f3f4f5 !important;
+}
+
+table.is-style-stripes tbody tr:nth-of-type(even) {
+  background: #ffffff !important;
 }
 
 table tbody tr.active,
