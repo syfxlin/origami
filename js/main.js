@@ -934,7 +934,7 @@ origami.initTocbot = function() {
 };
 
 origami.readingTransfer = function() {
-  let url = encodeURI(location.href);
+  let url = location.href;
   let select = true;
   let headerHeight = document.querySelector('.ori-header').clientHeight;
   let contentEles = Array.from(
@@ -1920,7 +1920,7 @@ origami.initShareCard = function() {
   let card = document.querySelector('.share-card');
   let source = document.querySelector('#share-card-source');
   let gen = function(ele) {
-    let currKey = 'ori_share_card_' + encodeURI(location.pathname);
+    let currKey = 'ori_share_card_' + location.pathname;
     if (sessionStorage.getItem(currKey)) {
       ele.innerHTML = sessionStorage.getItem(currKey);
       return;
@@ -1945,7 +1945,7 @@ origami.initShareCard = function() {
         .textContent.substring(1, 100)
         .replace(/\s+/g, ' ') + ' […]';
     QRCode.toDataURL(
-      encodeURI(location.href),
+      location.href,
       {
         width: 180,
         margin: 0,
