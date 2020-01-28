@@ -1924,13 +1924,14 @@ origami.initShareCard = function() {
       return;
     }
     let siteTitle = document.querySelector('#ori-title').innerHTML;
-    let imageUrl = 'https://lab.ixk.me/api/bing/?size=1024x768';
+    let imageUrl = 'https://lab.ixk.me/api/bing/?size=1024x768&skip_cache=true';
     let thumb = document.querySelector('.s-thumb');
     if (thumb) {
-      imageUrl = (thumb.style.backgroundImage
-        ? thumb.style.backgroundImage
-        : thumb.getAttribute('data-bg')
-      ).replace(/url\(["']?([^"']*)["']?\)/g, '$1');
+      imageUrl =
+        (thumb.style.backgroundImage
+          ? thumb.style.backgroundImage
+          : thumb.getAttribute('data-bg')
+        ).replace(/url\(["']?([^"']*)["']?\)/g, '$1') + '?skip_cache=true';
     }
     let info = document.querySelector('.s-info, .p-info');
     let title = info.querySelector('.card-title').innerHTML;
@@ -1958,7 +1959,7 @@ origami.initShareCard = function() {
             <h2>${siteTitle}</h2>
             <img
                 class="img-responsive"
-                src="${imageUrl + '?skip_cache=true'}"
+                src="${imageUrl}"
             />
           </div>
           <div class="card-header">
