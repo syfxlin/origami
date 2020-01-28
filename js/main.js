@@ -528,6 +528,7 @@ origami.initComments = function() {
     }
     loading.style.height = '4rem';
     listEle.style.height = '0px';
+    listEle.style.overflow = 'hidden';
     if (page <= 0) {
       page = 1;
     }
@@ -548,6 +549,7 @@ origami.initComments = function() {
           loading.style.height = '0';
           listEle.innerHTML = commentsToList(response);
           listEle.style.height = listEle.scrollHeight + 'px';
+          listEle.style.overflow = 'unset';
           setTimeout(function() {
             listEle.style.height = 'unset';
           }, 600);
