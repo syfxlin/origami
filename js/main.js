@@ -1958,7 +1958,7 @@ origami.initShareCard = function() {
             <h2>${siteTitle}</h2>
             <img
                 class="img-responsive"
-                src="${imageUrl}"
+                src="${imageUrl + '?skip_cache=true'}"
             />
           </div>
           <div class="card-header">
