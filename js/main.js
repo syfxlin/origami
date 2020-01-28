@@ -1930,7 +1930,7 @@ origami.initShareCard = function() {
       imageUrl = (thumb.style.backgroundImage
         ? thumb.style.backgroundImage
         : thumb.getAttribute('data-bg')
-      ).replace(/url\([\\"|"|']*(.*)[\\"|"|']*\)/g, '$1');
+      ).replace(/url\(["']?([^"']*)["']?\)/g, '$1');
     }
     let info = document.querySelector('.s-info, .p-info');
     let title = info.querySelector('.card-title').innerHTML;
