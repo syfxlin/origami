@@ -20,5 +20,8 @@
   "katex_js_2": "https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/contrib/auto-render.min.js",
   "katex_css": "https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css",
   "mermaid_js": "https://cdn.jsdelivr.net/npm/mermaid@8.2.3/dist/mermaid.min.js",
-  "marked_js": "https://cdn.jsdelivr.net/npm/marked@0.7.0/lib/marked.min.js"
+  "marked_js": "https://cdn.jsdelivr.net/npm/marked@0.7.0/lib/marked.min.js",
+  "mouse_css": "/css/mouse.css",
+  "mouse_js": "/js/mouse.js",
+  "html2canvas_js": "https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"
 }
