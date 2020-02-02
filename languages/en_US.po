@@ -6,7 +6,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/"
 "Origami\n"
 "POT-Creation-Date: 2020-01-07T04:39:58+00:00\n"
-"PO-Revision-Date: 2020-02-01 23:47+0800\n"
+"PO-Revision-Date: 2020-02-02 12:45+0800\n"
 "Last-Translator: \n"
 "Language-Team: Ye Shu <chshu@protonmail.ch>\n"
 "Language: en_US\n"
@@ -209,7 +209,7 @@ msgstr "Origami Theme"
 
 #: include/config.class.php:17 include/config_style.php:2
 msgid "Origami主题 - 样式"
-msgstr "Origami Theme—Appearances"
+msgstr "Origami Theme - Appearances"
 
 #: include/config.class.php:18
 msgid "样式"
@@ -217,7 +217,7 @@ msgstr "Appearances"
 
 #: include/config.class.php:25 include/config_fun.php:2
 msgid "Origami主题 - 功能"
-msgstr "Origami Theme—Features"
+msgstr "Origami Theme - Features"
 
 #: include/config.class.php:26
 msgid "功能"
@@ -225,7 +225,7 @@ msgstr "Features"
 
 #: include/config.class.php:33 include/config_about.php:2
 msgid "Origami主题 - 关于"
-msgstr "Origami Theme—About"
+msgstr "Origami Theme - About"
 
 #: include/config.class.php:34
 msgid "关于"
@@ -321,7 +321,8 @@ msgstr "Avatar for \"about me\" card"
 
 #: include/config.class.php:221 include/config.class.php:234
 msgid "如果填入default则会自动读取用户信息显示"
-msgstr "Enter default to automatically fetch user info for display"
+msgstr ""
+"Enter \"default\" to automatically fetch user info for display"
 
 #: include/config.class.php:226
 msgid "关于卡片"
