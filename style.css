@@ -1360,34 +1360,18 @@ body.menu-active .ori-footer {
 .s-content a {
   text-decoration: none;
   position: relative;
+  transition: background-size 0.25s ease-out;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-size: 0 2px;
+  background-image: linear-gradient(#5755d9, #5755d9);
 }
 
-.comments-container a:after,
-.p-content a:after,
-.s-content a:after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  -webkit-transform: scaleX(0);
-          transform: scaleX(0);
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: #5755d9;
-  -webkit-transform-origin: bottom right;
-          transform-origin: bottom right;
-  transition: -webkit-transform 0.25s ease-out;
-  transition: transform 0.25s ease-out;
-  transition: transform 0.25s ease-out, -webkit-transform 0.25s ease-out;
-}
-
-.comments-container a:hover:after,
-.p-content a:hover:after,
-.s-content a:hover:after {
-  -webkit-transform: scaleX(1);
-          transform: scaleX(1);
-  -webkit-transform-origin: bottom left;
-          transform-origin: bottom left;
+.comments-container a:hover,
+.p-content a:hover,
+.s-content a:hover {
+  background-size: 100% 2px;
+  background-position: bottom left;
 }
 
 .links-list,

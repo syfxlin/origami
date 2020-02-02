@@ -1277,22 +1277,15 @@ body.menu-active {
   text-decoration: none;
   position: relative;
 
-  &:after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    transform: scaleX(0);
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: primary-color();
-    transform-origin: bottom right;
-    transition: transform 0.25s ease-out;
-  }
+  transition: background-size 0.25s ease-out;
+  background-repeat: no-repeat;
+  background-position: bottom right;
+  background-size: 0 2px;
+  background-image: linear-gradient(primary-color(), primary-color());
 
-  &:hover:after {
-    transform: scaleX(1);
-    transform-origin: bottom left;
+  &:hover {
+    background-size: 100% 2px;
+    background-position: bottom left;
   }
 }
 
