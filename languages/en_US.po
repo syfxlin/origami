@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Origami 2.1.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/Origami\n"
 "POT-Creation-Date: 2020-02-01T17:10:35+00:00\n"
-"PO-Revision-Date: 2020-02-02 12:56+0800\n"
+"PO-Revision-Date: 2020-02-03 20:28+0800\n"
 "Last-Translator: \n"
 "Language-Team: Ye Shu <chshu@protonmail.ch>\n"
 "Language: en_US\n"
@@ -239,15 +239,15 @@ msgstr "Predefined layout styles"
 
 #: include/config.class.php:85
 msgid "有大图布局"
-msgstr ""
+msgstr "With stylistic picture"
 
 #: include/config.class.php:86
 msgid "无大图布局"
-msgstr ""
+msgstr "Without stylistic picture"
 
 #: include/config.class.php:87
 msgid "小图布局"
-msgstr ""
+msgstr "With smaller stylistic picture"
 
 #: include/config.class.php:93
 msgid "侧边栏位置"
@@ -255,19 +255,19 @@ msgstr "Location of sidebar"
 
 #: include/config.class.php:102
 msgid "侧边栏右置"
-msgstr ""
+msgstr "Right-hand side"
 
 #: include/config.class.php:103
 msgid "侧边栏左置"
-msgstr ""
+msgstr "Left-hand side"
 
 #: include/config.class.php:104
 msgid "不显示侧边栏"
-msgstr ""
+msgstr "Does not show sidebar"
 
 #: include/config.class.php:105
 msgid "侧边栏下置"
-msgstr ""
+msgstr "Bottom"
 
 #: include/config.class.php:114
 msgid "2.导航栏设置"
@@ -306,19 +306,19 @@ msgstr ""
 
 #: include/config.class.php:175
 msgid "页脚位置"
-msgstr ""
+msgstr "Location of footer"
 
 #: include/config.class.php:184
 msgid "左边"
-msgstr ""
+msgstr "Left-hand side"
 
 #: include/config.class.php:185
 msgid "中间"
-msgstr ""
+msgstr "In the middle"
 
 #: include/config.class.php:186
 msgid "右边"
-msgstr ""
+msgstr "Right-hand side"
 
 #: include/config.class.php:198
 msgid "4.侧栏关于卡片设置"
@@ -413,23 +413,18 @@ msgid "开启动画"
 msgstr "Enable animation effects"
 
 #: include/config.class.php:456
-#, fuzzy
-#| msgid ""
-#| "注意此选项是开启一些影响性能的动画效果，正常情况下请不要开启(填入true为"
-#| "开，false为关)"
 msgid "注意此选项是开启一些影响性能的动画效果，正常情况下请不要开启"
 msgstr ""
 "Be aware that animation effects can impact the performance. Please only "
-"enable it if you're sure what you're doing. (Enter \"true\" to enable, "
-"\"false\" to disable)"
+"enable it if you're sure what you're doing. "
 
 #: include/config.class.php:464
 msgid "开启侧栏目录"
-msgstr ""
+msgstr "Enable sidebar directories"
 
 #: include/config.class.php:476
 msgid "彩色标签云"
-msgstr ""
+msgstr "Colorful word cloud for tags"
 
 #: include/config.class.php:491
 msgid "1.静态资源设置"
@@ -528,11 +523,11 @@ msgstr "Footer for the mail notice"
 
 #: include/config.class.php:706
 msgid "评论标记URL（admin）"
-msgstr ""
+msgstr "Add URL link to comments from administrator"
 
 #: include/config.class.php:718
 msgid "评论标记URL（friend）"
-msgstr ""
+msgstr "Add URL link to comments from friends"
 
 #: include/config.class.php:747
 msgid "4.其他设置"
@@ -544,15 +539,15 @@ msgstr "Add copyright notice when copying contents"
 
 #: include/config.class.php:762
 msgid "全部添加"
-msgstr ""
+msgstr "For all cases of copying"
 
 #: include/config.class.php:763
 msgid "除代码外"
-msgstr ""
+msgstr "For all cases except copying codes"
 
 #: include/config.class.php:764
 msgid "不添加"
-msgstr ""
+msgstr "Disabled"
 
 #: include/config.class.php:766
 msgid ""
@@ -577,7 +572,7 @@ msgstr "Canvas-Nest background"
 
 #: include/config.class.php:802
 msgid "Canvas-Mouse特效"
-msgstr ""
+msgstr "Canvas-Mouse effect"
 
 #: include/config.class.php:814
 msgid "WorkBox缓存"
@@ -588,12 +583,8 @@ msgid "阻止混合内容"
 msgstr "Prevent mixed contents"
 
 #: include/config.class.php:834
-#, fuzzy
-#| msgid "是否阻止混合内容出现(即https中混入http，true为开，false为关)"
 msgid "是否阻止混合内容出现(即https中混入http)"
-msgstr ""
-"Prevent http content to be mixed in https pages (\"true\" for enabled, "
-"\"false\" for disabled)"
+msgstr "Prevent http content to be mixed in https pages"
 
 #: include/config.class.php:842
 msgid "LazyLoad加载图片"
@@ -615,19 +606,19 @@ msgstr "Enable support for flowchart/sequence diagram/Gantt chart"
 
 #: include/config.class.php:882
 msgid "Judge0API地址"
-msgstr ""
+msgstr "Judge0 API Address"
 
 #: include/config.class.php:890
 msgid "输入Judge0API服务器地址"
-msgstr ""
+msgstr "Enter the address for Judge0 API Server"
 
 #: include/config.class.php:895
 msgid "Run-Code语言列表"
-msgstr ""
+msgstr "List of Run-Code languages"
 
 #: include/config.class.php:904
 msgid "填入Run-Code语言列表JSON"
-msgstr ""
+msgstr "Enter the JSON list for Run-Code languages"
 
 #: include/config.class.php:909
 msgid "开启网页标题改变"
@@ -647,17 +638,15 @@ msgstr "Enter address for Live Chat Server to enable it"
 
 #: include/config.class.php:946
 msgid "取消禁用jQuery"
-msgstr ""
+msgstr "Enable jQuery"
 
 #: include/config.class.php:993
-#, fuzzy
-#| msgid "开启动画"
 msgid "开启"
-msgstr "Enable animation effects"
+msgstr "Enable"
 
 #: include/config.class.php:994 template-part/tools.php:95
 msgid "关闭"
-msgstr ""
+msgstr "Disable"
 
 #: include/config_about.php:12
 msgid "感谢使用 Origami 主题"
@@ -754,7 +743,7 @@ msgstr "Show Table of Content in posts"
 
 #: template-part/tools.php:70
 msgid "分享"
-msgstr ""
+msgstr "Share"
 
 #: template-part/tools.php:73
 msgid "阅读转移"
