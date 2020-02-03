@@ -1599,6 +1599,18 @@ body.menu-active .ori-footer {
   cursor: pointer;
 }
 
+.comment-body.expand::before {
+  display: block;
+  content: '';
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  bottom: 3.15em;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9));
+}
+
 .comment-body.expand::after {
   display: block;
   content: '展开评论';
@@ -1611,7 +1623,7 @@ body.menu-active .ori-footer {
   left: 0;
   bottom: 0;
   pointer-events: none;
-  background: linear-gradient(0deg, white, rgba(255, 255, 255, 0.7));
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .comment-footer {
@@ -1661,6 +1673,18 @@ body.menu-active .ori-footer {
   cursor: pointer;
 }
 
+.comment-children.expand::before {
+  display: block;
+  content: '';
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  bottom: 3.15em;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9));
+}
+
 .comment-children.expand::after {
   display: block;
   content: '展开更多回复';
@@ -1673,7 +1697,7 @@ body.menu-active .ori-footer {
   left: 0;
   bottom: 0;
   pointer-events: none;
-  background: linear-gradient(0deg, white, rgba(255, 255, 255, 0.7));
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .comments-container i {

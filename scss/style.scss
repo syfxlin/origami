@@ -1474,6 +1474,17 @@ body.menu-active {
     max-height: 100px;
     overflow: hidden;
     cursor: pointer;
+    &::before {
+      display: block;
+      content: '';
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 0;
+      bottom: 3.15em;
+      pointer-events: none;
+      background: linear-gradient(180deg, primary-bg(0), primary-bg(0.9));
+    }
     &::after {
       display: block;
       content: '展开评论';
@@ -1486,7 +1497,7 @@ body.menu-active {
       left: 0;
       bottom: 0;
       pointer-events: none;
-      background: linear-gradient(0deg, primary-bg(1), primary-bg(0.7));
+      background: primary-bg(0.9);
     }
   }
 }
@@ -1529,6 +1540,17 @@ body.menu-active {
     max-height: 100px;
     overflow: hidden;
     cursor: pointer;
+    &::before {
+      display: block;
+      content: '';
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 0;
+      bottom: 3.15em;
+      pointer-events: none;
+      background: linear-gradient(180deg, primary-bg(0), primary-bg(0.9));
+    }
     &::after {
       display: block;
       content: '展开更多回复';
@@ -1541,7 +1563,7 @@ body.menu-active {
       left: 0;
       bottom: 0;
       pointer-events: none;
-      background: linear-gradient(0deg, primary-bg(1), primary-bg(0.7));
+      background: primary-bg(0.9);
     }
   }
 }
