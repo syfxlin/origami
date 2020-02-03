@@ -201,21 +201,33 @@ hr:not(.is-style-dots)::before {
   width: 100%;
 }
 
+@media (min-width: 576px) {
+  .ori-container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .ori-container {
+    max-width: 720px;
+  }
+}
+
 @media (min-width: 992px) {
   .ori-container {
-    width: 1140px;
+    max-width: 960px;
   }
 }
 
-@media (min-width: 992px) and (max-width: 1099px) {
+@media (min-width: 1200px) {
   .ori-container {
-    width: 970px;
+    max-width: 1140px;
   }
 }
 
-@media screen and (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 1560px) {
   .ori-container {
-    width: 750px;
+    max-width: 1400px;
   }
 }
 
