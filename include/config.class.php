@@ -723,7 +723,7 @@ class OrigamiConfig
       [
         'field' => 'origami_comment_admin_url',
         'value' => '/about',
-        'type' => 'url'
+        'type' => 'text'
       ]
     );
     add_settings_field(
@@ -735,7 +735,7 @@ class OrigamiConfig
       [
         'field' => 'origami_comment_friend_url',
         'value' => '/links',
-        'type' => 'url'
+        'type' => 'text'
       ]
     );
 
