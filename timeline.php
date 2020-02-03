@@ -90,11 +90,9 @@ $this_year = -1;
 <div id="main-content">
     <?php if (get_option('origami_featured_pages_post_type', 'false') != 'true'): ?>
       <section class="featured">
-        <div class="featured-image" style="background-image:url(<?php echo wp_get_attachment_url(
-          get_post_thumbnail_id($post->ID)
-        ); ?>)"></div>
+        <div class="featured-image" style="background-image:url(<?php echo $post_item['post_image']; ?>)"></div>
         <div class="featured-container">
-          <h1><?php echo get_the_title(); ?></h1>
+          <h1><?php echo $post_item['post_title']; ?></h1>
           <h2><?php echo __('目前共有', 'origami') .
             $count .
             __('篇文章'); ?></h2>
