@@ -667,6 +667,7 @@ body {
   position: fixed;
   display: none;
   opacity: 0;
+  transition: opacity 0.5s;
 
   .navbar-section {
     flex: 0;

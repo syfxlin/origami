@@ -208,7 +208,6 @@ origami.searchBtn = function() {
     let el = document.getElementsByClassName('ori-search')[0];
     el.style.display = 'block';
     document.getElementById('ori-search-input').focus();
-    el.style.transition = 'opacity 0.5s';
     el.style.opacity = '1';
   });
   document
@@ -218,7 +217,6 @@ origami.searchBtn = function() {
       setTimeout(function() {
         el.style.display = 'none';
       }, 500);
-      el.style.transition = 'opacity 0.5s';
       el.style.opacity = '0';
     });
 };
@@ -754,7 +752,7 @@ origami.initComments = function() {
         form.remove();
         document
           .querySelector('#comment-' + parentId)
-          .nextElementSibling.appendChild(form);
+          .nextElementSibling.prepend(form);
         submitEle.setAttribute('data-commentid', parentId);
         submitEle.setAttribute(
           'data-lv',
