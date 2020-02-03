@@ -554,6 +554,23 @@ origami.initComments = function() {
           pageOut = page;
           changeNav();
           initReply();
+          document
+            .querySelectorAll('.comment-body pre code')
+            .forEach(function(item) {
+              Prism.highlightElement(item);
+            });
+          document.querySelectorAll('.comment-body').forEach(function(item) {
+            if (item.clientHeight > 100) {
+              item.classList.add('expand');
+              item.addEventListener(
+                'click',
+                function() {
+                  item.classList.remove('expand');
+                },
+                { once: true }
+              );
+            }
+          });
           callback(pageOut, response);
         },
         error: function(status) {
@@ -658,6 +675,12 @@ origami.initComments = function() {
       parent.replaceChild(newComment, responseForm);
       respondMain.appendChild(responseForm);
     }
+    // 代码高亮
+    newComment
+      .querySelectorAll('.comment-body pre code')
+      .forEach(function(item) {
+        Prism.highlightElement(item);
+      });
     // 初始化两个按钮
     initBtn();
   };

@@ -1580,6 +1580,7 @@ body.menu-active .ori-footer {
 
 .comment-body {
   margin-top: 0.25rem;
+  position: relative;
 }
 
 .comment-body *,
@@ -1590,6 +1591,27 @@ body.menu-active .ori-footer {
 .comment-body img {
   max-height: 20vh;
   max-width: 50%;
+}
+
+.comment-body.expand {
+  max-height: 100px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.comment-body.expand::after {
+  display: block;
+  content: 'Click on expand';
+  text-align: center;
+  color: #828586;
+  position: absolute;
+  width: 100%;
+  height: 3.15em;
+  line-height: 3.15em;
+  left: 0;
+  bottom: 0;
+  pointer-events: none;
+  background: linear-gradient(0deg, white, rgba(255, 255, 255, 0));
 }
 
 .comment-footer {
