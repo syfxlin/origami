@@ -1476,9 +1476,9 @@ body.menu-active {
     cursor: pointer;
     &::after {
       display: block;
-      content: 'Click on expand';
+      content: '展开评论';
       text-align: center;
-      color: #828586;
+      color: primary-color();
       position: absolute;
       width: 100%;
       height: 3.15em;
@@ -1486,7 +1486,7 @@ body.menu-active {
       left: 0;
       bottom: 0;
       pointer-events: none;
-      background: linear-gradient(0deg, primary-bg(1), primary-bg(0));
+      background: linear-gradient(0deg, primary-bg(1), primary-bg(0.7));
     }
   }
 }
@@ -1523,6 +1523,27 @@ body.menu-active {
 
 .comment-children {
   margin-left: 1.2rem;
+  position: relative;
+
+  &.expand {
+    max-height: 100px;
+    overflow: hidden;
+    cursor: pointer;
+    &::after {
+      display: block;
+      content: '展开更多回复';
+      text-align: center;
+      color: primary-color();
+      position: absolute;
+      width: 100%;
+      height: 3.15em;
+      line-height: 3.15em;
+      left: 0;
+      bottom: 0;
+      pointer-events: none;
+      background: linear-gradient(0deg, primary-bg(1), primary-bg(0.7));
+    }
+  }
 }
 
 .comments-container i {

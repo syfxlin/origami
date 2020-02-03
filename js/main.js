@@ -554,11 +554,13 @@ origami.initComments = function() {
           pageOut = page;
           changeNav();
           initReply();
+          // 代码高亮
           document
             .querySelectorAll('.comment-body pre code')
             .forEach(function(item) {
               Prism.highlightElement(item);
             });
+          // 评论折叠
           document.querySelectorAll('.comment-body').forEach(function(item) {
             if (item.clientHeight > 100) {
               item.classList.add('expand');
@@ -571,6 +573,21 @@ origami.initComments = function() {
               );
             }
           });
+          // 子评论折叠
+          document
+            .querySelectorAll('#comments-list > .comment-children')
+            .forEach(function(item) {
+              if (item.clientHeight > 400) {
+                item.classList.add('expand');
+                item.addEventListener(
+                  'click',
+                  function() {
+                    item.classList.remove('expand');
+                  },
+                  { once: true }
+                );
+              }
+            });
           callback(pageOut, response);
         },
         error: function(status) {

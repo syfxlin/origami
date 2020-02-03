@@ -1601,9 +1601,9 @@ body.menu-active .ori-footer {
 
 .comment-body.expand::after {
   display: block;
-  content: 'Click on expand';
+  content: '展开评论';
   text-align: center;
-  color: #828586;
+  color: #5755d9;
   position: absolute;
   width: 100%;
   height: 3.15em;
@@ -1611,7 +1611,7 @@ body.menu-active .ori-footer {
   left: 0;
   bottom: 0;
   pointer-events: none;
-  background: linear-gradient(0deg, white, rgba(255, 255, 255, 0));
+  background: linear-gradient(0deg, white, rgba(255, 255, 255, 0.7));
 }
 
 .comment-footer {
@@ -1652,6 +1652,28 @@ body.menu-active .ori-footer {
 
 .comment-children {
   margin-left: 1.2rem;
+  position: relative;
+}
+
+.comment-children.expand {
+  max-height: 100px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.comment-children.expand::after {
+  display: block;
+  content: '展开更多回复';
+  text-align: center;
+  color: #5755d9;
+  position: absolute;
+  width: 100%;
+  height: 3.15em;
+  line-height: 3.15em;
+  left: 0;
+  bottom: 0;
+  pointer-events: none;
+  background: linear-gradient(0deg, white, rgba(255, 255, 255, 0.7));
 }
 
 .comments-container i {
