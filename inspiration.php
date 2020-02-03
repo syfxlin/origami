@@ -108,7 +108,7 @@ get_header();
           <h1><?php echo $post_item['post_title']; ?></h1>
           <h2><?php echo __('目前共有', 'origami') .
             $count .
-            __('篇灵感'); ?></h2>
+            __('篇灵感', 'origami'); ?></h2>
         </div>
       </section>
     <?php endif; ?>

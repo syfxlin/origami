@@ -486,7 +486,7 @@ class OrigamiConfig
     );
     add_settings_field(
       'origami_featured_pages_post_type',
-      __('特色页使用普通页面样式'),
+      __('特色页使用普通页面样式', 'origami'),
       [&$this, 'settings_field_input'],
       'origami_style',
       'origami_style_other',

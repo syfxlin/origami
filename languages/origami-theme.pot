@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-02-01T17:10:35+00:00\n"
+"POT-Creation-Date: 2020-02-03T14:09:16+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: origami\n"
@@ -96,7 +96,7 @@ msgstr ""
 #: page.php:58
 #: single.php:58
 #: template-part/post-list.php:75
-#: timeline.php:116
+#: timeline.php:155
 msgid "条评论"
 msgstr ""
 
@@ -386,247 +386,251 @@ msgstr ""
 msgid "首页幻灯片按钮链接"
 msgstr ""
 
-#: include/config.class.php:381
+#: include/config.class.php:382
 msgid "6.其他设置"
 msgstr ""
 
-#: include/config.class.php:387
+#: include/config.class.php:388
 msgid "归档/分类/标签页的特色图"
 msgstr ""
 
-#: include/config.class.php:399
+#: include/config.class.php:400
 msgid "开启时光轴侧栏"
 msgstr ""
 
-#: include/config.class.php:411
+#: include/config.class.php:412
 msgid "开启友链侧栏"
 msgstr ""
 
-#: include/config.class.php:423
+#: include/config.class.php:424
 msgid "开启灵感侧栏"
 msgstr ""
 
-#: include/config.class.php:435
+#: include/config.class.php:436
 msgid "背景图"
 msgstr ""
 
-#: include/config.class.php:443
+#: include/config.class.php:444
 msgid "填入图片的地址，格式见Github Wiki"
 msgstr ""
 
-#: include/config.class.php:448
+#: include/config.class.php:449
 msgid "开启动画"
 msgstr ""
 
-#: include/config.class.php:456
+#: include/config.class.php:457
 msgid "注意此选项是开启一些影响性能的动画效果，正常情况下请不要开启"
 msgstr ""
 
-#: include/config.class.php:464
+#: include/config.class.php:465
 msgid "开启侧栏目录"
 msgstr ""
 
-#: include/config.class.php:476
+#: include/config.class.php:477
 msgid "彩色标签云"
 msgstr ""
 
-#: include/config.class.php:491
+#: include/config.class.php:489
+msgid "特色页使用普通页面样式"
+msgstr ""
+
+#: include/config.class.php:504
 msgid "1.静态资源设置"
 msgstr ""
 
-#: include/config.class.php:497
+#: include/config.class.php:510
 msgid "静态资源入口"
 msgstr ""
 
-#: include/config.class.php:505
+#: include/config.class.php:518
 msgid "填入静态资源入口的JSON，若填入local则使用本地的静态资源，jsdeliver则使用jsDeliver CDN，JSON格式请查看js目录下的assets.json"
 msgstr ""
 
-#: include/config.class.php:514
+#: include/config.class.php:527
 msgid "2.友链设置"
 msgstr ""
 
-#: include/config.class.php:520
+#: include/config.class.php:533
 msgid "其他友链列表"
 msgstr ""
 
-#: include/config.class.php:528
+#: include/config.class.php:541
 msgid "当友人如果有其他的链接时可以填充在这里，在评论时标记为友人，使用逗号分割"
 msgstr ""
 
-#: include/config.class.php:551
+#: include/config.class.php:564
 msgid "3.评论设置"
 msgstr ""
 
-#: include/config.class.php:557
+#: include/config.class.php:570
 msgid "权限控制(key)"
 msgstr ""
 
-#: include/config.class.php:565
+#: include/config.class.php:578
 msgid "用于权限验证的key，在下方两个功能中都有使用，请填入随机字符串，尽量不要少于30位"
 msgstr ""
 
-#: include/config.class.php:573
+#: include/config.class.php:586
 msgid "开启评论可编辑"
 msgstr ""
 
-#: include/config.class.php:585
+#: include/config.class.php:598
 msgid "开启评论可删除"
 msgstr ""
 
-#: include/config.class.php:597
+#: include/config.class.php:610
 msgid "评论可操作的时间(分钟)"
 msgstr ""
 
-#: include/config.class.php:605
+#: include/config.class.php:618
 msgid "评论者可以操作评论内容的有效时间，单位为分钟"
 msgstr ""
 
-#: include/config.class.php:613
+#: include/config.class.php:626
 msgid "OwO表情"
 msgstr ""
 
-#: include/config.class.php:625
+#: include/config.class.php:638
 msgid "Markdown评论"
 msgstr ""
 
-#: include/config.class.php:637
+#: include/config.class.php:650
 msgid "评论公告"
 msgstr ""
 
-#: include/config.class.php:649
+#: include/config.class.php:662
 msgid "评论通知icon"
 msgstr ""
 
-#: include/config.class.php:661
+#: include/config.class.php:674
 msgid "评论通知标题"
 msgstr ""
 
-#: include/config.class.php:674
+#: include/config.class.php:687
 msgid "评论通知致敬"
 msgstr ""
 
-#: include/config.class.php:689
+#: include/config.class.php:702
 msgid "评论通知底部信息"
 msgstr ""
 
-#: include/config.class.php:706
+#: include/config.class.php:719
 msgid "评论标记URL（admin）"
 msgstr ""
 
-#: include/config.class.php:718
+#: include/config.class.php:731
 msgid "评论标记URL（friend）"
 msgstr ""
 
-#: include/config.class.php:747
+#: include/config.class.php:760
 msgid "4.其他设置"
 msgstr ""
 
-#: include/config.class.php:753
+#: include/config.class.php:766
 msgid "复制时添加版权信息"
 msgstr ""
 
-#: include/config.class.php:762
+#: include/config.class.php:775
 msgid "全部添加"
 msgstr ""
 
-#: include/config.class.php:763
+#: include/config.class.php:776
 msgid "除代码外"
 msgstr ""
 
-#: include/config.class.php:764
+#: include/config.class.php:777
 msgid "不添加"
 msgstr ""
 
-#: include/config.class.php:766
+#: include/config.class.php:779
 msgid "all表示不管复制什么内容都会添加版权信息，ncode表示除代码部分外复制内容会添加版权信息，none表示不启用复制添加版权信息的功能"
 msgstr ""
 
-#: include/config.class.php:774
+#: include/config.class.php:787
 msgid "生成目录的级别"
 msgstr ""
 
-#: include/config.class.php:782
+#: include/config.class.php:795
 msgid "设置生成目录的级别（文章目录），默认为h1,h2,h3"
 msgstr ""
 
-#: include/config.class.php:790
+#: include/config.class.php:803
 msgid "Canvas-Nest背景"
 msgstr ""
 
-#: include/config.class.php:802
+#: include/config.class.php:815
 msgid "Canvas-Mouse特效"
 msgstr ""
 
-#: include/config.class.php:814
+#: include/config.class.php:827
 msgid "WorkBox缓存"
 msgstr ""
 
-#: include/config.class.php:826
+#: include/config.class.php:839
 msgid "阻止混合内容"
 msgstr ""
 
-#: include/config.class.php:834
+#: include/config.class.php:847
 msgid "是否阻止混合内容出现(即https中混入http)"
 msgstr ""
 
-#: include/config.class.php:842
+#: include/config.class.php:855
 msgid "LazyLoad加载图片"
 msgstr ""
 
-#: include/config.class.php:850
+#: include/config.class.php:863
 msgid "是否开启Lazyload加载图片，默认为false，格式为[true/false,all/post]"
 msgstr ""
 
-#: include/config.class.php:858
+#: include/config.class.php:871
 msgid "开启Katex支持"
 msgstr ""
 
-#: include/config.class.php:870
+#: include/config.class.php:883
 msgid "开启流程图/时序图/甘特图支持"
 msgstr ""
 
-#: include/config.class.php:882
+#: include/config.class.php:895
 msgid "Judge0API地址"
 msgstr ""
 
-#: include/config.class.php:890
+#: include/config.class.php:903
 msgid "输入Judge0API服务器地址"
 msgstr ""
 
-#: include/config.class.php:895
+#: include/config.class.php:908
 msgid "Run-Code语言列表"
 msgstr ""
 
-#: include/config.class.php:904
+#: include/config.class.php:917
 msgid "填入Run-Code语言列表JSON"
 msgstr ""
 
-#: include/config.class.php:909
+#: include/config.class.php:922
 msgid "开启网页标题改变"
 msgstr ""
 
-#: include/config.class.php:921
+#: include/config.class.php:934
 msgid "开启实时搜索功能"
 msgstr ""
 
-#: include/config.class.php:933
+#: include/config.class.php:946
 msgid "开启Live Chat功能"
 msgstr ""
 
-#: include/config.class.php:941
+#: include/config.class.php:954
 msgid "填入Live Chat Server地址即可开启"
 msgstr ""
 
-#: include/config.class.php:946
+#: include/config.class.php:959
 msgid "取消禁用jQuery"
 msgstr ""
 
-#: include/config.class.php:993
+#: include/config.class.php:1006
 msgid "开启"
 msgstr ""
 
-#: include/config.class.php:994
+#: include/config.class.php:1007
 #: template-part/tools.php:95
 msgid "关闭"
 msgstr ""
@@ -664,14 +668,24 @@ msgstr ""
 msgid "Inspiration"
 msgstr ""
 
-#: inspiration.php:86
-#: links.php:56
-#: timeline.php:73
+#: inspiration.php:109
+#: links.php:79
+#: timeline.php:96
 msgid "目前共有"
+msgstr ""
+
+#: inspiration.php:111
+#: inspiration.php:128
+msgid "篇灵感"
 msgstr ""
 
 #. Template Name of the theme
 msgid "Links"
+msgstr ""
+
+#: links.php:81
+#: links.php:98
+msgid "个友链"
 msgstr ""
 
 #. Template Name of the theme
@@ -748,4 +762,9 @@ msgstr ""
 
 #. Template Name of the theme
 msgid "Timeline"
+msgstr ""
+
+#: timeline.php:98
+#: timeline.php:115
+msgid "篇文章"
 msgstr ""
