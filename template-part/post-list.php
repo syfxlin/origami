@@ -86,7 +86,7 @@ if ($sidebar_pos === 'right' || $sidebar_pos === 'left') {
         <div class="card-body">
         <?php echo apply_filters(
           'the_content',
-          wp_trim_words($item['post_excerpt'], 100)
+          wp_trim_words($item['post_excerpt'], 30, ' [&hellip;]')
         ); ?>
         </div>
         <div class="card-footer">
