@@ -1,0 +1,829 @@
+# Copyright (C) 2020 Otstar Lin & Ye Shu
+# This file is distributed under the GNU General Public License v3 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Origami 2.1.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/Origami\n"
+"POT-Creation-Date: 2020-02-03T14:09:16+00:00\n"
+"PO-Revision-Date: 2020-02-05 15:58+0800\n"
+"Last-Translator: \n"
+"Language-Team: Ye Shu <chshu@protonmail.ch>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.4\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Theme Name of the theme
+msgid "Origami"
+msgstr "Origami"
+
+#. Theme URI of the theme
+msgid "https://blog.ixk.me/theme-origami.html"
+msgstr "https://blog.ixk.me/theme-origami.html"
+
+#. Description of the theme
+msgid "简约平面化风格的主题"
+msgstr "A flat design theme with minimalist approach"
+
+#. Author of the theme
+msgid "Otstar Lin"
+msgstr "Otstar Lin"
+
+#. Author URI of the theme
+msgid "https://www.ixk.me"
+msgstr "https://www.ixk.me"
+
+#: 404.php:192
+msgid "未找到所请求的资源。"
+msgstr "Requested resource not found."
+
+#: 404.php:195
+msgid "首页"
+msgstr "Homepage"
+
+#: comments.php:20
+msgid "说点什么"
+msgstr "Comments"
+
+#: comments.php:26
+msgid "您是"
+msgstr "You are logged in as "
+
+#: comments.php:33
+msgid "放弃治疗"
+msgstr "Cancel"
+
+#: comments.php:46
+msgid "加入讨论"
+msgstr "Join the discussion ..."
+
+#: comments.php:51
+msgid "支持Markdown语法"
+msgstr "Markdown supported"
+
+#: comments.php:56
+msgid "昵称"
+msgstr "Nickname"
+
+#: comments.php:59
+msgid "网站"
+msgstr "Website URL"
+
+#: comments.php:64
+msgid "邮箱"
+msgstr "Email"
+
+#: comments.php:67
+msgid "发表评论"
+msgstr "SUBMIT"
+
+#: comments.php:76
+msgid "好耶,沙发还空着ヾ(≧▽≦*)o"
+msgstr "Hurray, you get to post the first commentヾ(≧▽≦*)o"
+
+#: comments.php:78
+msgid "在"
+msgstr "Under "
+
+#: comments.php:82
+msgid "已有"
+msgstr "are "
+
+#: comments.php:84 page-type-2.php:62 page-type-2.php:95 page.php:58
+#: single.php:58 template-part/post-list.php:75 timeline.php:155
+msgid "条评论"
+msgstr "comment(s)."
+
+#: comments.php:96
+msgid "当前评论页："
+msgstr "Comments:"
+
+#: comments.php:102 functions.php:805
+msgid "上一页"
+msgstr "Previous page"
+
+#: comments.php:105 functions.php:807
+msgid "下一页"
+msgstr "Next page"
+
+#: functions.php:302 include/config_about.php:5
+msgid ""
+"你可能修改了页脚的版权信息，请将其修正。Origami主题要求你保留页脚主题信息。"
+msgstr ""
+"Changes are made to the copyright notice at the page footer. Please revert "
+"the changes as the Origami theme requires you to preserve this information "
+"at footer."
+
+#: functions.php:574 functions.php:575 functions.php:585
+msgid "灵感"
+msgstr "Ideas"
+
+#: functions.php:576 functions.php:577
+msgid "发表灵感"
+msgstr "Publish the Idea"
+
+#: functions.php:578
+msgid "编辑灵感"
+msgstr "Edit the Idea"
+
+#: functions.php:579
+msgid "新灵感"
+msgstr "New Idea"
+
+#: functions.php:580
+msgid "查看灵感"
+msgstr "View the Idea"
+
+#: functions.php:581
+msgid "搜索灵感"
+msgstr "Search Ideas"
+
+#: functions.php:582
+msgid "暂无灵感"
+msgstr "No Ideas now"
+
+#: functions.php:583
+msgid "没有已遗弃的灵感"
+msgstr "No trashed ideas"
+
+#: functions.php:836
+msgid "默认侧栏"
+msgstr "Default sidebar"
+
+#: functions.php:837
+msgid "默认的侧边栏"
+msgstr "The sidebar by default"
+
+#: header.php:73
+msgid "快来寻找你要的文章ヾ(≧▽≦*)o..."
+msgstr "Look for interesting articles ヾ(≧▽≦*)o..."
+
+#: include/comment.php:349
+msgid "经鉴定，这货是站长"
+msgstr "Identity confirmed, this is the blog owner."
+
+#: include/comment.php:351
+msgid "站长"
+msgstr "Owner"
+
+#: include/comment.php:379
+msgid "友情链接认证"
+msgstr "Verified friend"
+
+#: include/comment.php:381
+msgid "友人"
+msgstr "Friend"
+
+#: include/comment.php:390
+msgid "访客"
+msgstr "Visitor"
+
+#: include/comment.php:541 include/comment.php:623
+msgid "此功能未开启"
+msgstr "This feature is disabled."
+
+#: include/comment.php:557 include/comment.php:631
+msgid "权限不足，未读取到合法的token"
+msgstr "Permission denied: failed to obtain a valid token"
+
+#: include/comment.php:564 include/comment.php:638
+msgid "您无法更改超过5分钟的评论"
+msgstr "You cannot make edits to comments after five minutes"
+
+#: include/comment.php:571
+msgid "提交的评论ID不匹配"
+msgstr "Submitted comment ID does not match"
+
+#: include/comment.php:645
+msgid "评论ID未找到"
+msgstr "Comment ID not found"
+
+#: include/config.class.php:9 include/config.class.php:10
+msgid "Origami主题"
+msgstr "Origami Theme"
+
+#: include/config.class.php:17 include/config_style.php:2
+msgid "Origami主题 - 样式"
+msgstr "Origami Theme - Appearances"
+
+#: include/config.class.php:18
+msgid "样式"
+msgstr "Appearances"
+
+#: include/config.class.php:25 include/config_fun.php:2
+msgid "Origami主题 - 功能"
+msgstr "Origami Theme - Features"
+
+#: include/config.class.php:26
+msgid "功能"
+msgstr "Features"
+
+#: include/config.class.php:33 include/config_about.php:2
+msgid "Origami主题 - 关于"
+msgstr "Origami Theme - About"
+
+#: include/config.class.php:34
+msgid "关于"
+msgstr "About"
+
+#: include/config.class.php:70
+msgid "1.布局"
+msgstr "1. layouts"
+
+#: include/config.class.php:76
+msgid "布局方式"
+msgstr "Predefined layout styles"
+
+#: include/config.class.php:85
+msgid "有大图布局"
+msgstr "With stylistic picture"
+
+#: include/config.class.php:86
+msgid "无大图布局"
+msgstr "Without stylistic picture"
+
+#: include/config.class.php:87
+msgid "小图布局"
+msgstr "With smaller stylistic picture"
+
+#: include/config.class.php:93
+msgid "侧边栏位置"
+msgstr "Location of sidebar"
+
+#: include/config.class.php:102
+msgid "侧边栏右置"
+msgstr "Right-hand side"
+
+#: include/config.class.php:103
+msgid "侧边栏左置"
+msgstr "Left-hand side"
+
+#: include/config.class.php:104
+msgid "不显示侧边栏"
+msgstr "Does not show sidebar"
+
+#: include/config.class.php:105
+msgid "侧边栏下置"
+msgstr "Bottom"
+
+#: include/config.class.php:114
+msgid "2.导航栏设置"
+msgstr "2. Navigation bar"
+
+#: include/config.class.php:120
+msgid "导航栏logo"
+msgstr "Navigation bar logo"
+
+#: include/config.class.php:137
+msgid "3.页脚设置"
+msgstr "3. Footer"
+
+#: include/config.class.php:143
+msgid "页脚文本"
+msgstr "Text at footer"
+
+#: include/config.class.php:151
+msgid ""
+"<span class=\"my-face\"></span>中的内容会添加随机摇动效果，<span id="
+"\"timeDate\"></span>显示日期，<span id=\"times\"></span>显示时间"
+msgstr ""
+"Contents in <span class=\"my-face\"></span> will be vibrating randomly, "
+"those in <span id=\"timeDate\"></span> shows dates, and those in <span id="
+"\"times\"></span> shows the time."
+
+#: include/config.class.php:159
+msgid "页脚时间"
+msgstr "Time in footer"
+
+#: include/config.class.php:167
+msgid "是否显示页脚时间？若填写时间代表显示，格式如下 07/01/2017 00:00:09"
+msgstr ""
+"Whether to show time in the footer. Enter the time with formats 07/01/2017 "
+"00:00:09."
+
+#: include/config.class.php:175
+msgid "页脚位置"
+msgstr "Location of footer"
+
+#: include/config.class.php:184
+msgid "左边"
+msgstr "Left-hand side"
+
+#: include/config.class.php:185
+msgid "中间"
+msgstr "In the middle"
+
+#: include/config.class.php:186
+msgid "右边"
+msgstr "Right-hand side"
+
+#: include/config.class.php:198
+msgid "4.侧栏关于卡片设置"
+msgstr "4. \"About me\" card in the sidebar"
+
+#: include/config.class.php:204
+msgid "开启关于卡片"
+msgstr "Enable the \"about me\" card"
+
+#: include/config.class.php:216
+msgid "关于卡片图像"
+msgstr "Background image for \"about me\" card"
+
+#: include/config.class.php:228
+msgid "关于卡片头像"
+msgstr "Avatar for \"about me\" card"
+
+#: include/config.class.php:236 include/config.class.php:252
+msgid "如果填入default则会自动读取用户信息显示"
+msgstr "Enter \"default\" to automatically fetch user info for display"
+
+#: include/config.class.php:244
+msgid "关于卡片"
+msgstr "\"About me\" card"
+
+#: include/config.class.php:270
+msgid "5.首页设置"
+msgstr "5. Homepage"
+
+#: include/config.class.php:276
+msgid "首页幻灯片1"
+msgstr "Homepage carousel 1"
+
+#: include/config.class.php:288
+msgid "首页幻灯片2"
+msgstr "Homepage carousel 2"
+
+#: include/config.class.php:300
+msgid "首页幻灯片3"
+msgstr "Homepage carousel 3"
+
+#: include/config.class.php:312
+msgid "首页幻灯片4"
+msgstr "Homepage carousel 4"
+
+#: include/config.class.php:324
+msgid "首页幻灯片主标题"
+msgstr "Homepage carousel title"
+
+#: include/config.class.php:336
+msgid "首页幻灯片副标题"
+msgstr "Homepage carousel subtitle"
+
+#: include/config.class.php:348
+msgid "首页幻灯片按钮内容"
+msgstr "Homepage carousel button's title"
+
+#: include/config.class.php:360
+msgid "首页幻灯片按钮链接"
+msgstr "Homepage carousel button's link"
+
+#: include/config.class.php:382
+msgid "6.其他设置"
+msgstr "6. Misc"
+
+#: include/config.class.php:388
+msgid "归档/分类/标签页的特色图"
+msgstr "Featured image for archive/category/tags page"
+
+#: include/config.class.php:400
+msgid "开启时光轴侧栏"
+msgstr "Enable timeline sidebar"
+
+#: include/config.class.php:412
+msgid "开启友链侧栏"
+msgstr "Enable \"Useful links\" sidebar"
+
+#: include/config.class.php:424
+msgid "开启灵感侧栏"
+msgstr "Enable \"Ideas\" sidebar"
+
+#: include/config.class.php:436
+msgid "背景图"
+msgstr "Background image"
+
+#: include/config.class.php:444
+msgid "填入图片的地址，格式见Github Wiki"
+msgstr "Enter URL of the image, according to the formats on GitHub wiki"
+
+#: include/config.class.php:449
+msgid "开启动画"
+msgstr "Enable animation effects"
+
+#: include/config.class.php:457
+msgid "注意此选项是开启一些影响性能的动画效果，正常情况下请不要开启"
+msgstr ""
+"Be aware that animation effects can impact the performance. Please only "
+"enable it if you're sure what you're doing. "
+
+#: include/config.class.php:465
+msgid "开启侧栏目录"
+msgstr "Enable sidebar directories"
+
+#: include/config.class.php:477
+msgid "彩色标签云"
+msgstr "Colorful word cloud for tags"
+
+#: include/config.class.php:489
+msgid "特色页使用普通页面样式"
+msgstr "Apply ordinary layout style to featured pages"
+
+#: include/config.class.php:504
+msgid "1.静态资源设置"
+msgstr "1. Static resources"
+
+#: include/config.class.php:510
+msgid "静态资源入口"
+msgstr "Entry for static resources"
+
+#: include/config.class.php:518
+msgid ""
+"填入静态资源入口的JSON，若填入local则使用本地的静态资源，jsdeliver则使用"
+"jsDeliver CDN，JSON格式请查看js目录下的assets.json"
+msgstr ""
+"Please enter the JSON for static resources. \"local\" for using local static "
+"resources. \"jsdeliver\" for using jsDeliver CDN networks. For the JSON "
+"format, please refer to assets.json under the js directory."
+
+#: include/config.class.php:527
+msgid "2.友链设置"
+msgstr "2. Useful links setting"
+
+#: include/config.class.php:533
+msgid "其他友链列表"
+msgstr "Friends' other links"
+
+#: include/config.class.php:541
+msgid ""
+"当友人如果有其他的链接时可以填充在这里，在评论时标记为友人，使用逗号分割"
+msgstr ""
+"Add links here if your friends have other website links. The associated "
+"comments will be marked as \"posted by a verified friend\". Use commas(,) to "
+"separate links."
+
+#: include/config.class.php:564
+msgid "3.评论设置"
+msgstr "3. Comments"
+
+#: include/config.class.php:570
+msgid "权限控制(key)"
+msgstr "Permission key"
+
+#: include/config.class.php:578
+msgid ""
+"用于权限验证的key，在下方两个功能中都有使用，请填入随机字符串，尽量不要少于30"
+"位"
+msgstr ""
+"Key for permission verification, used in latter two features. Please enter "
+"random string longer than 30 characters."
+
+#: include/config.class.php:586
+msgid "开启评论可编辑"
+msgstr "Allow comments to be edited"
+
+#: include/config.class.php:598
+msgid "开启评论可删除"
+msgstr "Allow comments to be deleted"
+
+#: include/config.class.php:610
+msgid "评论可操作的时间(分钟)"
+msgstr "The time for edition/deletion (in minutes)"
+
+#: include/config.class.php:618
+msgid "评论者可以操作评论内容的有效时间，单位为分钟"
+msgstr ""
+"The available time (in minutes) for commenters to edit or delete their "
+"comments."
+
+#: include/config.class.php:626
+msgid "OwO表情"
+msgstr "OwO Emoticons"
+
+#: include/config.class.php:638
+msgid "Markdown评论"
+msgstr "Markdown comments"
+
+#: include/config.class.php:650
+msgid "评论公告"
+msgstr "Comment announcement"
+
+#: include/config.class.php:662
+msgid "评论通知icon"
+msgstr "Icon for the mail notice"
+
+#: include/config.class.php:674
+msgid "评论通知标题"
+msgstr "Title for the mail notice"
+
+#: include/config.class.php:687
+msgid "评论通知致敬"
+msgstr "Salutation for the mail notice"
+
+#: include/config.class.php:702
+msgid "评论通知底部信息"
+msgstr "Footer for the mail notice"
+
+#: include/config.class.php:719
+msgid "评论标记URL（admin）"
+msgstr "Add URL link to comments from administrator"
+
+#: include/config.class.php:731
+msgid "评论标记URL（friend）"
+msgstr "Add URL link to comments from friends"
+
+#: include/config.class.php:760
+msgid "4.其他设置"
+msgstr "4. Misc"
+
+#: include/config.class.php:766
+msgid "复制时添加版权信息"
+msgstr "Add copyright notice when copying contents"
+
+#: include/config.class.php:775
+msgid "全部添加"
+msgstr "For all cases of copying"
+
+#: include/config.class.php:776
+msgid "除代码外"
+msgstr "For all cases except copying codes"
+
+#: include/config.class.php:777
+msgid "不添加"
+msgstr "Disabled"
+
+#: include/config.class.php:779
+msgid ""
+"all表示不管复制什么内容都会添加版权信息，ncode表示除代码部分外复制内容会添加"
+"版权信息，none表示不启用复制添加版权信息的功能"
+msgstr ""
+"\"all\" adds copyright notice to all cases of copying, \"ncode\" stands for "
+"all cases except copying codes, \"none\" disables this feature."
+
+#: include/config.class.php:787
+msgid "生成目录的级别"
+msgstr "Level of headings in Table of Content"
+
+#: include/config.class.php:795
+msgid "设置生成目录的级别（文章目录），默认为h1,h2,h3"
+msgstr ""
+"Configure the level of headings in Table of Contents, default to h1, h2, h3"
+
+#: include/config.class.php:803
+msgid "Canvas-Nest背景"
+msgstr "Canvas-Nest background"
+
+#: include/config.class.php:815
+msgid "Canvas-Mouse特效"
+msgstr "Canvas-Mouse effect"
+
+#: include/config.class.php:827
+msgid "WorkBox缓存"
+msgstr "Workbox cache"
+
+#: include/config.class.php:839
+msgid "阻止混合内容"
+msgstr "Prevent mixed contents"
+
+#: include/config.class.php:847
+msgid "是否阻止混合内容出现(即https中混入http)"
+msgstr "Prevent http content to be mixed in https pages"
+
+#: include/config.class.php:855
+msgid "LazyLoad加载图片"
+msgstr "LazyLoad image loading"
+
+#: include/config.class.php:863
+msgid "是否开启Lazyload加载图片，默认为false，格式为[true/false,all/post]"
+msgstr ""
+"Toggle Lazyload image loading, default to false. Please enter in the format "
+"[true/false,all/post]"
+
+#: include/config.class.php:871
+msgid "开启Katex支持"
+msgstr "Enable support for Katex"
+
+#: include/config.class.php:883
+msgid "开启流程图/时序图/甘特图支持"
+msgstr "Enable support for flowchart/sequence diagram/Gantt chart"
+
+#: include/config.class.php:895
+msgid "Judge0API地址"
+msgstr "Judge0 API Address"
+
+#: include/config.class.php:903
+msgid "输入Judge0API服务器地址"
+msgstr "Enter the address for Judge0 API Server"
+
+#: include/config.class.php:908
+msgid "Run-Code语言列表"
+msgstr "List of Run-Code languages"
+
+#: include/config.class.php:917
+msgid "填入Run-Code语言列表JSON"
+msgstr "Enter the JSON list for Run-Code languages"
+
+#: include/config.class.php:922
+msgid "开启网页标题改变"
+msgstr "Enable changing website titles"
+
+#: include/config.class.php:934
+msgid "开启实时搜索功能"
+msgstr "Enable instant search feature"
+
+#: include/config.class.php:946
+msgid "开启Live Chat功能"
+msgstr "Enable Live Chat feature"
+
+#: include/config.class.php:954
+msgid "填入Live Chat Server地址即可开启"
+msgstr "Enter address for Live Chat Server to enable it"
+
+#: include/config.class.php:959
+msgid "取消禁用jQuery"
+msgstr "Enable jQuery"
+
+#: include/config.class.php:1006
+msgid "开启"
+msgstr "Enable"
+
+#: include/config.class.php:1007 template-part/tools.php:95
+msgid "关闭"
+msgstr "Disable"
+
+#: include/config_about.php:12
+msgid "感谢使用 Origami 主题"
+msgstr "Thanks for choosing Origami"
+
+#: include/config_about.php:28 include/config_about.php:39
+msgid "Origami主题有新版本可以更新啦！"
+msgstr "You can now update to a newer version of Origami theme!"
+
+#: include/config_about.php:34
+msgid "版本"
+msgstr "Version"
+
+#: include/config_about.php:35
+msgid "当前版本 v"
+msgstr "Current version v"
+
+#: include/config_about.php:36
+msgid "最新版本 v"
+msgstr "Latest version v"
+
+#: include/config_about.php:42
+msgid "主题使用到的库或框架等"
+msgstr "Libraries or frameworks used"
+
+#: include/config_about.php:62
+msgid "本主题谨献给在我博客道路上遇到的朋友们。"
+msgstr "This theme is dedicated to the friends I've met while blogging"
+
+#. Template Name of the theme
+msgid "Inspiration"
+msgstr "Inspiration"
+
+#: inspiration.php:109 links.php:79 timeline.php:96
+msgid "目前共有"
+msgstr "Currently there are"
+
+#: inspiration.php:111 inspiration.php:128
+msgid "篇灵感"
+msgstr "ideas."
+
+#. Template Name of the theme
+msgid "Links"
+msgstr "Links"
+
+#: links.php:81 links.php:98
+msgid "个友链"
+msgstr "friends."
+
+#. Template Name of the theme
+msgid "Page Type 2"
+msgstr "Page Type 2"
+
+#: searchform.php:2 searchform.php:3 searchform.php:4
+#: template-part/featured.php:18
+msgid "搜索"
+msgstr "Search"
+
+#: template-part/featured.php:6
+msgid "作者"
+msgstr "Author"
+
+#: template-part/featured.php:9
+msgid "分类"
+msgstr "Category"
+
+#: template-part/featured.php:15
+msgid "归档"
+msgstr "Archive"
+
+#: template-part/post-list.php:53
+msgid "置顶"
+msgstr "Pinned"
+
+#: template-part/post-list.php:102
+msgid "阅读全文"
+msgstr "Read More"
+
+#: template-part/post-nav.php:11
+msgid "上一篇"
+msgstr "Previous"
+
+#: template-part/post-nav.php:16
+msgid "下一篇"
+msgstr "Next"
+
+#: template-part/tools.php:16
+msgid "确认"
+msgstr "Confirm"
+
+#: template-part/tools.php:20
+msgid "取消"
+msgstr "Cancel"
+
+#: template-part/tools.php:28 template-part/tools.php:31
+msgid "已跳转到上次阅读的位置，从头阅读？"
+msgstr "Continued from where you left. Starting over?"
+
+#: template-part/tools.php:63
+msgid "显示文章目录(点击显示或隐藏)"
+msgstr "Show Table of Content in posts"
+
+#: template-part/tools.php:70
+msgid "分享"
+msgstr "Share"
+
+#: template-part/tools.php:73
+msgid "阅读转移"
+msgstr "Continue reading elsewhere"
+
+#: template-part/tools.php:76
+msgid "乘上通往云端的纸飞机吧"
+msgstr "Board the paper plane into the clouds!"
+
+#: template-part/tools.php:105
+msgid "更换主题"
+msgstr "Change theme"
+
+#. Template Name of the theme
+msgid "Timeline"
+msgstr "Timeline"
+
+#: timeline.php:98 timeline.php:115
+msgid "篇文章"
+msgstr "posts."
+
+#~ msgid ""
+#~ "layout1：有大图布局，layout2：无大图布局，layout3：介于layout1和layout2的"
+#~ "布局"
+#~ msgstr ""
+#~ "Layout 1: with stylistic picture. Layout 2: without stylistic picture. "
+#~ "Layout 3: intermediate between the formers"
+
+#~ msgid "right：侧边栏右置，left：侧边栏左置，none：不显示侧边栏"
+#~ msgstr ""
+#~ "Right: Show sidebar in right-hand side. Left: Show sidebar in left-hand "
+#~ "side. None: Do not show sidebar."
+
+#~ msgid "页脚的位置(left,center,right)"
+#~ msgstr "Location of footer (left, center, right)"
+
+#~ msgid "填入true为开，false为关"
+#~ msgstr "True for enabled, false for disabled."
+
+#~ msgid "开启评论可编辑（指定时间之内评论者可以编辑评论内容）"
+#~ msgstr ""
+#~ "Allow comments to be edited (Comments can be edited by the commenter "
+#~ "within certain amount of time.)"
+
+#~ msgid "开启评论可删除（指定时间之内评论者可以删除评论内容）"
+#~ msgstr ""
+#~ "Allow comments to be deleted (Comments can be deleted by the commenter "
+#~ "within certain period of time.)"
+
+#~ msgid "是否开启评论区的OwO表情，默认为true(true为开，false为关)"
+#~ msgstr ""
+#~ "Toggle OwO emoticons in comments, default to true (\"true\" for enabled, "
+#~ "\"false\" for disabled)"
+
+#~ msgid "是否开启Markdown评论，默认为true(true为开，false为关)"
+#~ msgstr ""
+#~ "Toggle Markdown-styled comments, default to true (\"true\" for enabled, "
+#~ "\"false\" for disabled)"
+
+#~ msgid "是否开启Canvas-Nest背景，默认为true(true为开，false为关)"
+#~ msgstr ""
+#~ "Toggle Canvas-Nest background, default to \"true\" (\"true\" for enabled"
+#~ "\", \"false\" for disabled)"
+
+#~ msgid "是否开启WorkBox缓存，默认为false(true为开，false为关)"
+#~ msgstr ""
+#~ "Toggle Workbox cache, default to false (\"true\" for enabled, \"false\" "
+#~ "for disabled)"
+
+#~ msgid "true为开，false为关"
+#~ msgstr "\"true\" for enabled, \"false\" for disabled"
