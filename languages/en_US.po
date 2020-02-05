@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Origami 2.1.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/Origami\n"
 "POT-Creation-Date: 2020-02-03T14:09:16+00:00\n"
-"PO-Revision-Date: 2020-02-05 15:31+0800\n"
+"PO-Revision-Date: 2020-02-05 15:58+0800\n"
 "Last-Translator: \n"
 "Language-Team: Ye Shu <chshu@protonmail.ch>\n"
 "Language: en_US\n"
@@ -147,7 +147,7 @@ msgstr "No Ideas now"
 
 #: functions.php:583
 msgid "没有已遗弃的灵感"
-msgstr "Ideas not found in trash"
+msgstr "No trashed ideas"
 
 #: functions.php:836
 msgid "默认侧栏"
@@ -159,15 +159,15 @@ msgstr "The sidebar by default"
 
 #: header.php:73
 msgid "快来寻找你要的文章ヾ(≧▽≦*)o..."
-msgstr "Look for articles desired ヾ(≧▽≦*)o..."
+msgstr "Look for interesting articles ヾ(≧▽≦*)o..."
 
 #: include/comment.php:349
 msgid "经鉴定，这货是站长"
-msgstr "Identity confirmed, this is the webmaster."
+msgstr "Identity confirmed, this is the blog owner."
 
 #: include/comment.php:351
 msgid "站长"
-msgstr "Webmaster"
+msgstr "Owner"
 
 #: include/comment.php:379
 msgid "友情链接认证"
@@ -191,7 +191,7 @@ msgstr "Permission denied: failed to obtain a valid token"
 
 #: include/comment.php:564 include/comment.php:638
 msgid "您无法更改超过5分钟的评论"
-msgstr "You cannot amend comments after five minutes"
+msgstr "You cannot make edits to comments after five minutes"
 
 #: include/comment.php:571
 msgid "提交的评论ID不匹配"
@@ -386,7 +386,7 @@ msgstr "6. Misc"
 
 #: include/config.class.php:388
 msgid "归档/分类/标签页的特色图"
-msgstr "Stylistic picture for archive/category/tags page"
+msgstr "Featured image for archive/category/tags page"
 
 #: include/config.class.php:400
 msgid "开启时光轴侧栏"
@@ -428,7 +428,7 @@ msgstr "Colorful word cloud for tags"
 
 #: include/config.class.php:489
 msgid "特色页使用普通页面样式"
-msgstr ""
+msgstr "Apply ordinary layout style to featured pages"
 
 #: include/config.class.php:504
 msgid "1.静态资源设置"
@@ -686,13 +686,11 @@ msgstr "Inspiration"
 
 #: inspiration.php:109 links.php:79 timeline.php:96
 msgid "目前共有"
-msgstr "Currently there is"
+msgstr "Currently there are"
 
 #: inspiration.php:111 inspiration.php:128
-#, fuzzy
-#| msgid "灵感"
 msgid "篇灵感"
-msgstr "Ideas"
+msgstr "ideas."
 
 #. Template Name of the theme
 msgid "Links"
@@ -700,7 +698,7 @@ msgstr "Links"
 
 #: links.php:81 links.php:98
 msgid "个友链"
-msgstr ""
+msgstr "friends."
 
 #. Template Name of the theme
 msgid "Page Type 2"
@@ -777,7 +775,7 @@ msgstr "Timeline"
 
 #: timeline.php:98 timeline.php:115
 msgid "篇文章"
-msgstr ""
+msgstr "posts."
 
 #~ msgid ""
 #~ "layout1：有大图布局，layout2：无大图布局，layout3：介于layout1和layout2的"
