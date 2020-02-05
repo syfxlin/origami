@@ -874,7 +874,7 @@ function origami_rest_pembed(WP_REST_Request $request)
     'title' => $post->post_title,
     'description' => wp_trim_words(
       $post->post_excerpt ? $post->post_excerpt : $post->post_content,
-      30,
+      100,
       ' [&hellip;]'
     ),
     'url' => get_permalink($post_id),
