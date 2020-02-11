@@ -90,7 +90,7 @@ function origami_frontend_config()
     "');</script>";
 }
 add_action('wp_footer', 'origami_frontend_config', 1);
-add_action('admin_menu', 'origami_frontend_config', 1);
+add_action('admin_print_scripts', 'origami_frontend_config', 1);
 
 // 配置
 $local_assets_url = [
