@@ -741,6 +741,7 @@ class OrigamiConfig
 
     // 其他
     register_setting('origami_fun', 'origami_copy_add_copyright');
+    register_setting('origami_fun', 'origami_ccl');
     register_setting('origami_fun', 'origami_toc_level');
     register_setting('origami_fun', 'origami_canvas_nest');
     register_setting('origami_fun', 'origami_canvas_mouse');
@@ -780,6 +781,26 @@ class OrigamiConfig
           'all表示不管复制什么内容都会添加版权信息，ncode表示除代码部分外复制内容会添加版权信息，none表示不启用复制添加版权信息的功能',
           'origami'
         )
+      ]
+    );
+    add_settings_field(
+      'origami_ccl',
+      __('知识共享许可协议', 'origami'),
+      [&$this, 'settings_field_input'],
+      'origami_fun',
+      'origami_fun_other',
+      [
+        'field' => 'origami_ccl',
+        'value' => 'by-nc-sa',
+        'type' => 'select',
+        'options' => [
+          '署名标示(BY)' => 'by',
+          '署名标示(BY)-相同方式共享(SA)' => 'by-sa',
+          '署名标示(BY)-非商业性使用(NC)' => 'by-nc',
+          '署名标示(BY)-非商业性使用(NC)-相同方式共享(SA)' => 'by-nc-sa',
+          '署名标示(BY)-禁止演绎(ND)' => 'by-nd',
+          '署名标示(BY)-非商业性使用(NC)-禁止演绎(ND)' => 'by-nc-nd',
+        ]
       ]
     );
     add_settings_field(

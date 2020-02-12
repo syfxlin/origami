@@ -53,17 +53,17 @@ function origami_frontend_config()
   $config = [
     'themeBaseURL' => $tem_url,
     'markdownComment' =>
-      get_option('origami_markdown_comment', 'true') == 'true',
+    get_option('origami_markdown_comment', 'true') == 'true',
     'updateComment' =>
-      get_option('origami_enable_comment_update', 'true') == 'true',
+    get_option('origami_enable_comment_update', 'true') == 'true',
     'deleteComment' =>
-      get_option('origami_enable_comment_delete', 'true') == 'true',
+    get_option('origami_enable_comment_delete', 'true') == 'true',
     'katex' => get_option('origami_katex', 'true') == 'true',
     'mermaid' => get_option('origami_mermaid', 'true') == 'true',
     'animate' => get_option('origami_animate', 'false') == 'true',
     'titleChange' => get_option('origami_title_change', 'true') == 'true',
     'realTimeSearch' =>
-      get_option('origami_real_time_search', 'true') == 'true',
+    get_option('origami_real_time_search', 'true') == 'true',
     'owo' => get_option('origami_comment_owo', 'true') == 'true',
     'footerTime' => get_option('origami_footer_time', false),
     'liveChat' => get_option('origami_live_chat', false),
@@ -83,7 +83,8 @@ function origami_frontend_config()
         'origami_runcode_lang_list',
         '{"c": 1,"cpp": 2,"bash": 3,"csharp": 4,"go": 5,"java": 6,"node": 7,"php": 8,"python": 9,"python2": 10,"ruby": 11,"rust": 12,"scala": 13,"typescript": 14}'
       )
-    )
+    ),
+    'ccl' => get_option('origami_ccl', 'by-nc-sa')
   ];
   echo "<script>window.origamiConfig = JSON.parse('" .
     json_encode($config) .
@@ -123,25 +124,25 @@ $local_assets_url = [
 
 $jsdelivr_assets_url = [
   'spectre_css' =>
-    'https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre.min.css',
+  'https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre.min.css',
   'spectre_exp_css' =>
-    'https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-exp.min.css',
+  'https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-exp.min.css',
   'spectre_icons_css' =>
-    'https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-icons.min.css',
+  'https://cdn.jsdelivr.net/npm/spectre.css@0.5.8/dist/spectre-icons.min.css',
   'origami_js' => $tem_url . '/js/main.js',
   'origami_css' => $tem_url . '/style.css',
   'qrcode_js' =>
-    'https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js',
+  'https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js',
   'SMValidator_js' =>
-    'https://cdn.jsdelivr.net/npm/SMValidator@1.2.7/dist/SMValidator.min.js',
+  'https://cdn.jsdelivr.net/npm/SMValidator@1.2.7/dist/SMValidator.min.js',
   'font_awesome_css' =>
-    'https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css',
+  'https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css',
   'canvas_nest_js' =>
-    'https://cdn.jsdelivr.net/npm/canvas-nest.js@2.0.4/dist/canvas-nest.js',
+  'https://cdn.jsdelivr.net/npm/canvas-nest.js@2.0.4/dist/canvas-nest.js',
   'lazyload_js' =>
-    'https://cdn.jsdelivr.net/npm/vanilla-lazyload@12.0.0/dist/lazyload.min.js',
+  'https://cdn.jsdelivr.net/npm/vanilla-lazyload@12.0.0/dist/lazyload.min.js',
   'zooming_js' =>
-    'https://cdn.jsdelivr.net/npm/zooming@2.1.1/build/zooming.min.js',
+  'https://cdn.jsdelivr.net/npm/zooming@2.1.1/build/zooming.min.js',
   'owo_css' => 'https://cdn.jsdelivr.net/npm/owo@1.0.2/dist/OwO.min.css',
   'owo_js' => 'https://cdn.jsdelivr.net/npm/owo@1.0.2/dist/OwO.min.js',
   'tocbot_css' => 'https://cdn.jsdelivr.net/npm/tocbot@4.7.1/dist/tocbot.css',
@@ -150,15 +151,15 @@ $jsdelivr_assets_url = [
   'prism_js' => $tem_url . '/js/prism.js',
   'katex_js_1' => 'https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.js',
   'katex_js_2' =>
-    'https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/contrib/auto-render.min.js',
+  'https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/contrib/auto-render.min.js',
   'katex_css' => 'https://cdn.jsdelivr.net/npm/katex@0.11.0/dist/katex.min.css',
   'mermaid_js' =>
-    'https://cdn.jsdelivr.net/npm/mermaid@8.2.3/dist/mermaid.min.js',
+  'https://cdn.jsdelivr.net/npm/mermaid@8.2.3/dist/mermaid.min.js',
   'marked_js' => 'https://cdn.jsdelivr.net/npm/marked@0.7.0/lib/marked.min.js',
   'mouse_css' => $tem_url . '/css/mouse.css',
   'mouse_js' => $tem_url . '/js/mouse.js',
   'html2canvas_js' =>
-    'https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js'
+  'https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js'
 ];
 
 $assets_url = '';
@@ -609,18 +610,27 @@ function origami_content_copyright($content)
 {
   $content .= '<div class="clearfix"></div>';
   if (is_single() || is_feed()) {
-    $content .=
-      '<div id="content-copyright"><span style="font-weight:bold;text-shadow:0 1px 0 #ddd;font-size: 12px;">声明:</span><span style="font-size: 12px;">本文采用 <a rel="nofollow" href="http://creativecommons.org/licenses/by-nc-sa/3.0/" title="署名-非商业性使用-相同方式共享">BY-NC-SA</a> 协议进行授权，如无注明均为原创，转载请注明转自<a href="' .
-      home_url() .
-      '">' .
-      get_bloginfo('name') .
-      '</a><br>本文地址:<a rel="bookmark" title="' .
-      get_the_title() .
-      '" href="' .
-      get_permalink() .
-      '">' .
-      get_the_title() .
-      '</a></span></div>';
+    $select_ccl = get_option('origami_ccl', 'by-nc-sa');
+    $ccl = [
+      'by' => '署名标示(BY)',
+      'by-sa' => '署名标示(BY)-相同方式共享(SA)',
+      'by-nc' => '署名标示(BY)-非商业性使用(NC)',
+      'by-nc-sa' => '署名标示(BY)-非商业性使用(NC)-相同方式共享(SA)',
+      'by-nd' => '署名标示(BY)-禁止演绎(ND)',
+      'by-nc-nd' => '署名标示(BY)-非商业性使用(NC)-禁止演绎(ND)',
+    ];
+    $content .= '<div id="content-copyright">
+      <span style="font-weight:bold;text-shadow:0 1px 0 #ddd;font-size: 12px;">声明:</span>
+      <span style="font-size: 12px;">
+        本文采用
+        <a rel="nofollow" href="http://creativecommons.org/licenses/' . $select_ccl . '/4.0/" title="' . $ccl[$select_ccl] . '">' . strtoupper($select_ccl) . '</a>
+        协议进行授权，如无注明均为原创，转载请注明转自
+        <a href="' . home_url() . '">' . get_bloginfo('name') . '</a>
+        <br>
+        本文地址:
+        <a rel="bookmark" title="' . get_the_title() . '" href="' . get_permalink() . '">' . get_the_title() . '</a>
+      </span>
+    </div>';
   }
   return $content;
 }
@@ -805,7 +815,7 @@ function origami_pagination($echo = true)
     'prev_next' => true,
     'prev_text' => '<i class="icon icon-back"></i> ' . __('上一页', 'origami'),
     'next_text' =>
-      __('下一页', 'origami') . ' <i class="icon icon-forward"></i>',
+    __('下一页', 'origami') . ' <i class="icon icon-forward"></i>',
     'type' => 'array',
     'add_args' => false,
     'add_fragment' => '',

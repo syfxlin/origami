@@ -513,7 +513,7 @@ origami.initComments = function() {
     }
     select.value = pageOut;
   };
-  let load = function(page = -1, callback = function() {}) {
+  let load = function(page = -1, callback = function() {}, noFold = false) {
     if (page == -1) {
       page = pageOut;
     }
@@ -560,24 +560,10 @@ origami.initComments = function() {
             .forEach(function(item) {
               Prism.highlightElement(item);
             });
-          // 评论折叠
-          document.querySelectorAll('.comment-body').forEach(function(item) {
-            if (item.clientHeight > 100) {
-              item.classList.add('expand');
-              item.addEventListener(
-                'click',
-                function() {
-                  item.classList.remove('expand');
-                },
-                { once: true }
-              );
-            }
-          });
-          // 子评论折叠
-          document
-            .querySelectorAll('#comments-list > .comment-children')
-            .forEach(function(item) {
-              if (item.clientHeight > 400) {
+          if (!noFold) {
+            // 评论折叠
+            document.querySelectorAll('.comment-body').forEach(function(item) {
+              if (item.clientHeight > 100) {
                 item.classList.add('expand');
                 item.addEventListener(
                   'click',
@@ -588,6 +574,22 @@ origami.initComments = function() {
                 );
               }
             });
+            // 子评论折叠
+            document
+              .querySelectorAll('#comments-list > .comment-children')
+              .forEach(function(item) {
+                if (item.clientHeight > 400) {
+                  item.classList.add('expand');
+                  item.addEventListener(
+                    'click',
+                    function() {
+                      item.classList.remove('expand');
+                    },
+                    { once: true }
+                  );
+                }
+              });
+          }
           callback(pageOut, response);
         },
         error: function(status) {
@@ -866,19 +868,25 @@ origami.initComments = function() {
       pageOut = parseInt(pageCount) + 1 - commentPageP;
     }
     initNav();
-    load(-1, function() {
-      if (window.location.hash != '') {
-        setTimeout(function() {
-          window.scrollTo({
-            top: document.querySelector(window.location.hash).offsetTop - 200
-          });
-          document
-            .querySelector(window.location.hash)
-            .classList.add('changeshadow');
-        }, 500);
-      }
-      initReply();
-    });
+    load(
+      -1,
+      function() {
+        if (window.location.hash != '') {
+          setTimeout(function() {
+            window.scrollTo({
+              top:
+                document.querySelector(window.location.hash).getClientRects()[0]
+                  .top - 200
+            });
+            document
+              .querySelector(window.location.hash)
+              .classList.add('changeshadow');
+          }, 500);
+        }
+        initReply();
+      },
+      commentPage || commentPageP
+    );
     initSubmit();
   };
   init();
@@ -1522,7 +1530,9 @@ origami.copy = function() {
     e.preventDefault();
     let html =
       window.getSelection().toString() +
-      '<br><br>本文采用 CC BY-NC-SA 3.0 许可协议，著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。<br>作者：' +
+      '<br><br>本文采用 CC ' +
+      origamiConfig.ccl.toUpperCase() +
+      ' 4.0 许可协议，著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。<br>作者：' +
       document.querySelector('.post-info .card-subtitle span').textContent +
       '<br>来源：' +
       document.title +
@@ -1530,7 +1540,9 @@ origami.copy = function() {
       window.location.href;
     let plain =
       window.getSelection().toString() +
-      '\n\n本文采用 CC BY-NC-SA 3.0 许可协议，著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。\n作者：' +
+      '\n\n本文采用 CC ' +
+      origamiConfig.ccl.toUpperCase() +
+      ' 4.0 许可协议，著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。\n作者：' +
       document.querySelector('.post-info .card-subtitle span').textContent +
       '\n来源：' +
       document.title +
@@ -1540,11 +1552,15 @@ origami.copy = function() {
     e.clipboardData.setData('text/plain', plain);
     if (window.clipboardData) return window.clipboardData.setData('text', html);
   };
-  document.body.addEventListener('copy', function(e) {
-    if (window.getSelection().toString().length > 10) {
-      inner(e);
-    }
-  });
+  if (document.querySelector('.s-content, .p-content')) {
+    document
+      .querySelector('.s-content, .p-content')
+      .addEventListener('copy', function(e) {
+        if (window.getSelection().toString().length > 20) {
+          inner(e);
+        }
+      });
+  }
 };
 
 origami.hasNewInspiration = function() {
