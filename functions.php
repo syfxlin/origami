@@ -607,6 +607,7 @@ add_action('init', 'origami_inspiration_init');
 // 文末版权声明
 function origami_content_copyright($content)
 {
+  $content .= '<div class="clearfix"></div>';
   if (is_single() || is_feed()) {
     $content .=
       '<div id="content-copyright"><span style="font-weight:bold;text-shadow:0 1px 0 #ddd;font-size: 12px;">声明:</span><span style="font-size: 12px;">本文采用 <a rel="nofollow" href="http://creativecommons.org/licenses/by-nc-sa/3.0/" title="署名-非商业性使用-相同方式共享">BY-NC-SA</a> 协议进行授权，如无注明均为原创，转载请注明转自<a href="' .
