@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v3 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Origami 2.2.7-pre1\n"
+"Project-Id-Version: Origami 2.2.8-pre1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/Origami\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-02-03T14:09:16+00:00\n"
+"POT-Creation-Date: 2020-02-12T06:19:54+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: origami\n"
@@ -105,60 +105,60 @@ msgid "当前评论页："
 msgstr ""
 
 #: comments.php:102
-#: functions.php:805
+#: functions.php:816
 msgid "上一页"
 msgstr ""
 
 #: comments.php:105
-#: functions.php:807
+#: functions.php:818
 msgid "下一页"
 msgstr ""
 
-#: functions.php:302
+#: functions.php:303
 #: include/config_about.php:5
 msgid "你可能修改了页脚的版权信息，请将其修正。Origami主题要求你保留页脚主题信息。"
 msgstr ""
 
-#: functions.php:574
 #: functions.php:575
-#: functions.php:585
+#: functions.php:576
+#: functions.php:586
 msgid "灵感"
 msgstr ""
 
-#: functions.php:576
 #: functions.php:577
+#: functions.php:578
 msgid "发表灵感"
 msgstr ""
 
-#: functions.php:578
+#: functions.php:579
 msgid "编辑灵感"
 msgstr ""
 
-#: functions.php:579
+#: functions.php:580
 msgid "新灵感"
 msgstr ""
 
-#: functions.php:580
+#: functions.php:581
 msgid "查看灵感"
 msgstr ""
 
-#: functions.php:581
+#: functions.php:582
 msgid "搜索灵感"
 msgstr ""
 
-#: functions.php:582
+#: functions.php:583
 msgid "暂无灵感"
 msgstr ""
 
-#: functions.php:583
+#: functions.php:584
 msgid "没有已遗弃的灵感"
 msgstr ""
 
-#: functions.php:836
+#: functions.php:847
 msgid "默认侧栏"
 msgstr ""
 
-#: functions.php:837
+#: functions.php:848
 msgid "默认的侧边栏"
 msgstr ""
 
@@ -522,115 +522,119 @@ msgstr ""
 msgid "评论标记URL（friend）"
 msgstr ""
 
-#: include/config.class.php:760
+#: include/config.class.php:761
 msgid "4.其他设置"
 msgstr ""
 
-#: include/config.class.php:766
+#: include/config.class.php:767
 msgid "复制时添加版权信息"
 msgstr ""
 
-#: include/config.class.php:775
+#: include/config.class.php:776
 msgid "全部添加"
 msgstr ""
 
-#: include/config.class.php:776
+#: include/config.class.php:777
 msgid "除代码外"
 msgstr ""
 
-#: include/config.class.php:777
+#: include/config.class.php:778
 msgid "不添加"
 msgstr ""
 
-#: include/config.class.php:779
+#: include/config.class.php:780
 msgid "all表示不管复制什么内容都会添加版权信息，ncode表示除代码部分外复制内容会添加版权信息，none表示不启用复制添加版权信息的功能"
 msgstr ""
 
-#: include/config.class.php:787
+#: include/config.class.php:788
+msgid "知识共享许可协议"
+msgstr ""
+
+#: include/config.class.php:808
 msgid "生成目录的级别"
 msgstr ""
 
-#: include/config.class.php:795
+#: include/config.class.php:816
 msgid "设置生成目录的级别（文章目录），默认为h1,h2,h3"
 msgstr ""
 
-#: include/config.class.php:803
+#: include/config.class.php:824
 msgid "Canvas-Nest背景"
 msgstr ""
 
-#: include/config.class.php:815
+#: include/config.class.php:836
 msgid "Canvas-Mouse特效"
 msgstr ""
 
-#: include/config.class.php:827
+#: include/config.class.php:848
 msgid "WorkBox缓存"
 msgstr ""
 
-#: include/config.class.php:839
+#: include/config.class.php:860
 msgid "阻止混合内容"
 msgstr ""
 
-#: include/config.class.php:847
+#: include/config.class.php:868
 msgid "是否阻止混合内容出现(即https中混入http)"
 msgstr ""
 
-#: include/config.class.php:855
+#: include/config.class.php:876
 msgid "LazyLoad加载图片"
 msgstr ""
 
-#: include/config.class.php:863
+#: include/config.class.php:884
 msgid "是否开启Lazyload加载图片，默认为false，格式为[true/false,all/post]"
 msgstr ""
 
-#: include/config.class.php:871
+#: include/config.class.php:892
 msgid "开启Katex支持"
 msgstr ""
 
-#: include/config.class.php:883
+#: include/config.class.php:904
 msgid "开启流程图/时序图/甘特图支持"
 msgstr ""
 
-#: include/config.class.php:895
+#: include/config.class.php:916
 msgid "Judge0API地址"
 msgstr ""
 
-#: include/config.class.php:903
+#: include/config.class.php:924
 msgid "输入Judge0API服务器地址"
 msgstr ""
 
-#: include/config.class.php:908
+#: include/config.class.php:929
 msgid "Run-Code语言列表"
 msgstr ""
 
-#: include/config.class.php:917
+#: include/config.class.php:938
 msgid "填入Run-Code语言列表JSON"
 msgstr ""
 
-#: include/config.class.php:922
+#: include/config.class.php:943
 msgid "开启网页标题改变"
 msgstr ""
 
-#: include/config.class.php:934
+#: include/config.class.php:955
 msgid "开启实时搜索功能"
 msgstr ""
 
-#: include/config.class.php:946
+#: include/config.class.php:967
 msgid "开启Live Chat功能"
 msgstr ""
 
-#: include/config.class.php:954
+#: include/config.class.php:975
 msgid "填入Live Chat Server地址即可开启"
 msgstr ""
 
-#: include/config.class.php:959
+#: include/config.class.php:980
 msgid "取消禁用jQuery"
 msgstr ""
 
-#: include/config.class.php:1006
+#: include/config.class.php:1027
 msgid "开启"
 msgstr ""
 
-#: include/config.class.php:1007
+#: include/config.class.php:1028
 #: template-part/tools.php:95
 msgid "关闭"
 msgstr ""
