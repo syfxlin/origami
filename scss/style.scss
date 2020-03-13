@@ -4,7 +4,7 @@ Theme URI: https://blog.ixk.me/theme-origami.html
 Author: Otstar Lin
 Author URI: https://www.ixk.me
 Description: 简约平面化风格的主题
-Version: 2.2.8
+Version: 2.2.9-pre1
 License: GNU General Public License v3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Tags: black,cyan-blue,flat,responsive
@@ -54,8 +54,8 @@ Tags: black,cyan-blue,flat,responsive
 
 body {
   background-color: #f8f9fa;
-  font-family: 'Source Serif Pro', 'Noto Serif SC', -apple-system, 'SF UI Text',
-    'PingFang SC', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif;
+  font-family: "Source Serif Pro", "Noto Serif SC", -apple-system, "SF UI Text",
+    "PingFang SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   font-weight: 400;
   color: #757575;
   overflow: unset;
@@ -63,12 +63,12 @@ body {
 
 code,
 pre {
-  &[class*='language-'] {
+  &[class*="language-"] {
     font-size: 0.7rem;
     padding: 0;
   }
 
-  &:not([class*='language-']) {
+  &:not([class*="language-"]) {
     width: 100%;
     overflow-x: auto;
   }
@@ -148,7 +148,7 @@ hr {
 
     &::before {
       position: absolute;
-      content: '';
+      content: "";
       top: -2px;
       width: 64px;
       height: 4px;
@@ -157,6 +157,10 @@ hr {
       animation: hrLine 6s ease-in-out 0s infinite;
     }
   }
+}
+
+figure {
+  margin: 0;
 }
 
 .lazy {
@@ -207,6 +211,30 @@ hr {
 .modal.active {
   z-index: 1000;
 }
+
+/* wp-blocks-style */
+
+.wp-block-image {
+  max-width: 100%;
+  margin-bottom: 1em;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.wp-block-image figcaption {
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  color: #555d66;
+  text-align: center;
+  font-size: 13px;
+}
+
+.wp-block-quote cite {
+  font-size: 0.7rem;
+  color: #777;
+}
+
+/* end */
 
 .ori-container {
   margin: 0 auto;
@@ -270,7 +298,7 @@ hr {
 
   &:after {
     position: fixed;
-    content: '';
+    content: "";
     top: 0;
     left: 0;
     width: 100%;
@@ -442,7 +470,7 @@ hr {
 
     &:after {
       position: absolute;
-      content: '';
+      content: "";
       top: 0;
       left: 0;
       width: 100%;
@@ -970,7 +998,7 @@ body.menu-active {
       list-style: none;
 
       &:not(:last-child):after {
-        content: ' , ';
+        content: " , ";
       }
 
       a {
@@ -1081,7 +1109,7 @@ body.menu-active {
   padding-right: 20px;
 
   &:after {
-    content: '';
+    content: "";
     position: absolute;
     top: 100%;
     right: 0;
@@ -1168,7 +1196,7 @@ body.menu-active {
     padding-bottom: 0.4rem;
 
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       left: 0;
       bottom: -1px;
@@ -1351,7 +1379,7 @@ body.menu-active {
     position: relative;
 
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       left: 0;
       bottom: -1px;
@@ -1385,7 +1413,7 @@ body.menu-active {
   }
 
   code {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
   }
 
   img {
@@ -1480,7 +1508,7 @@ body.menu-active {
     cursor: pointer;
     &::before {
       display: block;
-      content: '';
+      content: "";
       position: absolute;
       width: 100%;
       left: 0;
@@ -1491,7 +1519,7 @@ body.menu-active {
     }
     &::after {
       display: block;
-      content: '展开评论';
+      content: "展开评论";
       text-align: center;
       color: primary-color();
       position: absolute;
@@ -1546,7 +1574,7 @@ body.menu-active {
     cursor: pointer;
     &::before {
       display: block;
-      content: '';
+      content: "";
       position: absolute;
       width: 100%;
       left: 0;
@@ -1557,7 +1585,7 @@ body.menu-active {
     }
     &::after {
       display: block;
-      content: '展开更多回复';
+      content: "展开更多回复";
       text-align: center;
       color: primary-color();
       position: absolute;
@@ -1826,7 +1854,7 @@ body.menu-active {
   @include bg-center();
 
   &:before {
-    content: '';
+    content: "";
     width: 100%;
     height: 100%;
     position: absolute;
@@ -1847,17 +1875,17 @@ body.menu-active {
     border-radius: 0 5px;
   }
 
-  &[data-platform='github']:before {
-    content: 'GitHub';
+  &[data-platform="github"]:before {
+    content: "GitHub";
     background: #5a5a5a
-      url('data:image/svg+xml;charset=utf-8,%3Csvg%20viewBox%3D%220%200%201024%201024%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cdefs%3E%3Cstyle%2F%3E%3C%2Fdefs%3E%3Cpath%20d%3D%22M950.93%20512q0%20143.43-83.75%20257.97T650.9%20928.55q-15.43%202.85-22.6-4.02t-7.17-17.12V786.87q0-55.44-29.7-81.11%2032.55-3.44%2058.6-10.32t53.68-22.3T750%20635.1t30.28-59.98%2011.7-86.01q0-69.12-45.13-117.7%2021.14-52-4.53-116.58-16.02-5.12-46.3%206.29t-52.6%2025.16l-21.72%2013.68Q568.54%20285.1%20512%20285.1t-109.71%2014.85q-9.15-6.3-24.29-15.43t-47.69-22.02-49.15-7.68Q256%20319.4%20277.14%20371.41%20232%20419.99%20232%20489.1q0%2048.56%2011.7%2085.72t30%2059.98%2046%2038.25%2053.68%2022.3%2058.6%2010.32q-22.83%2020.56-28.02%2058.88-12%205.7-25.75%208.56t-32.55%202.85-37.45-12.29T276.48%20728q-10.83-18.28-27.72-29.7t-28.3-13.67l-11.42-1.69q-12%200-16.6%202.56t-2.85%206.59%205.12%207.97%207.46%206.88l4.02%202.85q12.58%205.7%2024.87%2021.72t18%2029.11l5.7%2013.17q7.46%2021.72%2025.16%2035.1T318.17%20826t39.72%204.03%2031.74-1.98l13.17-2.27q0%2021.73.29%2050.84t.3%2030.86q0%2010.32-7.47%2017.12t-22.82%204.02Q240.57%20884.6%20156.82%20770.05T73.07%20512.07q0-119.44%2058.88-220.3t159.74-159.75T512%2073.14t220.3%2058.88%20159.75%20159.75%2058.88%20220.3z%22%20fill%3D%22rgba(244%2C244%2C244%2C0.6)%22%2F%3E%3C%2Fsvg%3E')
+      url("data:image/svg+xml;charset=utf-8,%3Csvg%20viewBox%3D%220%200%201024%201024%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cdefs%3E%3Cstyle%2F%3E%3C%2Fdefs%3E%3Cpath%20d%3D%22M950.93%20512q0%20143.43-83.75%20257.97T650.9%20928.55q-15.43%202.85-22.6-4.02t-7.17-17.12V786.87q0-55.44-29.7-81.11%2032.55-3.44%2058.6-10.32t53.68-22.3T750%20635.1t30.28-59.98%2011.7-86.01q0-69.12-45.13-117.7%2021.14-52-4.53-116.58-16.02-5.12-46.3%206.29t-52.6%2025.16l-21.72%2013.68Q568.54%20285.1%20512%20285.1t-109.71%2014.85q-9.15-6.3-24.29-15.43t-47.69-22.02-49.15-7.68Q256%20319.4%20277.14%20371.41%20232%20419.99%20232%20489.1q0%2048.56%2011.7%2085.72t30%2059.98%2046%2038.25%2053.68%2022.3%2058.6%2010.32q-22.83%2020.56-28.02%2058.88-12%205.7-25.75%208.56t-32.55%202.85-37.45-12.29T276.48%20728q-10.83-18.28-27.72-29.7t-28.3-13.67l-11.42-1.69q-12%200-16.6%202.56t-2.85%206.59%205.12%207.97%207.46%206.88l4.02%202.85q12.58%205.7%2024.87%2021.72t18%2029.11l5.7%2013.17q7.46%2021.72%2025.16%2035.1T318.17%20826t39.72%204.03%2031.74-1.98l13.17-2.27q0%2021.73.29%2050.84t.3%2030.86q0%2010.32-7.47%2017.12t-22.82%204.02Q240.57%20884.6%20156.82%20770.05T73.07%20512.07q0-119.44%2058.88-220.3t159.74-159.75T512%2073.14t220.3%2058.88%20159.75%20159.75%2058.88%20220.3z%22%20fill%3D%22rgba(244%2C244%2C244%2C0.6)%22%2F%3E%3C%2Fsvg%3E")
       2px 2px / 19px no-repeat;
   }
 
-  &[data-platform='gitlab']:before {
-    content: 'GitLab';
+  &[data-platform="gitlab"]:before {
+    content: "GitLab";
     background: #5a5a5a
-      url('data:image/svg+xml;charset=utf-8,%3Csvg%20viewBox%3D%220%200%201024%201024%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22100%22%20height%3D%22100%22%3E%3Cpath%20d%3D%22M59.564%20399.464L512%20987.428%2016.148%20619.398C2.436%20609.114-3.276%20591.406%201.866%20575.412l57.698-175.948zm150.81-349.612c-6.284-17.708-31.418-17.708-37.702%200L59.564%20399.464h263.922L210.374%2049.852zm113.112%20349.612L512%20987.428l188.514-587.964H323.486zm698.648%20175.948l-57.698-175.948L512%20987.428l495.852-368.03c13.71-10.284%2019.422-27.992%2014.282-43.986zM851.326%2049.852c-6.284-17.708-31.418-17.708-37.702%200l-113.11%20349.612h263.922L851.326%2049.852z%22%20fill%3D%22rgba(251%2C250%2C245%2C.6)%22%2F%3E%3C%2Fsvg%3E')
+      url("data:image/svg+xml;charset=utf-8,%3Csvg%20viewBox%3D%220%200%201024%201024%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22100%22%20height%3D%22100%22%3E%3Cpath%20d%3D%22M59.564%20399.464L512%20987.428%2016.148%20619.398C2.436%20609.114-3.276%20591.406%201.866%20575.412l57.698-175.948zm150.81-349.612c-6.284-17.708-31.418-17.708-37.702%200L59.564%20399.464h263.922L210.374%2049.852zm113.112%20349.612L512%20987.428l188.514-587.964H323.486zm698.648%20175.948l-57.698-175.948L512%20987.428l495.852-368.03c13.71-10.284%2019.422-27.992%2014.282-43.986zM851.326%2049.852c-6.284-17.708-31.418-17.708-37.702%200l-113.11%20349.612h263.922L851.326%2049.852z%22%20fill%3D%22rgba(251%2C250%2C245%2C.6)%22%2F%3E%3C%2Fsvg%3E")
       2px 2px / 19px no-repeat;
   }
 }
@@ -2489,7 +2517,7 @@ body:not(.page):not(.single) {
 
   &:before,
   &:after {
-    content: '';
+    content: "";
     position: absolute;
     top: 2.5rem;
     left: -0.5rem;
@@ -2514,7 +2542,7 @@ body:not(.page):not(.single) {
   padding-bottom: 0.4rem;
 
   &:after {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     bottom: -1px;
@@ -2527,6 +2555,14 @@ body:not(.page):not(.single) {
     transition: 0.25s;
     z-index: 1;
   }
+
+  &:empty {
+    display: none;
+
+    & + .inspiration-content {
+      padding-top: 0;
+    }
+  }
 }
 
 .inspiration-content {
@@ -2536,6 +2572,10 @@ body:not(.page):not(.single) {
   img {
     max-width: 100%;
   }
+}
+
+.inspiration-footer {
+  font-size: 0.7rem;
 }
 
 .inspiration-footer-right {
@@ -2596,7 +2636,7 @@ body:not(.page):not(.single) {
   transition: all 0.5s;
 
   &:after {
-    content: '';
+    content: "";
     height: 8rem;
     width: 100%;
     position: absolute;

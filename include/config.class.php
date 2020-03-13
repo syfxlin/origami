@@ -678,7 +678,7 @@ class OrigamiConfig
       [
         'field' => 'origami_mail_notice_title',
         'value' =>
-          '<span>Otstar</span>&nbsp;<span style="color:#8bb7c5">Cloud</span>',
+        '<span>Otstar</span>&nbsp;<span style="color:#8bb7c5">Cloud</span>',
         'type' => 'textarea'
       ]
     );
@@ -691,7 +691,7 @@ class OrigamiConfig
       [
         'field' => 'origami_mail_notice_salute',
         'value' =>
-          '此致<br />' .
+        '此致<br />' .
           wp_specialchars_decode(get_option('blogname'), ENT_QUOTES) .
           '敬上',
         'type' => 'textarea'
@@ -706,7 +706,7 @@ class OrigamiConfig
       [
         'field' => 'origami_mail_notice_footer',
         'value' =>
-          '此电子邮件地址无法接收回复。如需更多信息，请访问<a href="' .
+        '此电子邮件地址无法接收回复。如需更多信息，请访问<a href="' .
           wp_specialchars_decode(home_url(), ENT_QUOTES) .
           '" style="text-decoration:none;color:#4285f4" target="_blank">' .
           wp_specialchars_decode(get_option('blogname'), ENT_QUOTES) .
@@ -794,6 +794,7 @@ class OrigamiConfig
         'value' => 'by-nc-sa',
         'type' => 'select',
         'options' => [
+          '不显示知识共享许可协议' => 'none',
           '署名标示(BY)' => 'by',
           '署名标示(BY)-相同方式共享(SA)' => 'by-sa',
           '署名标示(BY)-非商业性使用(NC)' => 'by-nc',
@@ -933,7 +934,7 @@ class OrigamiConfig
       [
         'field' => 'origami_runcode_lang_list',
         'value' =>
-          '{"c": 1,"cpp": 2,"bash": 3,"csharp": 4,"go": 5,"java": 6,"node": 7,"php": 8,"python": 9,"python2": 10,"ruby": 11,"rust": 12,"scala": 13,"typescript": 14}',
+        '{"c": 1,"cpp": 2,"bash": 3,"csharp": 4,"go": 5,"java": 6,"node": 7,"php": 8,"python": 9,"python2": 10,"ruby": 11,"rust": 12,"scala": 13,"typescript": 14}',
         'type' => 'textarea',
         'description' => __('填入Run-Code语言列表JSON', 'origami')
       ]

@@ -187,12 +187,6 @@ if (!is_admin()) {
   function css_js_to_footer()
   {
     global $assets_url, $tem_url;
-    wp_enqueue_script(
-      'origami_js',
-      $assets_url['origami_js'],
-      [],
-      wp_get_theme()->get('Version')
-    );
     wp_enqueue_script('qrcode_js', $assets_url['qrcode_js']);
     wp_enqueue_script('SMValidator_js', $assets_url['SMValidator_js']);
     // fa图标
@@ -249,6 +243,13 @@ if (!is_admin()) {
         wp_enqueue_script('html2canvas_js', $assets_url['html2canvas_js']);
       }
     }
+    // 最后加载 main.js
+    wp_enqueue_script(
+      'origami_js',
+      $assets_url['origami_js'],
+      [],
+      wp_get_theme()->get('Version')
+    );
   }
   add_action('wp_footer', 'css_js_to_footer');
   // 加载WorkBox
@@ -611,6 +612,9 @@ function origami_content_copyright($content)
   $content .= '<div class="clearfix"></div>';
   if (is_single() || is_feed()) {
     $select_ccl = get_option('origami_ccl', 'by-nc-sa');
+    if ($select_ccl === 'none') {
+      return $content;
+    }
     $ccl = [
       'by' => '署名标示(BY)',
       'by-sa' => '署名标示(BY)-相同方式共享(SA)',
