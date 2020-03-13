@@ -926,6 +926,17 @@ function color_tagloud_callback($matches)
 }
 add_filter('wp_tag_cloud', 'color_tagcloud', 1);
 
+// 替换Gravatar头像源
+function change_avatar_url($avatar_url)
+{
+  $url = get_option('origami_change_avatar_url', 'false');
+  if ($url != 'false') {
+    $avatar_url = preg_replace("/http:\/\/(www|\d).gravatar.com\/avatar\//", $url, $avatar_url);
+  }
+  return $avatar_url;
+}
+add_filter('get_avatar_url', 'change_avatar_url');
+
 require_once get_template_directory() . '/include/remove.php';
 require_once get_template_directory() . '/include/shortcode.php';
 require_once get_template_directory() . '/include/aes.class.php';

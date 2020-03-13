@@ -756,6 +756,7 @@ class OrigamiConfig
     register_setting('origami_fun', 'origami_judge0api');
     register_setting('origami_fun', 'origami_runcode_lang_list');
     register_setting('origami_fun', 'origami_enable_jquery');
+    register_setting('origami_fun', 'origami_change_avatar_url');
     add_settings_section(
       'origami_fun_other',
       __('4.其他设置', 'origami'),
@@ -986,6 +987,19 @@ class OrigamiConfig
         'field' => 'origami_enable_jquery',
         'value' => 'false',
         'type' => 'checkbox'
+      ]
+    );
+    add_settings_field(
+      'origami_change_avatar_url',
+      __('设置Gavatar CDN', 'origami'),
+      [&$this, 'settings_field_input'],
+      'origami_fun',
+      'origami_fun_other',
+      [
+        'field' => 'origami_change_avatar_url',
+        'value' => 'false',
+        'type' => 'text',
+        'description' => __('填入Gavatar URL即可启用（注意：需要完整的URL，并同时跟上 /，如 http://cdn.v2ex.com/gravatar/），若不启用请填 false', 'origami')
       ]
     );
   }
