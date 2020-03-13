@@ -1547,7 +1547,7 @@ body.menu-active .ori-footer {
 .p-content img.lazy:not(.loaded),
 .s-content img.lazy:not(.loaded) {
   width: 100%;
-  padding-bottom: 40%;
+  height: 200px;
 }
 
 .p-tags,
