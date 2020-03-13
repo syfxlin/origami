@@ -51,6 +51,7 @@ function origami_frontend_config()
 {
   global $tem_url;
   $config = [
+    'restURL' => get_rest_url(),
     'themeBaseURL' => $tem_url,
     'markdownComment' =>
     get_option('origami_markdown_comment', 'true') == 'true',

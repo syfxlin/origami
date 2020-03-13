@@ -274,7 +274,7 @@ origami.realTimeSearch = function() {
         changeSearchList(JSON.parse(sessionStorage.getItem(currKey)));
       } else {
         $http({
-          url: "/wp-json/wp/v2/posts",
+          url: origamiConfig.restURL + "wp/v2/posts",
           type: "GET",
           dataType: "json",
           data: {
@@ -536,7 +536,7 @@ origami.initComments = function() {
     closeReply();
     let loadF = function() {
       $http({
-        url: "/wp-json/origami/v1/comments",
+        url: origamiConfig.restURL + "origami/v1/comments",
         type: "GET",
         dataType: "json",
         data: {
@@ -615,7 +615,7 @@ origami.initComments = function() {
   let submit = function(info, callback = function() {}, isUpdate = false) {
     if (!isUpdate) {
       $http({
-        url: "/wp-json/origami/v1/comments",
+        url: origamiConfig.restURL + "origami/v1/comments",
         type: "POST",
         dataType: "json",
         data: {
@@ -635,7 +635,7 @@ origami.initComments = function() {
       });
     } else {
       $http({
-        url: "/wp-json/origami/v1/comments",
+        url: origamiConfig.restURL + "origami/v1/comments",
         type: "PUT",
         dataType: "json",
         data: {
@@ -809,7 +809,7 @@ origami.initComments = function() {
     deleteBtn.addEventListener("click", function() {
       origami.tools.showModal("删除评论", "确定要删除这条评论？", function() {
         $http({
-          url: "/wp-json/origami/v1/comments",
+          url: origamiConfig.restURL + "origami/v1/comments",
           type: "DELETE",
           dataType: "json",
           data: {
