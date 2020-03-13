@@ -236,6 +236,33 @@ figure {
 
 /* end */
 
+.widget_categories,
+.widget_archive {
+  .screen-reader-text {
+    display: none;
+  }
+  select {
+    appearance: none;
+    border: 0.05rem solid #bcc3ce;
+    border-radius: 0.1rem;
+    color: inherit;
+    font-size: 0.8rem;
+    height: 1.8rem;
+    line-height: 1.2rem;
+    outline: 0;
+    padding: 0.25rem 0.4rem;
+    vertical-align: middle;
+    width: 100%;
+    background: #fff;
+    padding-right: 1.2rem;
+
+    &:focus {
+      border-color: #5755d9;
+      box-shadow: 0 0 0 0.1rem rgba(87, 85, 217, 0.2);
+    }
+  }
+}
+
 .ori-container {
   margin: 0 auto;
   padding: 0 10px;
