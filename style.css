@@ -1865,13 +1865,19 @@ body.menu-active .ori-footer {
 
 .response-img {
   width: 3.8rem;
+  height: 3.8rem;
   position: absolute;
   right: 0;
-  opacity: 0.4;
+  pointer-events: none;
+  overflow: hidden;
 }
 
-.response-img:hover {
-  opacity: 1;
+.response-img img {
+  width: 100%;
+  height: 100%;
+  transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+  transition: transform 0.5s, -webkit-transform 0.5s;
 }
 
 .response-user {
@@ -1896,6 +1902,11 @@ body.menu-active .ori-footer {
       -ms-flex: 1;
           flex: 1;
   margin-left: 0.5rem;
+}
+
+#response-text:focus + .response-img img {
+  -webkit-transform: translate3d(0, -100%, 0);
+          transform: translate3d(0, -100%, 0);
 }
 
 .response-md {

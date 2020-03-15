@@ -50,6 +50,10 @@ $tem_url = get_template_directory_uri();
 function origami_frontend_config()
 {
   global $tem_url;
+  $inspiration = get_posts([
+    'numberposts' => 1,
+    'post_type' => 'inspiration'
+  ]);
   $config = [
     'restURL' => get_rest_url(),
     'themeBaseURL' => $tem_url,
@@ -69,12 +73,9 @@ function origami_frontend_config()
     'footerTime' => get_option('origami_footer_time', false),
     'liveChat' => get_option('origami_live_chat', false),
     'background' => json_decode(get_option('origami_background', '')),
-    'lastInspirationTime' => get_the_time(
+    'lastInspirationTime' => count($inspiration) === 0 ? false : get_the_time(
       'U',
-      get_posts([
-        'numberposts' => 1,
-        'post_type' => 'inspiration'
-      ])[0]
+      $inspiration[0]
     ),
     'tocLevel' => get_option('origami_toc_level', 'h1,h2,h3'),
     'copyAddCopyright' => get_option('origami_copy_add_copyright', 'ncode'),
@@ -932,7 +933,7 @@ function change_avatar_url($avatar_url)
 {
   $url = get_option('origami_change_avatar_url', 'false');
   if ($url != 'false') {
-    $avatar_url = preg_replace("/http:\/\/(www|\d).gravatar.com\/avatar\//", $url, $avatar_url);
+    $avatar_url = preg_replace("/http:\/\/(www|\d|secure).gravatar.com\/avatar\//", $url, $avatar_url);
   }
   return $avatar_url;
 }

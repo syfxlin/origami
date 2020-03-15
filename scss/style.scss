@@ -1715,12 +1715,16 @@ body.menu-active {
 
 .response-img {
   width: 3.8rem;
+  height: 3.8rem;
   position: absolute;
   right: 0;
-  opacity: 0.4;
+  pointer-events: none;
+  overflow: hidden;
 
-  &:hover {
-    opacity: 1;
+  img {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s;
   }
 }
 
@@ -1744,6 +1748,10 @@ body.menu-active {
   height: 3.8rem;
   flex: 1;
   margin-left: 0.5rem;
+
+  &:focus + .response-img img {
+    transform: translate3d(0, -100%, 0);
+  }
 }
 
 .response-md {

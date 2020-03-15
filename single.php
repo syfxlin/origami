@@ -36,54 +36,47 @@ if ($post_item['post_image'] == false && origami_get_other_thumbnail($post)) {
 ?>
 <?php get_header(); ?>
 <div id="main-content">
-    <main class="ori-container columns <?php echo $main_class; ?> grid-md single-post">
-        <section class="s-container column <?php echo $post_list_class; ?>">
-            <?php if ($post_item['post_image']): ?>
-              <div class="s-thumb" style="background-image:url(<?php echo $post_item[
-                'post_image'
-              ]; ?>)"></div>
-            <?php endif; ?>
-            <?php origami_breadcrumbs(); ?>
-            <div class="s-info post-info">
-                <h2 class="card-title"><?php echo $post_item[
-                  'post_title'
-                ]; ?></h2>
-                <div class="card-subtitle text-gray">
-                    <time><?php echo $post_item[
-                      'post_date'
-                    ]; ?></time> • <span><?php echo $post_item[
-  'post_author'
-]; ?></span> •
-                    <span><?php echo $post_item['post_comments'] .
-                      __('条评论', 'origami'); ?></span> • 
-                    <ul>
-                    <?php foreach ($post_item['post_category'] as $cat): ?>
-                        <li><a href="<?php echo get_category_link(
-                          $cat
-                        ); ?>"><?php echo get_cat_name($cat); ?></a></li>
-                    <?php endforeach; ?>
-                    </ul>
-                </div>
-            </div>
-            <article <?php post_class(
-              's-content'
-            ); ?> id="post-<?php the_ID(); ?>">
-                <?php the_content(); ?>
-            </article>
-            <div class="s-tags">
-              <?php get_template_part('template-part/post-tags'); ?>
-            </div>
-            <div class="s-comments">
-              <?php comments_template(); ?>
-            </div>
-            <div class="s-nav">
-              <?php get_template_part('template-part/post-nav'); ?>
-            </div>
-        </section>
-        <aside class="column ori-sidebar <?php echo $sidebar_class; ?>">
-            <?php get_sidebar(); ?>
-        </aside>
-    </main>
+  <main class="ori-container columns <?php echo $main_class; ?> grid-md single-post">
+    <section class="s-container column <?php echo $post_list_class; ?>">
+      <?php if ($post_item['post_image']) : ?>
+        <div class="s-thumb" style="background-image:url(<?php echo $post_item['post_image']; ?>)"></div>
+      <?php endif; ?>
+      <?php origami_breadcrumbs(); ?>
+      <div class="s-info post-info">
+        <h2 class="card-title"><?php echo $post_item['post_title']; ?></h2>
+        <div class="card-subtitle text-gray">
+          <time><?php echo $post_item['post_date']; ?></time> • <span><?php echo $post_item['post_author']; ?></span> •
+          <span>
+            <?php echo $post_item['post_comments'] . __('条评论', 'origami'); ?>
+          </span> •
+          <ul>
+            <?php foreach ($post_item['post_category'] as $cat) : ?>
+              <li>
+                <a href="<?php echo get_category_link($cat); ?>">
+                  <?php echo get_cat_name($cat); ?>
+                </a>
+              </li>
+            <?php endforeach; ?>
+          </ul>
+        </div>
+      </div>
+      <article <?php post_class('s-content'); ?> id="post-<?php the_ID(); ?>">
+        <?php the_content(); ?>
+      </article>
+      <div class="s-tags">
+        <?php get_template_part('template-part/post-tags'); ?>
+      </div>
+      <div class="s-comments">
+        <?php comments_template(); ?>
+      </div>
+      <div class="s-nav">
+        <?php get_template_part('template-part/post-nav'); ?>
+      </div>
+    </section>
+    <aside class="column ori-sidebar <?php echo $sidebar_class; ?>">
+      <?php get_sidebar(); ?>
+    </aside>
+  </main>
 </div>
 <?php // get_template_part('template-part/tools-button');
 get_footer(); ?>

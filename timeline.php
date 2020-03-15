@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template Name: Timeline
  */
@@ -88,92 +89,95 @@ get_header();
 $this_year = -1;
 ?>
 <div id="main-content">
-    <?php if (get_option('origami_featured_pages_post_type', 'false') != 'true'): ?>
-      <section class="featured">
-        <div class="featured-image" style="background-image:url(<?php echo $post_item['post_image']; ?>)"></div>
-        <div class="featured-container">
-          <h1><?php echo $post_item['post_title']; ?></h1>
-          <h2><?php echo __('目前共有', 'origami') .
-            $count .
-            __('篇文章', 'origami'); ?></h2>
+  <?php if (get_option('origami_featured_pages_post_type', 'false') != 'true') : ?>
+    <section class="featured">
+      <div class="featured-image" style="background-image:url(<?php echo $post_item['post_image']; ?>)"></div>
+      <div class="featured-container">
+        <h1>
+          <?php echo $post_item['post_title']; ?>
+        </h1>
+        <h2>
+          <?php echo __('目前共有', 'origami') . $count . __('篇文章', 'origami'); ?>
+        </h2>
+      </div>
+    </section>
+  <?php endif; ?>
+  <main class="ori-container columns <?php echo $main_class; ?> grid-md">
+    <section class="timeline-list column <?php echo $post_list_class; ?>">
+      <?php if (get_option('origami_featured_pages_post_type', 'false') == 'true') : ?>
+        <?php if ($post_item['post_image']) : ?>
+          <div class="p-thumb" style="background-image:url(<?php echo $post_item['post_image']; ?>)"></div>
+        <?php endif; ?>
+        <?php origami_breadcrumbs(); ?>
+        <div class="p-info post-info">
+          <h2 class="card-title"><?php echo $post_item['post_title']; ?></h2>
+          <div class="card-subtitle text-gray">
+            <time><?php echo $post_item['post_date']; ?></time> • <span><?php echo $post_item['post_author']; ?></span> •
+            <span><?php echo $count . __('篇文章', 'origami'); ?></span>
+          </div>
         </div>
-      </section>
-    <?php endif; ?>
-    <main class="ori-container columns <?php echo $main_class; ?> grid-md">
-        <section class="timeline-list column <?php echo $post_list_class; ?>">
-          <?php if (get_option('origami_featured_pages_post_type', 'false') == 'true'): ?>
-            <?php if ($post_item['post_image']): ?>
-              <div class="p-thumb" style="background-image:url(<?php echo $post_item[
-                'post_image'
-              ]; ?>)"></div>
-            <?php endif; ?>
-            <?php origami_breadcrumbs(); ?>
-            <div class="p-info post-info">
-                <h2 class="card-title"><?php echo $post_item['post_title']; ?></h2>
-                <div class="card-subtitle text-gray">
-                    <time><?php echo $post_item['post_date']; ?></time> • <span><?php echo $post_item['post_author']; ?></span> •
-                    <span><?php echo $count . __('篇文章', 'origami'); ?></span>
+      <?php endif; ?>
+      <article <?php post_class('p-content'); ?> id="post-<?php the_ID(); ?>">
+        <?php the_content(); ?>
+      </article>
+      <div class="timeline">
+        <?php foreach ($post_list as $item) : ?>
+          <?php if ($item['post_year'] != $this_year) :
+            $this_year = $item['post_year']; ?>
+            <div class="timeline-item">
+              <div class="timeline-left">
+                <div class="timeline-icon icon-lg"></div>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-year">
+                  <?php echo $this_year; ?>
                 </div>
+              </div>
             </div>
-          <?php endif; ?>
-          <article <?php post_class(
-            'p-content'
-          ); ?> id="post-<?php the_ID(); ?>">
-              <?php the_content(); ?>
-          </article>
-          <div class="timeline">
-              <?php foreach ($post_list as $item): ?>
-                <?php if ($item['post_year'] != $this_year):
-                  $this_year = $item['post_year']; ?>
-                  <div class="timeline-item">
-                    <div class="timeline-left">
-                      <div class="timeline-icon icon-lg"></div>
-                    </div>
-                    <div class="timeline-content">
-                      <div class="timeline-year">
-                        <?php echo $this_year; ?>
-                      </div>
-                    </div>
-                  </div>
-                <?php
-                endif; ?>
-                <div class="timeline-item">
-                  <div class="timeline-left">
-                    <div class="timeline-icon"></div>
-                  </div>
-                  <div class="timeline-content">
-                    <div class="timeline-title"><a href="<?php echo $item[
-                      'post_link'
-                    ]; ?>"><?php echo $item['post_title']; ?></a></div>
-                    <div class="text-gray timeline-subtitle">
-                      <i class="fa fa-calendar"></i>
-                      <time><?php echo $item['post_date']; ?></time>
-                      <i class="fa fa-paper-plane-o"></i>
-                      <span><?php echo $item['post_author']; ?></span>
-                      <i class="fa fa-comment"></i>
-                      <span><?php echo $item['post_comments'] .
-                        __('条评论', 'origami'); ?></span>
-                      <i class="fa fa-bookmark"></i> 
-                      <ul>
-                        <?php foreach ($item['post_category'] as $cat): ?>
-                          <li><a href="<?php echo get_category_link(
-                            $cat
-                          ); ?>"><?php echo get_cat_name($cat); ?></a></li>
-                        <?php endforeach; ?>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              <?php endforeach; ?>
+          <?php
+          endif; ?>
+          <div class="timeline-item">
+            <div class="timeline-left">
+              <div class="timeline-icon"></div>
+            </div>
+            <div class="timeline-content">
+              <div class="timeline-title">
+                <a href="<?php echo $item['post_link']; ?>">
+                  <?php echo $item['post_title']; ?>
+                </a>
+              </div>
+              <div class="text-gray timeline-subtitle">
+                <i class="fa fa-calendar"></i>
+                <time><?php echo $item['post_date']; ?></time>
+                <i class="fa fa-paper-plane-o"></i>
+                <span><?php echo $item['post_author']; ?></span>
+                <i class="fa fa-comment"></i>
+                <span>
+                  <?php echo $item['post_comments'] . __('条评论', 'origami'); ?>
+                </span>
+                <i class="fa fa-bookmark"></i>
+                <ul>
+                  <?php foreach ($item['post_category'] as $cat) : ?>
+                    <li>
+                      <a href="<?php echo get_category_link($cat); ?>">
+                        <?php echo get_cat_name($cat); ?>
+                      </a>
+                    </li>
+                  <?php endforeach; ?>
+                </ul>
+              </div>
+            </div>
           </div>
-          <?php echo $pagination; ?>
-          <div class="p-comments">
-            <?php comments_template(); ?>
-          </div>
-      </section>
-      <aside class="column ori-sidebar <?php echo $sidebar_class; ?>">
-          <?php get_sidebar(); ?>
-      </aside>
-    </main>
+        <?php endforeach; ?>
+      </div>
+      <?php echo $pagination; ?>
+      <div class="p-comments">
+        <?php comments_template(); ?>
+      </div>
+    </section>
+    <aside class="column ori-sidebar <?php echo $sidebar_class; ?>">
+      <?php get_sidebar(); ?>
+    </aside>
+  </main>
 </div>
 <?php get_footer(); ?>

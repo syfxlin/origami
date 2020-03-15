@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template Name: Inspiration
  */
@@ -101,72 +102,76 @@ if ($post_item['post_image'] == false && origami_get_other_thumbnail($post)) {
 get_header();
 ?>
 <div id="main-content">
-    <?php if (get_option('origami_featured_pages_post_type', 'false') != 'true'): ?>
-      <section class="featured">
-        <div class="featured-image" style="background-image:url(<?php echo $post_item['post_image']; ?>)"></div>
-        <div class="featured-container">
-          <h1><?php echo $post_item['post_title']; ?></h1>
-          <h2><?php echo __('目前共有', 'origami') .
+  <?php if (get_option('origami_featured_pages_post_type', 'false') != 'true') : ?>
+    <section class="featured">
+      <div class="featured-image" style="background-image:url(<?php echo $post_item['post_image']; ?>)"></div>
+      <div class="featured-container">
+        <h1>
+          <?php echo $post_item['post_title']; ?>
+        </h1>
+        <h2>
+          <?php echo __('目前共有', 'origami') .
             $count .
-            __('篇灵感', 'origami'); ?></h2>
-        </div>
-      </section>
-    <?php endif; ?>
-    <main class="ori-container columns <?php echo $main_class; ?> grid-md">
-        <section class="inspiration-list column <?php echo $post_list_class; ?>">
-          <?php if (get_option('origami_featured_pages_post_type', 'false') == 'true'): ?>
-            <?php if ($post_item['post_image']): ?>
-              <div class="p-thumb" style="background-image:url(<?php echo $post_item[
-                'post_image'
-              ]; ?>)"></div>
-            <?php endif; ?>
-            <?php origami_breadcrumbs(); ?>
-            <div class="p-info post-info">
-                <h2 class="card-title"><?php echo $post_item['post_title']; ?></h2>
-                <div class="card-subtitle text-gray">
-                    <time><?php echo $post_item['post_date']; ?></time> • <span><?php echo $post_item['post_author']; ?></span> •
-                    <span><?php echo $count . __('篇灵感', 'origami'); ?></span>
-                </div>
-            </div>
-          <?php endif; ?>
-          <article <?php post_class(
-            'p-content'
-          ); ?> id="post-<?php the_ID(); ?>">
-              <?php the_content(); ?>
-          </article>
-          <ul class="inspiration">
-            <?php foreach ($post_list as $item): ?>
-              <li class="inspiration-card">
-                <?php echo $item['post_author_avatar']; ?>
-                <div class="inspiration-right">
-                  <div class="inspiration-title"><?php echo $item[
-                    'post_title'
-                  ]; ?></div>
-                  <div class="inspiration-content">
-                    <?php echo $item['post_content']; ?>
-                  </div>
-                  <div class="inspiration-footer">
-                    <span class="inspiration-footer-left">
-                      <i class="fa fa-paper-plane-o"></i>
-                      <span><?php echo $item['post_author']; ?></span>
-                    </span>
-                    <span class="inspiration-footer-right">
-                      <i class="fa fa-calendar"></i>
-                      <time><?php echo $item['post_date']; ?></time>
-                    </span>
-                  </div>
-                </div>
-              </li>
-            <?php endforeach; ?>
-          </ul>
-          <?php echo $pagination; ?>
-          <div class="p-comments">
-            <?php comments_template(); ?>
+            __('篇灵感', 'origami'); ?>
+        </h2>
+      </div>
+    </section>
+  <?php endif; ?>
+  <main class="ori-container columns <?php echo $main_class; ?> grid-md">
+    <section class="inspiration-list column <?php echo $post_list_class; ?>">
+      <?php if (get_option('origami_featured_pages_post_type', 'false') == 'true') : ?>
+        <?php if ($post_item['post_image']) : ?>
+          <div class="p-thumb" style="background-image:url(<?php echo $post_item['post_image']; ?>)"></div>
+        <?php endif; ?>
+        <?php origami_breadcrumbs(); ?>
+        <div class="p-info post-info">
+          <h2 class="card-title"><?php echo $post_item['post_title']; ?></h2>
+          <div class="card-subtitle text-gray">
+            <time><?php echo $post_item['post_date']; ?></time> • <span><?php echo $post_item['post_author']; ?></span> •
+            <span><?php echo $count . __('篇灵感', 'origami'); ?></span>
           </div>
-      </section>
-      <aside class="column ori-sidebar <?php echo $sidebar_class; ?>">
-          <?php get_sidebar(); ?>
-      </aside>
-    </main>
+        </div>
+      <?php endif; ?>
+      <article <?php post_class('p-content'); ?> id="post-<?php the_ID(); ?>">
+        <?php the_content(); ?>
+      </article>
+      <ul class="inspiration">
+        <?php foreach ($post_list as $item) : ?>
+          <li class="inspiration-card">
+            <?php echo $item['post_author_avatar']; ?>
+            <div class="inspiration-right">
+              <div class="inspiration-title">
+                <?php echo $item['post_title']; ?>
+              </div>
+              <div class="inspiration-content">
+                <?php echo $item['post_content']; ?>
+              </div>
+              <div class="inspiration-footer">
+                <span class="inspiration-footer-left">
+                  <i class="fa fa-paper-plane-o"></i>
+                  <span>
+                    <?php echo $item['post_author']; ?>
+                  </span>
+                </span>
+                <span class="inspiration-footer-right">
+                  <i class="fa fa-calendar"></i>
+                  <time>
+                    <?php echo $item['post_date']; ?>
+                  </time>
+                </span>
+              </div>
+            </div>
+          </li>
+        <?php endforeach; ?>
+      </ul>
+      <?php echo $pagination; ?>
+      <div class="p-comments">
+        <?php comments_template(); ?>
+      </div>
+    </section>
+    <aside class="column ori-sidebar <?php echo $sidebar_class; ?>">
+      <?php get_sidebar(); ?>
+    </aside>
+  </main>
 </div>
 <?php get_footer(); ?>

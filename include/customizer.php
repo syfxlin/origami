@@ -405,5 +405,3 @@ add_action( 'customize_register', 'origami_customize_register' );
 //     }
 // }
 // add_action( 'widgets_init', 'origami_sidebars_init' );
-
-?>

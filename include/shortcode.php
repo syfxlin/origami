@@ -82,16 +82,16 @@ add_shortcode('image', 'origami_image_shortcode_func');
 // 添加短代码按钮到文本编辑器
 function origami_add_html_button($mce_settings)
 {
-  ?>
-    <script type="text/javascript">
-        QTags.addButton('image_add', '添加图片', '[image alt="" is-thum="false" is-show="true"]', '[/image]');
-        QTags.addButton('prism', 'Prism.js - 代码高亮', '<pre class="fix-back-pre">[prism lang=""]', '[/prism]</pre>');
-        QTags.addButton('notebox_yellow', 'NoteBox - yellow', '[notebox color="yellow"]', '[/notebox]');
-        QTags.addButton('notebox_blue', 'NoteBox - blue', '[notebox color=blue]', '[/notebox]');
-        QTags.addButton('notebox_green', 'NoteBox - green', '[notebox color=green]', '[/notebox]');
-        QTags.addButton('notebox_red', 'NoteBox - red', '[notebox color=red]', '[/notebox]');
-    </script>
-    <?php
+?>
+  <script type="text/javascript">
+    QTags.addButton('image_add', '添加图片', '[image alt="" is-thum="false" is-show="true"]', '[/image]');
+    QTags.addButton('prism', 'Prism.js - 代码高亮', '<pre class="fix-back-pre">[prism lang=""]', '[/prism]</pre>');
+    QTags.addButton('notebox_yellow', 'NoteBox - yellow', '[notebox color="yellow"]', '[/notebox]');
+    QTags.addButton('notebox_blue', 'NoteBox - blue', '[notebox color=blue]', '[/notebox]');
+    QTags.addButton('notebox_green', 'NoteBox - green', '[notebox color=green]', '[/notebox]');
+    QTags.addButton('notebox_red', 'NoteBox - red', '[notebox color=red]', '[/notebox]');
+  </script>
+<?php
 }
 add_action('after_wp_tiny_mce', 'origami_add_html_button');
 

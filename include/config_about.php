@@ -1,6 +1,6 @@
 <div class="wrap">
     <h1><?php echo __("Origami主题 - 关于", "origami"); ?></h1>
-    <?php if (isset($GLOBALS['theme_edited']) && $GLOBALS['theme_edited']): ?>
+    <?php if (isset($GLOBALS['theme_edited']) && $GLOBALS['theme_edited']) : ?>
         <div class="notice notice-warning">
             <p>Warning：<?php echo __('你可能修改了页脚的版权信息，请将其修正。Origami主题要求你保留页脚主题信息。', 'origami') ?></p>
         </div>
@@ -18,23 +18,23 @@
     <p style="font-size:15px;"><?php echo __('Origami主题的 Github 地址是'); ?><a href="https://github.com/syfxlin/origami/" target="_blank">https://github.com/syfxlin/origami/</a></p>
     <p style="font-size:15px;"><?php echo __('Origami主题的开发离不开互联网上的各位朋友，是你们提供了灵感，设计，代码等帮助Origami主题发展。'); ?></p>
     <?php
-        $origami_data = json_decode(file_get_contents("https://lab.ixk.me/wordpress/Origami-theme-info.json"));
-        $now_version = $origami_data->version;
-        $curr_version = wp_get_theme()->get("Version");
-        if ($now_version != $curr_version) {
-            function origami_update_notice()
-            {
-                echo '<div class="notice notice-warning is-dismissible">
-                        <p>'. __('Origami主题有新版本可以更新啦！', 'origami') .'(￣▽￣)"</p>
+    $origami_data = json_decode(file_get_contents("https://lab.ixk.me/wordpress/Origami-theme-info.json"));
+    $now_version = $origami_data->version;
+    $curr_version = wp_get_theme()->get("Version");
+    if ($now_version != $curr_version) {
+        function origami_update_notice()
+        {
+            echo '<div class="notice notice-warning is-dismissible">
+                        <p>' . __('Origami主题有新版本可以更新啦！', 'origami') . '(￣▽￣)"</p>
                     </div>';
-            }
-            add_action('admin_notices', 'origami_update_notice');
         }
+        add_action('admin_notices', 'origami_update_notice');
+    }
     ?>
     <h2 style="font-size:19px;"><?php echo __("版本", "origami") ?></h2>
     <p style="font-size:12px;"><?php echo __('当前版本 v', 'origami') . $curr_version; ?></p>
     <p style="font-size:12px;"><?php echo __('最新版本 v', 'origami') . $now_version; ?></p>
-    <?php if ($now_version != $curr_version): ?>
+    <?php if ($now_version != $curr_version) : ?>
         <div style="display: inline-block;line-height: 19px;padding: 0px 15px;font-size: 14px;text-align: left;background-color: #fff;border-left: 4px solid #ffba00;box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);">
             <p><?php echo __('Origami主题有新版本可以更新啦！', 'origami'); ?>(￣▽￣)"</p>
         </div>

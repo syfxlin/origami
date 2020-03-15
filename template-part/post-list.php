@@ -47,23 +47,17 @@ if ($sidebar_pos === 'right' || $sidebar_pos === 'left') {
 ?>
 <main class="ori-container columns <?php echo $main_class; ?> grid-md">
   <section class="post-list column <?php echo $post_list_class; ?>">
-    <?php foreach ($post_list as $item): ?>
+    <?php foreach ($post_list as $item) : ?>
       <article class="card" id="post-<?php echo $item['post_id']; ?>">
-        <?php if (is_sticky($item['post_id'])): ?>
+        <?php if (is_sticky($item['post_id'])) : ?>
           <div class="post-sticky"><?php echo __('置顶', 'origami'); ?></div>
         <?php endif; ?>
-        <?php if ($item['post_image']): ?>
-          <a class="card-image post-thumb" href="<?php echo $item[
-            'post_link'
-          ]; ?>" style="background-image:url(<?php echo $item[
-  'post_image'
-]; ?>)"></a>
+        <?php if ($item['post_image']) : ?>
+          <a class="card-image post-thumb" href="<?php echo $item['post_link']; ?>" style="background-image:url(<?php echo $item['post_image']; ?>)"></a>
         <?php endif; ?>
         <div class="card-header post-info">
           <h2 class="card-title">
-            <a href="<?php echo $item['post_link']; ?>"><?php echo $item[
-  'post_title'
-]; ?></a>
+            <a href="<?php echo $item['post_link']; ?>"><?php echo $item['post_title']; ?></a>
           </h2>
           <div class="card-subtitle text-gray">
             <i class="fa fa-calendar"></i>
@@ -72,34 +66,36 @@ if ($sidebar_pos === 'right' || $sidebar_pos === 'left') {
             <span><?php echo $item['post_author']; ?></span>
             <i class="fa fa-comment"></i>
             <span><?php echo $item['post_comments'] .
-              __('条评论', 'origami'); ?></span>
-            <i class="fa fa-bookmark"></i> 
+                    __('条评论', 'origami'); ?></span>
+            <i class="fa fa-bookmark"></i>
             <ul>
-              <?php foreach ($item['post_category'] as $cat): ?>
-                <li><a href="<?php echo get_category_link(
-                  $cat
-                ); ?>"><?php echo get_cat_name($cat); ?></a></li>
+              <?php foreach ($item['post_category'] as $cat) : ?>
+                <li>
+                  <a href="<?php echo get_category_link($cat); ?>">
+                    <?php echo get_cat_name($cat); ?>
+                  </a>
+                </li>
               <?php endforeach; ?>
             </ul>
           </div>
         </div>
         <div class="card-body">
-        <?php echo apply_filters(
-          'the_content',
-          wp_trim_words($item['post_excerpt'], 100, ' [&hellip;]')
-        ); ?>
+          <?php echo apply_filters(
+            'the_content',
+            wp_trim_words($item['post_excerpt'], 100, ' [&hellip;]')
+          ); ?>
         </div>
         <div class="card-footer">
           <div class="post-tags">
-            <?php foreach ($item['post_tag'] as $tag): ?>
-            <a href="<?php echo get_tag_link(
-              $tag
-            ); ?>"><?php echo $tag->name; ?></a>
+            <?php foreach ($item['post_tag'] as $tag) : ?>
+              <a href="<?php echo get_tag_link($tag); ?>">
+                <?php echo $tag->name; ?>
+              </a>
             <?php endforeach; ?>
           </div>
-          <a href="<?php echo $item[
-            'post_link'
-          ]; ?>" class="read-more"><?php echo __('阅读全文', 'origami'); ?></a>
+          <a href="<?php echo $item['post_link']; ?>" class="read-more">
+            <?php echo __('阅读全文', 'origami'); ?>
+          </a>
         </div>
       </article>
     <?php endforeach; ?>

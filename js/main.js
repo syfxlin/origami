@@ -1566,7 +1566,7 @@ origami.copy = function() {
 origami.hasNewInspiration = function() {
   if (origamiConfig.lastInspirationTime) {
     let oldTime = window.localStorage.getItem("inspirationTime");
-    if (oldTime && oldTime < origamiConfig.lastInspirationTime) {
+    if (!oldTime || oldTime < origamiConfig.lastInspirationTime) {
       origami.tools.timeToast(
         "有新灵感发布哦，要记得去看哟。ヾ(≧▽≦*)o",
         "success",

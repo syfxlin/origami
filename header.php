@@ -16,19 +16,19 @@ $body_class .= $GLOBALS['layout'];
 
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
+
 <head>
-  <meta charset="<?php bloginfo('charset'); ?>"/>
+  <meta charset="<?php bloginfo('charset'); ?>" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>"/>
+  <link rel="pingback" href="<?php bloginfo('pingback_url'); ?>" />
   <meta name="theme-color" content="#87d1df">
-  <meta name="origami-version" content="<?php echo wp_get_theme()->get(
-    'Version'
-  ); ?>">
+  <meta name="origami-version" content="<?php echo wp_get_theme()->get('Version'); ?>">
   <?php wp_head(); ?>
-  <?php if (get_option('origami_block_mixed', 'true') == 'true'): ?>
+  <?php if (get_option('origami_block_mixed', 'true') == 'true') : ?>
     <meta http-equiv="Content-Security-Policy" content="block-all-mixed-content">
   <?php endif; ?>
 </head>
+
 <body <?php body_class($body_class); ?>>
   <header class="ori-header">
     <div class="ori-container navbar">
@@ -36,9 +36,7 @@ $body_class .= $GLOBALS['layout'];
         <a href="<?php echo esc_url(home_url('/')); ?>" id="ori-logo">
           <img src="<?php echo esc_url($ori_header_logo); ?>" alt="Site Logo">
         </a>
-        <a href="<?php echo esc_url(
-          home_url('/')
-        ); ?>" class="btn btn-link" id="ori-title">
+        <a href="<?php echo esc_url(home_url('/')); ?>" class="btn btn-link" id="ori-title">
           <?php echo get_bloginfo('name'); ?>
         </a>
       </section>
@@ -49,7 +47,7 @@ $body_class .= $GLOBALS['layout'];
           'menu_id' => 'ori-menu',
           'menu_class' => '',
           'link_after' =>
-            '<div></div><span class="sub-drop-icon icon icon-arrow-down"></span>'
+          '<div></div><span class="sub-drop-icon icon icon-arrow-down"></span>'
         ]); ?>
         <div id="ori-s-btn">
           <i class="fa fa-search"></i>
@@ -70,10 +68,7 @@ $body_class .= $GLOBALS['layout'];
         </section>
         <section class="navbar-center">
           <div class="has-icon-right">
-            <input id="ori-search-input" class="form-input" type="text" placeholder="<?php echo __(
-              '快来寻找你要的文章ヾ(≧▽≦*)o...',
-              'origami'
-            ); ?>">
+            <input id="ori-search-input" class="form-input" type="text" placeholder="<?php echo __('快来寻找你要的文章ヾ(≧▽≦*)o...', 'origami'); ?>">
             <i class="form-icon loading ori-search-loading"></i>
           </div>
         </section>
