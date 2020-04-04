@@ -490,13 +490,13 @@ function origami_rest_post_comments(WP_REST_Request $request)
   $comment_re = wp_handle_comment_submission(wp_unslash($comment_data));
   if (is_wp_error($comment_re)) {
     $error = $comment_re->get_error_data();
-    return [
-      'code' => 'wp_handle_comment_submission error',
-      'data' => [
+    return new WP_Error(
+      'wp_handle_comment_submission error',
+      $comment_re->get_error_message(),
+      [
         'status' => $error
-      ],
-      'massage' => $comment_re->get_error_message()
-    ];
+      ]
+    );
   }
   $user = wp_get_current_user();
   do_action('set_comment_cookies', $comment_re, $user);
@@ -538,7 +538,7 @@ function origami_rest_put_comments(WP_REST_Request $request)
       'data' => [
         'status' => 200
       ],
-      'massage' => __('此功能未开启', 'origami')
+      'message' => __('此功能未开启', 'origami')
     ];
   }
   $comment_data = [
@@ -554,24 +554,24 @@ function origami_rest_put_comments(WP_REST_Request $request)
     'data' => [
       'status' => 401
     ],
-    'massage' => __('权限不足，未读取到合法的token', 'origami')
+    'message' => __('权限不足，未读取到合法的token', 'origami')
   ];
   $error_403 = [
     'code' => 'You cannot change comments over 5 minutes',
     'data' => [
       'status' => 403
     ],
-    'massage' => __('您无法更改超过5分钟的评论', 'origami')
+    'message' => __('您无法更改超过5分钟的评论', 'origami')
   ];
   $error_409 = [
     'code' => 'Submitted comment ID does not match',
     'data' => [
       'status' => 409
     ],
-    'massage' => __('提交的评论ID不匹配', 'origami')
+    'message' => __('提交的评论ID不匹配', 'origami')
   ];
   if (!isset($_COOKIE['change_comment'])) {
-    return $error_401;
+    return new WP_Error($error_401['code'], $error_401['message'], $error_401['data']);
   }
   $aes = new Aes(
     get_option('origami_comment_key', 'qwertyuiopasdfghjklzxcvbnm12345')
@@ -579,10 +579,10 @@ function origami_rest_put_comments(WP_REST_Request $request)
   $data = explode(':', $aes->decrypt($_COOKIE['change_comment']));
   $time_out = 60 * intval(get_option('origami_enable_comment_time', '5'));
   if (time() - $data[0] > $time_out) {
-    return $error_403;
+    return new WP_Error($error_403['code'], $error_403['message'], $error_403['data']);
   }
   if ($comment_data['comment_ID'] != $data[1]) {
-    return $error_409;
+    return new WP_Error($error_409['code'], $error_409['message'], $error_409['data']);
   }
   $status = wp_update_comment($comment_data);
   if ($status != 1) {
@@ -620,7 +620,7 @@ function origami_rest_delete_comments(WP_REST_Request $request)
       'data' => [
         'status' => 200
       ],
-      'massage' => __('此功能未开启', 'origami')
+      'message' => __('此功能未开启', 'origami')
     ];
   }
   $error_401 = [
@@ -628,25 +628,25 @@ function origami_rest_delete_comments(WP_REST_Request $request)
     'data' => [
       'status' => 401
     ],
-    'massage' => __('权限不足，未读取到合法的token', 'origami')
+    'message' => __('权限不足，未读取到合法的token', 'origami')
   ];
   $error_403 = [
     'code' => 'You cannot change comments over 5 minutes',
     'data' => [
       'status' => 403
     ],
-    'massage' => __('您无法更改超过5分钟的评论', 'origami')
+    'message' => __('您无法更改超过5分钟的评论', 'origami')
   ];
   $error_409 = [
     'code' => 'Comment ID does not found',
     'data' => [
       'status' => 400
     ],
-    'massage' => __('评论ID未找到', 'origami')
+    'message' => __('评论ID未找到', 'origami')
   ];
   $comment_id = $request['id'];
   if (!isset($_COOKIE['change_comment'])) {
-    return $error_401;
+    return new WP_Error($error_401['code'], $error_401['message'], $error_401['data']);
   }
   $aes = new Aes(
     get_option('origami_comment_key', 'qwertyuiopasdfghjklzxcvbnm12345')
@@ -654,10 +654,10 @@ function origami_rest_delete_comments(WP_REST_Request $request)
   $data = explode(':', $aes->decrypt($_COOKIE['change_comment']));
   $time_out = 60 * intval(get_option('origami_enable_comment_time', '5'));
   if (time() - $data[0] > $time_out) {
-    return $error_403;
+    return new WP_Error($error_403['code'], $error_403['message'], $error_403['data']);
   }
-  if (!$comment_id) {
-    return $error_409;
+  if ($comment_id != $data[1]) {
+    return new WP_Error($error_409['code'], $error_409['message'], $error_409['data']);
   }
   $status = wp_delete_comment($comment_id);
   return $status;

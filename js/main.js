@@ -30,7 +30,13 @@ window.$http = function(options) {
           options.success && options.success(xhr.responseText);
         }
       } else {
-        options.error && options.error(status);
+        options.error &&
+          options.error(
+            status,
+            options.dataType === "json"
+              ? JSON.parse(xhr.responseText)
+              : xhr.responseText
+          );
       }
     }
   };
@@ -129,7 +135,7 @@ origami.scrollTop = function() {
   document.getElementById("scroll-top").addEventListener("click", function() {
     window.scrollTo({
       top: 0,
-      behavior: "smooth"
+      behavior: "smooth",
     });
   });
 };
@@ -280,7 +286,7 @@ origami.realTimeSearch = function() {
           data: {
             search: ele.value,
             page: page,
-            per_page: 10
+            per_page: 10,
           },
           success: function(response) {
             loadingEle.style.opacity = "0";
@@ -290,9 +296,9 @@ origami.realTimeSearch = function() {
             changeSearchList(response);
             sessionStorage.setItem(currKey, JSON.stringify(response));
           },
-          error: function(status) {
-            console.log("状态码为" + status);
-          }
+          error: function() {
+            origami.tools.timeToast("文章获取失败，请重试", "error", 3000);
+          },
         });
       }
     }, 300);
@@ -324,11 +330,11 @@ origami.realTimeSearch = function() {
 
 origami.tools = {
   toastList: [],
-  showToast: function(massage, status) {
+  showToast: function(message, status) {
     let className = "toast-" + status;
     let toast = document.querySelector(".ori-tools .toast");
     toast.classList.add(className);
-    toast.querySelector("p").innerHTML = massage;
+    toast.querySelector("p").innerHTML = message;
     toast.style.visibility = "visible";
     toast.style.opacity = "1";
   },
@@ -344,7 +350,7 @@ origami.tools = {
   },
   popToast: function() {
     let toast = origami.tools.toastList[0];
-    origami.tools.showToast(toast.massage, toast.status);
+    origami.tools.showToast(toast.message, toast.status);
     setTimeout(function() {
       origami.tools.hideToast(function() {
         origami.tools.toastList.shift();
@@ -354,11 +360,11 @@ origami.tools = {
       });
     }, toast.delay);
   },
-  timeToast: function(massage, status, delay) {
+  timeToast: function(message, status, delay) {
     origami.tools.toastList.push({
-      massage: massage,
+      message: message,
       status: status,
-      delay: delay
+      delay: delay,
     });
     if (origami.tools.toastList.length === 1) {
       origami.tools.popToast();
@@ -401,7 +407,7 @@ origami.tools = {
     let modal = document.querySelector(".ori-tools .modal");
     modal.style.visibility = "hidden";
     modal.classList.remove("active");
-  }
+  },
 };
 
 origami.initComments = function() {
@@ -521,7 +527,7 @@ origami.initComments = function() {
     if (!isOne) {
       window.scrollTo({
         top: loading.offsetTop - 200,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
     loading.style.height = "4rem";
@@ -541,7 +547,7 @@ origami.initComments = function() {
         dataType: "json",
         data: {
           id: postId,
-          page: page
+          page: page,
         },
         success: function(response) {
           loading.style.height = "0";
@@ -592,9 +598,9 @@ origami.initComments = function() {
           }
           callback(pageOut, response);
         },
-        error: function(status) {
-          console.log("状态码为" + status);
-        }
+        error: function() {
+          origami.tools.timeToast("评论读取失败，请重试", "error", 3000);
+        },
       });
     };
     if (isOne) {
@@ -624,14 +630,14 @@ origami.initComments = function() {
           author_url: info.author_url,
           content: info.content,
           parent: info.parent,
-          post: info.post
+          post: info.post,
         },
         success: function(res) {
           callback(res);
         },
-        error: function(error) {
-          console.log("状态码为" + status);
-        }
+        error: function(status, error) {
+          callback(error);
+        },
       });
     } else {
       $http({
@@ -644,19 +650,19 @@ origami.initComments = function() {
           author_url: info.author_url,
           content: info.content,
           id: info.parent,
-          post: info.post
+          post: info.post,
         },
         success: function(res) {
           callback(res);
         },
-        error: function(error) {
-          console.log("状态码为" + status);
-        }
+        error: function(status, error) {
+          callback(error);
+        },
       });
     }
   };
   let submitError = function(res) {
-    origami.tools.timeToast(res.massage, "error", 5000);
+    origami.tools.timeToast(res.message, "error", 5000);
   };
   let submitSuccess = function(res, lv = 1) {
     // 显示和定时隐藏提示
@@ -669,7 +675,7 @@ origami.initComments = function() {
         commentToHtml(res, lv, {
           enDelete: origamiConfig.deleteComment,
           enUpdate: origamiConfig.updateComment,
-          enCountdown: true
+          enCountdown: true,
         }),
         "text/html"
       )
@@ -747,7 +753,7 @@ origami.initComments = function() {
         content: content,
         author_email: authorEmailEle.value,
         author_name: authorNameEle.value,
-        author_url: document.getElementById("response-website").value
+        author_url: document.getElementById("response-website").value,
       };
       loadingEle.style.opacity = "1";
       submit(
@@ -813,10 +819,10 @@ origami.initComments = function() {
           type: "DELETE",
           dataType: "json",
           data: {
-            id: deleteBtn.getAttribute("data-commentid")
+            id: deleteBtn.getAttribute("data-commentid"),
           },
           success: function(res) {
-            if (res || res == "true") {
+            if (res && res == "true") {
               document
                 .getElementById(
                   "comment-" + deleteBtn.getAttribute("data-commentid")
@@ -824,7 +830,10 @@ origami.initComments = function() {
                 .remove();
               origami.tools.timeToast("删除评论成功！", "success", 3000);
             }
-          }
+          },
+          error: function(status, error) {
+            origami.tools.timeToast(error.message, "error", 3000);
+          },
         });
       });
     });
@@ -876,7 +885,7 @@ origami.initComments = function() {
             window.scrollTo({
               top:
                 document.querySelector(window.location.hash).getClientRects()[0]
-                  .top - 200
+                  .top - 200,
             });
             document
               .querySelector(window.location.hash)
@@ -894,7 +903,7 @@ origami.initComments = function() {
     load: load,
     loadPrev: loadPrev,
     loadNext: loadNext,
-    submit: submit
+    submit: submit,
   };
 };
 
@@ -907,7 +916,7 @@ origami.loadOwO = function() {
       api: window.origamiConfig.themeBaseURL + "/js/OwO.json",
       position: "down",
       width: "100%",
-      maxHeight: "250px"
+      maxHeight: "250px",
     });
   }
 };
@@ -971,11 +980,11 @@ origami.initTocbot = function() {
     onClick: function(e) {
       window.scrollTo({
         top: document.querySelector(e.target.hash).offsetTop - offset - 20,
-        behavior: "smooth"
+        behavior: "smooth",
       });
       e.stopPropagation();
       return false;
-    }
+    },
   });
 };
 
@@ -1008,8 +1017,8 @@ origami.readingTransfer = function() {
           color: {
             dark: "#000000",
             light: "#ffffff",
-            errorCorrectionLevel: "H"
-          }
+            errorCorrectionLevel: "H",
+          },
         },
         function(err, url) {
           let img = document.createElement("img");
@@ -1059,7 +1068,7 @@ origami.setPosition = function() {
   if (indexEle) {
     window.scrollTo({
       top: indexEle.offsetTop - headerHeight,
-      behavior: "smooth"
+      behavior: "smooth",
     });
     let ifToStart = document.getElementById("if-to-start");
     ifToStart.style.visibility = "visible";
@@ -1069,7 +1078,7 @@ origami.setPosition = function() {
 window.toStart = function() {
   window.scrollTo({
     top: 0,
-    behavior: "smooth"
+    behavior: "smooth",
   });
   let url = window.location.href;
   let index = "index=" + $getQuery("index");
@@ -1176,9 +1185,9 @@ origami.initMarkdown = function() {
         delimiters: [
           { left: "$$", right: "$$" },
           { left: "```math", right: "```" },
-          { left: "```tex", right: "```" }
+          { left: "```tex", right: "```" },
         ],
-        ignoredTags: ["script", "noscript", "style", "textarea", "code"]
+        ignoredTags: ["script", "noscript", "style", "textarea", "code"],
       });
     } catch (e) {
       console.log(e);
@@ -1204,7 +1213,7 @@ origami.imgBox = function() {
         origami.tools.timeToast("按住图片可放大", "success", 3000);
         opened = true;
       }
-    }
+    },
   }).listen(".s-content img, .p-content img");
 };
 
@@ -1260,7 +1269,7 @@ origami.liveChat = function() {
     "#38b03f",
     "#f1a325",
     "#bd7b46",
-    "#8666b8"
+    "#8666b8",
   ];
   let msgEle = document.getElementById("live-chat");
   let list = msgEle.querySelector(".live-chat-list");
@@ -1337,7 +1346,7 @@ origami.liveChat = function() {
     } else {
       let data = {
         name: commentName,
-        message: inputInput.value
+        message: inputInput.value,
       };
       chatWs.send(JSON.stringify(data));
       inputInput.value = "";
@@ -1487,7 +1496,7 @@ origami.paperPlane = function() {
       open = true;
       add([
         origamiConfig.background[index],
-        origamiConfig.background[index + 1]
+        origamiConfig.background[index + 1],
       ]);
     }
   });
@@ -1625,15 +1634,15 @@ origami.initGitCard = function() {
             cardEle,
             {
               url: res.owner.html_url,
-              name: res.owner.login
+              name: res.owner.login,
             },
             {
               url: res.html_url,
-              name: res.name
+              name: res.name,
             },
             {
               description: res.description,
-              homepage: res.homepage
+              homepage: res.homepage,
             },
             res.stargazers_count,
             platform
@@ -1641,7 +1650,7 @@ origami.initGitCard = function() {
         },
         error: function(status) {
           console.log("状态码为" + status);
-        }
+        },
       });
     } else if (platform === "gitlab") {
       $http({
@@ -1653,15 +1662,15 @@ origami.initGitCard = function() {
             cardEle,
             {
               url: res.namespace.web_url,
-              name: res.namespace.path
+              name: res.namespace.path,
             },
             {
               url: res.web_url,
-              name: res.path
+              name: res.path,
             },
             {
               description: res.description,
-              homepage: ""
+              homepage: "",
             },
             res.star_count,
             platform
@@ -1669,7 +1678,7 @@ origami.initGitCard = function() {
         },
         error: function(status) {
           console.log("状态码为" + status);
-        }
+        },
       });
     }
   });
@@ -1726,7 +1735,7 @@ origami.initArticleCard = function() {
         },
         error: function(status) {
           console.log("状态码为" + status);
-        }
+        },
       });
     } else if (platform === "embed") {
       $http({
@@ -1747,7 +1756,7 @@ origami.initArticleCard = function() {
             d.querySelector(".wp-embed-site-title a span").innerHTML,
             d.querySelector(".wp-embed-site-title a").href
           );
-        }
+        },
       });
     }
   });
@@ -1837,7 +1846,7 @@ origami.initRunCode = function() {
       var outputContent = output.textContent;
       var newLogItem = "> " + content + "\n";
       output.textContent = outputContent + newLogItem;
-    }
+    },
   };
 
   function runJS(code, outputEle) {
@@ -1855,7 +1864,7 @@ origami.initRunCode = function() {
         var output = formattedList.join(" ");
         consoleUtils.writeOutput(output, outputEle);
         window.console.log.apply(console, arguments);
-      }
+      },
     };
     outputEle.textContent = "";
     // eslint-disable-next-line no-eval
@@ -1873,7 +1882,7 @@ origami.initRunCode = function() {
       data: {
         source_code: code,
         language_id: languageId,
-        stdin: input
+        stdin: input,
       },
       success: function(res) {
         let timer = null;
@@ -1923,7 +1932,7 @@ origami.initRunCode = function() {
               clearTimeout(timer);
               outputEle.innerHTML =
                 '<span class="error"># ' + status + "</span>";
-            }
+            },
           });
         };
         fetchOut();
@@ -1931,7 +1940,7 @@ origami.initRunCode = function() {
       error: function(status) {
         clearTimeout(timer);
         outputEle.innerHTML = '<span class="error"># ' + status + "</span>";
-      }
+      },
     });
   }
 
@@ -2006,8 +2015,8 @@ origami.initShareCard = function() {
         color: {
           dark: "#000000",
           light: "#efefef",
-          errorCorrectionLevel: "M"
-        }
+          errorCorrectionLevel: "M",
+        },
       },
       function(err, url) {
         let html = `
@@ -2039,7 +2048,7 @@ origami.initShareCard = function() {
           html2canvas(source, {
             useCORS: true,
             x: -source.clientWidth,
-            y: window.pageYOffset
+            y: window.pageYOffset,
           }).then(function(canvas) {
             let img = document.createElement("img");
             img.src = canvas.toDataURL("image/jpeg");
@@ -2109,7 +2118,7 @@ if (window.LazyLoad) {
       if (ele.classList.contains("lazy-bg-loaded-flag")) {
         ele.parentElement.classList.add("loaded");
       }
-    }
+    },
   });
 }
 
