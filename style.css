@@ -1974,6 +1974,15 @@ body.menu-active .ori-footer {
 .OwO ul li {
   margin-top: 0;
 }
+/* 文末分页导航 */
+#nav_articlePages{
+	font-weight: bold;
+	text-align:center;
+}
+.nav_page_num{padding-right:5px;padding-left:5px;}
+#nav_page_title{padding:0;}
+#nav_previous_page{padding-left:5px;}
+
 
 /* 文末版权 */
 #content-copyright {
