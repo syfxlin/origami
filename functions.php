@@ -608,6 +608,63 @@ function origami_inspiration_init()
 }
 add_action('init', 'origami_inspiration_init');
 
+//文末文章分页显示
+function origami_content_pagesNav($content)
+{
+  //代码有点乱，QAQ
+  /* 使用到的函数
+    _wp_link_page($page),返回文章第$page页的html超链接，类似<a href="...">,但是没有尾标签，所以要手动加上</a>
+  
+  */
+  global $page, $numpages, $multipage, $more;
+  if($multipage && ( is_single() || is_page() ) )//只有在多页的文章或页面中才会显示导航栏
+  {
+    $content .= '<ul class="pagination">';
+    /* 上一页标签 */
+
+    //<li class="page-item disabled">
+    $prev = $page - 1;
+    if($prev > 0)
+    {
+        $link = '<li class="page-item">'. _wp_link_page( $prev ) . '上一页</a>';
+    }
+    else
+    {
+      $link = '<li class="page-item disabled"><a href="#" tabindex="-1">上一页</a>';
+    }
+    $content .= $link . '</li>';
+    
+    /* 文章页码标签 */
+    
+    //var_dump($page, $numpages, $multipage, $more);//调试输出
+    for ($i = 1; $i <= $numpages; $i++) {
+      $link = $i ;
+      if ($i != $page || !$more && 1 == $page) {
+        $link = '<li class="page-item">' . _wp_link_page($i) . $link .'</a></li>';
+      } elseif ($i === $page) {
+        $link = '<li class="page-item active"><a href="#">' . $link. '</a></li>';     
+      }
+      $content .= $link;
+    }
+  
+    /* 下一页标签 */
+
+    $next = $page + 1;
+    if($next <= $numpages)
+    {
+      $link = '<li class="page-item">'. _wp_link_page( $next ) . '下一页</a>';
+    }
+    else
+    {
+      $link = '<li class="page-item disabled"><a href="#" tabindex="-1">下一页</a>';
+    }
+    $content .= $link . '</li>';
+    $content .= '</ul>';
+  }
+  return $content;
+}
+add_filter('the_content', 'origami_content_pagesNav');
+
 // 文末版权声明
 function origami_content_copyright($content)
 {
