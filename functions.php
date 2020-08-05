@@ -625,9 +625,13 @@ function origami_content_pagesNav($content)
     //<li class="page-item disabled">
     $prev = $page - 1;
     if($prev > 0)
-      $link = '<li class="page-item">'. _wp_link_page( $prev ) . '上一页</a>';
+    {
+        $link = '<li class="page-item">'. _wp_link_page( $prev ) . '上一页</a>';
+    }
     else
+    {
       $link = '<li class="page-item disabled"><a href="#" tabindex="-1">上一页</a>';
+    }
     $content .= $link . '</li>';
     
     /* 文章页码标签 */
@@ -644,12 +648,16 @@ function origami_content_pagesNav($content)
     }
   
     /* 下一页标签 */
-    
+
     $next = $page + 1;
     if($next <= $numpages)
+    {
       $link = '<li class="page-item">'. _wp_link_page( $next ) . '下一页</a>';
+    }
     else
+    {
       $link = '<li class="page-item disabled"><a href="#" tabindex="-1">下一页</a>';
+    }
     $content .= $link . '</li>';
     $content .= '</ul>';
   }
